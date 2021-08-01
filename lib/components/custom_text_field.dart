@@ -13,8 +13,20 @@ class CustomTextField extends StatelessWidget {
   IconData icon;
   Function validate;
   String errorText;
+  double radius;
+  String label;
 
-  CustomTextField({this.hintText, this.passWord=false, this.key, this.controller, this.validator, this.icon, this.validate,this.errorText});
+  CustomTextField({
+    this.hintText,
+    this.passWord=false,
+    this.key,
+    this.controller,
+    this.validator,
+    this.icon,
+    this.validate,
+    this.radius = 25,
+    this.label='',
+    this.errorText});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +49,18 @@ class CustomTextField extends StatelessWidget {
                   //focusedErrorBorder: kPresentTheme.formTextBorder,
                   prefixIcon: Icon(icon,color: kPresentTheme.inputTextColor,),
                   fillColor: kPresentTheme.inputTextColor,
-                  border:kPresentTheme.formTextBorder,
+                  border: OutlineInputBorder(
+                          gapPadding: 2.0,
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(
+                                color: Color(0xFF004752),
+                                    )
+                            ),
                   hintText: this.hintText,
                   hintStyle: kPresentTheme.hintTextStyle,
                   errorText: errorText,
-
+                  labelText: label,
+                  //labelStyle:
         ),
 
         onEditingComplete: validate,

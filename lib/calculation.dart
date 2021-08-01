@@ -5,24 +5,24 @@ import 'package:matrix2d/matrix2d.dart';
 class Calculator {
   List<Investment> _investmentPortfolio = [
     Investment(
-        name: 'Cash',
-        currentInvestmentAmount: 10,
-        annualInvestmentAmount: 2,
-        investmentRoi: .04,
-        investmentDuration: 10),
+         'Cash',
+         10,
+         2,
+        .04,
+        10),
     Investment(
-        name: 'Equity',
-        currentInvestmentAmount: 20,
-        annualInvestmentAmount: 7,
-        investmentRoi: .12,
-        investmentDuration: 15),
-    Investment(
-        name: 'PF',
-        currentInvestmentAmount: 10,
-        annualInvestmentAmount: 2,
-        investmentRoi: .085,
-        investmentDuration: 18),
-  ];
+        'Equity',
+         20,
+         7,
+         .12,
+         15),
+  //   Investment(
+  //       name: 'PF',
+  //       currentInvestmentAmount: 10,
+  //       annualInvestmentAmount: 2,
+  //       investmentRoi: .085,
+  //       investmentDuration: 18),
+   ];
   double longestInvestmentDuration = 0;
 
   List getInvestmentDetail() {

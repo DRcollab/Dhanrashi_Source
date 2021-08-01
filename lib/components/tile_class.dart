@@ -9,14 +9,24 @@ class Tile extends StatelessWidget {
   String title;
   Widget prominent;
   String imageSource;
-  Function onPresed;
+  Function onPressed;
   String subText;
   double padding;
   double height;
   double width;
   Color titleColor;
+  Color color;
 
-  Tile({this.title="Title", this.prominent,  this.subText,this.onPresed, this.padding=8.0, this.imageSource, this.height=100, this.width=100});
+  Tile({this.title="Title",
+    this.prominent,
+    this.subText='',
+    this.onPressed,
+    this.padding=8.0,
+    this.imageSource,
+    this.height=100,
+    this.width=100,
+    this.titleColor,
+    this.color = Colors.white});
 
 
 
@@ -24,28 +34,65 @@ class Tile extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Padding(
       padding:  EdgeInsets.all(this.padding),
-      child: Card(
+      child: GestureDetector(
+            onTap: this.onPressed,
+            child: Card(
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                          ),
+            elevation: 5,
+            color: this.color,
+            child:Column(
 
-          elevation: 1,
-          color: kPresentTheme.cardColors[1],
-          child:Column(
+                  children: [
+                      Column(
 
-            children: [
-              Container(
-                  color: kPresentTheme.accentButtonColor,
-                  child: Text(
-                    this.title,
-                    style: TextStyle(fontSize: 20,color: kPresentTheme.lightTextColor),
-                  ),
-              ),
-              Image.asset(this.imageSource,
-              height: this.height, width: this.width,),
-            ],
-          ),
+                      children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Image.asset(this.imageSource,height: 50, width: 50,)),
+                                ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0, top:8.0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                  this.title,
+                                  style: TextStyle(fontSize: 20,color: titleColor, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
+                    ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 18.0, ),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(this.subText, style: TextStyle(color: titleColor),)),
+                    ),
+
+                  ],
+                ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 18.0, bottom: 18.0),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Icon(Icons.style, size: 20,)),
+                          ),
+                        ],
+                      ),
+              ],
+            ),
 
 
 
-              ),
+
+                ),
+      ),
 
 
     );

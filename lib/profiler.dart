@@ -24,8 +24,8 @@ import 'package:dhanrashi_mvp/data/validators.dart';
 class Collector{
 
 
-  var _dateOfBirth;
-  var _annualIncome ;
+  DateTime _dateOfBirth;
+  double _annualIncome ;
   var  _fName ;
   var _lName;
 
@@ -33,8 +33,8 @@ class Collector{
 
   Collector(){
 
-      _dateOfBirth = "";
-     _annualIncome = "";
+      _dateOfBirth = null;
+     _annualIncome = 0;
      _fName = TextEditingController();
      _lName = TextEditingController();
 
@@ -56,16 +56,16 @@ class Collector{
   }
 
   /// setter of DOB
-  set dateOfBirth(String str){
+  set dateOfBirth(DateTime dt){
 
-     _dateOfBirth = str;
+     _dateOfBirth = dt;
   }
 
 
   /// setter of Annual Income
-  set annualIncome(String str){
+  set annualIncome(double income){
 
-    _annualIncome = str;
+    _annualIncome = income;
 
   }
 
@@ -84,18 +84,22 @@ class Collector{
 
 
 /// getter of DOB
- String get dateOfBirth{
+ DateTime get dateOfBirth{
 
     return _dateOfBirth;
   }
 
 /// getter of Income
- String get annualIncome{
+ double get annualIncome{
 
     return _annualIncome;
 
   }
 
+  String dateAsString(){
+
+      return '${_dateOfBirth.day}/${_dateOfBirth.month}/${_dateOfBirth.year}';
+  }
 
   }
 
@@ -156,7 +160,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
     "Great, Let's start with your name",
     'Your age factors how  you choose your investments.',
     'Declaration of your Income will help us recommend you financial product',
-    'Confirm your entries'
+    ''
   ];
 
   /// Holds the necessary desscription .. THIS NEED TO BE REVIEWED
@@ -191,7 +195,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
     IncomePicker(), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
     ///
-    ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
+   // ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
   ];
 
 
@@ -215,7 +219,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
         print(index);
         setState(() {
           index++;
-          if (index < 3) {
+          if (index < 2) {
 
             viewNavigationButton = true;
           }
@@ -223,8 +227,8 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
             viewNavigationButton = false;
 
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => ConfirmationPage(collector: Collector(),)));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ConfirmationPage(collector: profileCollector,)));
           }
         },
         );
@@ -250,34 +254,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
 
 
-    Widget comButt = CommandButton(
-
-        borderRadius: BorderRadius.circular(20),
-        buttonText: "Add User Details",
-        buttonColor: kPresentTheme.accentButtonColor,
-
-        onPressed:(){
-
-/// on pressing this button data will be saved in database ...
-        setState(() {
-
-          print(widget.currentUser.eMail());
-
-          widget.currentUser.setFName(profileCollector.fName.text); /// calling User data methods -- open user_data_class.dart file
-          widget.currentUser.setLName(profileCollector.lName.text);/// calling User data methods -- open user_data_class.dart file
-          widget.currentUser.setIncome(profileCollector.annualIncome);/// calling User data methods -- open user_data_class.dart file
-          widget.currentUser.setDOB(profileCollector.dateOfBirth);/// calling User data methods -- open user_data_class.dart file
-
-          _userHandler.createUser(widget.currentUser); /// creating user from currentUser data -- open usr_handler.dart
-
-          _userHandler.addProfile();  /// adding user profile to the database -- mock database [UserPtofileTable]
-
-
-         _userHandler.printUserData();
-        });
-
-    },
-        ); /// Command Button
+    //Widget comButt =  /// Command Button
 
 
     return CustomScaffold(
@@ -306,7 +283,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
             Expanded(
               flex: 2,
               child: Center(
-                child: viewNavigationButton ? navButton : comButt,
+                child: viewNavigationButton ? navButton : navButton,
               ),
             ),
           ],
@@ -405,11 +382,15 @@ class _DOBPickerState extends State<DOBPicker> {
             CalendarDatePicker(
 
               initialDate: DateTime.now(),
-              firstDate: DateTime(2001),
+              firstDate: DateTime(1900),
               lastDate: DateTime(2222),
               onDateChanged: (valueChanged) {
 
-                profileCollector.dateOfBirth = 'valueChanged';
+                //var newFormat = DateFoermat("dd-mm-yyyy");
+
+                profileCollector.dateOfBirth = valueChanged;//'${valueChanged.day}/${valueChanged.month}/${valueChanged.year}';
+
+
               },
             ),
           ],
@@ -438,13 +419,13 @@ class _IncomePickerState extends State<IncomePicker> {
   int selectedValue = 0;
 
 
-  List <String> incomeRangeList  = [
+  List <double> incomeRangeList  = [
 
-    "1L",
-    "5L",
-    "10L",
-    "20L",
-    "NA",
+    1,
+    5,
+    10,
+    20,
+     0,
 
   ];
 
@@ -523,7 +504,7 @@ class _IncomePickerState extends State<IncomePicker> {
                 setState(() {
 
                   selectedValue = value;
-                  profileCollector.annualIncome = incomeRangeList[selectedValue];
+                  profileCollector.annualIncome = incomeRangeList[selectedValue] * 100000;
                 });
 
               }),
@@ -542,94 +523,3 @@ class _IncomePickerState extends State<IncomePicker> {
 /// Shows the collected data before saving
 
 
-class ConfirmationPage extends StatefulWidget {
-  // const ConfirmationPage({Key? key}) : super(key: key);
-
-  Collector collector;
-
-
-
-  ConfirmationPage({this.collector}){
-    collector = Collector();
-  }
-
-  @override
-  _ConfirmationPageState createState() => _ConfirmationPageState();
-}
-
-
-class _ConfirmationPageState extends State<ConfirmationPage> {
-
-  bool _isEditing = false;
-
-  @override
-  Widget build(BuildContext context) {
-    print(widget.collector.dateOfBirth);
-    print(widget.collector);
-    print(widget.collector.dateOfBirth);
-
-    return Container(
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-
-        children : [
-
-          Image.asset('images/confirmed.png',
-            height: 200,
-            width: 200,
-
-          ),
-
-          Band(
-            headingChild: Icon(Icons.drive_file_rename_outline),
-            title: "Name",
-            text: profileCollector.fName.text,
-            subText: "",
-            controller: profileCollector.fName,
-            buttonIcon: Icons.edit,
-            action:(){
-
-              print(profileCollector.fName.text);
-            },
-
-          ),
-
-          Band(
-              headingChild: Icon(Icons.drive_file_rename_outline),
-              title: "Last Name",
-              text: profileCollector.lName.text,
-             controller: profileCollector.lName,
-              subText: "",
-              buttonIcon: Icons.edit,
-              action:(){},
-
-          ),
-
-          Band(
-              headingChild: Icon(Icons.drive_file_rename_outline),
-              title: "Date of Birth",
-              text: profileCollector.dateOfBirth,
-              subText: "age",
-              buttonIcon: Icons.edit,
-              action:(){},
-
-          ),
-          Band(
-              headingChild: Icon(Icons.drive_file_rename_outline),
-              title: "Annual Income",
-              text: profileCollector.annualIncome,
-              subText: "",
-              buttonIcon: Icons.edit,
-              action:(){},
-          ),
-
-
-        ]
-      ),
-
-
-
-    );
-  }
-}

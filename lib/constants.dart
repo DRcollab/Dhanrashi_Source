@@ -176,3 +176,10 @@ var kH1 = TextStyle(
   color: Colors.black,
 
 );
+
+var kH3 = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.normal,
+  color: Colors.black,
+
+);

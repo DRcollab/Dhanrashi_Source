@@ -141,13 +141,15 @@ class CurvePainter extends CustomPainter {
     }
     else if(type == 1){
 
-      //upperWave(canvas, size, Color(0xffb5c210),);
+      upperWave(canvas, size, Color(0xffb5c210),);
     }
     else if(type == 2){
 
       dividingWave(canvas, size, Color(0xFF004752));
     }
-
+    else if(type == 3){
+      bottomWave(canvas, size, Color(0xFF004752));
+    }
 
   }
 

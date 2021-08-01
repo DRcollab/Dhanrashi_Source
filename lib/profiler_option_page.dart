@@ -89,7 +89,14 @@ class ProfilerOptionPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       buttonColor: kPresentTheme.accentButtonColor,
                       buttonText: "OK",
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                            builder: (context) => ProfilerPage(),
+                        )
+                        );
+                      },
                     ),
                   ),
                   Padding(
@@ -98,7 +105,7 @@ class ProfilerOptionPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         buttonText: "No, I am not sharing",
                         onPressed: (){
-
+                          // TODO code to got to loading page
                         }, ),
                   )
                 ]

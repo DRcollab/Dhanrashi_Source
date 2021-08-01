@@ -34,6 +34,7 @@ dependencies:
   flutter_rounded_date_picker: ^2.0.2
   matrix2d: ^1.0.0
   stacked: ^2.2.3
+  intl: ^0.17.0
 
 
 dev_dependencies:
@@ -67,6 +68,11 @@ flutter:
     - images/confirmed.png
     - images/info.png
     - images/investing-pana.png
+    - images/mutual.png
+    - images/insurance.png
+    - images/investment.png
+    - images/investment_banner.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
