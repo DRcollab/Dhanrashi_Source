@@ -144,3 +144,86 @@ class _EditableTextFieldState extends State<EditableTextField> {
     }
   }
 }
+
+
+class LabeledTextField extends StatefulWidget {
+ // const LabeledTextField({Key? key}) : super(key: key);
+
+  String hintText = "";
+  bool passWord = false;
+  var key;
+  Function validator;
+  TextEditingController controller;
+
+  Function validate;
+  String errorText;
+  double radius;
+  String label;
+
+  LabeledTextField({
+    this.hintText,
+    this.passWord=false,
+    this.key,
+    this.controller,
+    this.validator,
+
+    this.validate,
+    this.radius = 25,
+    this.label='',
+    this.errorText});
+
+
+  @override
+  _LabeledTextFieldState createState() => _LabeledTextFieldState();
+}
+
+class _LabeledTextFieldState extends State<LabeledTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+          children: [
+            Expanded(
+              flex:3,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.label),
+              ),
+            ),
+            Flexible(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                  controller: widget.controller,
+
+                  obscureText: widget.passWord,
+                  textInputAction: TextInputAction.next,
+                  style: kInputTextStyle,
+                  validator: widget.validator,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(8),
+
+                    fillColor: kPresentTheme.inputTextColor,
+                    border: OutlineInputBorder(
+                        gapPadding: 1.0,
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: BorderSide(
+                          color: Color(0xFF004752),
+                        )
+                    ),
+                    hintText: widget.hintText,
+                    hintStyle: kPresentTheme.hintTextStyle,
+                    errorText: widget.errorText,
+
+                    //labelStyle:
+                  ),
+
+                  onEditingComplete: widget.validate,
+                  onTap: widget.validate,
+            ),),
+            ),
+          ]
+
+      ),
+    );
+  }
+}

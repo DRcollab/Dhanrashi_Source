@@ -34,198 +34,200 @@ class InvestmentInputScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScaffold(
 
-      child: Container(
-
-        child: ListView(
-
-             // crossAxisAlignment: CrossAxisAlignment.stretch,
-             // mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Stack(
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(top:0.0),
+                  child: Image.asset('images/investment_banner.png', height: 400, width: 400,alignment: Alignment.topLeft),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0,top: 140.0),
+                  child: Text("Investments",
+                    style: kH1,
 
-                  Stack(
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0,top: 170.0),
+                  child: Text("Choose one of  these",
+                    style: kH3,
+
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+
+          Expanded(
+            flex:5,
+            child: Container(
+              height: 500,
+              child: ListView(
+                  shrinkWrap: true,
+                children: [
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top:0.0),
-                        child: Image.asset('images/investment_banner.png', height: 400, width: 400,alignment: Alignment.topLeft),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0,top: 140.0),
-                        child: Text("Investments",
-                          style: kH1,
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/mutual.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Mutual Fund',
+                          subText: 'Equity and debt funds',
+                          color: color,
+                          titleColor: Colors.white60,
+                          onPressed: (){
+                            name = 'Mutual Fund';
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) => ActionSheet(
+                              titleMessage: name,
+                            ));
+                          },
 
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0,top: 170.0),
-                        child: Text("Choose one of  these",
-                          style: kH3,
 
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/insurance.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Insurance',
+                          subText: 'Life, health and term',
+                          color: alternateColor,
+                          titleColor: titleColor,
+                          onPressed: (){
+                            name = 'Insurance';
+                          },
                         ),
                       ),
 
-                      Padding(
-                        padding: EdgeInsets.only(top:190),
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/mutual.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Mutual Fund',
-                                      subText: 'Equity and debt funds',
-                                      color: color,
-                                      titleColor: Colors.white60,
-                                      onPressed: (){
-                                        name = 'Mutual Fund';
-                                        showModalBottomSheet(context: context, builder: (context) => ActionSheet(
-                                          titleMessage: name,
-                                        ));
-                                      },
-
-                                    ),
-                                  ),
-
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/insurance.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Insurance',
-                                      subText: 'Life, health and term',
-                                      color: alternateColor,
-                                      titleColor: titleColor,
-                                      onPressed: (){
-                                        name = 'Insurance';
-                                      },
-                                    ),
-                                  ),
-
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/info.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Debts & Bonds',
-                                      subText: 'Govt Bonds company debentures',
-                                      color: alternateColor,
-                                      titleColor: titleColor,
-                                      onPressed: (){
-                                        name = 'Debts and Bonds';
-                                      },
-                                    ),
-                                  ),
-
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/info.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Equity',
-                                      subText: 'Stock market investments',
-                                      color: color,
-                                      titleColor: Colors.white60,
-                                      onPressed: (){
-                                        name = 'Equity';
-                                      },
-                                    ),
-                                  ),
-
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/info.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Real Estate',
-                                      subText: 'Lands, houses, complexes etc.',
-                                      color:color,
-                                      titleColor: Colors.white60,
-                                      onPressed: (){
-                                        name = 'Real Estate';
-                                      },
-                                    ),
-                                  ),
-
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/info.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Bank FD',
-                                      subText: 'NSC, KVP, RD, Bank term deposits',
-                                      color: alternateColor,
-                                      titleColor: titleColor,
-                                      onPressed: (){
-                                        name = 'Bank FD';
-                                      },
-                                    ),
-                                  ),
-
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/info.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Gold',
-                                      subText: 'Jewellery ',
-                                      color:alternateColor,
-                                      titleColor: titleColor,
-                                      onPressed: (){
-                                        name = 'Gold';
-                                      },
-                                    ),
-                                  ),
-
-                                  Expanded(
-                                    child: Tile(
-                                      imageSource: 'images/info.png',
-                                      height: 120,
-                                      width: 150,
-                                      title: 'Others',
-                                      subText: 'Something not listed here',
-                                      color: color,
-                                      titleColor: Colors.white60,
-                                      onPressed: (){
-                                        name = 'Other';
-                                      },
-                                    ),
-                                  ),
-
-                                ],
-                              )
-
-                            ],
-                          ),
+                    ],
+                  ),// Row 1
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/info.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Debts & Bonds',
+                          subText: 'Govt Bonds company debentures',
+                          color: alternateColor,
+                          titleColor: titleColor,
+                          onPressed: (){
+                            name = 'Debts and Bonds';
+                          },
                         ),
-                      )
+                      ),
+
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/info.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Equity',
+                          subText: 'Stock market investments',
+                          color: color,
+                          titleColor: Colors.white60,
+                          onPressed: (){
+                            name = 'Equity';
+                          },
+                        ),
+                      ),
+
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/info.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Real Estate',
+                          subText: 'Lands, houses, complexes etc.',
+                          color:color,
+                          titleColor: Colors.white60,
+                          onPressed: (){
+                            name = 'Real Estate';
+                          },
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/info.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Bank FD',
+                          subText: 'NSC, KVP, RD, Bank term deposits',
+                          color: alternateColor,
+                          titleColor: titleColor,
+                          onPressed: (){
+                            name = 'Bank FD';
+                          },
+                        ),
+                      ),
+
                     ],
                   ),
 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/info.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Gold',
+                          subText: 'Jewellery ',
+                          color:alternateColor,
+                          titleColor: titleColor,
+                          onPressed: (){
+                            name = 'Gold';
+                          },
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Tile(
+                          imageSource: 'images/info.png',
+                          height: 120,
+                          width: 150,
+                          title: 'Others',
+                          subText: 'Something not listed here',
+                          color: color,
+                          titleColor: Colors.white60,
+                          onPressed: (){
+                            name = 'Other';
+                          },
+                        ),
+                      ),
+
+                    ],
+                  )
 
 
-                // Image.asset('images/investing-pana.png', height: 200, width: 200,),
+                ],
 
-              ],
-        ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
