@@ -1,11 +1,11 @@
 
 
 class Goal {
-  Goal({ this.userId, this.name, this.description, this.goalAmount, this.goalDuration});
+  Goal({  this.name='', this.description='', this.goalAmount=0, this.goalDuration=0});
 
-  final String userId;
-  final String name;
-  final String description;
-  final double goalAmount;
-  final double goalDuration;
+
+   String name = '';
+   String description = '';
+  double goalAmount = 0;
+  double goalDuration = 0;
 }

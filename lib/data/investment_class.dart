@@ -21,11 +21,11 @@ class Investment {
    }
 
 
-   String _name;
-   double _currentInvestmentAmount;
-   double _annualInvestmentAmount;
-   double _investmentRoi;
-   double _investmentDuration; //int or double??
+   String _name = '';
+   double _currentInvestmentAmount = 0;
+   double _annualInvestmentAmount = 0;
+   double _investmentRoi = 0;
+   double _investmentDuration = 0; //int or double??
 
 String get name{
   return _name;

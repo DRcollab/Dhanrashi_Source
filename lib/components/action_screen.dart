@@ -1,10 +1,14 @@
 
+import 'dart:math';
+
+import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 import 'package:dhanrashi_mvp/constants.dart';
 import 'package:flutter/material.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:dhanrashi_mvp/components/labeled_slider.dart';
 
 class ActionSheet extends StatefulWidget {
  // const ActionSheet({Key? key}) : super(key: key);
@@ -12,8 +16,9 @@ class ActionSheet extends StatefulWidget {
   String titleMessage;
   var textVar = TextEditingController();
   String display = '';
+  final String? Function(String?) validator;
 
-  ActionSheet({this.titleMessage=''});
+  ActionSheet({this.titleMessage='', required this.validator });
   @override
   _ActionSheetState createState() => _ActionSheetState();
 }
@@ -28,108 +33,81 @@ class _ActionSheetState extends State<ActionSheet> {
   int year = 0;
   int roi = 0;
 
+  double investedAmount = 0;
+  double expectedRoi = 0;
+  double investmentDuration = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: CustomPaint(
-        painter: CurvePainter(type: 3),
-        child: Wrap(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Center(child: Text(widget.titleMessage, style: kH1,)),
+      color: Color(0x00000000),
+      child: Wrap(
+         // shrinkWrap: true,
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+         Padding(
+           padding: const EdgeInsets.all(8.0),
+           child: Center(child: Text(widget.titleMessage, style: kH1,)),
+         ),
 
-           LabeledSlider(
+
+         Container(
+           height: 180,width: 180,
+             child: DonutChart()),
+
+         Padding(
+           padding: const EdgeInsets.only(left:8.0, right: 8.0),
+           child: LabeledSlider(
+             collector: investAmount,
+             controller: widget.textVar,
+             validator: widget.validator,
              sliderValue: 5,
              min: 1,
              max: 100,
              labelText: 'Invested Amount (in Lakhs)',
            ),
-            LabeledSlider(
+         ),
+          Padding(
+            padding: const EdgeInsets.only(left:8.0, right: 8.0),
+            child: LabeledSlider(
+              collector: expectedRoi,
+              controller: widget.textVar,
+              validator: widget.validator,
               min: 1,
               max:30,
               labelText: 'Expected return ',
               sliderValue: 15,
             ),
-            LabeledSlider(
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left:8.0, right: 8.0),
+            child: LabeledSlider(
+              collector: investmentDuration,
+              controller: widget.textVar,
+              validator: widget.validator,
               min: 1,
               max: 30,
               labelText: 'Time Period',
               sliderValue: 5,
             ),
-            Center(
-              child: CommandButton(
-                buttonText: 'Save Investment',
-                onPressed:(){
-
-              }, borderRadius: BorderRadius.circular(10),),
-            ),
-            Container(
-              child: charts.PieChart([
-
-
-              ]),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-
-class LabeledSlider extends StatefulWidget {
- // const LabeledSlider({Key? key}) : super(key: key);
-
-  int sliderValue = 5;
-  String labelText;
-  double min;
-  double max;
-  int divisions ;
-  LabeledSlider({this.sliderValue, this.labelText='', this.min, this.max});
-
-  @override
-  _LabeledSliderState createState() => _LabeledSliderState();
-}
-
-
-
-
-
-class _LabeledSliderState extends State<LabeledSlider> {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0,top: 8.0,right: 8.0,bottom: 0.0),
-            child: LabeledTextField(
-              label:widget.labelText,
-              hintText: widget.sliderValue.toString(),
-            ),
-
           ),
-          Slider(
-              min: widget.min,
-              max:widget.max,
-              divisions: widget.divisions,
-              activeColor: kPresentTheme.accentButtonColor,
-              inactiveColor: kPresentTheme.navigationColor,
-              value: widget.sliderValue.toDouble() ,
+          Center(
+            child: CommandButton(
+              buttonColor: kPresentTheme.navigationColor,
+              //icon: Icons.save,
+              textColor: kPresentTheme.inputTextColor,
+              buttonText: 'Save Investment',
+              onPressed:(){
 
-              onChanged: (changeValue){
-                setState(() {
-                  widget.sliderValue = changeValue.round();
-                  // display = changeValue.toString();
+            }, borderRadius: BorderRadius.circular(10),),
+          ),
 
-                });
-
-              })
         ],
       ),
-
     );
   }
 }
+
+
+
+

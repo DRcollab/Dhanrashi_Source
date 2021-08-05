@@ -7,9 +7,9 @@ import 'irregular_shapes.dart';
 
 class GradientCard extends StatelessWidget {
 
-  Widget child;
+   Widget child;
 
-  GradientCard({this.child});
+  GradientCard({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +49,23 @@ class GradientCard extends StatelessWidget {
 
 class InputCard extends StatelessWidget {
 
-  Widget child;
+ // Widget child;
   Color color;
   String titleText = "Title";
-  Padding childrenPadding;
+
   List<Widget> children;
   MainAxisAlignment mainAxisAlignment;
-  InputCard({this.child, this.color, this.titleText, this.children, this.mainAxisAlignment= MainAxisAlignment.spaceBetween});
+
+  InputCard({
+   //required this.child,
+    this.color = Colors.blueAccent,
+     this.titleText = '',
+    required this.children,
+    this.mainAxisAlignment= MainAxisAlignment.spaceBetween,
+
+  }
+
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +104,10 @@ class InputCard extends StatelessWidget {
 class ReportCard extends StatefulWidget {
   // const ReportCard({Key? key}) : super(key: key);
 
-  final Widget child;
+  //final Widget child;
   final Color color;
   final String titleText;
-  final Padding childrenPadding;
+
   final List<Widget> children;
   final BorderRadius borderRadius;
 
@@ -105,14 +115,14 @@ class ReportCard extends StatefulWidget {
   final Color baseColor;
 
   ReportCard({
-    this.child,
+    //this.child,
     this.color = Colors.amber,
     this.titleText = "Title",
-    this.children,
-    this.childrenPadding,
-    @required this.borderRadius,
+    required this.children,
+
+    required this.borderRadius,
     this.requiredTitleBar = true,
-    @required this.baseColor,
+    required this.baseColor,
   });
 
   @override
@@ -123,7 +133,7 @@ class _ReportCardState extends State<ReportCard> {
   String titleText = "";
   bool requiredTitleBar = true;
 
-  Color titleColor;
+  var titleColor;
 
 
   @override
@@ -197,10 +207,10 @@ class _ReportCardState extends State<ReportCard> {
 class OptionCard extends StatelessWidget {
 
   List< Widget> children;
-  Function optionOneReplied;
-  Function optionTworeplied;
+  final void Function() optionOneReplied;
+  final void Function() optionTworeplied;
 
-  OptionCard({this.children, this.optionOneReplied, this.optionTworeplied});
+  OptionCard({  required this.children, required this.optionOneReplied, required this.optionTworeplied});
 
   @override
   Widget build(BuildContext context) {

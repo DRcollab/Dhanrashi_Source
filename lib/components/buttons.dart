@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 import 'package:dhanrashi_mvp/constants.dart';
@@ -23,48 +25,47 @@ class OptionGroup{
 
 class CommandButton extends StatelessWidget {
   String buttonText = "Button";
-  Function onPressed;
-  IconData icon;
-  Color buttonColor = kDarkColor;
+   void Function() onPressed;
+  //IconData icon;
+  late Color buttonColor = kDarkColor;
   double textSize = 20.0;
-  double inducedHeight = 40;
+  double inducedHeight = 20;
   Color textColor;
   BorderRadius borderRadius = BorderRadius.circular(20.0);
 
   CommandButton({
-    this.buttonText,
-    @required this.onPressed,
-    this.icon,
-    this.buttonColor,
-    this.textSize,
-    @required this.borderRadius,
+    this.buttonText = '',
+    required this.onPressed,
+    //required this.icon,
+    required this.buttonColor,
+    this.textSize = 18,
+    required this.borderRadius,
     this.inducedHeight = 40.0,
-    this.textColor,
+    required this.textColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: inducedHeight,
-      child: ElevatedButton(
+    return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            primary: this.buttonColor,
-            textStyle: TextStyle(
-              fontSize: this.textSize,
-              fontWeight: FontWeight.bold,
-              // color: Colors.red,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: this.borderRadius,
-            )),
+              primary: this.buttonColor,
+                textStyle: TextStyle(
+                  fontSize: this.textSize,
+                  fontWeight: FontWeight.bold,
+            // color: Colors.red,
+                    ),
+              shape: RoundedRectangleBorder(
+                 borderRadius: this.borderRadius,
+                  ),
+              ),// Elevated Button Stylefrom
+
         onPressed: this.onPressed,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            buttonText,
-            style: TextStyle(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              buttonText,
+              style: TextStyle(
               color: this.textColor,
-            ),
           ),
         ),
       ),
@@ -78,13 +79,13 @@ class OptionButton extends StatefulWidget {
 
   final Color textColor;
 
-  final Function onPressed;
+ final void Function() onPressed;
 
-   Color backColor;
+   late Color backColor;
   int index = 0;
 
 
-   OptionButton({this.buttonText = "Button",this.textColor = kLightTextColor,@required this.onPressed, this.index, @required this.backColor}){
+   OptionButton({this.buttonText = "Button",this.textColor = kLightTextColor,required this.onPressed, this.index=0, required this.backColor}){
     // OptionGroup.add(this.backColor);
    }
 
@@ -95,10 +96,10 @@ class OptionButton extends StatefulWidget {
 
 class _OptionButtonState extends State<OptionButton> {
   //ExpandedButton({});
-  String buttonText;
-  Color textColor;
-  Function onPressed;
-  Color backColor;
+  String buttonText = '';
+  var textColor ;
+  late Function onPressed;
+  late Color backColor;
 
   initState() {
     buttonText = widget.buttonText;
@@ -153,12 +154,12 @@ class _OptionButtonState extends State<OptionButton> {
 
 class LinkText extends StatelessWidget {
   String linkText = "Link Text";
-  Function onPressed;
+  final void Function() onPressed;
   LinkTextType type = LinkTextType.DARK;
-  double displaySize = 25.0;
+  double displaySize = 15.0;
 
   LinkText(
-      {this.linkText, @required this.onPressed, this.type, this.displaySize});
+      {this.linkText = 'Link Text', required this.onPressed, this.type = LinkTextType.DARK, this.displaySize= 18.0});
 
   @override
   Widget build(BuildContext context) {
@@ -176,23 +177,23 @@ class LinkText extends StatelessWidget {
 }
 
 class NavigationButtonSet extends StatelessWidget {
-  Function leftButtonPressed;
-  Function rightButtonPressed;
+  final void Function() leftButtonPressed;
+  final void Function() rightButtonPressed;
   String leftButtonText = "Back";
   String rightButtonText = "Next";
-  Color leftButtonColor;
-  Color rightButtonColor;
+  late Color leftButtonColor;
+  late Color rightButtonColor;
   double spaceBetween = 0.0;
-  Color textColor;
+  late Color textColor;
 
   NavigationButtonSet({
-    @required this.leftButtonPressed,
-    @required this.rightButtonPressed,
+    required this.leftButtonPressed,
+    required this.rightButtonPressed,
 
     this.leftButtonText = "Back",
     this.rightButtonText = "Next",
     this.spaceBetween = 0.0,
-    this.textColor,
+    this.textColor = Colors.black,
   });
 
 
@@ -210,10 +211,12 @@ class NavigationButtonSet extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: this.spaceBetween / 2),
             child: CommandButton(
+              //icon: Icons.chevron_left,
               buttonColor: this.leftButtonColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25.0),
                 bottomLeft: Radius.circular(25.0),
+
               ),
               buttonText: this.leftButtonText,
               textColor: textColor,
@@ -223,6 +226,7 @@ class NavigationButtonSet extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: this.spaceBetween / 2),
             child: CommandButton(
+              //icon: Icons.chevron_right,
               buttonColor: this.rightButtonColor,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(25.0),

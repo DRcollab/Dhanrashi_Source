@@ -15,9 +15,9 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class DashBoard extends StatefulWidget {
 
-  Investment investments;
-  Goal goals;
-  UserData currentUser;
+ // Investment investments;
+  //Goal goals ;
+  UserData currentUser = UserData.create();
 
   String currentUserName = ""; // to recieve the current user from login screen
 
@@ -118,7 +118,7 @@ class _DashBoardState extends State<DashBoard> {
 }
 
 class UpperPanel extends StatefulWidget {
-  const UpperPanel({Key key}) : super(key: key);
+  const UpperPanel({Key? key}) : super(key: key);
 
   @override
   _UpperPanelState createState() => _UpperPanelState();
@@ -305,7 +305,9 @@ class _AnalysisCardState extends State<AnalysisCard> {
 }
 
 class GoalViewPanel extends StatefulWidget {
-  const GoalViewPanel({Key key}) : super(key: key);
+
+  UserData currentUser = UserData.create();
+  GoalViewPanel({ required this.currentUser});
 
   @override
   _GoalViewPanelState createState() => _GoalViewPanelState();
@@ -365,7 +367,7 @@ class _GoalViewPanelState extends State<GoalViewPanel> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ProfilerPage()),
+                                  builder: (context) => ProfilerPage(currentUser: widget.currentUser )),
                             );
                           }),
                     ),
@@ -381,7 +383,9 @@ class _GoalViewPanelState extends State<GoalViewPanel> {
 } // End of Goal view class
 
 class InvestmentViewPanel extends StatefulWidget {
-  const InvestmentViewPanel({Key key}) : super(key: key);
+  const InvestmentViewPanel({Key? key}) : super(key: key);
+
+
 
   @override
   _InvestmentViewPanelState createState() => _InvestmentViewPanelState();
@@ -449,39 +453,39 @@ class _InvestmentViewPanelState extends State<InvestmentViewPanel> {
   } // end of build
 } //End of class
 
-class DashBoard_2 extends StatefulWidget {
-  const DashBoard_2({Key key}) : super(key: key);
-
-  @override
-  _DashBoard_2State createState() => _DashBoard_2State();
-}
-
-class _DashBoard_2State extends State<DashBoard_2> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        //color: Colors.deepPurple,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          colors: [Colors.deepPurple, Colors.amber],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [.4, 1],
-        )),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            UpperPanel(),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: GoalViewPanel(),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: InvestmentViewPanel(),
-            ),
-          ],
-        ));
-  }
-}
+// class DashBoard_2 extends StatefulWidget {
+//   const DashBoard_2({Key? key}) : super(key: key);
+//
+//   @override
+//   _DashBoard_2State createState() => _DashBoard_2State();
+// }
+//
+// class _DashBoard_2State extends State<DashBoard_2> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         //color: Colors.deepPurple,
+//         decoration: BoxDecoration(
+//             gradient: LinearGradient(
+//           colors: [Colors.deepPurple, Colors.amber],
+//           begin: Alignment.topCenter,
+//           end: Alignment.bottomCenter,
+//           stops: [.4, 1],
+//         )),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           crossAxisAlignment: CrossAxisAlignment.stretch,
+//           children: [
+//             UpperPanel(),
+//             Padding(
+//               padding: const EdgeInsets.only(top: 10.0),
+//               child: GoalViewPanel(currentUser: widget.,),
+//             ),
+//             Padding(
+//               padding: const EdgeInsets.only(top: 8.0),
+//               child: InvestmentViewPanel(),
+//             ),
+//           ],
+//         ));
+//   }
+// }

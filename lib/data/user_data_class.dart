@@ -4,22 +4,21 @@ import 'package:flutter/material.dart';
 
 class UserData{
 
-  String _eMail;
-  String _fName;
-  String _lName;
-  String _dob;
-  String _income;
+  String _eMail = '';
+  String _fName = '';
+  String _lName = '';
+  String _dob = '';
+  String _income = '';
 
   UserData( this._eMail, this._fName,this._lName, this._dob,this._income);
 
-  Nullify(){
+  UserData.create(){
+    _eMail = '';
+    _fName = '';
+    _lName = '';
+    _dob = '';
+    _income = '';
 
-    this._eMail = null;
-    this._lName = null;
-    this._eMail = null;
-    this._fName = null;
-    this._income = null;
-    this._dob = null;
   }
 
 

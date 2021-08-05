@@ -19,11 +19,11 @@ class InvestmentInputScreen extends StatelessWidget {
 
   var investment = Investment.create();
 
-  String name;
-  double currentInvestmentAmount;
-  double annualInvestmentAmount;
-  double investmentRoi;
-  double investmentDuration;
+  String name = '';
+  double currentInvestmentAmount = 0;
+  double annualInvestmentAmount = 0;
+  double investmentRoi = 0;
+  double investmentDuration = 0;
 
 
 
@@ -68,8 +68,8 @@ class InvestmentInputScreen extends StatelessWidget {
             flex:5,
             child: Container(
               height: 500,
-              child: ListView(
-                  shrinkWrap: true,
+              child:ListView(
+                  shrinkWrap: false,
                 children: [
 
                   Row(
@@ -89,9 +89,17 @@ class InvestmentInputScreen extends StatelessWidget {
                             showModalBottomSheet(
                                 isScrollControlled: true,
                                 context: context,
-                                builder: (context) => ActionSheet(
+                                builder: (context) => SingleChildScrollView(
+                                  child: Container(
+                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    child: ActionSheet(
+                                      validator: (text){
+
+                                      },
                               titleMessage: name,
-                            ));
+                            ),
+                                  ),
+                                ));
                           },
 
                         ),

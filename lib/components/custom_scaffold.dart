@@ -8,7 +8,7 @@ class CustomScaffold extends StatelessWidget {
   Widget child;
   //final Widget svg = Svg
 
-  CustomScaffold({this.child});
+  CustomScaffold({required this.child});
 
 
   @override

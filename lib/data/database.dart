@@ -22,8 +22,8 @@ var userProfileTable = [
 List<Goal> Goals = [
   Goal()
 ];
-List<Investment> Investments;
-List<UserData> Users;
+List<Investment> Investments = <Investment>[];
+List<UserData> Users = <UserData>[];
 
 
 

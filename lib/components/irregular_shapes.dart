@@ -9,7 +9,7 @@ class CurvePainter extends CustomPainter {
 
   int type = 0;
 
-   UI.Image image;
+  // UI.Image image ;
 
   CurvePainter({this.type = 0});
 
@@ -23,7 +23,7 @@ class CurvePainter extends CustomPainter {
   Future loadImage(String path) async {
     final data = await rootBundle.load(path);
     final bytes = data.buffer.asUint8List();
-    image = await decodeImageFromList(bytes);
+   // image = await decodeImageFromList(bytes);
 
   }
 

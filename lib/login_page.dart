@@ -22,6 +22,8 @@ import 'data/user_data_class.dart';
 
 class LoginPage extends StatefulWidget {
 
+UserData currentUser = UserData.create();
+
 
 
   @override
@@ -125,7 +127,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignUpPage(),
+                        builder: (context) => SignUpPage(currentUser: widget.currentUser,),
                       ),
                     );
                   },
@@ -194,8 +196,8 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
                   passWord: false,
                   icon: Icons.email,
 
-                  validator: (String value) {
-                    if(eMailValid(value))
+                  validator: (value) {
+                    if(eMailValid( value.toString() ))
                       return null;
                     else
                       return validEmailMessage;
@@ -211,14 +213,14 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
             )
         ),
         Padding(
-          padding: EdgeInsets.only(left: 18, top: 28, right: 18, bottom: 0),
+          padding: kTextFieldPadding,
           child: Form(
             key: _passKey,
 
             child: CustomTextField(
 
-              validator: (String value){
-                if(passWordValid(value))
+              validator: (value){
+                if(passWordValid(value.toString()))
                   return null;
                 else
                   return validPasswordMessage;
@@ -242,7 +244,7 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
         ),
         ErrorText( errorText: _errorText,),
         Padding(
-          padding: kTextFieldPadding,
+          padding:kTextFieldPadding,
           child: CommandButton(
             buttonText: 'Login',
             buttonColor: kPresentTheme.accentButtonColor,
@@ -252,14 +254,14 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
               //TODO fetch user data here.
               setState(() {
-                if(_userKey.currentState.validate()) {
-                  if(_passKey.currentState.validate()){
+                if(_userKey.currentState!.validate()) {
+                  if(_passKey.currentState!.validate()){
 
                     print(_userText.text);
                     print(_passWord.text);
 
                    bool _authenticationSuccess =_user.authenticateUser(_userText.text, _passWord.text);
-                    print("validattn");
+                    print(_userText.text);
                    print(_authenticationSuccess);
 
                     if(_authenticationSuccess){
@@ -312,7 +314,7 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
 
   var _emailKey = GlobalKey<FormState>();
 
-
+  var emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -324,9 +326,10 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
             key: _emailKey,
 
             child: CustomTextField(
+              controller: emailController,
               icon: Icons.email,
-              validator: (String value){
-                if(eMailValid(value))
+              validator: (value){
+                if(eMailValid(value.toString()))
                   return null;
                 else
                   return validEmailMessage;
@@ -338,12 +341,13 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
         Padding(
           padding: kTextFieldPadding,
           child: CommandButton(
+            textColor: Colors.white,
             buttonColor: kPresentTheme.accentButtonColor,
             borderRadius: BorderRadius.circular(20),
             buttonText: 'Reset Password',
             onPressed: () {
 
-              if(_emailKey.currentState.validate()){
+              if(_emailKey.currentState!.validate()){
                 // TODO code to send user password reset link //
               }
 

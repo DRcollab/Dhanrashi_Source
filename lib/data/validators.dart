@@ -8,7 +8,7 @@ String validPasswordMessage = 'length of the password must be atleast 6 ';
 mixin InputValidationMixin{
 
   bool eMailValid(String email){
-    Pattern pattern =  r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))';
+    String pattern =  r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))';
 
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(email);
@@ -36,7 +36,7 @@ String emailValidator(String value){
     return "email must contain '@' and '.' ";
   }
   else{
-    return null;
+    return '';
   }
 }
 
@@ -49,7 +49,7 @@ String passWordValidator(String value){
 
   }
   else{
-    return null;
+    return '';
   }
 
 

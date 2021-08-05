@@ -23,7 +23,7 @@ class GoalInputScreen extends StatelessWidget {
 }
 
 class GoalInput extends StatefulWidget {
-  const GoalInput({Key key}) : super(key: key);
+  const GoalInput({Key? key}) : super(key: key);
 
   @override
   _GoalInputState createState() => _GoalInputState();
@@ -60,25 +60,25 @@ class _GoalInputState extends State<GoalInput> {
 
             ),
           ),
-          ReportCard(borderRadius:BorderRadius.only(topLeft: Radius.circular(20),
-              topRight: Radius.circular(20.0),),
-          children: [
-              Row(
-                children: [
-                  Icon(Icons.monetization_on,
-                              size: 60.0,
-                              color: kDarkColor,)
-                ],
-
-              ),
-
-            Column(
-              children: [
-
-              ],
-            )
-          ],
-          )
+          // ReportCard(borderRadius:BorderRadius.only(topLeft: Radius.circular(20),
+          //     topRight: Radius.circular(20.0),),
+          // children: [
+          //     Row(
+          //       children: [
+          //         Icon(Icons.monetization_on,
+          //                     size: 60.0,
+          //                     color: kDarkColor,)
+          //       ],
+          //
+          //     ),
+          //
+          //   Column(
+          //     children: [
+          //
+          //     ],
+          //   )
+          // ],
+          // )
           // Card(
           //   color: Color(0xffffffff),
           //   shadowColor: kDarkColor,

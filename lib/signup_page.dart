@@ -15,6 +15,7 @@ import 'components/custom_text_field.dart';
 
 import 'components/custom_text.dart';
 import 'profiler.dart';
+import 'data/user_data_class.dart';
 
 
 const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
@@ -22,7 +23,13 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
 
 
   class SignUpPage extends StatefulWidget with InputValidationMixin {
+
   //const Logging({Key? key}) : super(key: key);
+
+    UserData currentUser = UserData.create();
+
+    SignUpPage({required this.currentUser});
+
   @override
   _SignUpState createState() => _SignUpState();
   }
@@ -64,8 +71,8 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                     },
 
 
-                    validator: (String value) {
-                      if (eMailValid(value))
+                    validator: (value) {
+                      if (eMailValid(value.toString()))
                         return null;
                       else
                         return validEmailMessage;
@@ -90,8 +97,8 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                       });
                     },
 
-                    validator: (String value){
-                      if(passWordValid(value))
+                    validator: (value){
+                      if(passWordValid(value.toString()))
                         return null;
                       else
                         return validPasswordMessage;
@@ -118,7 +125,7 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                     },
 
 
-                    validator: (String value){
+                    validator: (value){
                       if(_userPassword.text == _userPassword2.text){
                         return null;
 
@@ -141,6 +148,7 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                   50.0,
                 ),
                 child: CommandButton(
+                  textColor: Colors.black,
                   buttonColor: kPresentTheme.accentButtonColor,
                   buttonText: 'Sign Up',
                   borderRadius: BorderRadius.circular(25.0),
@@ -149,16 +157,16 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
 
                     setState(() {
 
-                      if(_emailKey.currentState.validate()){
-                       if(_passKey.currentState.validate()){
-                         if(_passKey2.currentState.validate()){
+                      if(_emailKey.currentState!.validate()){
+                       if(_passKey.currentState!.validate()){
+                         if(_passKey2.currentState!.validate()){
 
 
                            _user.add([_userEmail.text,_userPassword.text]);
                            _user.printTable();
 
                            Navigator.push(context,
-                               MaterialPageRoute(builder: (context) => ProfilerPage()));
+                               MaterialPageRoute(builder: (context) => ProfilerPage(currentUser: widget.currentUser,)));
 
 
                          }

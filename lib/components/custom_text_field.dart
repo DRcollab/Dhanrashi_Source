@@ -5,28 +5,28 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
 
-  String hintText = "";
+  late String hintText = "";
   bool passWord = false;
   var key;
-  Function validator;
+  final String? Function(String?) validator;
   TextEditingController controller;
-  IconData icon;
-  Function validate;
-  String errorText;
+  late IconData icon;
+  Function()? validate;
+  String errorText = '';
   double radius;
   String label;
 
   CustomTextField({
-    this.hintText,
+    this.hintText='',
     this.passWord=false,
     this.key,
-    this.controller,
-    this.validator,
-    this.icon,
+    required this.controller,
+    required this.validator,
+    this.icon = Icons.add_chart_outlined,
     this.validate,
     this.radius = 25,
     this.label='',
-    this.errorText});
+    this.errorText=''});
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +45,16 @@ class CustomTextField extends StatelessWidget {
         validator: this.validator,
         decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(8),
-                 // errorBorder: kPresentTheme.formTextBorder,
-                  //focusedErrorBorder: kPresentTheme.formTextBorder,
+
+                  errorBorder: kPresentTheme.formTextBorder,
+                  focusedErrorBorder: kPresentTheme.formTextBorder,
                   prefixIcon: Icon(icon,color: kPresentTheme.inputTextColor,),
                   fillColor: kPresentTheme.inputTextColor,
                   border: OutlineInputBorder(
                           gapPadding: 2.0,
-                          borderRadius: BorderRadius.circular(25.0),
+                         borderRadius: BorderRadius.circular(25.0),
                           borderSide: BorderSide(
-                                color: Color(0xFF004752),
+                               color: Color(0xFF004752),
                                     )
                             ),
                   hintText: this.hintText,
@@ -63,7 +64,7 @@ class CustomTextField extends StatelessWidget {
                   //labelStyle:
         ),
 
-        onEditingComplete: validate,
+       onEditingComplete: validate,
         onTap: validate,
       ),
     );
@@ -84,7 +85,12 @@ class EditableTextField extends StatefulWidget {
   String initialText = "Initial Text";
   TextStyle style;
 
-  EditableTextField({this.isEditing,this.initialText,this.style, this.editingController});
+
+  EditableTextField({
+    this.isEditing=false,
+    this.initialText = 'Initial Text',
+    this.style = const TextStyle(fontSize: 10),
+    required this.editingController });
 
 
   @override
@@ -152,25 +158,25 @@ class LabeledTextField extends StatefulWidget {
   String hintText = "";
   bool passWord = false;
   var key;
-  Function validator;
+  final String? Function(String?) validator;
   TextEditingController controller;
 
-  Function validate;
+  final Function()? validate;
   String errorText;
   double radius;
   String label;
 
   LabeledTextField({
-    this.hintText,
+    this.hintText = '',
     this.passWord=false,
     this.key,
-    this.controller,
-    this.validator,
-
+    required this.controller,
+    required this.validator,
     this.validate,
     this.radius = 25,
     this.label='',
-    this.errorText});
+    this.errorText='',
+  });
 
 
   @override
@@ -191,35 +197,42 @@ class _LabeledTextFieldState extends State<LabeledTextField> {
               ),
             ),
             Flexible(child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                  controller: widget.controller,
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+              child: Container(
+                height: 60,width: 60,
+                child: TextFormField(
+                    controller: widget.controller,
 
-                  obscureText: widget.passWord,
-                  textInputAction: TextInputAction.next,
-                  style: kInputTextStyle,
-                  validator: widget.validator,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(8),
+                    obscureText: widget.passWord,
+                    textInputAction: TextInputAction.next,
+                    style: kInputTextStyle,
+                    validator: widget.validator,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(8),
+                      focusedBorder:  kPresentTheme.formTextBorder,
+                      enabledBorder: kPresentTheme.formTextBorder,
+                      fillColor: kPresentTheme.inputTextColor,
+                      border: OutlineInputBorder(
+                          gapPadding: 1.0,
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(
+                            color: Color(0xFF004752),
+                          )
+                      ),
+                      hintText: widget.hintText,
+                      hintStyle: kPresentTheme.hintTextStyle,
+                      errorText: widget.errorText,
 
-                    fillColor: kPresentTheme.inputTextColor,
-                    border: OutlineInputBorder(
-                        gapPadding: 1.0,
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Color(0xFF004752),
-                        )
+                      //labelStyle:
                     ),
-                    hintText: widget.hintText,
-                    hintStyle: kPresentTheme.hintTextStyle,
-                    errorText: widget.errorText,
 
-                    //labelStyle:
-                  ),
+                   onEditingComplete: (){
+                     //widget.validate(),
+                   },
+                   onTap: widget.validate,
 
-                  onEditingComplete: widget.validate,
-                  onTap: widget.validate,
-            ),),
+            ),
+              ),),
             ),
           ]
 

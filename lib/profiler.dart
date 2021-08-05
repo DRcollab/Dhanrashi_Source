@@ -24,16 +24,16 @@ import 'package:dhanrashi_mvp/data/validators.dart';
 class Collector{
 
 
-  DateTime _dateOfBirth;
-  double _annualIncome ;
-  var  _fName ;
-  var _lName;
+  DateTime _dateOfBirth = DateTime.now();
+  double _annualIncome = 0.0 ;
+  var  _fName = TextEditingController() ;
+  var _lName = TextEditingController();
 
 /// Constructor of  the class
 
   Collector(){
 
-      _dateOfBirth = null;
+      _dateOfBirth = DateTime.now();
      _annualIncome = 0;
      _fName = TextEditingController();
      _lName = TextEditingController();
@@ -41,6 +41,8 @@ class Collector{
 
 
   }
+
+
 
   /// setter of first Name
 
@@ -128,11 +130,11 @@ class ProfilerPage extends StatefulWidget {
 
 
 /// used as named attribute to get the user data from the login page.
-  UserData currentUser = UserData(null,null,null,null,null);
+  UserData currentUser = UserData('','','','','');
 
 
 /// Constructor for Profile Page
-  ProfilerPage({this.currentUser});
+  ProfilerPage({required this.currentUser});
 
 
   @override
@@ -189,7 +191,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
 
 
-    NamePicker(), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
+    NamePicker(fname: profileCollector._fName,lname: profileCollector.lName,), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
 
     DOBPicker( ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
 
@@ -217,21 +219,25 @@ class _ProfilerPageState extends State<ProfilerPage> {
         // responds when right navigation button pressed
 
         print(index);
-        setState(() {
-          index++;
-          if (index < 2) {
 
-            viewNavigationButton = true;
+          index++;
+
+          if (index < 3 ) {
+            setState(() {
+              viewNavigationButton = true;
+            });
+
           }
           else{
 
-            viewNavigationButton = false;
-
+           // viewNavigationButton = false;
+          //  print(index);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ConfirmationPage(collector: profileCollector,)));
+                MaterialPageRoute(builder: (context) => ConfirmationPage(
+                  currentUser: widget.currentUser,
+                  collector: profileCollector,)));
           }
-        },
-        );
+
       },
       leftButtonPressed: () {
         // Responds when left navigation button pressed
@@ -304,7 +310,7 @@ class NamePicker extends StatefulWidget {
   var fname = TextEditingController();
   var lname = TextEditingController();
 
-  NamePicker({this.fname, this.lname});
+  NamePicker({required this.fname, required this.lname});
 
 
 
@@ -335,14 +341,16 @@ class _NamePickerState extends State<NamePicker> {
                   Padding(
                       padding: kTextFieldPadding,
                           child: CustomTextField(
+                                validator: (value){},
                                 icon: Icons.badge,
                                 controller:  profileCollector.fName,
                                 hintText: 'First Name',
                                 ),
                         ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(18.0, 28.0, 18.0, 48.0),
+                      padding: EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 28.0),
                       child: CustomTextField(
+                        validator: (value){},
                           icon: Icons.badge,
                           controller: profileCollector.lName,
                           hintText: 'Last Name',
@@ -359,9 +367,9 @@ class _NamePickerState extends State<NamePicker> {
 class DOBPicker extends StatefulWidget {
  // const DOBPicker({Key? key}) : super(key: key);
 
-  String datePicker;
+  String datePicker = '';
 
-  DOBPicker({this.datePicker});
+  DOBPicker({this.datePicker= ''});
 
   @override
   _DOBPickerState createState() => _DOBPickerState();
@@ -406,9 +414,9 @@ class IncomePicker extends StatefulWidget {
  // const IncomePicker({Key? key}) : super(key: key);
 
 
-  String incomePicker;
+  String incomePicker = '';
 
-  IncomePicker({incomePicker});
+  IncomePicker({incomePicker=''});
 
   @override
   _IncomePickerState createState() => _IncomePickerState();
@@ -445,7 +453,7 @@ class _IncomePickerState extends State<IncomePicker> {
               onChanged: (value){
                 setState(() {
 
-                  selectedValue = value;
+                  selectedValue = int.parse(value.toString());
                   profileCollector.annualIncome = incomeRangeList[selectedValue];
                 });
 
@@ -460,7 +468,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
                 setState(() {
 
-                  selectedValue = value;
+                  selectedValue = int.parse(value.toString());
                   profileCollector.annualIncome = incomeRangeList[selectedValue];
                 });
 
@@ -475,7 +483,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
                 setState(() {
 
-                  selectedValue = value;
+                  selectedValue = int.parse(value.toString());
                   profileCollector.annualIncome = incomeRangeList[selectedValue];
                 });
 
@@ -489,7 +497,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
                 setState(() {
 
-                  selectedValue = value;
+                  selectedValue = int.parse(value.toString());
                   profileCollector.annualIncome = incomeRangeList[selectedValue];
                 });
 
@@ -503,7 +511,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
                 setState(() {
 
-                  selectedValue = value;
+                  selectedValue = int.parse(value.toString());
                   profileCollector.annualIncome = incomeRangeList[selectedValue] * 100000;
                 });
 

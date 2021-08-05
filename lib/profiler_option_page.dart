@@ -16,7 +16,7 @@ class ProfilerOptionPage extends StatelessWidget {
   String currentUserName = "";
 
 
-  ProfilerOptionPage({this.currentUser}){
+  ProfilerOptionPage({required this.currentUser}){
 
     currentUserName = currentUser.eMail();
   }
@@ -86,14 +86,16 @@ class ProfilerOptionPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CommandButton(
+                      textSize: 18,
+                      textColor: Colors.black,
                       borderRadius: BorderRadius.circular(20),
-                      buttonColor: kPresentTheme.accentButtonColor,
+                      buttonColor: kPresentTheme.navigationColor,
                       buttonText: "OK",
                       onPressed: (){
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                            builder: (context) => ProfilerPage(),
+                            builder: (context) => ProfilerPage(currentUser: this.currentUser,),
                         )
                         );
                       },
@@ -102,6 +104,9 @@ class ProfilerOptionPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CommandButton(
+                      textSize: 18,
+                      buttonColor: kPresentTheme.accentButtonColor,
+                      textColor: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         buttonText: "No, I am not sharing",
                         onPressed: (){
@@ -117,10 +122,13 @@ class ProfilerOptionPage extends StatelessWidget {
           Center(child: Text("Worried about safety of your information?",
           style: kAdviceTextStyleDark,)),
           Center(
-            child: LinkText(
-                linkText: "Click here to know our Privace Policy",
-                type: LinkTextType.DARK,
-                onPressed: (){}),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: LinkText(
+                  linkText: "Click here to know our Privacy Policy",
+                  type: LinkTextType.DARK,
+                  onPressed: (){}),
+            ),
           ),
 
         ],

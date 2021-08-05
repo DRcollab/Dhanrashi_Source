@@ -3,9 +3,9 @@ import '../constants.dart';
 
 class RoundButton extends StatelessWidget {
   IconData icon;
-  Function onPress;
+  final void Function() onPress;
 
-  RoundButton({this.icon, this.onPress});
+  RoundButton({required this.icon, required this.onPress});
 
   @override
   Widget build(BuildContext context) {

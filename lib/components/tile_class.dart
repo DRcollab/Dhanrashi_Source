@@ -7,25 +7,25 @@ class Tile extends StatelessWidget {
   //const Chip({Key? key}) : super(key: key);
 
   String title;
-  Widget prominent;
+ // Widget prominent;
   String imageSource;
-  Function onPressed;
+  final void Function() onPressed;
   String subText;
   double padding;
   double height;
   double width;
-  Color titleColor;
+   Color titleColor;
   Color color;
 
   Tile({this.title="Title",
-    this.prominent,
+    //this.prominent,
     this.subText='',
-    this.onPressed,
+    required this.onPressed,
     this.padding=8.0,
-    this.imageSource,
+    this.imageSource = '',
     this.height=100,
     this.width=100,
-    this.titleColor,
+    this.titleColor = Colors.blueAccent,
     this.color = Colors.white});
 
 
