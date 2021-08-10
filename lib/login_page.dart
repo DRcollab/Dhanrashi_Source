@@ -78,8 +78,15 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.monetization_on),
+              Text('Dhanrashi', style: kH1,),
+            ],
+          ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 18.0,right:18.0,top:28.0,bottom:18),
           child: InputCard(
           titleText: titleText[cardIndex],
           children: [
@@ -111,7 +118,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Not have a login id ?",
-                  style: kDarkTextStyle,
+                  style: kNormal2,
                 ),
               ),
               Padding(
@@ -119,8 +126,8 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
                 child: CommandButton(
                   buttonText: "Click Here to Sign Up",
                   borderRadius: BorderRadius.circular(20),
-                  buttonColor: kPresentTheme.navigationColor,
-                  textColor: kPresentTheme.inputTextColor,
+                  buttonColor: kPresentTheme.alternateColor,
+                  textColor: kPresentTheme.accentColor,
 
                   //type: LinkTextType.DARK,
                   onPressed: () {
@@ -172,7 +179,7 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
   var _user = UserHandeler(userTable, userProfileTable);
   //var _userProfile = UserHandeler(userProfileTable);
 
-
+  bool _hidePassword = true;
 
   @override
   void dispose(){
@@ -235,64 +242,66 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
               controller: _passWord,
               hintText: 'Enter Password',
               passWord: true,
+              hidePassword: _hidePassword,
               icon: Icons.password_sharp,
-
+              showPassword: (){
+                setState(() {
+                  _hidePassword = !_hidePassword;
+                });
+              },
               // key: _passKey,
 
             ),
           ),
         ),
         ErrorText( errorText: _errorText,),
-        Padding(
-          padding:kTextFieldPadding,
-          child: CommandButton(
-            buttonText: 'Login',
-            buttonColor: kPresentTheme.accentButtonColor,
-            textColor: kPresentTheme.lightTextColor,
-            borderRadius: BorderRadius.circular(25.0),
-            onPressed: () {
+        CommandButton(
+          buttonText: 'Login',
+          buttonColor: kPresentTheme.accentColor,
+          textColor: kPresentTheme.lightWeightColor,
+          borderRadius: BorderRadius.circular(25.0),
+          onPressed: () {
 
-              //TODO fetch user data here.
-              setState(() {
-                if(_userKey.currentState!.validate()) {
-                  if(_passKey.currentState!.validate()){
+            //TODO fetch user data here.
+            setState(() {
+              if(_userKey.currentState!.validate()) {
+                if(_passKey.currentState!.validate()){
 
+                  print(_userText.text);
+                  print(_passWord.text);
+
+                 bool _authenticationSuccess =_user.authenticateUser(_userText.text, _passWord.text);
+                  print(_userText.text);
+                 print(_authenticationSuccess);
+
+                  if(_authenticationSuccess){
+                   profileReady = _user.fetchProfile();
+                    print("validate");
+                   if (profileReady){
+                     Navigator.push(context,
+                         MaterialPageRoute(builder: (context) => DashBoard(currentUser: _user.user(),)));
+                   }
+                   else{
+
+
+                     // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
+                     Navigator.push(context,
+                         MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _user.user(),)));
+                   }
+                  }
+                  else{
+                    _errorText = "User name or password did not match";
+
+                    print("not matched");
                     print(_userText.text);
                     print(_passWord.text);
-
-                   bool _authenticationSuccess =_user.authenticateUser(_userText.text, _passWord.text);
-                    print(_userText.text);
-                   print(_authenticationSuccess);
-
-                    if(_authenticationSuccess){
-                     profileReady = _user.fetchProfile();
-                      print("validate");
-                     if (profileReady){
-                       Navigator.push(context,
-                           MaterialPageRoute(builder: (context) => DashBoard(currentUser: _user.user(),)));
-                     }
-                     else{
-
-
-                       // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
-                       Navigator.push(context,
-                           MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _user.user(),)));
-                     }
-                    }
-                    else{
-                      _errorText = "User name or password did not match";
-
-                      print("not matched");
-                      print(_userText.text);
-                      print(_passWord.text);
-                      return ;
-                    }
+                    return ;
                   }
                 }
-              });
+              }
+            });
 
-            },
-          ),
+          },
         ),
       ],
     );
@@ -342,7 +351,7 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
           padding: kTextFieldPadding,
           child: CommandButton(
             textColor: Colors.white,
-            buttonColor: kPresentTheme.accentButtonColor,
+            buttonColor: kPresentTheme.accentColor,
             borderRadius: BorderRadius.circular(20),
             buttonText: 'Reset Password',
             onPressed: () {

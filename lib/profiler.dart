@@ -106,7 +106,7 @@ class Collector{
   }
 
   /// instance of Collector to be used in collecting user data.
-var profileCollector = Collector();
+
 
 
 /// Not for here
@@ -142,6 +142,9 @@ class ProfilerPage extends StatefulWidget {
 }
 
 /// State class of Profile page
+///
+
+
 
 class _ProfilerPageState extends State<ProfilerPage> {
 
@@ -153,6 +156,13 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
   bool viewNavigationButton = true; /// used to hold comdition to show save button or navigator button
 
+  static var profileCollector = Collector();
+
+  static var _nameKey = GlobalKey<FormState>(); // Used for user email validation
+  static var _lnameKey = GlobalKey<FormState>(); // Used fot password validation
+  static bool  _dateKeyValidation  = false;
+  static bool _incomeValidation = false;
+  String errorText = ''; // Used to display message on date validation
 
 
 
@@ -160,7 +170,8 @@ class _ProfilerPageState extends State<ProfilerPage> {
 ///  Holds the different screen header display .
   final List<String> headers = [
     "Great, Let's start with your name",
-    'Your age factors how  you choose your investments.',
+    'Pick your date of birth',
+    //'Your age factors how  you choose your investments.',
     'Declaration of your Income will help us recommend you financial product',
     ''
   ];
@@ -183,19 +194,39 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
 
 
-
-
-
-
   final List<Widget> CardChoice = [
 
 
 
-    NamePicker(fname: profileCollector._fName,lname: profileCollector.lName,), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
+    NamePicker(
+      fName: profileCollector._fName,
+      lName: profileCollector.lName,
+      lnameKey: _lnameKey,
+      nameKey: _nameKey,
 
-    DOBPicker( ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
 
-    IncomePicker(), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
+        ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
+
+    DOBPicker(
+      onDateChanged: (valueChanged) {
+
+        //var newFormat = DateFoermat("dd-mm-yyyy");
+
+        profileCollector.dateOfBirth = valueChanged;//'${valueChanged.day}/${valueChanged.month}/${valueChanged.year}';
+
+        _dateKeyValidation = true;
+      },
+    ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
+
+    IncomePicker(
+      validate:(value){
+
+        List <double> incomeRangeList  = [1,5,10,20,0, ];
+
+        profileCollector.annualIncome = incomeRangeList[value!.round()];
+        _incomeValidation = true;
+      }
+    ), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
     ///
    // ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
   ];
@@ -214,24 +245,58 @@ class _ProfilerPageState extends State<ProfilerPage> {
       leftButtonText: "Back",
       rightButtonText: "Next",
 
-      textColor: kDarkTextColor,
+      textColor: kPresentTheme.accentColor,
       rightButtonPressed: () {
         // responds when right navigation button pressed
 
         print(index);
 
-          index++;
+        switch (index){
+          case 0:
+            if(_nameKey.currentState!.validate()){
+              if(_lnameKey.currentState!.validate()){
+                index++;
+              }
+
+            }
+            break;
+          case 1:
+            if(_dateKeyValidation){
+              index++;
+              errorText = '';
+            }
+            else{
+              this.errorText = 'Select a date before continue';
+            }
+
+            break;
+          case 2:
+            if(_incomeValidation){
+              index++;
+              errorText = '';
+            }
+            else{
+              this.errorText = 'Please select an option before continue';
+            }
+
+            break;
+
+        }
+         // index++;
 
           if (index < 3 ) {
             setState(() {
               viewNavigationButton = true;
+
+
             });
 
           }
           else{
 
            // viewNavigationButton = false;
-          //  print(index);
+            print('name ${profileCollector.fName.text}');
+
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ConfirmationPage(
                   currentUser: widget.currentUser,
@@ -267,18 +332,19 @@ class _ProfilerPageState extends State<ProfilerPage> {
       child: Container(
        // color: Colors.red,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+         mainAxisAlignment: MainAxisAlignment.center,
+         crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            //Image.asset('images/profile_image.png',height: 200,width: 200,),
             Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.only(left:18, top:28),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                //padding: const EdgeInsets.only(left:18, top:28),
                 child: Text(
 
                   headers[index],
                   style: TextStyle(
-                    color: kPresentTheme.inputTextColor,
+                    color: kPresentTheme.accentColor,
                     fontSize: 24.0 * scaleSmallDevice(context),
                     fontWeight: FontWeight.bold,
                   ),
@@ -286,10 +352,15 @@ class _ProfilerPageState extends State<ProfilerPage> {
               ),
             ),
             CardChoice[index],
+            Center(child: Text(this.errorText, style:         // Display error message on validation fail
+                                  TextStyle(
+                                    color:Colors.red,
+                                  ),),
+            ),
             Expanded(
               flex: 2,
               child: Center(
-                child: viewNavigationButton ? navButton : navButton,
+                child:  navButton,
               ),
             ),
           ],
@@ -307,54 +378,79 @@ class _ProfilerPageState extends State<ProfilerPage> {
 class NamePicker extends StatefulWidget {
   //const Names({Key? key}) : super(key: key);
 
-  var fname = TextEditingController();
-  var lname = TextEditingController();
-
-  NamePicker({required this.fname, required this.lname});
+  var fName = TextEditingController();
+  var lName = TextEditingController();
 
 
+  var nameKey = GlobalKey<FormState>();
+  var lnameKey = GlobalKey<FormState>();
+
+  NamePicker( {required this.fName, required this.lName, required this.nameKey, required this.lnameKey, });
+
+  setVariants(nameKey, lnameKey){
+    this.nameKey = nameKey;
+    this.lnameKey = lnameKey;
+
+  }
 
   @override
   _NamePickerState createState() => _NamePickerState();
 }
 
 class _NamePickerState extends State<NamePicker> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return  Padding(
-        padding: EdgeInsets.only(top:28,left: 8,right: 8,bottom: 8),
+        padding: EdgeInsets.only(top:28,left: 18,right: 18,bottom: 8),
         child: InputCard(
-              titleText: "Name and Lastname",
+              titleText: "",
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 18, top: 4, right: 18, bottom: 10),
-                     child: Text(
-              '           Your name would be used to customize this app for you',
-                            style: TextStyle(
-                            fontSize: 20.0,
-                            color: kPresentTheme.darkTextColor
-                               )       ,
-                        ),
-                    ),
+                  Image.asset('images/onlyprofile.png',),
+
                   SizedBox(height: 30,),
                   Padding(
                       padding: kTextFieldPadding,
-                          child: CustomTextField(
-                                validator: (value){},
-                                icon: Icons.badge,
-                                controller:  profileCollector.fName,
-                                hintText: 'First Name',
-                                ),
+                          child: Form(
+                            key:widget.nameKey,
+                            child: CustomTextField(
+                                  validator: (value){
+                                    if(value.toString().isEmpty){
+                                       return 'Name must not be empty';
+
+                                    }
+                                    else{
+                                      return null;
+                                    }
+                                  },
+                                  icon: Icons.badge,
+                                  controller:  widget.fName,
+                                  hintText: 'First Name',
+                                  ),
+                          ),
                         ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 28.0),
-                      child: CustomTextField(
-                        validator: (value){},
-                          icon: Icons.badge,
-                          controller: profileCollector.lName,
-                          hintText: 'Last Name',
-                    ),
+                        padding: EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 28.0),
+                            child: Form(
+                              key: widget.lnameKey,
+                              child: CustomTextField(
+                                validator: (value){
+                                  if(value.toString().isEmpty){
+                                    return 'lastname cannot be empty';
+
+                                  }
+                                  else {
+                                    return null;
+                                  }
+                                },
+                                  icon: Icons.badge,
+                                  controller: widget.lName,
+                                  hintText: 'Last Name',
+                          ),
+                            ),
                   ),
 
         ],
@@ -369,38 +465,47 @@ class DOBPicker extends StatefulWidget {
 
   String datePicker = '';
 
-  DOBPicker({this.datePicker= ''});
+  bool dateValidated = false;
+  void Function(DateTime) onDateChanged;
+  DOBPicker({this.datePicker= '', this.dateValidated = false, required this.onDateChanged});
 
   @override
   _DOBPickerState createState() => _DOBPickerState();
 }
 
 class _DOBPickerState extends State<DOBPicker> {
+
+  String errorText = '';
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 28, left:8, right: 8),
+      padding: const EdgeInsets.only(top: 28, left:18, right: 18),
       child: GradientCard(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(left:8,top:16,bottom: 0,right:8),
-              child: Text("Your Date of Birth", style: kPresentTheme.titleTextStyle),
-            ),
-            CalendarDatePicker(
-
+            // Padding(
+            //   padding: EdgeInsets.only(left:8,top:16,bottom: 0,right:8),
+            //   child: Text("Your Date of Birth", style: kTitleTextStyle),
+            // ),
+           CalendarDatePicker(
+            //DateTimeFormField(
               initialDate: DateTime.now(),
               firstDate: DateTime(1900),
               lastDate: DateTime(2222),
-              onDateChanged: (valueChanged) {
 
-                //var newFormat = DateFoermat("dd-mm-yyyy");
+              onDateChanged: (valueChanged){
+                setState(() {
+                  widget.onDateChanged(valueChanged);
+                  this.errorText = 'Please select a date before continue';
+                });
 
-                profileCollector.dateOfBirth = valueChanged;//'${valueChanged.day}/${valueChanged.month}/${valueChanged.year}';
+              }
 
-
-              },
             ),
+
+
           ],
         ),
       ),
@@ -416,7 +521,9 @@ class IncomePicker extends StatefulWidget {
 
   String incomePicker = '';
 
-  IncomePicker({incomePicker=''});
+  Function(int?)? validate;
+
+  IncomePicker({incomePicker='', required this.validate});
 
   @override
   _IncomePickerState createState() => _IncomePickerState();
@@ -427,34 +534,26 @@ class _IncomePickerState extends State<IncomePicker> {
   int selectedValue = 0;
 
 
-  List <double> incomeRangeList  = [
 
-    1,
-    5,
-    10,
-    20,
-     0,
-
-  ];
 
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 28,left:8, right : 8),
+      padding: const EdgeInsets.only(top: 28,left:18, right : 18),
       child: InputCard(
         titleText: "Your income range",
         children: [
           RadioListTile(
               value: 1,
               groupValue: selectedValue,
-              title: Text("Below 1 Lakh ", style: kDarkTextStyle,),
+              title: Text("Below 1 Lakh ", style: kNormal2,),
 
-              onChanged: (value){
+              onChanged:  (value){
                 setState(() {
-
+                  widget.validate!(int.parse(value.toString()));
                   selectedValue = int.parse(value.toString());
-                  profileCollector.annualIncome = incomeRangeList[selectedValue];
+
                 });
 
 
@@ -462,14 +561,14 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 2,
               groupValue: selectedValue,
-              title: Text("Above 1 Lakh to 5 lakh", style: kDarkTextStyle,),
+              title: Text("Above 1 Lakh to 5 lakh", style: kNormal2,),
 
               onChanged: (value){
 
                 setState(() {
-
+                  widget.validate!(int.parse(value.toString()));
                   selectedValue = int.parse(value.toString());
-                  profileCollector.annualIncome = incomeRangeList[selectedValue];
+
                 });
 
 
@@ -477,42 +576,42 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 3,
               groupValue: selectedValue,
-              title: Text("Above 5 Lakh  to 10 Lakh", style: kDarkTextStyle,),
+              title: Text("Above 5 Lakh  to 10 Lakh", style: kNormal2,),
 
               onChanged: (value){
 
                 setState(() {
-
+                  widget.validate!(int.parse(value.toString()));
                   selectedValue = int.parse(value.toString());
-                  profileCollector.annualIncome = incomeRangeList[selectedValue];
+
                 });
 
               }),
           RadioListTile(
               value: 4,
               groupValue: selectedValue,
-              title: Text("Above 10 Lakh ", style: kDarkTextStyle,),
+              title: Text("Above 10 Lakh ", style: kNormal2,),
 
               onChanged: (value){
 
                 setState(() {
-
+                  widget.validate!(int.parse(value.toString()));
                   selectedValue = int.parse(value.toString());
-                  profileCollector.annualIncome = incomeRangeList[selectedValue];
+
                 });
 
               }),
           RadioListTile(
               value: 5,
               groupValue: selectedValue,
-              title: Text("Prefer not to disclose ", style: kDarkTextStyle,),
+              title: Text("Prefer not to disclose ", style: kNormal2,),
 
               onChanged: (value){
 
                 setState(() {
-
+                  widget.validate!(int.parse(value.toString()));
                   selectedValue = int.parse(value.toString());
-                  profileCollector.annualIncome = incomeRangeList[selectedValue] * 100000;
+
                 });
 
               }),

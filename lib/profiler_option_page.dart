@@ -35,32 +35,33 @@ class ProfilerOptionPage extends StatelessWidget {
             padding: const EdgeInsets.only(top:8,left: 18,right: 18, bottom: 8.0),
             child: Column(
               children: [
+                Container(
+                  decoration: BoxDecoration(
+
+
+                  ),
+                  child: Image.asset('images/info.png',
+                    height: 200,
+                    width: 200,),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 18, left: 8, right: 8,bottom: 8),
                   child: Text("Hey ! $currentUserName  \nThanks for choosing us",
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
-                    color: kPresentTheme.inputTextColor,
+                    color: kPresentTheme.accentColor,
                   )
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
 
-
-                  ),
-                 child: Image.asset('images/info.png',
-                 height: 200,
-                 width: 200,),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text("Looks like we dont know much of you.",
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: kPresentTheme.inputTextColor,
+                        color: kPresentTheme.accentColor,
                       )
                   ),
                 )
@@ -72,7 +73,7 @@ class ProfilerOptionPage extends StatelessWidget {
             child: Text("Knowing you more, will help us to help you more. How about getting some information about you ?",
               style: TextStyle(
                 fontSize: 20.0,
-                color: kDarkColor,
+                color: kPresentTheme.accentColor,
               ),
             ),
           ),
@@ -81,6 +82,7 @@ class ProfilerOptionPage extends StatelessWidget {
             padding: const EdgeInsets.all(18.0),
             child: Container(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:[
                   Padding(
@@ -89,7 +91,7 @@ class ProfilerOptionPage extends StatelessWidget {
                       textSize: 18,
                       textColor: Colors.black,
                       borderRadius: BorderRadius.circular(20),
-                      buttonColor: kPresentTheme.navigationColor,
+                      buttonColor: kPresentTheme.alternateColor,
                       buttonText: "OK",
                       onPressed: (){
                         Navigator.push(
@@ -105,7 +107,7 @@ class ProfilerOptionPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CommandButton(
                       textSize: 18,
-                      buttonColor: kPresentTheme.accentButtonColor,
+                      buttonColor: kPresentTheme.accentColor,
                       textColor: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         buttonText: "No, I am not sharing",

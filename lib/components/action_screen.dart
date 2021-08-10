@@ -10,35 +10,103 @@ import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dhanrashi_mvp/components/labeled_slider.dart';
 
+
+
+// double investedAmount = 10;
+// double expectedRoi = 23;
+// int investmentDuration = 8;
+
+
 class ActionSheet extends StatefulWidget {
  // const ActionSheet({Key? key}) : super(key: key);
 
   String titleMessage;
-  var textVar = TextEditingController();
-  String display = '';
-  final String? Function(String?) validator;
+  // var textVar1 = TextEditingController();
+  // var textVar2 = TextEditingController();
+  // var textVar3 = TextEditingController();
 
-  ActionSheet({this.titleMessage='', required this.validator });
+  double investedAmount = 0;
+  double expectedRoi = 0;
+  int investmentDuration = 0;
+  String imageSource ='';
+
+  String display = '';
+ // final String? Function(String?) validator => return 0;
+
+  ActionSheet({
+    this.titleMessage='',
+    required this.investedAmount,
+    required this.expectedRoi,
+    required this.investmentDuration,
+    this.imageSource='',
+
+  });
+
   @override
   _ActionSheetState createState() => _ActionSheetState();
 }
 
 class _ActionSheetState extends State<ActionSheet> {
 
+  //var seriesPieData =  <charts.Series<Task, String>>[];
+  List<Task> pieData = [];
 
   //String display = '';
   double sliderValue = 5;
 
-  double investAmount = 0;
-  int year = 0;
-  int roi = 0;
+  double investedAmount = 1;
+  double expectedRoi = 1;
+  int investmentDuration = 1;
+  double interestValue = 0 ;        // holds calculated value of futureValue of the investment
 
-  double investedAmount = 0;
-  double expectedRoi = 0;
-  double investmentDuration = 0;
+
+  double calculateInterset( ){
+
+    double roi = expectedRoi /100;
+    return   investedAmount * pow(1 + roi,investmentDuration) - investedAmount;
+
+
+  }
+
+
+
+
+  @override
+  void initState(){
+
+    print(widget.investmentDuration);
+    investedAmount = widget.investedAmount;
+    expectedRoi = widget.expectedRoi;
+    investmentDuration = widget.investmentDuration;
+    interestValue = calculateInterset();
+
+
+
+    super.initState();
+  }
+
+  // var pieData = [
+  //   Task('PV', 23.9, Colors.deepPurpleAccent),
+  //   Task('FV', 24.8,Colors.amberAccent),
+  //
+  // ];
+
 
   @override
   Widget build(BuildContext context) {
+
+    interestValue = calculateInterset();
+    print('PV : $investedAmount and FV:$interestValue');
+
+     pieData = [
+
+      Task('PV', investedAmount, kPresentTheme.accentColor),
+      Task('IV', interestValue ,kPresentTheme.alternateColor),
+
+
+    ];
+
+
     return Container(
       color: Color(0x00000000),
       child: Wrap(
@@ -47,57 +115,97 @@ class _ActionSheetState extends State<ActionSheet> {
         children: [
          Padding(
            padding: const EdgeInsets.all(8.0),
-           child: Center(child: Text(widget.titleMessage, style: kH1,)),
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.start,
+             children: [
+               Image.asset(widget.imageSource, height: 50, width: 50,),
+               Expanded(child: Center(child: Text(widget.titleMessage, style: kH1,))),
+             ],
+           ),
          ),
 
 
          Container(
            height: 180,width: 180,
-             child: DonutChart()),
+             child: DonutChart(pieData: pieData,)),
 
          Padding(
            padding: const EdgeInsets.only(left:8.0, right: 8.0),
            child: LabeledSlider(
-             collector: investAmount,
-             controller: widget.textVar,
-             validator: widget.validator,
-             sliderValue: 5,
+             onChanged: (value){
+
+               setState(() {
+                 investedAmount = value;
+               });
+
+             },
+
+             validator: (value){
+
+                },
+             sliderValue: investedAmount.round(),
              min: 1,
              max: 100,
              labelText: 'Invested Amount (in Lakhs)',
+             suffix: 'Lakhs',
            ),
          ),
           Padding(
             padding: const EdgeInsets.only(left:8.0, right: 8.0),
             child: LabeledSlider(
-              collector: expectedRoi,
-              controller: widget.textVar,
-              validator: widget.validator,
+              onChanged: (value){
+                setState(() {
+                  expectedRoi = value;
+                });
+
+              },
+
+              validator: (value){
+
+              },
               min: 1,
               max:30,
               labelText: 'Expected return ',
-              sliderValue: 15,
+              sliderValue: expectedRoi.round(),
+              suffix: '%      ',
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left:8.0, right: 8.0),
             child: LabeledSlider(
-              collector: investmentDuration,
-              controller: widget.textVar,
-              validator: widget.validator,
+              onChanged: (value){
+                setState(() {
+                  investmentDuration = value.round();
+                });
+
+              },
+
+
+              validator: (value){
+
+              },
               min: 1,
               max: 30,
               labelText: 'Time Period',
-              sliderValue: 5,
+              sliderValue: investmentDuration,
+              suffix: 'Years',
             ),
           ),
           Center(
             child: CommandButton(
-              buttonColor: kPresentTheme.navigationColor,
+              buttonColor: kPresentTheme.alternateColor,
               //icon: Icons.save,
-              textColor: kPresentTheme.inputTextColor,
+              textColor: kPresentTheme.highLightColor,
               buttonText: 'Save Investment',
               onPressed:(){
+
+
+
+                  print('duration: ${investmentDuration}');
+                  print('amount: ${investedAmount}');
+                  print('ROI :${expectedRoi}');
+
+
 
             }, borderRadius: BorderRadius.circular(10),),
           ),

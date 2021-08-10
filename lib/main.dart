@@ -1,18 +1,20 @@
 import 'package:dhanrashi_mvp/confirmation_page.dart';
+//import 'package:dhanrashi_mvp/goalinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/showgraph_dynamic.dart';
 import 'package:flutter/services.dart';
 import 'investmentinput.dart';
-import 'goalinput.dart';
+//import 'goalinput.dart';
 import 'login_page.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
 import 'test.dart';
 import 'package:flutter/material.dart';
-import 'goalinput.dart';
+//import 'goalinput.dart';
 import 'investmentinput.dart';
 import 'dashboard.dart';
 import 'constants.dart';
+import 'package:dhanrashi_mvp/goal_input.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -29,7 +31,7 @@ class DhanrashiMVP extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
 
-      home:InvestmentInputScreen(),
+      home:GoalsInputScreen(),
     );
   }
 }

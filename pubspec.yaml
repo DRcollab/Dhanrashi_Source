@@ -72,6 +72,24 @@ flutter:
     - images/insurance.png
     - images/investment.png
     - images/investment_banner.png
+    - images/profile_image.png
+    - images/onlyprofile.png
+    - images/bank.png
+    - images/bonds.png
+    - images/real-estate.png
+    - images/stock.png
+    - images/coin.png
+    - images/products.png
+    - images/goals.png
+    - images/car.png
+    - images/destination.png
+    - images/education.png
+    - images/house.png
+    - images/pension.png
+    - images/tour.png
+    - images/healthcare.png
+
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

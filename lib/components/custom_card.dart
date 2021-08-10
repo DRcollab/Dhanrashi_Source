@@ -20,10 +20,10 @@ class GradientCard extends StatelessWidget {
 
         boxShadow: [
           BoxShadow(
-            color: kPresentTheme.shadowColor,
-            offset: Offset(2.0,2.0),
-            blurRadius: 5.0,
-            spreadRadius: 1.5,
+            color: Colors.black12,
+            offset: Offset.zero,
+            blurRadius: 2.0,
+            spreadRadius: 3,
 
           )
         ],
@@ -32,7 +32,7 @@ class GradientCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
 
-          colors: kPresentTheme.cardColors,
+          colors: kPresentTheme.influenceColors,
         ),
         borderRadius: BorderRadius.all(Radius.circular(20)),
         //color: kPresentTheme.titleColor,
@@ -84,7 +84,7 @@ class InputCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   this.titleText,
-                  style: kPresentTheme.titleTextStyle,
+                  style: kH2,
                 ),
               ),
             ), // Title Bar of the custom card
@@ -179,11 +179,7 @@ class _ReportCardState extends State<ReportCard> {
                 child: Center(
                   child: Text(
                     titleText,
-                    style: TextStyle(
-                      color: kPresentTheme.darkTextColor,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: kH2,
                   ),
                 ),
               ),

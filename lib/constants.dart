@@ -46,41 +46,63 @@ import 'package:flutter/material.dart';
 // );
 
 
-DhanrashiTheme kLimeTheme =  DhanrashiTheme(
+double adaptForeSmallDevice(BuildContext context) {
+  final size = MediaQuery.of(context).size;
+  // For tiny devices.
+  if (size.height < 600) {
+    return 0.6;
+  }
+  // For normal devices.
+  return 1.0;
+}
 
-    scaffoldColors: [Colors.white,Colors.white],
-    cardColors: [Color(0xffe3dfdf),Color(0xFFf7f7f7)],
-    accentButtonColor: Color(0xFF004752),
-    shadowColor: Colors.black54,
-    lightTextColor: Colors.white,
-    darkTextColor: Color(0xFF004752),
-    linkTextColor: Color(0xFF193F6C),
-    titleColor: Color(0x00f7f7f7),
-    accentColor: Color(0xFF193F6C),
-    titleTextColor:Color(0xFF004752),
-    navigationColor: Color(0xffb5c210), // Color(0xFFe8f54a),
-    insetBorderColor: Colors.white24,
-    inputTextColor: Color(0xFF004752),
-    reportCardColor: [Color(0xFFe8f54a), Color(0xFF004752),],
-    titleTextStyle: TextStyle(
+
+const kTitleTextStyle = TextStyle(
       fontSize: 20.0,
       fontFamily: 'Fredoka',
-      color: Color(0xFF004752),
-    ),
+      color: Colors.white38,
+    );
 
-    formTextBorder: OutlineInputBorder(
 
-        gapPadding: 2.0,
-        borderRadius: BorderRadius.circular(25.0),
-        borderSide: BorderSide(
-          color: Color(0xFF004752),
-        )
-    ),
+DhanrashiTheme kLimeTheme =  DhanrashiTheme(
 
-  hintTextStyle: TextStyle(
-      fontStyle: FontStyle.italic,
-      color: Color(0x88004752),
-  ),
+  themeColor:Colors.white,
+  influenceColors: [Color(0xfff0f0f0),Color(0xFFf7f7f7)],
+
+  alternateColor: Color(0xffb5c210),
+  accentColor: Color(0xFF004752),
+  shadowColor: Colors.black38,
+  linkTextColor: Color(0xFF193F6C),
+  borderColor: Colors.white24,
+
+  highLightColor: Color(0xFF004752),
+  lightWeightColor: Color(0xffb5c210),
+
+
+// scaffoldColors: [Colors.white,Colors.white],
+   // cardColors: [Color(0xffe3dfdf),Color(0xFFf7f7f7)],
+   // accentButtonColor: Color(0xFF004752),
+
+   // lightTextColor: Colors.white,
+   // darkTextColor: Color(0xFF004752),
+
+    //titleColor: Color(0x00f7f7f7),
+
+
+   // titleTextColor:Color(0xFF004752),
+   // navigationColor: Color(0xffb5c210), // Color(0xFFe8f54a),
+
+   // inputTextColor: Color(0xFF004752),
+   // reportCardColor: [Color(0xFFe8f54a), Color(0xFF004752),],
+   //  titleTextStyle: TextStyle(
+   //    fontSize: 20.0,
+   //    fontFamily: 'Fredoka',
+      //color: Color(0xFF004752),
+   //  ),
+
+
+
+
  );
 
 
@@ -112,95 +134,155 @@ DhanrashiTheme kLimeTheme =  DhanrashiTheme(
  DhanrashiTheme kPresentTheme = kLimeTheme;
 
 
-const kDarkColor = Color(0xFF193F6C);
-const kDarkColor2 =Color(0xA193F6C);//Color(0xFFd234eb); //Color(0xFF197F6D);//Color(0xFF197F6D);// Color(0xFFd234eb);//
-const kLightButtonColor = Colors.white24;
-const kLightHeader = Colors.white24;
-const kDarkButtonColor = Color(0xFF193F6C);
-const kNormalTextColor = Colors.white;
-const kLightTextColor = Colors.white;
-const kDarkTextColor = Color(0xFF193F6C);
-const kSpecialTextColor = 0;
-const kNegativeTextColor = Colors.red;
-final kBorderRadiusOfCommandButton = BorderRadius.circular(25.0);
+// const kDarkColor = Color(0xFF193F6C);
+// const kDarkColor2 =Color(0xA193F6C);//Color(0xFFd234eb); //Color(0xFF197F6D);//Color(0xFF197F6D);// Color(0xFFd234eb);//
+// const kLightButtonColor = Colors.white24;
+// const kLightHeader = Colors.white24;
+// const kDarkButtonColor = Color(0xFF193F6C);
+// const kNormalTextColor = Colors.white;
+// const kLightTextColor = Colors.white;
+// const kDarkTextColor = Color(0xFF193F6C);
+// const kSpecialTextColor = 0;
+// const kNegativeTextColor = Colors.red;
+// final kBorderRadiusOfCommandButton = BorderRadius.circular(25.0);
 const kNormalTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 20.0,
 );
-
+//
  var kDarkTextStyle = TextStyle(
-  color: kPresentTheme.darkTextColor,
+  color: kPresentTheme.highLightColor,
   fontWeight: FontWeight.bold,
   fontSize: 20.0,
 );
-
+//
 const kTextFieldPadding = const EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 8.0);
-//EdgeInsets.only(left: 18, top: 8, right: 18, bottom: 0),
-var kAdviceTextStyleLight = TextStyle(
-  color: kPresentTheme.lightTextColor,
-  fontSize: 20.0,
-  fontStyle: FontStyle.italic,
-);
-
+// //EdgeInsets.only(left: 18, top: 8, right: 18, bottom: 0),
+// var kAdviceTextStyleLight = TextStyle(
+//   color: kPresentTheme.lightTextColor,
+//   fontSize: 20.0,
+//   fontStyle: FontStyle.italic,
+// );
+//
 var kAdviceTextStyleDark = TextStyle(
-  color: kPresentTheme.darkTextColor,
-  fontSize: 20.0,
+  color: kPresentTheme.accentColor,
+  fontSize: 18.0,
   fontStyle: FontStyle.italic,
 );
-
+//
 var kInputTextStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,
-    color: kPresentTheme.inputTextColor);
+    color: kPresentTheme.accentColor);
+//
+// var kDecoration = BoxDecoration(
+//   gradient: LinearGradient(
+//     begin: Alignment.topCenter,
+//     end: Alignment.bottomCenter,
+//     colors: kPresentTheme.scaffoldColors,
+//   ),
+// );
+//
+//
+// var kCardDecoration = BoxDecoration(
+//
+//   borderRadius: BorderRadius.circular((20)),
+//
+//   boxShadow: [BoxShadow(
+//     color: kPresentTheme.shadowColor,
+//
+//   ),],
+//   gradient:  LinearGradient(
+//     begin: Alignment.topCenter,
+//     end: Alignment.bottomCenter,
+//     colors: kPresentTheme.cardColors
+//
+//   )
+// );
+//
+//
+// var kOptionTextStyle = TextStyle(
+//   fontSize: 20,
+//   fontWeight: FontWeight.bold,
+//   color:kPresentTheme.inputTextColor,
+//
+// );
+//
+// var kAlternateOptionTextStyle = TextStyle(
+//   fontSize: 20,
+//   fontWeight: FontWeight.bold,
+//   color:kPresentTheme.lightTextColor,
+//
+// );
+//
+// var kH1 = TextStyle(
+//   fontSize: 28,
+//   fontWeight: FontWeight.bold,
+//   color: Colors.black,
+//
+// );
+//
+// var kH3 = TextStyle(
+//   fontSize: 18,
+//   fontWeight: FontWeight.normal,
+//   color: Colors.black,
+//
+// );
 
-var kDecoration = BoxDecoration(
-  gradient: LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: kPresentTheme.scaffoldColors,
-  ),
+
+final kFormTextBorder = OutlineInputBorder(
+
+gapPadding: 2.0,
+borderRadius: BorderRadius.circular(25.0),
+borderSide: BorderSide(
+color: Color(0xFF004752),
+)
+);
+
+final kHintTextStyle =  TextStyle(
+    fontStyle: FontStyle.italic,
+    color: Color(0x88004752),
 );
 
 
-var kCardDecoration = BoxDecoration(
-  
-  borderRadius: BorderRadius.circular((20)),
-
-  boxShadow: [BoxShadow(
-    color: kPresentTheme.shadowColor,
-    
-  ),],
-  gradient:  LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: kPresentTheme.cardColors
-
-  )
+TextStyle kH1 = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.bold,
+  fontStyle: FontStyle.normal,
 );
 
 
-var kOptionTextStyle = TextStyle(
+TextStyle kH2 = TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.bold,
-  color:kPresentTheme.inputTextColor,
-
+  fontStyle: FontStyle.normal,
 );
 
-var kAlternateOptionTextStyle = TextStyle(
-  fontSize: 20,
-  fontWeight: FontWeight.bold,
-  color:kPresentTheme.lightTextColor,
-
-);
-
-var kH1 = TextStyle(
-  fontSize: 28,
-  fontWeight: FontWeight.bold,
-  color: Colors.black,
-
-);
-
-var kH3 = TextStyle(
+TextStyle kH3 = TextStyle(
   fontSize: 18,
-  fontWeight: FontWeight.normal,
-  color: Colors.black,
+  fontWeight: FontWeight.bold,
+  fontStyle: FontStyle.normal,
+);
+///
+///
 
+
+
+
+
+final kNormal1 = TextStyle(
+fontSize: 20,
+fontWeight: FontWeight.normal,
+fontStyle: FontStyle.normal,
+
+);
+
+final kNormal2 = TextStyle(
+fontSize: 18,
+fontWeight: FontWeight.normal,
+fontStyle: FontStyle.normal,
+);
+
+final kNormal3 = TextStyle(
+fontSize: 12,
+fontWeight: FontWeight.normal,
+fontStyle: FontStyle.normal,
 );

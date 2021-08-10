@@ -22,9 +22,9 @@ class ConfirmationPage extends StatefulWidget {
   UserData currentUser = UserData.create();
 
 
-  ConfirmationPage({ required this.collector, required this.currentUser}){
-    collector = Collector();
-  }
+  ConfirmationPage({ required this.collector, required this.currentUser});
+
+
 
   @override
   _ConfirmationPageState createState() => _ConfirmationPageState();
@@ -59,7 +59,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
 
             children : [
 
@@ -76,11 +76,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 children: [
                   Band(
                     //toggleBandState: this.bandClickCallBack,
-                    headingChild: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.navigationColor,),
+                    headingChild: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor,),
                     title: "Name",
-                    text: profileCollector.fName.text,
+                    text: widget.collector.fName.text,
                     subText: "",
-                    controller: profileCollector.fName,
+                    controller: widget.collector.fName,
                     buttonIcon:Icons.edit,
                     alternateIcon : Icons.subdirectory_arrow_right,
 
@@ -88,10 +88,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   ),
                   Band(
                     //toggleBandState: this.bandClickCallBack,
-                    headingChild: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.navigationColor),
+                    headingChild: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
                     title: "Last Name",
-                    text: profileCollector.lName.text,
-                    controller: profileCollector.lName,
+                    text: widget.collector.lName.text,
+                    controller: widget.collector.lName,
                     subText: "",
                     buttonIcon:   Icons.edit ,
                     alternateIcon:  Icons.subdirectory_arrow_right,
@@ -103,9 +103,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   Band(
 
                     controller: dobController,
-                    headingChild: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.navigationColor),
+                    headingChild: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
                     title: "Date of Birth",
-                    text: '${profileCollector.dateOfBirth.day}/${profileCollector.dateOfBirth.month}/${profileCollector.dateOfBirth.year}',
+                    text: '${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year}',
 
 
                     subText: "age",
@@ -116,9 +116,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   Band(
 
                     controller: incomeController,
-                    headingChild: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.navigationColor),
+                    headingChild: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor),
                     title: "Annual Income",
-                    text:  profileCollector.annualIncome.toString(),
+                    text:  widget.collector.annualIncome.toString(),
                     subText: "",
                     buttonIcon:   Icons.edit ,
                     alternateIcon: Icons.subdirectory_arrow_right,
@@ -136,7 +136,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               //icon:Icons.save,
               borderRadius: BorderRadius.circular(20),
               buttonText: "Add User Details",
-              buttonColor: kPresentTheme.accentButtonColor,
+              buttonColor: kPresentTheme.accentColor,
 
               onPressed:(){
 
@@ -144,10 +144,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 setState(() {
 
 
-                  widget.currentUser.setFName(profileCollector.fName.text); /// calling User data methods -- open user_data_class.dart file
-                  widget.currentUser.setLName(profileCollector.lName.text);/// calling User data methods -- open user_data_class.dart file
-                  widget.currentUser.setIncome(profileCollector.annualIncome.toString());/// calling User data methods -- open user_data_class.dart file
-                  widget.currentUser.setDOB(profileCollector.dateAsString());/// calling User data methods -- open user_data_class.dart file
+                  widget.currentUser.setFName(widget.collector.fName.text); /// calling User data methods -- open user_data_class.dart file
+                  widget.currentUser.setLName(widget.collector.lName.text);/// calling User data methods -- open user_data_class.dart file
+                  widget.currentUser.setIncome(widget.collector.annualIncome.toString());/// calling User data methods -- open user_data_class.dart file
+                  widget.currentUser.setDOB(widget.collector.dateAsString());/// calling User data methods -- open user_data_class.dart file
 
                   _userHandler.createUser(widget.currentUser); /// creating user from currentUser data -- open usr_handler.dart
 

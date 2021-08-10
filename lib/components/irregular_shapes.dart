@@ -1,3 +1,4 @@
+import 'package:dhanrashi_mvp/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -8,6 +9,9 @@ import 'dart:ui' as UI;
 class CurvePainter extends CustomPainter {
 
   int type = 0;
+  Color color1 = kPresentTheme.accentColor;
+  Color color2 = kPresentTheme.alternateColor;
+
 
   // UI.Image image ;
 
@@ -27,13 +31,13 @@ class CurvePainter extends CustomPainter {
 
   }
 
-  void sideCurveGreen( Canvas canvas, Size size, Color color){
+  void sideCurveGreen( Canvas canvas, Size size){
 
     var paint = Paint();
     paint.style = PaintingStyle.fill;
     var path = Path();
 
-    paint.color = color; // Color(0xFF004752);
+    paint.color = this.color1; // Color(0xFF004752);
 
 
     path.moveTo(size.width*.775, 0);
@@ -46,12 +50,12 @@ class CurvePainter extends CustomPainter {
   }
 
 
-  void sideCurveLime(Canvas canvas, Size size, Color color){
+  void sideCurveLime(Canvas canvas, Size size){
     var paint = Paint();
     paint.style = PaintingStyle.fill;
     var path = Path();
 
-    paint.color = color;
+    paint.color = this.color2;
 
     path.moveTo(size.width*0.865, 0);
    // path.quadraticBezierTo(size.width*0.835, size.height * 0.325,  size.width * 0.865, size.height*.250);
@@ -61,12 +65,12 @@ class CurvePainter extends CustomPainter {
 
   }
 
-  void bottomWave(Canvas canvas, Size size, Color color){
+  void bottomWave(Canvas canvas, Size size, ){
     var paint = Paint();
     paint.style = PaintingStyle.fill;
     var path = Path();
 
-    paint.color = color;
+    paint.color = color1;
 
     path.moveTo(0, size.height * 0.9167);
     path.quadraticBezierTo(size.width * 0.25, size.height * 0.875,
@@ -79,12 +83,12 @@ class CurvePainter extends CustomPainter {
 
   }
 
-  void upperWave(Canvas canvas , Size size, Color color){
+  void upperWave(Canvas canvas , Size size){
     var paint = Paint();
     paint.style = PaintingStyle.fill;
     var path = Path();
 
-    paint.color = color;
+    paint.color = color2;
 
     path.moveTo(0, size.height * 0.1 );
     path.quadraticBezierTo(size.width*0.25, size.height*0.135, size.width * 0.5, size.height * 0.1);
@@ -102,14 +106,14 @@ class CurvePainter extends CustomPainter {
   }
 
 
-  void dividingWave(Canvas canvas, Size size, Color color){
+  void dividingWave(Canvas canvas, Size size){
 
 
     var paint = Paint();
     paint.style = PaintingStyle.fill;
     var path = Path();
 
-    paint.color = color;
+    paint.color = color1;
 
     path.moveTo(0, size.height * 0.500);
     path.quadraticBezierTo(size.width * 0.25, size.height * 0.655,
@@ -135,20 +139,20 @@ class CurvePainter extends CustomPainter {
     paint.style = PaintingStyle.fill;
 
     if(type == 0) {
-      sideCurveLime(canvas, size, Color(0xffb5c210));// Color(0xDDe8f54a)
+      sideCurveLime(canvas, size);// Color(0xDDe8f54a)
 
-      sideCurveGreen(canvas, size, Color(0xFF004752));
+      sideCurveGreen(canvas, size);
     }
     else if(type == 1){
 
-      upperWave(canvas, size, Color(0xffb5c210),);
+      upperWave(canvas, size, );
     }
     else if(type == 2){
 
-      dividingWave(canvas, size, Color(0xFF004752));
+      dividingWave(canvas, size);
     }
     else if(type == 3){
-      bottomWave(canvas, size, Color(0xFF004752));
+      bottomWave(canvas, size, );
     }
 
   }

@@ -7,36 +7,30 @@ class Task{
   String task = '';
   double value = 0;
   Color color = Color(0);
-
-
   Task(this.task,this.value,this.color);
 
+
 }
 
 
-class DonutChart extends StatefulWidget {
-  // const DonutChart({Key? key}) : super(key: key);
-
-  @override
-  _DonutChartState createState() => _DonutChartState();
-}
-
-class _DonutChartState extends State<DonutChart> {
+class DonutChart extends StatelessWidget {
 
 
-  var seriesPieData;
+ List<Task> pieData = [];
+
+
+  DonutChart( {required this.pieData}  );
+
+
+
+  List<charts.Series<Task, String>>seriesPieData  = [];
 
 
   generateData(){
 
-    var pieData = [
-      Task('Work', 35.8, Colors.deepPurpleAccent),
-      Task('Play', 24.8,Colors.amberAccent),
-      Task('Rest',19.0,Colors.green),
-    ];
 
     seriesPieData.add(
-        charts.Series(
+          charts.Series(
           data: pieData,
           domainFn: (Task task,_) => task.task,
           measureFn: (Task task,_) => task.value,
@@ -50,29 +44,27 @@ class _DonutChartState extends State<DonutChart> {
     );
   }
 
-  @override
-  void initState() {
 
-    super.initState();
-    seriesPieData  = <charts.Series<Task, String>>[];
-    generateData();
-
-  }
 
 
   @override
   Widget build(BuildContext context) {
+   generateData();
+
     return charts.PieChart<String>(
       List.from(seriesPieData),
       animate: true,
-      animationDuration: Duration(milliseconds: 400),
+
+      animationDuration: Duration(milliseconds: 200),
       defaultRenderer: new charts.ArcRendererConfig(
           arcWidth: 30,
           arcRendererDecorators: [
+
             new charts.ArcLabelDecorator(
               labelPosition: charts.ArcLabelPosition.inside,
             )
-          ]
+          ],
+
       )
       ,
     );

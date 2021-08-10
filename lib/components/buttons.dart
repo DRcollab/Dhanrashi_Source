@@ -11,7 +11,7 @@ enum LinkTextType {
 
 class OptionGroup{
 
- static List<Color> group = [kPresentTheme.accentButtonColor, kPresentTheme.accentButtonColor];
+ static List<Color> group = [kPresentTheme.accentColor, kPresentTheme.accentColor];
 
   static void add(Color x){
 
@@ -27,7 +27,7 @@ class CommandButton extends StatelessWidget {
   String buttonText = "Button";
    void Function() onPressed;
   //IconData icon;
-  late Color buttonColor = kDarkColor;
+  late Color buttonColor = kPresentTheme.accentColor;
   double textSize = 20.0;
   double inducedHeight = 20;
   Color textColor;
@@ -85,7 +85,7 @@ class OptionButton extends StatefulWidget {
   int index = 0;
 
 
-   OptionButton({this.buttonText = "Button",this.textColor = kLightTextColor,required this.onPressed, this.index=0, required this.backColor}){
+   OptionButton({this.buttonText = "Button",this.textColor = Colors.white,required this.onPressed, this.index=0, required this.backColor}){
     // OptionGroup.add(this.backColor);
    }
 
@@ -116,7 +116,7 @@ class _OptionButtonState extends State<OptionButton> {
         onPressed: () {
           setState(() {
             for(Color color in OptionGroup.group){
-              if(OptionGroup.group[widget.index]==kPresentTheme.accentButtonColor){
+              if(OptionGroup.group[widget.index]==kPresentTheme.accentColor){
 
                 OptionGroup.group[widget.index] = Colors.red;
                 print(OptionGroup.group);
@@ -200,7 +200,7 @@ class NavigationButtonSet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    this.leftButtonColor = this.rightButtonColor = kPresentTheme.navigationColor; // Defined color from present theme.
+    this.leftButtonColor = this.rightButtonColor = kPresentTheme.alternateColor; // Defined color from present theme.
 
     return Container(
       height: 50,

@@ -11,14 +11,14 @@ class RoundButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: this.onPress,
-      child: Icon(icon, color: kLightTextColor),
+      child: Icon(icon, color: kPresentTheme.lightWeightColor),
       elevation: 6.0,
       constraints: BoxConstraints.tightFor(
         width: 40,
         height: 40,
       ),
       shape: CircleBorder(),
-      fillColor: kDarkButtonColor,
+      fillColor: kPresentTheme.lightWeightColor,
     );
   }
 }

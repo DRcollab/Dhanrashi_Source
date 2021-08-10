@@ -68,7 +68,7 @@ class _DashBoardState extends State<DashBoard> {
                 child: Text(
                   "Hi,$currentUser",
                   style: TextStyle(
-                    color: kPresentTheme.inputTextColor,
+                    color: kPresentTheme.highLightColor,
                     fontSize: 24.0,
                     fontFamily: "Fredoka",
                   ),
@@ -86,7 +86,7 @@ class _DashBoardState extends State<DashBoard> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15.0,
-              color: kLightTextColor,
+              color: kPresentTheme.lightWeightColor,
               fontWeight: FontWeight.bold,
 
             ),
@@ -155,7 +155,7 @@ class _UpperPanelState extends State<UpperPanel> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15.0,
-                color: kPresentTheme.darkTextColor,
+                color: kPresentTheme.accentColor,
                 fontWeight: FontWeight.bold,
 
               ),
@@ -197,7 +197,7 @@ class _AnalysisCardState extends State<AnalysisCard> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ReportCard(
-          baseColor: kPresentTheme.reportCardColor[0],
+          baseColor: kPresentTheme.influenceColors[0],
           requiredTitleBar: false,
           titleText: "Your Portfolio Analysis",
           borderRadius: BorderRadius.only(
@@ -246,19 +246,19 @@ class _AnalysisCardState extends State<AnalysisCard> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 18),
-                      child: Text("One is approaching  ", style: kDarkTextStyle,),
+                      child: Text("One is approaching  ", style: kH2,),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 18),
-                      child: Text("Your Investment are..", style: kDarkTextStyle,),
+                      child: Text("Your Investment are..", style: kH2,),
                     )
                   ],
                 ),
                 SizedBox(
                   width: 2.0,
                   height: 90,
-                  child: Container(color: kDarkColor),
+                  child: Container(color: kPresentTheme.accentColor),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -288,7 +288,7 @@ class _AnalysisCardState extends State<AnalysisCard> {
         ReportCard(
           //titleText: 'Investment Anlysis',
           requiredTitleBar: false,
-          baseColor: kPresentTheme.reportCardColor[1],
+          baseColor: kPresentTheme.influenceColors[1],
           borderRadius: BorderRadius.only(
             topRight: Radius.zero,
             topLeft: Radius.zero,
@@ -343,7 +343,7 @@ class _GoalViewPanelState extends State<GoalViewPanel> {
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: kDarkColor,
+                        color: kPresentTheme.accentColor,
                       ),
                     ),
                     Text("1 is approaching fast"),

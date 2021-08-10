@@ -47,7 +47,7 @@ class _GoalInputState extends State<GoalInput> {
             child: Center(
               child: Text(
                 "So , what you want your Goal about?",
-                style: kNormalTextStyle,
+                style:  kNormalTextStyle,
               ),
             ),
           ),

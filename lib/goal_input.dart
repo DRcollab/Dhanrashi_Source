@@ -10,7 +10,7 @@ import 'components/action_screen.dart';
 
 
 
-class InvestmentInputScreen extends StatelessWidget {
+class GoalsInputScreen extends StatelessWidget {
   //const InvestmentInputScreen({Key? key}) : super(key: key);
 
   Color color = kPresentTheme.accentColor;
@@ -43,11 +43,11 @@ class InvestmentInputScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top:0.0),
-                  child: Image.asset('images/investment_banner.png', height: 400, width: 400,alignment: Alignment.topLeft),
+                  child: Image.asset('images/goals.png', height: 400, width: 400,alignment: Alignment.topLeft),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 18.0,top: 140.0),
-                  child: Text("Investments",
+                  child: Text("Goals",
                     style: kH1,
 
                   ),
@@ -69,7 +69,7 @@ class InvestmentInputScreen extends StatelessWidget {
             child: Container(
               height: 500,
               child:ListView(
-                  shrinkWrap: false,
+                shrinkWrap: false,
                 children: [
 
                   Row(
@@ -77,15 +77,15 @@ class InvestmentInputScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Tile(
-                          imageSource: 'images/mutual.png',
+                          imageSource: 'images/car.png',
                           //height: 120,
                           //width: 150,
-                          title: 'Mutual Fund',
-                          subText: 'Equity and debt funds',
+                          title: 'Buy car',
+                          subText: 'dream car',
                           color: color,
                           titleColor: Colors.white60,
                           onPressed: (){
-                            name = 'Mutual Fund';
+                            name = 'Own a car';
 
                             showModalBottomSheet(
                                 isScrollControlled: true,
@@ -95,13 +95,13 @@ class InvestmentInputScreen extends StatelessWidget {
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
 
-                                        titleMessage: name,
-                                        investedAmount: 10,
-                                        investmentDuration: 10,
-                                        expectedRoi: 12,
-                                        imageSource: 'images/mutual.png',
+                                      titleMessage: name,
+                                      investedAmount: 10,
+                                      investmentDuration: 10,
+                                      expectedRoi: 12,
+                                      imageSource: 'images/car.png',
 
-                            ),
+                                    ),
                                   ),
                                 ));
                           },
@@ -111,15 +111,15 @@ class InvestmentInputScreen extends StatelessWidget {
 
                       Expanded(
                         child: Tile(
-                          imageSource: 'images/insurance.png',
+                          imageSource: 'images/house.png',
                           //height: 20,
                           //width: 150,
-                          title: 'Insurance',
-                          subText: 'Life, health and term',
+                          title: 'My Dream ',
+                          subText: 'House',
                           color: alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
-                            name = 'Insurance';
+                            name = 'Building my own House';
                             print('click on $name');
                             showModalBottomSheet(
                                 isScrollControlled: true,
@@ -133,7 +133,7 @@ class InvestmentInputScreen extends StatelessWidget {
                                       investedAmount: 5,
                                       investmentDuration: 20,
                                       expectedRoi: 6,
-                                      imageSource: 'images/insurance.png',
+                                      imageSource: 'images/house.png',
 
                                     ),
                                   ),
@@ -149,15 +149,15 @@ class InvestmentInputScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Tile(
-                          imageSource: 'images/bonds.png',
-                         // height: 120,
-                         // width: 150,
-                          title: 'Debts & Bonds',
-                          subText: 'Govt Bonds company debentures',
+                          imageSource: 'images/education.png',
+                          // height: 120,
+                          // width: 150,
+                          title: 'Children',
+                          subText: 'Education',
                           color: alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
-                            name = 'Debts and Bonds';
+                            name = 'Children Education';
 
                             showModalBottomSheet(
                                 isScrollControlled: true,
@@ -171,7 +171,7 @@ class InvestmentInputScreen extends StatelessWidget {
                                       investedAmount: 10,
                                       investmentDuration: 10,
                                       expectedRoi: 6,
-                                      imageSource: 'images/bonds.png',
+                                      imageSource: 'images/education.png',
 
                                     ),
                                   ),
@@ -182,15 +182,15 @@ class InvestmentInputScreen extends StatelessWidget {
 
                       Expanded(
                         child: Tile(
-                          imageSource: 'images/stock.png',
-                        //  height: 120,
-                        //  width: 150,
-                          title: 'Equity',
-                          subText: 'Stock market investments',
+                          imageSource: 'images/pension.png',
+                          //  height: 120,
+                          //  width: 150,
+                          title: 'Retirement',
+                          subText: 'a peaceful life',
                           color: color,
                           titleColor: Colors.white60,
                           onPressed: (){
-                            name = 'Equity';
+                            name = 'Retirement';
 
                             showModalBottomSheet(
                                 isScrollControlled: true,
@@ -204,7 +204,7 @@ class InvestmentInputScreen extends StatelessWidget {
                                       investedAmount: 10,
                                       investmentDuration: 5,
                                       expectedRoi: 15,
-                                      imageSource: 'images/stock.png',
+                                      imageSource: 'images/pension.png',
 
                                     ),
                                   ),
@@ -220,15 +220,15 @@ class InvestmentInputScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Tile(
-                          imageSource: 'images/real-estate.png',
-                         // height: 120,
-                         // width: 150,
-                          title: 'Real Estate',
-                          subText: 'Lands, houses, complexes etc.',
+                          imageSource: 'images/tour.png',
+                          // height: 120,
+                          // width: 150,
+                          title: 'Domestic',
+                          subText: 'tours and travel',
                           color:color,
                           titleColor: Colors.white60,
                           onPressed: (){
-                            name = 'Real Estate';
+                            name = 'See my country';
 
                             showModalBottomSheet(
                                 isScrollControlled: true,
@@ -242,7 +242,7 @@ class InvestmentInputScreen extends StatelessWidget {
                                       investedAmount: 10,
                                       investmentDuration: 20,
                                       expectedRoi: 12,
-                                      imageSource: 'images/real-estate.png',
+                                      imageSource: 'images/tour.png',
                                     ),
                                   ),
                                 ));
@@ -252,15 +252,15 @@ class InvestmentInputScreen extends StatelessWidget {
 
                       Expanded(
                         child: Tile(
-                          imageSource: 'images/bank.png',
-                        //  height: 120,
-                        //  width: 150,
-                          title: 'Bank FD',
-                          subText: 'NSC, KVP, RD, Bank term deposits',
+                          imageSource: 'images/destination.png',
+                          //  height: 120,
+                          //  width: 150,
+                          title: 'Foreign',
+                          subText: 'Tour',
                           color: alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
-                            name = 'Bank FD';
+                            name = 'Foreign tour';
 
                             showModalBottomSheet(
                                 isScrollControlled: true,
@@ -274,7 +274,7 @@ class InvestmentInputScreen extends StatelessWidget {
                                       investedAmount: 10,
                                       investmentDuration: 5,
                                       expectedRoi: 5,
-                                      imageSource: 'images/bank.png',
+                                      imageSource: 'images/destination.png',
 
                                     ),
                                   ),
@@ -291,15 +291,15 @@ class InvestmentInputScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Tile(
-                          imageSource: 'images/coin.png',
-                      //    height: 120,
-                       //   width: 150,
-                          title: 'Gold',
-                          subText: 'Jewellery ',
+                          imageSource: 'images/healthcare.png',
+                          //    height: 120,
+                          //   width: 150,
+                          title: 'Parents Health',
+                          subText: ' ',
                           color:alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
-                            name = 'Gold';
+                            name = 'Parents Health';
 
                             showModalBottomSheet(
                                 isScrollControlled: true,
@@ -313,7 +313,7 @@ class InvestmentInputScreen extends StatelessWidget {
                                       investedAmount: 10,
                                       investmentDuration: 10,
                                       expectedRoi: 10,
-                                      imageSource: 'images/coin.png',
+                                      imageSource: 'images/healthcare.png',
                                     ),
                                   ),
                                 ));
@@ -324,8 +324,8 @@ class InvestmentInputScreen extends StatelessWidget {
                       Expanded(
                         child: Tile(
                           imageSource: 'images/products.png',
-                      //    height: 120,
-                      //    width: 150,
+                          //    height: 120,
+                          //    width: 150,
                           title: 'Others',
                           subText: 'Something not listed here',
                           color: color,

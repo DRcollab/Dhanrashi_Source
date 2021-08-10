@@ -7,22 +7,27 @@ class CustomTextField extends StatelessWidget {
 
   late String hintText = "";
   bool passWord = false;
+  bool hidePassword = true;
   var key;
   final String? Function(String?) validator;
   TextEditingController controller;
   late IconData icon;
-  Function()? validate;
+  final Function()? validate;
+   Function()? showPassword;
   String errorText = '';
   double radius;
   String label;
 
+
   CustomTextField({
     this.hintText='',
     this.passWord=false,
+    this.hidePassword = true,
     this.key,
     required this.controller,
     required this.validator,
     this.icon = Icons.add_chart_outlined,
+    this.showPassword,
     this.validate,
     this.radius = 25,
     this.label='',
@@ -39,17 +44,21 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         controller: this.controller,
 
-        obscureText: this.passWord,
+        obscureText: passWord && this.hidePassword,
         textInputAction: TextInputAction.next,
-        style: kInputTextStyle,
+        style: kH3,
         validator: this.validator,
         decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(8),
 
-                  errorBorder: kPresentTheme.formTextBorder,
-                  focusedErrorBorder: kPresentTheme.formTextBorder,
-                  prefixIcon: Icon(icon,color: kPresentTheme.inputTextColor,),
-                  fillColor: kPresentTheme.inputTextColor,
+                  errorBorder: kFormTextBorder,
+                  focusedErrorBorder: kFormTextBorder,
+                  prefixIcon: Icon(icon,color: kPresentTheme.accentColor,),
+                  suffixIcon: this.passWord ? IconButton(
+                      onPressed:showPassword,
+                      icon:  this.hidePassword ? Icon(Icons.remove_red_eye_outlined) : Icon(Icons.remove_red_eye_sharp),
+                  ) : null,
+                  fillColor: kPresentTheme.accentColor,
                   border: OutlineInputBorder(
                           gapPadding: 2.0,
                          borderRadius: BorderRadius.circular(25.0),
@@ -58,7 +67,7 @@ class CustomTextField extends StatelessWidget {
                                     )
                             ),
                   hintText: this.hintText,
-                  hintStyle: kPresentTheme.hintTextStyle,
+                  hintStyle: kHintTextStyle,
                   errorText: errorText,
                   labelText: label,
                   //labelStyle:
@@ -161,10 +170,11 @@ class LabeledTextField extends StatefulWidget {
   final String? Function(String?) validator;
   TextEditingController controller;
 
-  final Function()? validate;
+  final Function()? getValue;
   String errorText;
   double radius;
   String label;
+  String suffix ='';
 
   LabeledTextField({
     this.hintText = '',
@@ -172,10 +182,11 @@ class LabeledTextField extends StatefulWidget {
     this.key,
     required this.controller,
     required this.validator,
-    this.validate,
+    this.getValue,
     this.radius = 25,
     this.label='',
     this.errorText='',
+    this.suffix='',
   });
 
 
@@ -202,38 +213,38 @@ class _LabeledTextFieldState extends State<LabeledTextField> {
                 height: 60,width: 60,
                 child: TextFormField(
                     controller: widget.controller,
-
                     obscureText: widget.passWord,
-                    textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
                     style: kInputTextStyle,
                     validator: widget.validator,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      focusedBorder:  kPresentTheme.formTextBorder,
-                      enabledBorder: kPresentTheme.formTextBorder,
-                      fillColor: kPresentTheme.inputTextColor,
-                      border: OutlineInputBorder(
-                          gapPadding: 1.0,
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(
-                            color: Color(0xFF004752),
-                          )
-                      ),
-                      hintText: widget.hintText,
-                      hintStyle: kPresentTheme.hintTextStyle,
-                      errorText: widget.errorText,
+                        contentPadding: EdgeInsets.all(8),
+                        focusedBorder:  kFormTextBorder,
+                        enabledBorder: kFormTextBorder,
+                        fillColor: kPresentTheme.accentColor,
+                        border: OutlineInputBorder(
+                            gapPadding: 1.0,
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF004752),
+                            )
+                        ),
+                    hintText: widget.hintText,
+                    hintStyle: kHintTextStyle,
+                    errorText: widget.errorText,
 
                       //labelStyle:
                     ),
 
-                   onEditingComplete: (){
-                     //widget.validate(),
-                   },
-                   onTap: widget.validate,
+                   onEditingComplete: widget.getValue,
+
+                   //onTap: widget.validate,
 
             ),
               ),),
             ),
+            Text(widget.suffix),
           ]
 
       ),
