@@ -1,10 +1,12 @@
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 //import 'components/tile_class.dart';
 import 'data/investment_class.dart';
 import 'components/action_screen.dart';
+import 'data/user_data_class.dart';
 
 
 
@@ -16,6 +18,7 @@ class GoalsInputScreen extends StatelessWidget {
   Color color = kPresentTheme.accentColor;
   Color alternateColor = kPresentTheme.alternateColor;
   Color titleColor = Colors.black;
+  UserData currentUser;
 
   var investment = Investment.create();
 
@@ -25,7 +28,7 @@ class GoalsInputScreen extends StatelessWidget {
   double investmentRoi = 0;
   double investmentDuration = 0;
 
-
+GoalsInputScreen({required this.currentUser});
 
 
 
@@ -363,6 +366,19 @@ class GoalsInputScreen extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.bullseye),
+            label: 'Back',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.bullseye),
+            label: 'Back',
+          )
         ],
       ),
     );

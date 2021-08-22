@@ -1,7 +1,10 @@
 
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
 
@@ -17,7 +20,7 @@ class CustomTextField extends StatelessWidget {
   String errorText = '';
   double radius;
   String label;
-
+  TextInputAction? textInputAction;
 
   CustomTextField({
     this.hintText='',
@@ -31,6 +34,7 @@ class CustomTextField extends StatelessWidget {
     this.validate,
     this.radius = 25,
     this.label='',
+    this.textInputAction = TextInputAction.next,
     this.errorText=''});
 
   @override
@@ -45,7 +49,7 @@ class CustomTextField extends StatelessWidget {
         controller: this.controller,
 
         obscureText: passWord && this.hidePassword,
-        textInputAction: TextInputAction.next,
+        textInputAction: this.textInputAction,
         style: kH3,
         validator: this.validator,
         decoration: InputDecoration(
@@ -161,7 +165,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
 }
 
 
-class LabeledTextField extends StatefulWidget {
+class NumberInputField extends StatefulWidget {
  // const LabeledTextField({Key? key}) : super(key: key);
 
   String hintText = "";
@@ -176,7 +180,7 @@ class LabeledTextField extends StatefulWidget {
   String label;
   String suffix ='';
 
-  LabeledTextField({
+  NumberInputField({
     this.hintText = '',
     this.passWord=false,
     this.key,
@@ -191,27 +195,28 @@ class LabeledTextField extends StatefulWidget {
 
 
   @override
-  _LabeledTextFieldState createState() => _LabeledTextFieldState();
+  _NumberInputFieldState createState() => _NumberInputFieldState();
 }
 
-class _LabeledTextFieldState extends State<LabeledTextField> {
+class _NumberInputFieldState extends State<NumberInputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Row(
           children: [
             Expanded(
-              flex:3,
+              flex:2,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(widget.label),
               ),
             ),
             Flexible(child: Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+              padding: const EdgeInsets.only(left: 0.0, right: 8.0),
               child: Container(
-                height: 60,width: 60,
+                height: 60,width: 120,
                 child: TextFormField(
+                    inputFormatters: [],
                     controller: widget.controller,
                     obscureText: widget.passWord,
                     textInputAction: TextInputAction.done,

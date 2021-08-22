@@ -18,6 +18,8 @@ import 'data/user_handler.dart';
 import 'data/database.dart';
 import 'components/custom_text.dart';
 import 'data/user_data_class.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 
 class LoginPage extends StatefulWidget {
@@ -131,6 +133,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
 
                   //type: LinkTextType.DARK,
                   onPressed: () {
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -142,6 +145,21 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
               ),
 
             ],
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calculator),
+              label: 'SIP Calculator',
+
+          ),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
+          label: 'Inflation Data'
+          ),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
+              label: 'Settings'
           ),
         ],
       ),

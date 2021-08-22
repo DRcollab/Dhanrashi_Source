@@ -1,4 +1,7 @@
 import 'package:dhanrashi_mvp/confirmation_page.dart';
+import 'package:dhanrashi_mvp/data/user_data_class.dart';
+import 'package:dhanrashi_mvp/empty_page_inputs.dart';
+import 'package:dhanrashi_mvp/investment_details.dart';
 //import 'package:dhanrashi_mvp/goalinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/showgraph_dynamic.dart';
@@ -16,6 +19,8 @@ import 'dashboard.dart';
 import 'constants.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 
+UserData currentUser = UserData('', '_fName', '_lName', '_dob', '_income');
+
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     //  statusBarColor: Colors.transparent,
@@ -31,7 +36,9 @@ class DhanrashiMVP extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
 
-      home:GoalsInputScreen(),
+      //home:InvestmentInputScreen(currentUser: currentUser),
+      //home:LoginPage(),
+      home:InvestmentScreen(),
     );
   }
 }

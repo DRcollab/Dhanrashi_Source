@@ -100,8 +100,8 @@ class _ActionSheetState extends State<ActionSheet> {
 
      pieData = [
 
-      Task('PV', investedAmount, kPresentTheme.accentColor),
-      Task('IV', interestValue ,kPresentTheme.alternateColor),
+      Task('Investment', investedAmount, kPresentTheme.accentColor),
+      Task('Interest Earned', interestValue ,kPresentTheme.alternateColor),
 
 
     ];
@@ -125,9 +125,44 @@ class _ActionSheetState extends State<ActionSheet> {
          ),
 
 
-         Container(
-           height: 180,width: 180,
-             child: DonutChart(pieData: pieData,)),
+         Row(
+           children: [
+             Container(
+               height: 180,width: 180,
+                 child: DonutChart(pieData: pieData,)),
+             Container(height: 180,width: 180,
+               child: Column(
+                 children: [
+                   Row(
+                     children: [
+                       CircleAvatar(radius: 10,backgroundColor: kPresentTheme.accentColor),
+                       Padding(
+                         padding: const EdgeInsets.only(left : 8.0),
+                         child: Text('Invested Amount'),
+                       ),
+
+                     ],
+                   ),
+                   Row(
+                     children: [
+                       CircleAvatar(radius: 10,backgroundColor: kPresentTheme.alternateColor),
+                       Padding(
+                         padding: const EdgeInsets.only(left : 8.0),
+                         child: Text('Interest Amount'),
+                       ),
+
+                     ],
+                   ),
+                   SizedBox(height: 10,width: double.infinity,),
+                   Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Text('Total Investment in ${widget.titleMessage}'),
+                   ),
+                 ],
+               ),
+             )
+           ],
+         ),
 
          Padding(
            padding: const EdgeInsets.only(left:8.0, right: 8.0),
@@ -143,7 +178,7 @@ class _ActionSheetState extends State<ActionSheet> {
              validator: (value){
 
                 },
-             sliderValue: investedAmount.round(),
+             sliderValue: investedAmount,
              min: 1,
              max: 100,
              labelText: 'Invested Amount (in Lakhs)',
@@ -166,7 +201,7 @@ class _ActionSheetState extends State<ActionSheet> {
               min: 1,
               max:30,
               labelText: 'Expected return ',
-              sliderValue: expectedRoi.round(),
+              sliderValue: expectedRoi,
               suffix: '%      ',
             ),
           ),
@@ -187,7 +222,7 @@ class _ActionSheetState extends State<ActionSheet> {
               min: 1,
               max: 30,
               labelText: 'Time Period',
-              sliderValue: investmentDuration,
+              sliderValue: investmentDuration.toDouble(),
               suffix: 'Years',
             ),
           ),

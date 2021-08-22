@@ -1,7 +1,7 @@
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 
 import '/components/custom_scaffold.dart';
-import 'goalinput.dart';
+
 import 'profiler.dart';
 import 'package:flutter/material.dart';
 import 'investmentinput.dart';
@@ -273,10 +273,10 @@ class _AnalysisCardState extends State<AnalysisCard> {
                     RoundButton(
                       icon: Icons.add,
                       onPress: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GoalInputScreen()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => GoalInputScreen()));
                       },
                     )
                   ],
@@ -436,11 +436,10 @@ class _InvestmentViewPanelState extends State<InvestmentViewPanel> {
                               color: Colors.white,
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => GoalInputScreen()),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => GoalInputScreen()),
                             },
                           )
                         ],

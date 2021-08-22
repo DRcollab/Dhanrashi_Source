@@ -7,32 +7,44 @@ import 'package:dhanrashi_mvp/components/menu_drawer_class.dart';
 
 class CustomScaffold extends StatelessWidget {
   Widget child;
+  String title = '';
+  Widget? trailing;
+  late Widget body;
+  Widget? bottomNavigationBar;
   //final Widget svg = Svg
 
-  CustomScaffold({required this.child});
+  CustomScaffold({
+    required this.child,
+    this.title = '',
+    this.trailing,
+    this.body = const SizedBox(height: 0,width: 0,),
+    this.bottomNavigationBar = const  SizedBox(height: 0, width: 0,),
+  });
 
   final  _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
-       statusBarColor: Color(0xffb5c210),
+       statusBarColor: kPresentTheme.themeColor,//Color(0xffb5c210),
         systemNavigationBarIconBrightness: Brightness.dark,
        // systemNavigationBarColor: Colors.black,
       ) ,
 
       child: Scaffold(
+        backgroundColor: kPresentTheme.themeColor,
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
 
        // backgroundColor: kPresentTheme.scaffoldColors[0],
 
-        body: CustomPaint(
-          painter: CurvePainter(type:1),
-            child: SafeArea(
-                child: Stack(
+        body: SafeArea(
+            child: Stack(
+              children: [
+                this.child,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    this.child,
                     Padding(
                       padding: const EdgeInsets.only(left:8),
                       child: GestureDetector(
@@ -47,14 +59,20 @@ class CustomScaffold extends StatelessWidget {
 
                         ),
                       ),
-                    //),
-
+                    Text(this.title),
+                    Icon(Icons.account_circle_sharp),
                   ],
                 ),
+                //),
+                Padding(
+                  padding: const EdgeInsets.only(top: 100.0),
+                  child: this.body,
+                ),
+              ],
             ),
-
         ),
         drawer: MenuDrawer(),
+        bottomNavigationBar:bottomNavigationBar,
       ),
     );
   }

@@ -35,6 +35,8 @@ dependencies:
   matrix2d: ^1.0.0
   stacked: ^2.2.3
   intl: ^0.17.0
+  tab_indicator_styler: ^2.0.0-null-safety
+  font_awesome_flutter: ^9.1.0
 
 
 dev_dependencies:
@@ -88,6 +90,9 @@ flutter:
     - images/pension.png
     - images/tour.png
     - images/healthcare.png
+    - images/goldsrain.png
+    - images/empty.png
+
 
 
 

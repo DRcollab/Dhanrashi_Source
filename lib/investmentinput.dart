@@ -1,10 +1,13 @@
+import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 //import 'components/tile_class.dart';
 import 'data/investment_class.dart';
 import 'components/action_screen.dart';
+import 'data/user_data_class.dart';
 
 
 
@@ -13,6 +16,7 @@ import 'components/action_screen.dart';
 class InvestmentInputScreen extends StatelessWidget {
   //const InvestmentInputScreen({Key? key}) : super(key: key);
 
+  UserData currentUser;
   Color color = kPresentTheme.accentColor;
   Color alternateColor = kPresentTheme.alternateColor;
   Color titleColor = Colors.black;
@@ -26,7 +30,7 @@ class InvestmentInputScreen extends StatelessWidget {
   double investmentDuration = 0;
 
 
-
+InvestmentInputScreen({required this.currentUser});
 
 
 
@@ -70,6 +74,7 @@ class InvestmentInputScreen extends StatelessWidget {
               height: 500,
               child:ListView(
                   shrinkWrap: false,
+
                 children: [
 
                   Row(
@@ -363,6 +368,35 @@ class InvestmentInputScreen extends StatelessWidget {
               ),
             ),
           ),
+
+
+
+        ],
+      ),
+      // body: Container(color: Colors.red,
+      //           width: double.infinity,
+      //     height: 10,
+      // ) ,
+      bottomNavigationBar: BottomNavigationBar(
+      // type: BottomNavigationBarType.,
+        currentIndex: 1,
+        items: [
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.backward),
+            label: 'Go Back',
+
+          ),
+
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.bullseye),
+            label: 'Goals',
+
+
+          ),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator),
+              label: 'SIP Calculator'
+          ),
+
         ],
       ),
     );

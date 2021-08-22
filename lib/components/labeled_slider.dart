@@ -6,7 +6,7 @@ import 'package:dhanrashi_mvp/constants.dart';
 class LabeledSlider extends StatefulWidget {
 // const LabeledSlider({Key? key}) : super(key: key);
 
-int sliderValue = 5; // Movement of slider
+double sliderValue = 5.0; // Movement of slider
 String labelText; //
 double min = 1; // minimum value of the slider movement
 double max = 10; // maximum value of the slider movement
@@ -19,7 +19,7 @@ final String? Function(String?) validator;
  Function(double)? onChanged;  // get the  changed value;
 
 LabeledSlider({
-  this.sliderValue=5,
+  this.sliderValue=5.0,
   this.labelText='',
   this.min=1,
   this.max=10,
@@ -54,16 +54,16 @@ class _LabeledSliderState extends State<LabeledSlider> {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 8.0,top: 2.0,right: 8.0,bottom: 0.0),
-            child: LabeledTextField(
+            child: NumberInputField(
               validator: widget.validator,
               controller: this.controller,
               label:widget.labelText,
-              hintText: widget.sliderValue.toString(),
+              hintText: widget.sliderValue.toStringAsFixed(2),
               suffix: widget.suffix,
               getValue: (){
                 setState(() {
-                  widget.sliderValue = double.parse( this.controller.text).round();
-                  widget.onChanged!(widget.sliderValue.toDouble());
+                  widget.sliderValue = double.parse(double.parse( this.controller.text).toStringAsFixed(2));
+                  widget.onChanged!(widget.sliderValue);
 
                 });
 
@@ -77,15 +77,16 @@ class _LabeledSliderState extends State<LabeledSlider> {
               //divisions: widget.divisions,
               activeColor: kPresentTheme.accentColor,
               inactiveColor: kPresentTheme.alternateColor,
-              value: widget.sliderValue.toDouble() ,
+              value: widget.sliderValue,//double.parse(widget.sliderValue.toStringAsFixed(2) ),
 
               onChanged:   (changeValue) {
                 setState(() {
                   this.controller.clear();
-                  widget.onChanged!(changeValue);
+                  widget.sliderValue = double.parse( changeValue.toStringAsFixed(2));
+                  widget.onChanged!(widget.sliderValue);
 
-                  widget.sliderValue = changeValue.round();
 
+                  print('slider value = ${widget.sliderValue}');
                 });
               }
                 //this.throwValue();

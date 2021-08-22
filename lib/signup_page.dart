@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 import 'package:dhanrashi_mvp/login_page.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
@@ -221,6 +222,21 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.calculator),
+            label: 'SIP Calculator',
+
+          ),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
+              label: 'Inflation Data'
+          ),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
+              label: 'Settings'
           ),
         ],
       ),

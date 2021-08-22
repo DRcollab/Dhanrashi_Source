@@ -66,7 +66,7 @@ const kTitleTextStyle = TextStyle(
 
 DhanrashiTheme kLimeTheme =  DhanrashiTheme(
 
-  themeColor:Colors.white,
+  themeColor:Color(0xFFfafafa),
   influenceColors: [Color(0xfff0f0f0),Color(0xFFf7f7f7)],
 
   alternateColor: Color(0xffb5c210),

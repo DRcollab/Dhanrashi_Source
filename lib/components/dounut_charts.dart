@@ -1,6 +1,7 @@
 
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:dhanrashi_mvp/constants.dart';
 import 'package:flutter/material.dart';
 
 class Task{
@@ -15,9 +16,7 @@ class Task{
 
 class DonutChart extends StatelessWidget {
 
-
  List<Task> pieData = [];
-
 
   DonutChart( {required this.pieData}  );
 
@@ -56,12 +55,23 @@ class DonutChart extends StatelessWidget {
       animate: true,
 
       animationDuration: Duration(milliseconds: 200),
+      // behaviors: [
+      //
+      //   charts.DatumLegend(
+      //     outsideJustification: charts.OutsideJustification.middleDrawArea,
+      //     horizontalFirst: false,
+      //     desiredMaxColumns: 2,
+      //    // cellPadding: EdgeInsets.only(right: 4.0,bottom: 4.0),
+      //    // entryTextStyle:
+      //
+      //   )
+      // ],
       defaultRenderer: new charts.ArcRendererConfig(
           arcWidth: 30,
           arcRendererDecorators: [
 
             new charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.inside,
+              labelPosition: charts.ArcLabelPosition.auto,
             )
           ],
 

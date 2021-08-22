@@ -437,6 +437,7 @@ class _NamePickerState extends State<NamePicker> {
                             child: Form(
                               key: widget.lnameKey,
                               child: CustomTextField(
+                                textInputAction: TextInputAction.done,
                                 validator: (value){
                                   if(value.toString().isEmpty){
                                     return 'lastname cannot be empty';
@@ -491,7 +492,7 @@ class _DOBPickerState extends State<DOBPicker> {
             // ),
            CalendarDatePicker(
             //DateTimeFormField(
-              initialDate: DateTime.now(),
+              initialDate:  DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day),
               firstDate: DateTime(1900),
               lastDate: DateTime(2222),
 

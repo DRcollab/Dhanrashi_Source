@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({Key? key}) : super(key: key);
@@ -16,7 +17,8 @@ class MenuDrawer extends StatelessWidget {
             child: Stack(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(radius: 20,backgroundColor: Colors.amber,),
+                //Image.asset('images/goldsrain.png'),
+                CircleAvatar(radius: 50,backgroundColor: kPresentTheme.accentColor,),
                 Align(
                     alignment: Alignment.topRight,
 
@@ -38,31 +40,43 @@ class MenuDrawer extends StatelessWidget {
 
 
                   ListTile(
-                    leading: Icon(Icons.account_box_sharp, ),
-                    title: Text('Update profile'),
+                    //contentPadding: EdgeInsets.all(10),
+                    leading: FaIcon(FontAwesomeIcons.userFriends,size: 30,color:kPresentTheme.accentColor, ),
+                    title: Text('Update profile' ,style: kNormal2, ),
 
                   ),
                   ListTile(
-                    leading: Icon(Icons.add_chart),
-                    title: Text('Go to Dashboard'),
+                    leading: FaIcon(FontAwesomeIcons.chartPie,size: 30,color:kPresentTheme.accentColor),
+                    title: Text('Go to Dashboard', style: kNormal2),
                   ),
                   ListTile(
-                    leading: Icon(Icons.account_balance_wallet_rounded),
-                    title: Text('Add Investments'),
+                    leading: FaIcon(FontAwesomeIcons.plus,size: 30,color:kPresentTheme.accentColor),
+                    title: Text('Add Investments', style: kNormal2),
                   ),
                   ListTile(
-                    leading: Icon(Icons.assistant_photo_rounded),
-                    title: Text('Add Goals'),
-                  )
+                    leading: FaIcon(FontAwesomeIcons.bullseye, size: 30,color:kPresentTheme.accentColor),
+                    title: Text('Add Goals', style: kNormal2),
+                  ),
 
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.wrench, size: 30,color:kPresentTheme.accentColor),
+                    title: Text('Settings', style: kNormal2),
+                  ),
+
+                  Container(height: 2,width: double.infinity,color: Colors.black12,),
+                  SizedBox(height: 10,width: double.infinity,),
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.calculator, size: 30,color:kPresentTheme.accentColor),
+                    title: Text('SIP Calculator', style: kNormal2),
+                  ),
                 ],
               ),
             ),
           ),
           Container(
               child: ListTile(
-                leading:Icon(Icons.logout),
-                title: Text('Logout'),
+                leading:Icon(Icons.logout,size: 35,color:kPresentTheme.accentColor),
+                title: Text('Logout',style: kNormal2),
               )
           )
         ],

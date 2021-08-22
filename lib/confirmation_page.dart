@@ -2,6 +2,7 @@
 import 'dart:ffi';
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
+import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -155,6 +156,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
 
                   _userHandler.printUserData();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
                 });
 
               },
