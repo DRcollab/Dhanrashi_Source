@@ -17,8 +17,10 @@ class Task{
 class DonutChart extends StatelessWidget {
 
  List<Task> pieData = [];
+ int arcWidth = 35;
+ bool viewLabel = false;
 
-  DonutChart( {required this.pieData}  );
+  DonutChart( {required this.pieData, this.arcWidth = 35, this.viewLabel = false}  );
 
 
 
@@ -67,13 +69,14 @@ class DonutChart extends StatelessWidget {
       //   )
       // ],
       defaultRenderer: new charts.ArcRendererConfig(
-          arcWidth: 30,
-          arcRendererDecorators: [
+          arcWidth: this.arcWidth,
+          arcRendererDecorators: viewLabel ? [
 
             new charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.auto,
+              labelPosition: charts.ArcLabelPosition.auto
             )
-          ],
+          ] : [],
+
 
       )
       ,

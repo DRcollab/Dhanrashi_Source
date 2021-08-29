@@ -1,9 +1,12 @@
 
 
+import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
+import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
+
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
-import 'dashboard.dart';
+import 'dashboard_old.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -164,8 +167,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
   static bool _incomeValidation = false;
   String errorText = ''; // Used to display message on date validation
 
-
-
+  String profileImageSource = '';
 
 ///  Holds the different screen header display .
   final List<String> headers = [
@@ -355,6 +357,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
             Center(child: Text(this.errorText, style:         // Display error message on validation fail
                                   TextStyle(
                                     color:Colors.red,
+
                                   ),),
             ),
             Expanded(
@@ -387,11 +390,14 @@ class NamePicker extends StatefulWidget {
 
   NamePicker( {required this.fName, required this.lName, required this.nameKey, required this.lnameKey, });
 
+
   setVariants(nameKey, lnameKey){
     this.nameKey = nameKey;
     this.lnameKey = lnameKey;
 
   }
+
+
 
   @override
   _NamePickerState createState() => _NamePickerState();
@@ -399,17 +405,65 @@ class NamePicker extends StatefulWidget {
 
 class _NamePickerState extends State<NamePicker> {
 
+  String _profilePhotoSource = 'images/profiles/profile_image0.png';
+  var jSon;
+
+
+  @override
+  initState(){
+    super.initState();
+    jSon =  JsonHandler(fileName: 'settings.json');
+    //jSon.readFile();
+    // if(jSon.readSuccessful){
+      _profilePhotoSource = jSon.fileContent['profile'];
+    // //  print('profile pict is :: $_profilePhotoSource');
+    // }
+    print('profile pict is :: $_profilePhotoSource');
+
+
+  }
 
 
   @override
   Widget build(BuildContext context) {
+
+
+   //   print('profile image is @@@@@ $_profilePhotoSource');
+
+
     return  Padding(
         padding: EdgeInsets.only(top:28,left: 18,right: 18,bottom: 8),
         child: InputCard(
               titleText: "",
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                  Image.asset('images/onlyprofile.png',),
+                  GestureDetector(
+                    onTap: (){
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                              child: PhotoSheet(getChoice: (value){
+                                      setState(() {
+                                        this._profilePhotoSource = 'images/profiles/profile_image$value.png';
+                                      });
+                                   //  var settings = JsonHandler(fileName: 'settings.json');
+                                   //  settings.createFile({'profile':this._profilePhotoSource});
+
+                                      print(this._profilePhotoSource);
+                              },)
+                            ),
+                          ));
+                    }
+                    ,
+                    child: CircleAvatar(
+                        radius: 40,
+                        backgroundImage:AssetImage(this._profilePhotoSource),
+                    ),
+                  ),
+
 
                   SizedBox(height: 30,),
                   Padding(

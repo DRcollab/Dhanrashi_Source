@@ -131,7 +131,8 @@ DhanrashiTheme kLimeTheme =  DhanrashiTheme(
 //
 // );
 
- DhanrashiTheme kPresentTheme = kLimeTheme;
+DhanrashiTheme kPresentTheme = kLimeTheme;
+
 
 
 // const kDarkColor = Color(0xFF193F6C);
@@ -235,6 +236,15 @@ borderRadius: BorderRadius.circular(25.0),
 borderSide: BorderSide(
 color: Color(0xFF004752),
 )
+);
+
+final kFormErrorTextBorder = OutlineInputBorder(
+
+    gapPadding: 2.0,
+    borderRadius: BorderRadius.circular(25.0),
+    borderSide: BorderSide(
+      color: Colors.red,
+    )
 );
 
 final kHintTextStyle =  TextStyle(

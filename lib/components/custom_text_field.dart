@@ -54,7 +54,7 @@ class CustomTextField extends StatelessWidget {
         validator: this.validator,
         decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(8),
-
+                  enabledBorder: kFormTextBorder,
                   errorBorder: kFormTextBorder,
                   focusedErrorBorder: kFormTextBorder,
                   prefixIcon: Icon(icon,color: kPresentTheme.accentColor,),
@@ -179,7 +179,7 @@ class NumberInputField extends StatefulWidget {
   double radius;
   String label;
   String suffix ='';
-
+  bool enabled;
   NumberInputField({
     this.hintText = '',
     this.passWord=false,
@@ -191,6 +191,7 @@ class NumberInputField extends StatefulWidget {
     this.label='',
     this.errorText='',
     this.suffix='',
+    this.enabled = true,
   });
 
 
@@ -207,25 +208,42 @@ class _NumberInputFieldState extends State<NumberInputField> {
             Expanded(
               flex:2,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
                 child: Text(widget.label),
               ),
             ),
             Flexible(child: Padding(
-              padding: const EdgeInsets.only(left: 0.0, right: 8.0),
+              padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
               child: Container(
                 height: 60,width: 120,
                 child: TextFormField(
+                    enabled: widget.enabled,
                     inputFormatters: [],
                     controller: widget.controller,
-                    obscureText: widget.passWord,
+
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     style: kInputTextStyle,
                     validator: widget.validator,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
-                        focusedBorder:  kFormTextBorder,
+
+                        errorBorder: OutlineInputBorder(
+
+                            gapPadding: 2.0,
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Colors.black12,
+                            )
+                        ),
+                        focusedErrorBorder:  OutlineInputBorder(
+
+                            gapPadding: 2.0,
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: BorderSide(
+                              color: Colors.black12,
+                            )
+                        ),
                         enabledBorder: kFormTextBorder,
                         fillColor: kPresentTheme.accentColor,
                         border: OutlineInputBorder(

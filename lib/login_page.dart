@@ -7,7 +7,7 @@ import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'constants.dart';
-import 'dashboard.dart';
+import 'dashboard_old.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,9 +34,9 @@ UserData currentUser = UserData.create();
 
 class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
 
-   bool profileReady = false; // will be used to determine if profiler page to be navigated or to dashboard
+   bool profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
   final String currentUser = ""; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
-  // The currentUser will be displayed on dashboard or other places....
+  // The currentUser will be displayed on dhanrashi or other places....
 
   final _userText = TextEditingController();
   final _passWord = TextEditingController();
@@ -185,9 +185,9 @@ class Logger extends StatefulWidget with InputValidationMixin {
 class _LoggerState extends State<Logger> with InputValidationMixin {
 
 
-   bool profileReady = false; // will be used to determine if profiler page to be navigated or to dashboard
+   bool profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
   final String currentUser = ""; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
-  // The currentUser will be displayed on dashboard or other places....
+  // The currentUser will be displayed on dhanrashi or other places....
   String _errorText = "";
   final _userText = TextEditingController();
   final _passWord = TextEditingController();

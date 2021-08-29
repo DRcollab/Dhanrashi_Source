@@ -1,6 +1,8 @@
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
+import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
@@ -13,27 +15,37 @@ import 'data/user_data_class.dart';
 
 
 
-class InvestmentInputScreen extends StatelessWidget {
+class InvestmentInputScreen extends StatefulWidget {
   //const InvestmentInputScreen({Key? key}) : super(key: key);
 
   UserData currentUser;
+
+InvestmentInputScreen({required this.currentUser});
+
+  @override
+  _InvestmentInputScreenState createState() => _InvestmentInputScreenState();
+}
+
+class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
   Color color = kPresentTheme.accentColor;
+
   Color alternateColor = kPresentTheme.alternateColor;
+
   Color titleColor = Colors.black;
 
   var investment = Investment.create();
 
   String name = '';
+
   double currentInvestmentAmount = 0;
+
   double annualInvestmentAmount = 0;
+
   double investmentRoi = 0;
+
   double investmentDuration = 0;
 
-
-InvestmentInputScreen({required this.currentUser});
-
-
-
+  int _currentTabIndex = 0 ;
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -379,18 +391,51 @@ InvestmentInputScreen({required this.currentUser});
       // ) ,
       bottomNavigationBar: BottomNavigationBar(
       // type: BottomNavigationBarType.,
-        currentIndex: 1,
-        items: [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.backward),
-            label: 'Go Back',
+        currentIndex: _currentTabIndex,
+        onTap: (index){
+            setState(() {
+              _currentTabIndex = index;
+            });
 
-          ),
+             switch(index){
+
+               case 0:
+                 Navigator.pop(context);
+
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                     builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,),
+                   ),
+                 );
+                 break;
+               case 1:
+                 Navigator.pop(context);
+
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                     builder: (context) => Dashboard(currentUser: widget.currentUser,),
+                   ),
+                 );
+                 break;
+               case 2:
+                 break;
+             }
+
+        },
+        items: [
+
 
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.bullseye),
             label: 'Goals',
 
+
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.chartPie),
+            label: 'Dashboard',
 
           ),
           BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator),

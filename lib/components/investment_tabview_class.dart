@@ -1,3 +1,4 @@
+import 'package:dhanrashi_mvp/components/banner_class.dart';
 import 'package:flutter/material.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/constants.dart';
@@ -24,6 +25,24 @@ class InvestmentTabView extends StatelessWidget {
             child: DonutChart(pieData: pieData
             )
         ),
+
+        Container(
+          height: 400,
+          child: ListView(
+            children: [
+              Shingle(),
+              Shingle(),
+              Shingle(),
+              Shingle(),
+              Shingle(),
+              Shingle(),
+              Shingle(),
+              Shingle(),
+
+
+            ],
+          ),
+        )
       ],
     );
   }

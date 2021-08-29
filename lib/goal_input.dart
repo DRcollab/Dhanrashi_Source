@@ -4,34 +4,47 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 //import 'components/tile_class.dart';
+import 'dashboard.dart';
 import 'data/investment_class.dart';
 import 'components/action_screen.dart';
 import 'data/user_data_class.dart';
+import 'investmentinput.dart';
 
 
 
 
 
-class GoalsInputScreen extends StatelessWidget {
+class GoalsInputScreen extends StatefulWidget {
   //const InvestmentInputScreen({Key? key}) : super(key: key);
 
-  Color color = kPresentTheme.accentColor;
-  Color alternateColor = kPresentTheme.alternateColor;
-  Color titleColor = Colors.black;
   UserData currentUser;
+
+
+GoalsInputScreen({required this.currentUser});
+
+  @override
+  _GoalsInputScreenState createState() => _GoalsInputScreenState();
+}
+
+class _GoalsInputScreenState extends State<GoalsInputScreen> {
+  Color color = kPresentTheme.accentColor;
+
+  Color alternateColor = kPresentTheme.alternateColor;
+
+  Color titleColor = Colors.black;
 
   var investment = Investment.create();
 
   String name = '';
+
   double currentInvestmentAmount = 0;
+
   double annualInvestmentAmount = 0;
+
   double investmentRoi = 0;
+
   double investmentDuration = 0;
-
-GoalsInputScreen({required this.currentUser});
-
-
-
+  int _currentTabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -370,14 +383,52 @@ GoalsInputScreen({required this.currentUser});
       ),
 
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentTabIndex,
+        onTap: (index){
+          setState(() {
+             _currentTabIndex = index;
+          });
+
+          switch(index){
+
+            case 0:
+              Navigator.pop(context);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,),
+                ),
+              );
+              break;
+            case 1:
+              Navigator.pop(context);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Dashboard(currentUser: widget.currentUser,),
+                ),
+              );
+
+              break;
+            case 2:
+              break;
+          }
+        },
+
         items: [
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.bullseye),
-            label: 'Back',
+              icon: FaIcon(FontAwesomeIcons.chartLine),
+            label: 'Investment',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.bullseye),
-            label: 'Back',
+            icon: FaIcon(FontAwesomeIcons.chartPie),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.calculator),
+            label: 'SIP Calculator',
           )
         ],
       ),

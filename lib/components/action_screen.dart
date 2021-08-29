@@ -28,6 +28,7 @@ class ActionSheet extends StatefulWidget {
   double investedAmount = 0;
   double expectedRoi = 0;
   int investmentDuration = 0;
+  double annualInvestment = 0;
   String imageSource ='';
 
   String display = '';
@@ -39,6 +40,7 @@ class ActionSheet extends StatefulWidget {
     required this.expectedRoi,
     required this.investmentDuration,
     this.imageSource='',
+    this.annualInvestment = 0,
 
   });
 
@@ -53,21 +55,32 @@ class _ActionSheetState extends State<ActionSheet> {
 
   //String display = '';
   double sliderValue = 5;
-
+  double futureValue = 0;
   double investedAmount = 1;
   double expectedRoi = 1;
   int investmentDuration = 1;
   double interestValue = 0 ;        // holds calculated value of futureValue of the investment
-
+  double annualInvestment = 0;
 
   double calculateInterset( ){
 
-    double roi = expectedRoi /100;
-    return   investedAmount * pow(1 + roi,investmentDuration) - investedAmount;
+    double interest;
+   // double roi = expectedRoi /100;
+    futureValue = fv(expectedRoi/100,investmentDuration, annualInvestment, investedAmount, 0);
+    double investedPortion = investedAmount + annualInvestment * investmentDuration;
 
+    interest = futureValue - investedPortion;
+
+   return double.parse(interest.toStringAsFixed(1)) ;
 
   }
 
+//TODO
+  double fv(double r, int nper, double pmt, double pv, int type){
+
+      double fv = (pv * pow(1 + r, nper ) + pmt * (1 + r * type)*(pow(1+r, nper) -1 )/r);
+      return fv;
+  }
 
 
 
@@ -79,6 +92,7 @@ class _ActionSheetState extends State<ActionSheet> {
     expectedRoi = widget.expectedRoi;
     investmentDuration = widget.investmentDuration;
     interestValue = calculateInterset();
+    annualInvestment = widget.annualInvestment;
 
 
 
@@ -95,8 +109,10 @@ class _ActionSheetState extends State<ActionSheet> {
   @override
   Widget build(BuildContext context) {
 
+
     interestValue = calculateInterset();
-    print('PV : $investedAmount and FV:$interestValue');
+
+    print('PV : $investedAmount and IV:$interestValue');
 
      pieData = [
 
@@ -113,29 +129,66 @@ class _ActionSheetState extends State<ActionSheet> {
          // shrinkWrap: true,
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-         Padding(
-           padding: const EdgeInsets.all(8.0),
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.start,
-             children: [
-               Image.asset(widget.imageSource, height: 50, width: 50,),
-               Expanded(child: Center(child: Text(widget.titleMessage, style: kH1,))),
-             ],
+         Container(
+           decoration: BoxDecoration(
+               color: kPresentTheme.themeColor,//Color(0x00000000),
+               boxShadow: [
+                 BoxShadow(
+                   color: Colors.black12,
+                   offset: Offset.zero,
+                   blurRadius: 0.5,
+                   spreadRadius: 1,
+
+                 )
+               ]
+           ),
+           child: Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Container(
+
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.start,
+                 children: [
+                   Image.asset(widget.imageSource, height: 50, width: 50,),
+                   Expanded(child: Center(child: Text(widget.titleMessage, style: kH1,))),
+                   CommandButton(
+                     buttonColor: kPresentTheme.alternateColor,
+                     //icon: Icons.save,
+                     textColor: kPresentTheme.highLightColor,
+                     buttonText: 'Save',
+                     onPressed:(){
+
+
+
+                       print('duration: ${investmentDuration}');
+                       print('amount: ${investedAmount}');
+                       print('ROI :${expectedRoi}');
+
+
+
+                     }, borderRadius: BorderRadius.circular(10),),
+                 ],
+               ),
+             ),
            ),
          ),
 
 
          Row(
            children: [
+
              Container(
                height: 180,width: 180,
                  child: DonutChart(pieData: pieData,)),
              Container(height: 180,width: 180,
                child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
+                   SizedBox(height: 30,),
                    Row(
                      children: [
-                       CircleAvatar(radius: 10,backgroundColor: kPresentTheme.accentColor),
+                       Container(
+                           height: 10, width: 12 ,color: kPresentTheme.accentColor),
                        Padding(
                          padding: const EdgeInsets.only(left : 8.0),
                          child: Text('Invested Amount'),
@@ -143,9 +196,10 @@ class _ActionSheetState extends State<ActionSheet> {
 
                      ],
                    ),
+                   Text('${investedAmount} Lakh',style: kH3,),
                    Row(
                      children: [
-                       CircleAvatar(radius: 10,backgroundColor: kPresentTheme.alternateColor),
+                       Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
                        Padding(
                          padding: const EdgeInsets.only(left : 8.0),
                          child: Text('Interest Amount'),
@@ -153,10 +207,12 @@ class _ActionSheetState extends State<ActionSheet> {
 
                      ],
                    ),
-                   SizedBox(height: 10,width: double.infinity,),
-                   Padding(
-                     padding: const EdgeInsets.all(8.0),
-                     child: Text('Total Investment in ${widget.titleMessage}'),
+                   Text('${interestValue} Lakh',style: kH3,),
+                   SizedBox(height: 5,width: double.infinity,),
+                   Container(height: 2,width: double.infinity,color: Colors.black12,),
+                   SizedBox(height: 5,width: double.infinity,),
+                   Text('${(investedAmount+interestValue).toStringAsFixed(2)} Lakh',
+                          style: kH1,
                    ),
                  ],
                ),
@@ -189,6 +245,27 @@ class _ActionSheetState extends State<ActionSheet> {
             padding: const EdgeInsets.only(left:8.0, right: 8.0),
             child: LabeledSlider(
               onChanged: (value){
+
+                setState(() {
+                  annualInvestment = value;
+                });
+
+              },
+
+              validator: (value){
+
+              },
+              sliderValue: annualInvestment,
+              min: 0,
+              max: 100,
+              labelText: 'Annual Investment (in Lakhs)',
+              suffix: 'Lakhs',
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left:8.0, right: 8.0),
+            child: LabeledSlider(
+              onChanged: (value){
                 setState(() {
                   expectedRoi = value;
                 });
@@ -200,7 +277,7 @@ class _ActionSheetState extends State<ActionSheet> {
               },
               min: 1,
               max:30,
-              labelText: 'Expected return ',
+              labelText: 'Expected return per year',
               sliderValue: expectedRoi,
               suffix: '%      ',
             ),
@@ -223,27 +300,12 @@ class _ActionSheetState extends State<ActionSheet> {
               max: 30,
               labelText: 'Time Period',
               sliderValue: investmentDuration.toDouble(),
+              textPrecision: 0,
+              textEditable: false,
               suffix: 'Years',
             ),
           ),
-          Center(
-            child: CommandButton(
-              buttonColor: kPresentTheme.alternateColor,
-              //icon: Icons.save,
-              textColor: kPresentTheme.highLightColor,
-              buttonText: 'Save Investment',
-              onPressed:(){
 
-
-
-                  print('duration: ${investmentDuration}');
-                  print('amount: ${investedAmount}');
-                  print('ROI :${expectedRoi}');
-
-
-
-            }, borderRadius: BorderRadius.circular(10),),
-          ),
 
         ],
       ),

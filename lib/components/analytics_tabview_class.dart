@@ -31,7 +31,7 @@ class AnalyticsTabView extends StatelessWidget {
           children: [
             Container(
                 width:220, height: 220,
-                child: DonutChart(pieData: pieData),
+                child: DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,),
             ),
 
             Padding(

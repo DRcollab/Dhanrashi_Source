@@ -6,12 +6,13 @@ import 'package:dhanrashi_mvp/constants.dart';
 class LabeledSlider extends StatefulWidget {
 // const LabeledSlider({Key? key}) : super(key: key);
 
+bool textEditable = true;
 double sliderValue = 5.0; // Movement of slider
 String labelText; //
 double min = 1; // minimum value of the slider movement
 double max = 10; // maximum value of the slider movement
 //int divisions = 1;
-
+int textPrecision = 2;
 double collector = 0;
 String suffix = '';
 final String? Function(String?) validator;
@@ -27,7 +28,8 @@ LabeledSlider({
   required this.validator,
   this.collector = 0,
   this.suffix ='',
-
+  this.textPrecision = 2,
+  this.textEditable = true,
   this.onChanged,
 }
     );
@@ -49,16 +51,18 @@ class _LabeledSliderState extends State<LabeledSlider> {
   Widget build(BuildContext context) {
     return Card(
 
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        //mainAxisAlignment: MainAxisAlignment.start,
+
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,top: 2.0,right: 8.0,bottom: 0.0),
+            padding: const EdgeInsets.only(left: 8.0,top: 0.0,right: 8.0,bottom: 0.0),
             child: NumberInputField(
+              enabled: widget.textEditable,
               validator: widget.validator,
               controller: this.controller,
               label:widget.labelText,
-              hintText: widget.sliderValue.toStringAsFixed(2),
+              hintText: widget.sliderValue.toStringAsFixed(widget.textPrecision),
               suffix: widget.suffix,
               getValue: (){
                 setState(() {
@@ -71,26 +75,29 @@ class _LabeledSliderState extends State<LabeledSlider> {
             ),
 
           ),
-          Slider(
-              min: widget.min,
-              max:widget.max,
-              //divisions: widget.divisions,
-              activeColor: kPresentTheme.accentColor,
-              inactiveColor: kPresentTheme.alternateColor,
-              value: widget.sliderValue,//double.parse(widget.sliderValue.toStringAsFixed(2) ),
+          Padding(
+            padding: const EdgeInsets.only(top:40.0),
+            child: Slider(
+                min: widget.min,
+                max:widget.max,
+                //divisions: widget.divisions,
+                activeColor: kPresentTheme.accentColor,
+                inactiveColor: kPresentTheme.alternateColor,
+                value: widget.sliderValue,//double.parse(widget.sliderValue.toStringAsFixed(2) ),
 
-              onChanged:   (changeValue) {
-                setState(() {
-                  this.controller.clear();
-                  widget.sliderValue = double.parse( changeValue.toStringAsFixed(2));
-                  widget.onChanged!(widget.sliderValue);
+                onChanged:   (changeValue) {
+                  setState(() {
+                    this.controller.clear();
+                    widget.sliderValue = double.parse( changeValue.toStringAsFixed(2));
+                    widget.onChanged!(widget.sliderValue);
 
 
-                  print('slider value = ${widget.sliderValue}');
-                });
-              }
-                //this.throwValue();
-              )
+
+                  });
+                }
+                  //this.throwValue();
+                ),
+          )
         ],
       ),
 

@@ -60,7 +60,10 @@ class CustomScaffold extends StatelessWidget {
                         ),
                       ),
                     Text(this.title),
-                    Icon(Icons.account_circle_sharp),
+                    Padding(
+                      padding: const EdgeInsets.only( right:8.0),
+                      child: Icon(Icons.account_circle_sharp),
+                    ),
                   ],
                 ),
                 //),

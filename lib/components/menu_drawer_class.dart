@@ -1,3 +1,4 @@
+import 'package:dhanrashi_mvp/components/settings_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -43,6 +44,8 @@ class MenuDrawer extends StatelessWidget {
                     //contentPadding: EdgeInsets.all(10),
                     leading: FaIcon(FontAwesomeIcons.userFriends,size: 30,color:kPresentTheme.accentColor, ),
                     title: Text('Update profile' ,style: kNormal2, ),
+                    onTap: (){}
+                    ,
 
                   ),
                   ListTile(
@@ -61,6 +64,26 @@ class MenuDrawer extends StatelessWidget {
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.wrench, size: 30,color:kPresentTheme.accentColor),
                     title: Text('Settings', style: kNormal2),
+                    onTap: (){
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                              child: SettingSheet(
+
+                                // titleMessage: name,
+                                // investedAmount: 10,
+                                // investmentDuration: 10,
+                                // expectedRoi: 12,
+                                // imageSource: 'images/products.png',
+
+                              ),
+                            ),
+                          ));
+
+                    },
                   ),
 
                   Container(height: 2,width: double.infinity,color: Colors.black12,),

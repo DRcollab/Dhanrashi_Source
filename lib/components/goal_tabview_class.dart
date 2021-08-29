@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/constants.dart';
+import 'banner_class.dart';
 
 class GoalsTabView extends StatelessWidget {
   GoalsTabView({Key? key}) : super(key: key);
@@ -16,15 +18,31 @@ class GoalsTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            height: 200,
-            width: 200,
-            child: DonutChart(pieData: pieData
-            )
-        ),
-      ],
+    return Container(
+      height: 500,
+      child: ListView(
+        children: [
+          Container(
+              height: 200,
+              width: 200,
+              child: DonutChart(pieData: pieData
+              )
+          ),
+
+      Shingle(),
+          Shingle(),
+          Shingle(),
+          Shingle(),
+          Shingle(),
+          Shingle(),
+          Shingle(),
+          Shingle(),
+          Shingle(),
+          Shingle(),
+
+
+        ],
+      ),
     );
   }
 }
