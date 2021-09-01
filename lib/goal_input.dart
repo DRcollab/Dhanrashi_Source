@@ -1,5 +1,6 @@
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
@@ -17,7 +18,8 @@ import 'investmentinput.dart';
 class GoalsInputScreen extends StatefulWidget {
   //const InvestmentInputScreen({Key? key}) : super(key: key);
 
-  UserData currentUser;
+  DRUserAccess? currentUser;
+
 
 
 GoalsInputScreen({required this.currentUser});

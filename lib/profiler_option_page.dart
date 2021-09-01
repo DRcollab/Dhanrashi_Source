@@ -1,6 +1,7 @@
 
 
 import 'package:dhanrashi_mvp/components/buttons.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:flutter/material.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
@@ -12,13 +13,14 @@ import 'data/user_data_class.dart';
 class ProfilerOptionPage extends StatelessWidget {
   //const ProfilerOptionPage({Key? key}) : super(key: key);
 
-  UserData currentUser;
+  var  currentUser;
   String currentUserName = "";
 
 
   ProfilerOptionPage({required this.currentUser}){
 
-    currentUserName = currentUser.eMail();
+   // currentUserName = currentUser.whenComplete(() => null)
+    print(currentUser!.email);
   }
 
 
@@ -26,6 +28,7 @@ class ProfilerOptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      currentUser: this.currentUser,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +49,7 @@ class ProfilerOptionPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 18, left: 8, right: 8,bottom: 8),
-                  child: Text("Hey ! $currentUserName  \nThanks for choosing us",
+                  child: Text("Hey ! ${currentUser!.email}  \nThanks for choosing us",
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,

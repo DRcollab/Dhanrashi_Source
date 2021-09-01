@@ -1,13 +1,44 @@
 import 'package:dhanrashi_mvp/components/settings_sheet.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
+import 'package:dhanrashi_mvp/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class MenuDrawer extends StatelessWidget {
-  const MenuDrawer({Key? key}) : super(key: key);
+import '../login_page.dart';
+
+class MenuDrawer extends StatefulWidget {
+ // const MenuDrawer({Key? key}) : super(key: key);
+  final currentUser;
+
+  MenuDrawer({this.currentUser});
+
+  @override
+  _MenuDrawerState createState() => _MenuDrawerState();
+}
+
+class _MenuDrawerState extends State<MenuDrawer> {
+  late FirebaseAuth fireAuth ;
+  var userParticular;
+  bool isUserLoggedIn = false;
+
+  @override
+  void initState()  {
+    // TODO: implement initState
+    super.initState();
+    future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance );
+
+
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
+
     return Drawer(
 
       child: Column(
@@ -24,7 +55,11 @@ class MenuDrawer extends StatelessWidget {
                     alignment: Alignment.topRight,
 
                     child: Text('Dhanrashi', style: kH1,)),
+                Align(
+                    alignment: Alignment.bottomLeft,
 
+                    child: widget.currentUser!=null ? Text(widget.currentUser.email, style: kNormal2,) : SizedBox(),
+                ),
               ],
             ),
             decoration: BoxDecoration(
@@ -35,7 +70,7 @@ class MenuDrawer extends StatelessWidget {
           ),
           Flexible(
             child: Container(
-              
+
               child: ListView(
                 children: [
 
@@ -100,6 +135,21 @@ class MenuDrawer extends StatelessWidget {
               child: ListTile(
                 leading:Icon(Icons.logout,size: 35,color:kPresentTheme.accentColor),
                 title: Text('Logout',style: kNormal2),
+               enabled: userLoggedIn,
+                onTap: () async {
+                  setState(() {
+                    fireAuth.signOut();
+                    userLoggedIn = false;
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                    print(widget.currentUser.email);
+                  });
+
+                 // if(fireAuth.currentUser == null){
+                 //
+                 // }
+
+                },
               )
           )
         ],

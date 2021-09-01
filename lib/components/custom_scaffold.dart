@@ -11,6 +11,7 @@ class CustomScaffold extends StatelessWidget {
   Widget? trailing;
   late Widget body;
   Widget? bottomNavigationBar;
+  var currentUser;
   //final Widget svg = Svg
 
   CustomScaffold({
@@ -19,6 +20,7 @@ class CustomScaffold extends StatelessWidget {
     this.trailing,
     this.body = const SizedBox(height: 0,width: 0,),
     this.bottomNavigationBar = const  SizedBox(height: 0, width: 0,),
+    this.currentUser,
   });
 
   final  _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -32,6 +34,7 @@ class CustomScaffold extends StatelessWidget {
       ) ,
 
       child: Scaffold(
+
         backgroundColor: kPresentTheme.themeColor,
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
@@ -74,7 +77,7 @@ class CustomScaffold extends StatelessWidget {
               ],
             ),
         ),
-        drawer: MenuDrawer(),
+        drawer: MenuDrawer(currentUser: this.currentUser, ),
         bottomNavigationBar:bottomNavigationBar,
       ),
     );

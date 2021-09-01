@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/confirmation_page.dart';
 import 'package:dhanrashi_mvp/data/user_data_class.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
@@ -5,10 +6,12 @@ import 'package:dhanrashi_mvp/dashboard.dart';
 //import 'package:dhanrashi_mvp/goalinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/showgraph_dynamic.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'components/theme_class.dart';
 import 'data/filemanagr_class.dart';
+import 'data/user_access.dart';
 import 'investmentinput.dart';
 //import 'goalinput.dart';
 import 'login_page.dart';
@@ -21,9 +24,12 @@ import 'investmentinput.dart';
 import 'dashboard_old.dart';
 import 'constants.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-UserData currentUser = UserData('', '_fName', '_lName', '_dob', '_income');
+late DRUserAccess currentUser; //UserData('', '_fName', '_lName', '_dob', '_income');
 
+bool loginState = false;
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -40,10 +46,60 @@ void main() {
       );
 }
 
-class DhanrashiMVP extends StatelessWidget {
+class DhanrashiMVP extends StatefulWidget {
+  // late FirebaseAuth fireAuth ;
+  // late FirebaseFirestore firestore;
+
+
   // This widget is the root of your application.
+
+
+
+  @override
+  _DhanrashiMVPState createState() => _DhanrashiMVPState();
+}
+
+class _DhanrashiMVPState extends State<DhanrashiMVP> {
+
+    late FirebaseAuth fireAuth ;
+  // late FirebaseFirestore firestore;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
+
+
+
+
+  }
+
+
+  void _login() async {
+   currentUser=DRUserAccess(fireAuth);
+
+   // var loggedInUser = await userAccess.authUser('subhaaspa@gmail.com','shubha123');
+
+    if(fireAuth.currentUser!=null){
+
+      userLoggedIn = true;
+    }
+    else{
+
+      userLoggedIn = false;
+    }
+    print(loginState);
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    //fireAuth = FirebaseAuth.instance;
+
+    _login();
+
+
     context.read<FileController>().readSettings();
   // kPresentTheme = context.select((FileController controller) => controller.settings !=null ? controller.settings.theme:kPresentTheme);
     return MaterialApp(
@@ -56,9 +112,11 @@ class DhanrashiMVP extends StatelessWidget {
    //    },
 
       //home:ProfilerPage(currentUser: currentUser),
-      home:LoginPage(),
+      home: !userLoggedIn ? LoginPage() : Dashboard(currentUser: currentUser),
       //home:InvestmentScreen(),
     );
   }
 }
+
+
 

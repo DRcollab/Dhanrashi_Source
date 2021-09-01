@@ -364,12 +364,13 @@ class _GoalViewPanelState extends State<GoalViewPanel> {
                           heroTag: "btn1",
                           child: Icon(Icons.add),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilerPage(currentUser: widget.currentUser )),
-                            );
-                          }),
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => ProfilerPage(currentUser: widget.currentUser )),
+                            // );
+                          }
+                          ),
                     ),
                   ],
                 ),

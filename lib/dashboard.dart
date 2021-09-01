@@ -4,6 +4,7 @@ import 'package:dhanrashi_mvp/components/analytics_tabview_class.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/data/user_data_class.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -15,7 +16,7 @@ import 'components/investment_tabview_class.dart';
 
 class Dashboard extends StatelessWidget {
 
-  UserData currentUser;
+  DRUserAccess? currentUser;
 
   Dashboard({required this.currentUser});
 

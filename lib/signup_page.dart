@@ -1,6 +1,7 @@
 
 
 import 'package:dhanrashi_mvp/data/database.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 import 'package:dhanrashi_mvp/login_page.dart';
@@ -28,7 +29,7 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
 
   //const Logging({Key? key}) : super(key: key);
 
-    UserData currentUser = UserData.create();
+    DRUserAccess? currentUser;
 
     SignUpPage({required this.currentUser});
 

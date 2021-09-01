@@ -2,6 +2,7 @@
 import 'dart:ffi';
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,8 +21,8 @@ class ConfirmationPage extends StatefulWidget {
 
 
   Collector collector;
-  UserData currentUser = UserData.create();
-
+  var currentUser;
+  UserData currentUserProfile = UserData.create();
 
   ConfirmationPage({ required this.collector, required this.currentUser});
 
@@ -70,8 +71,12 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left:8.0, bottom: 0),
                 child: Text(" Confirm your entries", style: kH1,),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:18.0, top:0),
+                child: Text(widget.currentUser.email, style: kNormal2,),
               ),
               Column(
                 children: [
@@ -145,12 +150,12 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 setState(() {
 
 
-                  widget.currentUser.setFName(widget.collector.fName.text); /// calling User data methods -- open user_data_class.dart file
-                  widget.currentUser.setLName(widget.collector.lName.text);/// calling User data methods -- open user_data_class.dart file
-                  widget.currentUser.setIncome(widget.collector.annualIncome.toString());/// calling User data methods -- open user_data_class.dart file
-                  widget.currentUser.setDOB(widget.collector.dateAsString());/// calling User data methods -- open user_data_class.dart file
+                  widget.currentUserProfile.setFName(widget.collector.fName.text); /// calling User data methods -- open user_data_class.dart file
+                  widget.currentUserProfile.setLName(widget.collector.lName.text);/// calling User data methods -- open user_data_class.dart file
+                  widget.currentUserProfile.setIncome(widget.collector.annualIncome.toString());/// calling User data methods -- open user_data_class.dart file
+                  widget.currentUserProfile.setDOB(widget.collector.dateAsString());/// calling User data methods -- open user_data_class.dart file
 
-                  _userHandler.createUser(widget.currentUser); /// creating user from currentUser data -- open usr_handler.dart
+               //   _userHandler.createUser(widget.currentUser); /// creating user from currentUser data -- open usr_handler.dart
 
                   _userHandler.addProfile();  /// adding user profile to the database -- mock database [UserPtofileTable]
 

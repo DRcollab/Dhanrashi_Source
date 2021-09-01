@@ -2,6 +2,7 @@
 
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
 
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
@@ -133,8 +134,8 @@ class ProfilerPage extends StatefulWidget {
 
 
 /// used as named attribute to get the user data from the login page.
-  UserData currentUser = UserData('','','','','');
-
+  //UserData currentUser = UserData('','','','','');
+  var currentUser;
 
 /// Constructor for Profile Page
   ProfilerPage({required this.currentUser});
@@ -415,7 +416,7 @@ class _NamePickerState extends State<NamePicker> {
     jSon =  JsonHandler(fileName: 'settings.json');
     //jSon.readFile();
     // if(jSon.readSuccessful){
-      _profilePhotoSource = jSon.fileContent['profile'];
+    //  _profilePhotoSource = jSon.fileContent['profile'];
     // //  print('profile pict is :: $_profilePhotoSource');
     // }
     print('profile pict is :: $_profilePhotoSource');

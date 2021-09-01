@@ -2,6 +2,7 @@
 
 import 'package:dhanrashi_mvp/data/validators.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
@@ -19,14 +20,17 @@ import 'data/database.dart';
 import 'components/custom_text.dart';
 import 'data/user_data_class.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:dhanrashi_mvp/data/user_access.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
 class LoginPage extends StatefulWidget {
 
-UserData currentUser = UserData.create();
+//UserData currentUser = UserData.create();
 
+DRUserAccess? currentUser;
 
+LoginPage({this.currentUser});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -35,7 +39,7 @@ UserData currentUser = UserData.create();
 class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
 
    bool profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
-  final String currentUser = ""; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
+    DRUserAccess? currentUser; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
   // The currentUser will be displayed on dhanrashi or other places....
 
   final _userText = TextEditingController();
@@ -43,6 +47,18 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
   var _userKey = GlobalKey<FormState>(); // Used for user email validation
   var _passKey = GlobalKey<FormState>(); // Used fot password validation
   int cardIndex = 0;
+
+
+   @override
+   void initState() {
+     // TODO: implement initState
+     super.initState();
+     currentUser = widget.currentUser;
+
+
+
+
+   }
 
   @override
   void dispose(){
@@ -68,15 +84,13 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
     "Recalled the password ? Go back",
   ];
 
-  @override
-  void initState(){
-    
-  }
+
 
   @override
   Widget build(BuildContext context) {
 
     return CustomScaffold(
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -177,7 +191,13 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
 
 
 class Logger extends StatefulWidget with InputValidationMixin {
-  //const Logging({Key? key}) : super(key: key);
+
+ // DRUserAccess? currentUser;
+  Logger();
+
+
+
+
   @override
   _LoggerState createState() => _LoggerState();
 }
@@ -185,9 +205,11 @@ class Logger extends StatefulWidget with InputValidationMixin {
 class _LoggerState extends State<Logger> with InputValidationMixin {
 
 
-   bool profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
-  final String currentUser = ""; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
+   bool _profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
+  //final String currentUser = ""; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
   // The currentUser will be displayed on dhanrashi or other places....
+
+   late final _loggedInUser;
   String _errorText = "";
   final _userText = TextEditingController();
   final _passWord = TextEditingController();
@@ -197,6 +219,10 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
   var _user = UserHandeler(userTable, userProfileTable);
   //var _userProfile = UserHandeler(userProfileTable);
 
+   bool loginState = false;
+  // late DRUserAccess currentUser;
+
+   late FirebaseAuth fireAuth ;
   bool _hidePassword = true;
 
   @override
@@ -206,10 +232,55 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
+
+  }
+
+  // This async method implements login
+   void _login(String id, String pwd) async {
+     //currentUser = DRUserAccess(fireAuth);
+    //_loggedInUser
+     var _loggedInUser = await DRUserAccess(fireAuth).authUser(id, pwd);
+
+     if (_loggedInUser != null) {
+
+       _profileReady = _user.fetchProfile(); // preserved for fetching user profile.
+
+       if (_profileReady){
+         Navigator.push(context,
+             MaterialPageRoute(builder: (context) => DashBoard(currentUser: _user.user(),)));
+       }
+       else{
+
+        userLoggedIn = true;
+         // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
+         Navigator.push(context,
+             MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser,)));
+       }
+     }
+     else{
+       _errorText = "User name or password did not match";
+
+
+       return ;
+     }
+
+
+   }
+
+// End of login async method
+
+
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+
+
+        return Column(
       children: [
         Padding(
             padding: kTextFieldPadding,
@@ -280,42 +351,16 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
           borderRadius: BorderRadius.circular(25.0),
           onPressed: () {
 
-            //TODO fetch user data here.
+
             setState(() {
               if(_userKey.currentState!.validate()) {
                 if(_passKey.currentState!.validate()){
 
-                  print(_userText.text);
-                  print(_passWord.text);
-
-                 bool _authenticationSuccess =_user.authenticateUser(_userText.text, _passWord.text);
-                  print(_userText.text);
-                 print(_authenticationSuccess);
-
-                  if(_authenticationSuccess){
-                   profileReady = _user.fetchProfile();
-                    print("validate");
-                   if (profileReady){
-                     Navigator.push(context,
-                         MaterialPageRoute(builder: (context) => DashBoard(currentUser: _user.user(),)));
-                   }
-                   else{
+                  // Async function to enable login
+                  _login(_userText.text, _passWord.text);
 
 
-                     // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
-                     Navigator.push(context,
-                         MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _user.user(),)));
-                   }
-                  }
-                  else{
-                    _errorText = "User name or password did not match";
-
-                    print("not matched");
-                    print(_userText.text);
-                    print(_passWord.text);
-                    return ;
-                  }
-                }
+                } // end of outside
               }
             });
 

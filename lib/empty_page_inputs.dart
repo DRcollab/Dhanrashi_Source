@@ -1,5 +1,6 @@
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
+import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/data/user_data_class.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ import 'constants.dart';
 import 'goal_input.dart';
 
 class EmptyPage extends StatelessWidget {
-  UserData currentUser;
+
+ DRUserAccess? currentUser;
 
   EmptyPage({required this.currentUser }) ;
 
