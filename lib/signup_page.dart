@@ -5,6 +5,8 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 import 'package:dhanrashi_mvp/login_page.dart';
+import 'package:dhanrashi_mvp/profiler_option_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,6 +21,8 @@ import 'components/custom_text_field.dart';
 import 'components/custom_text.dart';
 import 'profiler.dart';
 import 'data/user_data_class.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'components/utilities.dart';
 
 
 const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
@@ -49,6 +53,41 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
   var _passKey2 = GlobalKey<FormState>();
 
   var _user = UserHandeler(userTable, userProfileTable);
+
+  late FirebaseAuth fireAuth;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
+  }
+
+  void _createUser(String id, String pwd) async {
+
+       // DRUserAccess(fireAuth).createUser(id, pwd);
+
+    try{
+
+      var currentUser = await fireAuth.createUserWithEmailAndPassword(email: id, password: pwd) ;
+      if(currentUser.user !=null){
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: currentUser.user,)));
+
+      }
+
+    }catch(e){
+
+      Utility.showErrorMessage(context, e.toString());
+    }
+
+
+
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,12 +207,11 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                          if(_passKey.currentState!.validate()){
                            if(_passKey2.currentState!.validate()){
 
+                                _createUser(_userEmail.text, _userPassword.text);
+                               // userLoggedIn = true;
 
-                             _user.add([_userEmail.text,_userPassword.text]);
-                             _user.printTable();
-
-                             Navigator.push(context,
-                                 MaterialPageRoute(builder: (context) => ProfilerPage(currentUser: widget.currentUser,)));
+                                 // Navigator.push(context,
+                                 //     MaterialPageRoute(builder: (context) => ProfilerPage(currentUser: widget.currentUser,)));
 
 
                            }

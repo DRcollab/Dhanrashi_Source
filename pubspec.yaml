@@ -99,6 +99,7 @@ flutter:
     - images/goldsrain.png
     - images/empty.png
     - images/settings.png
+    - images/no_connection.png
     - images/profiles/profile1.png
     - images/profiles/profile2.png
     - images/profiles/profile3.png

@@ -3,6 +3,7 @@ import 'package:dhanrashi_mvp/confirmation_page.dart';
 import 'package:dhanrashi_mvp/data/user_data_class.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/models/on_error_screen.dart';
 //import 'package:dhanrashi_mvp/goalinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/showgraph_dynamic.dart';
@@ -62,6 +63,7 @@ class DhanrashiMVP extends StatefulWidget {
 class _DhanrashiMVPState extends State<DhanrashiMVP> {
 
     late FirebaseAuth fireAuth ;
+    var userLoggedIn;
   // late FirebaseFirestore firestore;
 
   @override
@@ -112,8 +114,9 @@ class _DhanrashiMVPState extends State<DhanrashiMVP> {
    //    },
 
       //home:ProfilerPage(currentUser: currentUser),
-      home: !userLoggedIn ? LoginPage() : Dashboard(currentUser: currentUser),
-      //home:InvestmentScreen(),
+      //
+     // home: !userLoggedIn ? LoginPage() : Dashboard(currentUser: currentUser),
+      home:LoginPage(),
     );
   }
 }

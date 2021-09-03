@@ -135,11 +135,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
               child: ListTile(
                 leading:Icon(Icons.logout,size: 35,color:kPresentTheme.accentColor),
                 title: Text('Logout',style: kNormal2),
-               enabled: userLoggedIn,
+               enabled: widget.currentUser!=null,
                 onTap: () async {
                   setState(() {
                     fireAuth.signOut();
-                    userLoggedIn = false;
+                    //userLoggedIn = false;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginPage()));
                     print(widget.currentUser.email);

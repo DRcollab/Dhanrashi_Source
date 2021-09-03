@@ -26,6 +26,7 @@ class DRUserAccess{
     try {
       final newUser = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+
       if (newUser != null) {
         var currentuser = _auth.currentUser!.uid;
         print('UUID is:$currentuser');
@@ -45,17 +46,28 @@ class DRUserAccess{
 
       final signInResult =
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      if (signInResult != null) {
+      if (signInResult!= null) {
         _email = _auth.currentUser!.email;
         return (_auth.currentUser);
       }
     }
     catch(e){
-      print('Exception while signing in $e');
-      return null;
+      // print('Exception while signing in $e');
+      // return null;
+      throw e;
     }
   }
 
+Future<void> resetPassword(String email) async {
+
+    try{
+      _auth.sendPasswordResetEmail(email: email);
+
+    }catch(e){
+      throw e;
+    }
+
+}
 
 
   Future getUser() async {

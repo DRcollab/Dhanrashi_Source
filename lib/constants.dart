@@ -1,17 +1,9 @@
 import 'package:dhanrashi_mvp/components/theme_class.dart';
 import 'package:flutter/material.dart';
 
-var userLoggedIn = false; // used to determine whether
+//var userLoggedIn = false; // used to determine whether
 
-double adaptForeSmallDevice(BuildContext context) {
-  final size = MediaQuery.of(context).size;
-  // For tiny devices.
-  if (size.height < 600) {
-    return 0.6;
-  }
-  // For normal devices.
-  return 1.0;
-}
+
 
 late final gCurrentUser;
 

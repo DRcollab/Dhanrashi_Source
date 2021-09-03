@@ -1,5 +1,6 @@
 
 
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'constants.dart';
 import 'dashboard_old.dart';
+import 'models/on_error_screen.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -240,34 +242,41 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
   }
 
+
   // This async method implements login
    void _login(String id, String pwd) async {
      //currentUser = DRUserAccess(fireAuth);
     //_loggedInUser
-     var _loggedInUser = await DRUserAccess(fireAuth).authUser(id, pwd);
+     try{
+       var _loggedInUser = await  fireAuth.signInWithEmailAndPassword(email: id, password: pwd); // DRUserAccess(fireAuth).authUser(id, pwd);
+       if (_loggedInUser.user != null) {
+         // userLoggedIn = true;
+         _profileReady = _user.fetchProfile(); // preserved for fetching user profile.
 
-     if (_loggedInUser != null) {
+         if (_profileReady){
+           Navigator.push(context,
+               MaterialPageRoute(builder: (context) => DashBoard(currentUser: _user.user(),)));
+         }
+         else{
 
-       _profileReady = _user.fetchProfile(); // preserved for fetching user profile.
 
-       if (_profileReady){
-         Navigator.push(context,
-             MaterialPageRoute(builder: (context) => DashBoard(currentUser: _user.user(),)));
+           // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
+           Navigator.push(context,
+               MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
+         }
        }
-       else{
 
-        userLoggedIn = true;
-         // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
-         Navigator.push(context,
-             MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser,)));
-       }
+
+     }catch(e){
+       // Navigator.push(context,
+       //     MaterialPageRoute(builder: (context) => ErrorPage()));
+
+       Utility.showErrorMessage(context, e.toString());
+        print(e);
      }
-     else{
-       _errorText = "User name or password did not match";
 
 
-       return ;
-     }
+
 
 
    }
@@ -385,8 +394,42 @@ class Resetter extends StatefulWidget  with InputValidationMixin{
 class _ResetterState extends State<Resetter>  with InputValidationMixin{
 
   var _emailKey = GlobalKey<FormState>();
+ late FirebaseAuth fireAuth;
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
+
+  }
+
+
+  void _reset(String email) async {
+
+    try{
+      await fireAuth.sendPasswordResetEmail(email: emailController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+      // fireAuth.sendPasswordResetEmail(email: emailController.text);
+    }catch(e){
+
+      Utility.showErrorMessage(context, e.toString());
+      print('error mesage :${e}');
+
+    }
+
+  }
+
+
 
   var emailController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -419,9 +462,16 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
             buttonText: 'Reset Password',
             onPressed: () {
 
-              if(_emailKey.currentState!.validate()){
-                // TODO code to send user password reset link //
-              }
+              setState(() {
+
+                if(_emailKey.currentState!.validate()){
+
+                  // TODO code to send user password reset link //
+                  // var currentUser = DRUserAccess(fireAuth).createUser(email, password)
+                  _reset(emailController.text);
+                }
+
+              });
 
 
 
