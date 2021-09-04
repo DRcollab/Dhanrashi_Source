@@ -10,6 +10,9 @@ import 'package:dhanrashi_mvp/data/investment_db.dart';
 class DRInvestAccess{
   final _firestore= FirebaseFirestore.instance;
   final _auth=FirebaseAuth.instance;
+
+
+
   Future storeInvestment(
       List<InvestDB> listInvestments,) async {
     DateTime currentPhoneDate = DateTime.now();

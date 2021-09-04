@@ -332,6 +332,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
 
     return CustomScaffold(
+      currentUser: widget.currentUser,
       child: Container(
        // color: Colors.red,
         child: Column(

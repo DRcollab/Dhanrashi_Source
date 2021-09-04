@@ -9,16 +9,17 @@ import 'goal_input.dart';
 
 class EmptyPage extends StatelessWidget {
 
- DRUserAccess? currentUser;
+ var currentUser;
 
   EmptyPage({required this.currentUser }) ;
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-
+        currentUser: this.currentUser,
         child:Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
 
             Container(child: Image.asset('images/empty.png'),),
@@ -30,30 +31,36 @@ class EmptyPage extends StatelessWidget {
               ),
             ),
             //CommandButton(),
-            CommandButton(
-                onPressed: (){
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+              child: CommandButton(
+                  onPressed: (){
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
-                },
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
+                  },
 
-                buttonColor: kPresentTheme.accentColor,
-                borderRadius: BorderRadius.circular(10),
-                textColor: kPresentTheme.lightWeightColor,
-                buttonText: 'Add Goals',
+                  buttonColor: kPresentTheme.accentColor,
+                  borderRadius: BorderRadius.circular(20),
+                  textColor: kPresentTheme.lightWeightColor,
+                  buttonText: 'Add Investments',
 
 
+              ),
             ),
 
-            CommandButton(
-                onPressed: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
-                },
-                buttonColor: kPresentTheme.accentColor,
-                borderRadius: BorderRadius.circular(10),
-                textColor: kPresentTheme.lightWeightColor,
-                buttonText: 'Add Investments',
+            Padding(
+              padding: const EdgeInsets.only(left:18.0, right: 18.0),
+              child: CommandButton(
+                  onPressed: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
+                  },
+                  buttonColor: kPresentTheme.accentColor,
+                  borderRadius: BorderRadius.circular(20),
+                  textColor: kPresentTheme.lightWeightColor,
+                  buttonText: 'Add Goals',
+              ),
             )
           ],
         )

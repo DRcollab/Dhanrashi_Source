@@ -57,6 +57,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     // print(widget.collector.dateOfBirth);
 
     return CustomScaffold(
+      currentUser: widget.currentUser,
       child: Container(
 
         child: Column(

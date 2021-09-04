@@ -19,7 +19,7 @@ import 'data/user_data_class.dart';
 class InvestmentInputScreen extends StatefulWidget {
   //const InvestmentInputScreen({Key? key}) : super(key: key);
 
-  DRUserAccess? currentUser;
+  var currentUser;
 
 InvestmentInputScreen({required this.currentUser});
 
@@ -50,7 +50,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-
+      currentUser: widget.currentUser,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

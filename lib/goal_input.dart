@@ -18,7 +18,7 @@ import 'investmentinput.dart';
 class GoalsInputScreen extends StatefulWidget {
   //const InvestmentInputScreen({Key? key}) : super(key: key);
 
-  DRUserAccess? currentUser;
+  var currentUser;
 
 
 
@@ -51,7 +51,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-
+      currentUser: widget.currentUser,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

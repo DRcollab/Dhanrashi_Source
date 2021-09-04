@@ -14,20 +14,23 @@ import 'constants.dart';
 import 'components/investment_tabview_class.dart';
 
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
 
-  DRUserAccess? currentUser;
+  var currentUser;
 
   Dashboard({required this.currentUser});
 
+  @override
+  _DashboardState createState() => _DashboardState();
+}
 
-
-
+class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
           length: 3,
           child: CustomScaffold(
+            currentUser: this.widget.currentUser,
               title: 'Dashboard',
               child: Padding(
                 padding: const EdgeInsets.only(top: 38.0),

@@ -1,3 +1,5 @@
+/// This code is written by Shubhadeep
+
 import 'package:dhanrashi_mvp/components/settings_sheet.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
@@ -39,6 +41,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
 
+    print(widget.currentUser);
     return Drawer(
 
       child: Column(
@@ -138,7 +141,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
                enabled: widget.currentUser!=null,
                 onTap: () async {
                   setState(() {
+                   // currentUser.
                     fireAuth.signOut();
+                    print(widget.currentUser);
                     //userLoggedIn = false;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginPage()));
