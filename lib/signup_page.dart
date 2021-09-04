@@ -207,11 +207,8 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                          if(_passKey.currentState!.validate()){
                            if(_passKey2.currentState!.validate()){
 
+                             /// creates an user in the firebase.
                                 _createUser(_userEmail.text, _userPassword.text);
-                               // userLoggedIn = true;
-
-                                 // Navigator.push(context,
-                                 //     MaterialPageRoute(builder: (context) => ProfilerPage(currentUser: widget.currentUser,)));
 
 
                            }
@@ -220,11 +217,8 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
 
                         }
                         else
-                          print("false");
-                        //_errorText = ""
-                     //
-                        //   _passKey.currentState.validate();
-                     //   _passKey2.currentState.validate();
+                          Utility.showErrorMessage(context, 'Something went wrong please restart the app.');
+                      /// custom method defined in utilities.dart;
                       });
 
 

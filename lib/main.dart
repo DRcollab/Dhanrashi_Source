@@ -18,7 +18,7 @@ import 'investmentinput.dart';
 import 'login_page.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
-import 'test.dart';
+
 import 'package:flutter/material.dart';
 //import 'goalinput.dart';
 import 'investmentinput.dart';
