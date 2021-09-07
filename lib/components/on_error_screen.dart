@@ -2,7 +2,7 @@
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import 'constants.dart';
 import '../login_page.dart';
 
 class ErrorPage extends StatelessWidget {
@@ -19,11 +19,11 @@ class ErrorPage extends StatelessWidget {
             color: Colors.red,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(' Lost Connection ', style: kH1,),
+              child: Text(' Lost Connection ', style:DefaultValues.kH1(context),),
             ),
           ),
           Container(
-            margin: EdgeInsets.all(8),
+            margin: DefaultValues.kDefaultPaddingAllSame(context),
             child:Image.asset('images/no_connection.png',),
 
           ),
@@ -35,19 +35,19 @@ class ErrorPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('It seems we have lost connection to the server',style: kH2,),
+                  child: Text('It seems we have lost connection to the server',style:DefaultValues.kH2(context),),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Please check your data settings or wifi connection.',style: kNormal2),
+                  child: Text('Please check your data settings or wifi connection.',style:DefaultValues.kNormal2(context)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('If you are travelling out side your native place.',style: kNormal2),
+                  child: Text('If you are travelling out side your native place.',style:DefaultValues.kNormal2(context)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Checkout Data Roaming settings inside your phone settings',style: kNormal2),
+                  child: Text('Checkout Data Roaming settings inside your phone settings',style:DefaultValues.kNormal2(context)),
                 ),
 
               ],

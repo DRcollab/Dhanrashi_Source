@@ -1,4 +1,4 @@
-import 'data/investment_class.dart';
+import 'models/investment_class.dart';
 import 'dart:math';
 import 'package:matrix2d/matrix2d.dart';
 

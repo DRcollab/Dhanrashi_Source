@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dounut_charts.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 import 'banner_class.dart';
 
 class GoalsTabView extends StatelessWidget {

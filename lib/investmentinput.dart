@@ -1,18 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
 import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
+import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 //import 'components/tile_class.dart';
-import 'data/investment_class.dart';
+import 'models/investment_class.dart';
 import 'components/action_screen.dart';
-import 'data/user_data_class.dart';
+import 'models/user_data_class.dart';
 
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -47,6 +51,21 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
   double investmentDuration = 0;
 
   int _currentTabIndex = 0 ;
+
+  late FirebaseFirestore fireStore;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+  }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -65,14 +84,14 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 18.0,top: 140.0),
                   child: Text("Investments",
-                    style: kH1,
+                    style:DefaultValues.kH1(context),
 
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 18.0,top: 170.0),
                   child: Text("Choose one of  these",
-                    style: kNormal2,
+                    style:DefaultValues.kNormal2(context),
 
                   ),
                 ),
@@ -112,11 +131,13 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                        currentUser: widget.currentUser,
+                                        //save: _save,
                                         titleMessage: name,
                                         investedAmount: 10,
                                         investmentDuration: 10,
                                         expectedRoi: 12,
+                                        annualInvestment: 1,
                                         imageSource: 'images/mutual.png',
 
                             ),
@@ -146,10 +167,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 5,
                                       investmentDuration: 20,
+                                      annualInvestment: 1,
                                       expectedRoi: 6,
                                       imageSource: 'images/insurance.png',
 
@@ -184,10 +206,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 10,
+                                      annualInvestment: 1,
                                       expectedRoi: 6,
                                       imageSource: 'images/bonds.png',
 
@@ -217,10 +240,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 5,
+                                      annualInvestment: 1,
                                       expectedRoi: 15,
                                       imageSource: 'images/stock.png',
 
@@ -255,10 +279,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 20,
+                                      annualInvestment: 1,
                                       expectedRoi: 12,
                                       imageSource: 'images/real-estate.png',
                                     ),
@@ -287,10 +312,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 5,
+                                      annualInvestment: 1,
                                       expectedRoi: 5,
                                       imageSource: 'images/bank.png',
 
@@ -326,10 +352,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 10,
+                                      annualInvestment: 1,
                                       expectedRoi: 10,
                                       imageSource: 'images/coin.png',
                                     ),
@@ -358,10 +385,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 10,
+                                      annualInvestment: 1,
                                       expectedRoi: 12,
                                       imageSource: 'images/products.png',
 

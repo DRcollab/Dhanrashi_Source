@@ -1,16 +1,19 @@
-
+/// This code is written by Shubhadeep Sarkar
+/// Login page consists  two view element 1. Logger and 2. Resetter
+///
 
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
+import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 import 'dashboard_old.dart';
-import 'models/on_error_screen.dart';
+import 'components/on_error_screen.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +23,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'data/user_handler.dart';
 import 'data/database.dart';
 import 'components/custom_text.dart';
-import 'data/user_data_class.dart';
+import 'models/user_data_class.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -50,6 +53,9 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
   var _passKey = GlobalKey<FormState>(); // Used fot password validation
   int cardIndex = 0;
 
+
+  /// Goto Logger class definition to see how login is happening
+   ///
 
    @override
    void initState() {
@@ -100,7 +106,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.monetization_on),
-              Text('Dhanrashi', style: kH1,),
+              Text('Dhanrashi', style:DefaultValues.kH1(context),),
             ],
           ),
         Padding(
@@ -110,7 +116,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
           children: [
             cardView[cardIndex],
             Padding(
-              padding: kTextFieldPadding,
+              padding:DefaultValues.kTextFieldPadding(context),
               child: LinkText(
                   type: LinkTextType.DARK,
                   linkText: linkText[cardIndex],
@@ -136,7 +142,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Not have a login id ?",
-                  style: kNormal2,
+                  style:DefaultValues.kNormal2(context),
                 ),
               ),
               Padding(
@@ -195,7 +201,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
 class Logger extends StatefulWidget with InputValidationMixin {
 
  // DRUserAccess? currentUser;
-  Logger();
+ // Logger();
 
 
 
@@ -261,8 +267,12 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
 
            // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
+           // Navigator.push(context,
+           //     MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
+
            Navigator.push(context,
-               MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
+               MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: _loggedInUser.user,)));
+
          }
        }
 
@@ -292,7 +302,7 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
         return Column(
       children: [
         Padding(
-            padding: kTextFieldPadding,
+            padding:DefaultValues.kTextFieldPadding(context),
             child: Form(
               key: _userKey,
               child: CustomTextField(
@@ -318,7 +328,7 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
             )
         ),
         Padding(
-          padding: kTextFieldPadding,
+          padding:DefaultValues.kTextFieldPadding(context),
           child: Form(
             key: _passKey,
 
@@ -402,6 +412,7 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
   void initState() {
     // TODO: implement initState
     super.initState();
+    /// Instantiate a Firebase auth object
     future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
 
   }
@@ -436,7 +447,7 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
 
       children: [
         Padding(
-          padding: kTextFieldPadding,
+          padding:DefaultValues.kTextFieldPadding(context),
           child: Form(
             key: _emailKey,
 
@@ -454,7 +465,7 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
           ),
         ),
         Padding(
-          padding: kTextFieldPadding,
+          padding:DefaultValues.kTextFieldPadding(context),
           child: CommandButton(
             textColor: Colors.white,
             buttonColor: kPresentTheme.accentColor,

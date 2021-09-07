@@ -1,5 +1,5 @@
 import 'package:dhanrashi_mvp/components/theme_class.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 class Settings {
 

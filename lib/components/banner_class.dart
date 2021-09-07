@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 class Shingle extends StatelessWidget {
   const Shingle({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class Shingle extends StatelessWidget {
     return Card(
       child: ListTile(
         leading:Image.asset('images/mutual.png',height: 20,width: 20,),
-        title: Text('Mutual Fund',style: kH2,),
+        title: Text('Mutual Fund',style: DefaultValues.kH2(context),),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

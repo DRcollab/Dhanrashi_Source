@@ -3,14 +3,20 @@ import 'dart:math';
 
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
+import 'package:dhanrashi_mvp/data/investment_access.dart';
+import 'package:dhanrashi_mvp/main.dart';
 import 'package:flutter/material.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dhanrashi_mvp/components/labeled_slider.dart';
-
-
+import 'package:dhanrashi_mvp/models/investment.dart';
+import 'package:dhanrashi_mvp/models/investment_db.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // double investedAmount = 10;
 // double expectedRoi = 23;
@@ -30,9 +36,11 @@ class ActionSheet extends StatefulWidget {
   int investmentDuration = 0;
   double annualInvestment = 0;
   String imageSource ='';
-
+ // late void Function(dynamic) save;
   String display = '';
- // final String? Function(String?) validator => return 0;
+  var dataToSave;
+  late var currentUser;
+  // final String? Function(String?) validator => return 0;
 
   ActionSheet({
     this.titleMessage='',
@@ -41,7 +49,9 @@ class ActionSheet extends StatefulWidget {
     required this.investmentDuration,
     this.imageSource='',
     this.annualInvestment = 0,
-
+  //  required this.save,
+    this.dataToSave,
+    required this.currentUser,
   });
 
   @override
@@ -61,6 +71,9 @@ class _ActionSheetState extends State<ActionSheet> {
   int investmentDuration = 1;
   double interestValue = 0 ;        // holds calculated value of futureValue of the investment
   double annualInvestment = 0;
+ // Investment currentInvestment = Investment();
+  late FirebaseFirestore fireStore;
+  late var investAccess;
 
   double calculateInterset( ){
 
@@ -70,6 +83,7 @@ class _ActionSheetState extends State<ActionSheet> {
     double investedPortion = investedAmount + annualInvestment * investmentDuration;
 
     interest = futureValue - investedPortion;
+
 
    return double.parse(interest.toStringAsFixed(1)) ;
 
@@ -87,32 +101,62 @@ class _ActionSheetState extends State<ActionSheet> {
   @override
   void initState(){
 
-    print(widget.investmentDuration);
+   // print(widget.investmentDuration);
     investedAmount = widget.investedAmount;
     expectedRoi = widget.expectedRoi;
     investmentDuration = widget.investmentDuration;
     interestValue = calculateInterset();
     annualInvestment = widget.annualInvestment;
-
-
-
     super.initState();
+    future:Firebase.initializeApp().whenComplete(() {
+      fireStore =  FirebaseFirestore.instance;
+      investAccess = DRInvestAccess(fireStore, widget.currentUser);
+    });
+
+   // print(fireStore.toString());
   }
 
-  // var pieData = [
-  //   Task('PV', 23.9, Colors.deepPurpleAccent),
-  //   Task('FV', 24.8,Colors.amberAccent),
-  //
-  // ];
+  void _save(Investment investment) async {
+    final snackBar = SnackBar(
+      content: Text(' Your investments are saved successfully'),
+    );
+    print(fireStore.toString());
+
+
+    try{
+      await investAccess.storeInvestmentSolo(investment);
+      // Fluttertoast.showToast(
+      //     msg:'Saved successfully',
+      //   toastLength: Toast.LENGTH_LONG,
+      //   gravity: ToastGravity.CENTER,
+      //   backgroundColor: Colors.green,
+      //   textColor: Colors.white,
+      //   fontSize: 16.0,
+      // );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    }
+     catch(e){
+         Utility.showErrorMessage(context, e.toString());
+
+     }
+
+
+
+
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
 
-
+    //print(fireStore.toString());
     interestValue = calculateInterset();
 
-    print('PV : $investedAmount and IV:$interestValue');
+  //  print('PV : $investedAmount and IV:$interestValue');
 
      pieData = [
 
@@ -150,20 +194,48 @@ class _ActionSheetState extends State<ActionSheet> {
                  mainAxisAlignment: MainAxisAlignment.start,
                  children: [
                    Image.asset(widget.imageSource, height: 50, width: 50,),
-                   Expanded(child: Center(child: Text(widget.titleMessage, style: kH1,))),
+                   Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH1(context),))),
                    CommandButton(
                      buttonColor: kPresentTheme.alternateColor,
                      //icon: Icons.save,
                      textColor: kPresentTheme.highLightColor,
                      buttonText: 'Save',
-                     onPressed:(){
-
-
-
+                     onPressed:()  {
+                      print(' To Be saved .......:');
+                       print('email: ${widget.currentUser.email}');
+                       print('uid : ${widget.currentUser.uid}');
+                       print(widget.titleMessage);
+                       print('Annual Inv : ${annualInvestment}');
+                       print('current Inv: ${investedAmount}');
                        print('duration: ${investmentDuration}');
-                       print('amount: ${investedAmount}');
-                       print('ROI :${expectedRoi}');
+                       print('ROI : ${interestValue}');
 
+
+                       var inv =  Investment(
+                             name:widget.titleMessage,
+                             annualInvestmentAmount: annualInvestment,
+                             currentInvestmentAmount: investedAmount,
+                             duration: investmentDuration,
+                             investmentRoi: interestValue,
+                           );
+
+                       print('.... printing inv:;;;;;;;;');
+                       print(inv);
+
+                       setState(() {
+
+                          _save(inv);
+
+                       });
+
+                       Navigator.pop(context);
+
+
+                       //
+                       // print('duration: ${investmentDuration}');
+                       // print('amount: ${investedAmount}');
+                       // print('ROI :${expectedRoi}');
+                       //
 
 
                      }, borderRadius: BorderRadius.circular(10),),
@@ -196,7 +268,7 @@ class _ActionSheetState extends State<ActionSheet> {
 
                      ],
                    ),
-                   Text('${investedAmount} Lakh',style: kH3,),
+                   Text('${investedAmount} Lakh',style: DefaultValues.kH3(context),),
                    Row(
                      children: [
                        Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
@@ -207,12 +279,12 @@ class _ActionSheetState extends State<ActionSheet> {
 
                      ],
                    ),
-                   Text('${interestValue} Lakh',style: kH3,),
+                   Text('${interestValue} Lakh',style: DefaultValues.kH3(context),),
                    SizedBox(height: 5,width: double.infinity,),
                    Container(height: 2,width: double.infinity,color: Colors.black12,),
                    SizedBox(height: 5,width: double.infinity,),
                    Text('${(investedAmount+interestValue).toStringAsFixed(2)} Lakh',
-                          style: kH1,
+                          style: DefaultValues.kH1(context),
                    ),
                  ],
                ),

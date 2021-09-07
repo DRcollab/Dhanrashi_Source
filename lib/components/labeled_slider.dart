@@ -1,7 +1,7 @@
 import 'package:dhanrashi_mvp/components/action_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/custom_text_field.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 class LabeledSlider extends StatefulWidget {
 // const LabeledSlider({Key? key}) : super(key: key);
@@ -46,6 +46,15 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
   var controller = TextEditingController();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller = TextEditingController(
+      text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
+    );
+        //
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +71,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
               validator: widget.validator,
               controller: this.controller,
               label:widget.labelText,
-              hintText: widget.sliderValue.toStringAsFixed(widget.textPrecision),
+              hintText: '',
               suffix: widget.suffix,
               getValue: (){
                 setState(() {

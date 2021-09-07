@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/custom_text_field.dart';
 
 class Band extends StatefulWidget {

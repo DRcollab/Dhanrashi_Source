@@ -2,7 +2,7 @@
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '/constants.dart';
+import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -40,7 +40,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 50.0,
+      //height: 50.0 - 50.0 * DefaultValues.adaptForSmallDevice(context),
       alignment: Alignment.bottomCenter,
       // color: Colors.amber,
 
@@ -50,10 +50,10 @@ class CustomTextField extends StatelessWidget {
 
         obscureText: passWord && this.hidePassword,
         textInputAction: this.textInputAction,
-        style: kH3,
+        style: DefaultValues.kH3(context),
         validator: this.validator,
         decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(8),
+                  contentPadding: DefaultValues.kDefaultPaddingAllSame(context),
                   enabledBorder: kFormTextBorder,
                   errorBorder: kFormTextBorder,
                   focusedErrorBorder: kFormTextBorder,
@@ -71,7 +71,7 @@ class CustomTextField extends StatelessWidget {
                                     )
                             ),
                   hintText: this.hintText,
-                  hintStyle: kHintTextStyle,
+                  hintStyle: DefaultValues.kHintTextStyle(context),
                   errorText: errorText,
                   labelText: label,
                   //labelStyle:
@@ -254,7 +254,7 @@ class _NumberInputFieldState extends State<NumberInputField> {
                             )
                         ),
                     hintText: widget.hintText,
-                    hintStyle: kHintTextStyle,
+                    hintStyle: DefaultValues.kHintTextStyle(context),
                     errorText: widget.errorText,
 
                       //labelStyle:

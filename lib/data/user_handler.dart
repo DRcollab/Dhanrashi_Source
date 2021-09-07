@@ -3,7 +3,7 @@
 
 
 
-import 'package:dhanrashi_mvp/data/user_data_class.dart';
+import 'package:dhanrashi_mvp/models/user_data_class.dart';
 
 import 'database.dart';
 

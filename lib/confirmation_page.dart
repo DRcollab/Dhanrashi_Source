@@ -9,9 +9,9 @@ import 'package:flutter/cupertino.dart';
 
 import 'main.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 import 'components/band_class.dart';
-import 'data/user_data_class.dart';
+import 'models/user_data_class.dart';
 import 'components/buttons.dart';
 import 'data/user_handler.dart';
 import 'data/database.dart';
@@ -73,11 +73,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left:8.0, bottom: 0),
-                child: Text(" Confirm your entries", style: kH1,),
+                child: Text(" Confirm your entries", style:DefaultValues.kH1(context),),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:18.0, top:0),
-                child: Text(widget.currentUser.email, style: kNormal2,),
+                child: Text(widget.currentUser.email, style:DefaultValues.kNormal2(context),),
               ),
               Column(
                 children: [

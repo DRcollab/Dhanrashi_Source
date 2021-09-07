@@ -5,7 +5,7 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -57,11 +57,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 Align(
                     alignment: Alignment.topRight,
 
-                    child: Text('Dhanrashi', style: kH1,)),
+                    child: Text('Dhanrashi', style:DefaultValues.kH1(context),)),
                 Align(
                     alignment: Alignment.bottomLeft,
 
-                    child: widget.currentUser!=null ? Text(widget.currentUser.email, style: kNormal2,) : SizedBox(),
+                    child: widget.currentUser!=null ? Text(widget.currentUser.email, style:DefaultValues.kNormal2(context),) : SizedBox(),
                 ),
               ],
             ),
@@ -81,27 +81,27 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     //contentPadding: EdgeInsets.all(10),
                     leading: FaIcon(FontAwesomeIcons.userFriends,size: 30,color:kPresentTheme.accentColor, ),
-                    title: Text('Update profile' ,style: kNormal2, ),
+                    title: Text('Update profile' ,style:DefaultValues.kNormal2(context), ),
                     onTap: (){}
                     ,
 
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 30,color:kPresentTheme.accentColor),
-                    title: Text('Go to Dashboard', style: kNormal2),
+                    title: Text('Go to Dashboard', style: DefaultValues.kNormal2(context)),
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.plus,size: 30,color:kPresentTheme.accentColor),
-                    title: Text('Add Investments', style: kNormal2),
+                    title: Text('Add Investments', style: DefaultValues.kNormal2(context)),
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.bullseye, size: 30,color:kPresentTheme.accentColor),
-                    title: Text('Add Goals', style: kNormal2),
+                    title: Text('Add Goals', style: DefaultValues.kNormal2(context)),
                   ),
 
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.wrench, size: 30,color:kPresentTheme.accentColor),
-                    title: Text('Settings', style: kNormal2),
+                    title: Text('Settings', style: DefaultValues.kNormal2(context)),
                     onTap: (){
                       showModalBottomSheet(
                           isScrollControlled: true,
@@ -128,7 +128,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   SizedBox(height: 10,width: double.infinity,),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.calculator, size: 30,color:kPresentTheme.accentColor),
-                    title: Text('SIP Calculator', style: kNormal2),
+                    title: Text('SIP Calculator', style: DefaultValues.kNormal2(context)),
                   ),
                 ],
               ),
@@ -137,7 +137,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           Container(
               child: ListTile(
                 leading:Icon(Icons.logout,size: 35,color:kPresentTheme.accentColor),
-                title: Text('Logout',style: kNormal2),
+                title: Text('Logout',style: DefaultValues.kNormal2(context)),
                enabled: widget.currentUser!=null,
                 onTap: () async {
                   setState(() {

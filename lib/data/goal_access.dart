@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dhanrashi_mvp/data/goal_db.dart';
+import 'package:dhanrashi_mvp/models/goal_db.dart';
 
 class DRGoalAccess{
   final _firestore= FirebaseFirestore.instance;
@@ -31,6 +31,32 @@ class DRGoalAccess{
       }
     }
   }
+
+  Future storeGoalSolo(
+      GoalDB goals,) async {
+    DateTime currentPhoneDate = DateTime.now();
+
+      try {
+        await _firestore.collection('pjdhan_goal').add({
+          'email': goals.email,
+          'Uuid': goals.user,
+          'Updated_id': 'system',
+          'goal_name': goals.name,
+          'goal_description': goals.description,
+          'goal_duration': goals.goalDuration,
+          'goal_amount': goals.goalAmount,
+          'insert_dts': Timestamp.fromDate(currentPhoneDate),
+          'update_dts': Timestamp.fromDate(currentPhoneDate),
+          'status': 'Active',
+        })
+            .then((value)=>print("Goal added"));
+      }
+      catch (e) {
+        print('Exception while inserting Goal $e');
+      }
+
+  }
+
   Future<dynamic> updateGoal(
       List<GoalDB> listGoals,
       String docStatus

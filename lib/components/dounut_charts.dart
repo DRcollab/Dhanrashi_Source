@@ -1,7 +1,7 @@
 
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class Task{

@@ -1,12 +1,13 @@
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:flutter/material.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 class ActionCircle extends StatelessWidget {
 
  Color color;
  int index= 0;
  int selectedIndex = 0;
- double radius = 40;
+ double radius = 40 ;
  Function onPreseed;
 String imageSource = '';
 
@@ -28,7 +29,7 @@ String imageSource = '';
 
       child: CircleAvatar(
         backgroundColor: kPresentTheme.themeColor,
-        radius:  this.radius,
+        radius:  this.radius * DefaultValues.adaptForSmallDevice(context),
         backgroundImage:AssetImage(imageSource),
       ),
     );

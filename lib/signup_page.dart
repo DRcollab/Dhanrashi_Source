@@ -13,19 +13,26 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 import 'dashboard_old.dart';
 import 'package:flutter/material.dart';
 import 'components/custom_text_field.dart';
 
 import 'components/custom_text.dart';
 import 'profiler.dart';
-import 'data/user_data_class.dart';
+import 'models/user_data_class.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'components/utilities.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 
-const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
+// var  TEXTFIELD_PADDING = EdgeInsets.fromLTRB(
+//     18.0 *  DefaultValues.adaptForSmallDevice(context),
+//     18.0 * DefaultValues.adaptForSmallDevice(context),
+//     18.0 *DefaultValues.adaptForSmallDevice(context),
+//
+//     8.0 *DefaultValues.adaptForSmallDevice(context),
+// );
 
 
 
@@ -33,7 +40,7 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
 
   //const Logging({Key? key}) : super(key: key);
 
-    DRUserAccess? currentUser;
+  var currentUser;
 
     SignUpPage({required this.currentUser});
 
@@ -99,7 +106,7 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.monetization_on),
-              Text('Dhanrashi', style: kH1,),
+              Text('Dhanrashi', style:DefaultValues.kH1(context),),
             ],
           ),
           Padding(
@@ -236,7 +243,7 @@ const TEXTFIELD_PADDING = const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 8.0);
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Already have a login id ?",
-                  style: kNormal2,
+                  style:DefaultValues.kNormal2(context),
                 ),
               ),
               Padding(

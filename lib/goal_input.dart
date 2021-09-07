@@ -1,15 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 //import 'components/tile_class.dart';
 import 'dashboard.dart';
-import 'data/investment_class.dart';
+import 'models/investment_class.dart';
 import 'components/action_screen.dart';
-import 'data/user_data_class.dart';
+import 'models/user_data_class.dart';
 import 'investmentinput.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
 
@@ -47,6 +49,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
 
   double investmentDuration = 0;
   int _currentTabIndex = 0;
+  late FirebaseFirestore fireStore;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    future:Firebase.initializeApp().whenComplete(() =>fireStore =  FirebaseFirestore.instance );
+    
+  }
+
+
+  _save() async {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +82,14 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 18.0,top: 140.0),
                   child: Text("Goals",
-                    style: kH1,
+                    style:DefaultValues.kH1(context),
 
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 18.0,top: 170.0),
                   child: Text("Choose one of  these",
-                    style: kNormal2,
+                    style:DefaultValues.kNormal2(context),
 
                   ),
                 ),
@@ -112,7 +128,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 10,
@@ -146,7 +162,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 5,
                                       investmentDuration: 20,
@@ -184,7 +200,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 10,
@@ -217,7 +233,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 5,
@@ -255,7 +271,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 20,
@@ -287,7 +303,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 5,
@@ -326,7 +342,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 10,
@@ -358,7 +374,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: ActionSheet(
-
+                                      currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
                                       investmentDuration: 10,

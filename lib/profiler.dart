@@ -11,10 +11,10 @@ import 'dashboard_old.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 import 'components/custom_text_field.dart';
 import 'components/buttons.dart';
-import 'data/user_data_class.dart';
+import 'models/user_data_class.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'confirmation_page.dart';
 import 'components/band_class.dart';  // confirmation page contains band class objects
@@ -469,7 +469,7 @@ class _NamePickerState extends State<NamePicker> {
 
                   SizedBox(height: 30,),
                   Padding(
-                      padding: kTextFieldPadding,
+                      padding:DefaultValues.kTextFieldPadding(context),
                           child: Form(
                             key:widget.nameKey,
                             child: CustomTextField(
@@ -489,7 +489,12 @@ class _NamePickerState extends State<NamePicker> {
                           ),
                         ),
                   Padding(
-                        padding: EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 28.0),
+                        padding: EdgeInsets.fromLTRB(
+                            18.0 *DefaultValues.adaptForSmallDevice(context),
+                            8.0 *DefaultValues.adaptForSmallDevice(context) ,
+                            18.0 *DefaultValues.adaptForSmallDevice(context) ,
+                            28.0 *DefaultValues.adaptForSmallDevice(context),
+                        ),
                             child: Form(
                               key: widget.lnameKey,
                               child: CustomTextField(
@@ -604,7 +609,7 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 1,
               groupValue: selectedValue,
-              title: Text("Below 1 Lakh ", style: kNormal2,),
+              title: Text("Below 1 Lakh ", style:DefaultValues.kNormal2(context),),
 
               onChanged:  (value){
                 setState(() {
@@ -618,7 +623,7 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 2,
               groupValue: selectedValue,
-              title: Text("Above 1 Lakh to 5 lakh", style: kNormal2,),
+              title: Text("Above 1 Lakh to 5 lakh", style:DefaultValues.kNormal2(context),),
 
               onChanged: (value){
 
@@ -633,7 +638,7 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 3,
               groupValue: selectedValue,
-              title: Text("Above 5 Lakh  to 10 Lakh", style: kNormal2,),
+              title: Text("Above 5 Lakh  to 10 Lakh", style:DefaultValues.kNormal2(context),),
 
               onChanged: (value){
 
@@ -647,7 +652,7 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 4,
               groupValue: selectedValue,
-              title: Text("Above 10 Lakh ", style: kNormal2,),
+              title: Text("Above 10 Lakh ", style:DefaultValues.kNormal2(context),),
 
               onChanged: (value){
 
@@ -661,7 +666,7 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 5,
               groupValue: selectedValue,
-              title: Text("Prefer not to disclose ", style: kNormal2,),
+              title: Text("Prefer not to disclose ", style:DefaultValues.kNormal2(context),),
 
               onChanged: (value){
 

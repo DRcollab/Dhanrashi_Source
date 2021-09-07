@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/confirmation_page.dart';
-import 'package:dhanrashi_mvp/data/user_data_class.dart';
+import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/dashboard.dart';
-import 'package:dhanrashi_mvp/models/on_error_screen.dart';
+import 'package:dhanrashi_mvp/components/on_error_screen.dart';
 //import 'package:dhanrashi_mvp/goalinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/showgraph_dynamic.dart';
@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 //import 'goalinput.dart';
 import 'investmentinput.dart';
 import 'dashboard_old.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -117,6 +117,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP> {
       //
      // home: !userLoggedIn ? LoginPage() : Dashboard(currentUser: currentUser),
       home:LoginPage(),
+     // home: InvestmentInputScreen(currentUser: currentUser,),
     );
   }
 }

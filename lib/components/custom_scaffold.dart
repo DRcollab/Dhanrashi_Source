@@ -1,7 +1,7 @@
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '/constants.dart';
+import 'constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dhanrashi_mvp/components/menu_drawer_class.dart';
 

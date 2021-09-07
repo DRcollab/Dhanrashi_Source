@@ -1,7 +1,7 @@
 import 'package:dhanrashi_mvp/components/banner_class.dart';
 import 'package:flutter/material.dart';
 import 'dounut_charts.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 class InvestmentTabView extends StatelessWidget {
    InvestmentTabView({Key? key}) : super(key: key);

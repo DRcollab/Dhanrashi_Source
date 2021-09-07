@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 import 'custom_text_field.dart';
 import 'irregular_shapes.dart';
 
@@ -84,7 +84,7 @@ class InputCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   this.titleText,
-                  style: kH2,
+                  style:DefaultValues.kH2(context),
                 ),
               ),
             ), // Title Bar of the custom card
@@ -179,7 +179,7 @@ class _ReportCardState extends State<ReportCard> {
                 child: Center(
                   child: Text(
                     titleText,
-                    style: kH2,
+                    style:DefaultValues.kH2(context),
                   ),
                 ),
               ),

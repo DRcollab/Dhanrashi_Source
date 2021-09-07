@@ -3,7 +3,7 @@ import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../constants.dart';
+import 'constants.dart';
 import 'action_circle.dart';
 
 class PhotoSheet extends StatefulWidget {
@@ -53,7 +53,7 @@ class _PhotoSheetState extends State<PhotoSheet> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     FaIcon(FontAwesomeIcons.userMd),
-                    Center(child: Text('Select a avatar', style: kNormal1,)),
+                    Center(child: Text('Select a avatar', style:DefaultValues.kNormal1(context),)),
                     CommandButton(
                         onPressed: (){
                           Navigator.pop(context);

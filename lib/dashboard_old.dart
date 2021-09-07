@@ -6,11 +6,11 @@ import 'profiler.dart';
 import 'package:flutter/material.dart';
 import 'investmentinput.dart';
 import 'components/round_button.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 import 'components/custom_card.dart';
 import 'data/goal_class.dart';
-import 'package:dhanrashi_mvp/data/investment_class.dart';
-import 'package:dhanrashi_mvp/data/user_data_class.dart';
+import 'package:dhanrashi_mvp/models/investment_class.dart';
+import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class DashBoard extends StatefulWidget {
@@ -246,12 +246,12 @@ class _AnalysisCardState extends State<AnalysisCard> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 18),
-                      child: Text("One is approaching  ", style: kH2,),
+                      child: Text("One is approaching  ", style:DefaultValues.kH2(context),),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 18),
-                      child: Text("Your Investment are..", style: kH2,),
+                      child: Text("Your Investment are..", style:DefaultValues.kH2(context),),
                     )
                   ],
                 ),

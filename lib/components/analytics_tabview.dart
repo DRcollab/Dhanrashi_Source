@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dounut_charts.dart';
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 class AnalyticsTabView extends StatelessWidget {
   AnalyticsTabView({Key? key}) : super(key: key);

@@ -5,22 +5,22 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:flutter/material.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
-import 'constants.dart';
+import 'components/constants.dart';
 import 'dashboard_old.dart';
 import 'profiler.dart';
-import 'data/user_data_class.dart';
+import 'models/user_data_class.dart';
 
 class ProfilerOptionPage extends StatelessWidget {
   //const ProfilerOptionPage({Key? key}) : super(key: key);
 
-  var  currentUser;
-  String currentUserName = "";
+  final  currentUser;
+  final String currentUserName = "";
 
 
   ProfilerOptionPage({required this.currentUser}){
 
    // currentUserName = currentUser.whenComplete(() => null)
-    print(currentUser!.email);
+   // print(currentUser.user!.email);
   }
 
 
@@ -125,7 +125,7 @@ class ProfilerOptionPage extends StatelessWidget {
           ),
 
           Center(child: Text("Worried about safety of your information?",
-          style: kAdviceTextStyleDark,)),
+          style: DefaultValues.kAdviceTextStyleDark(context),)),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

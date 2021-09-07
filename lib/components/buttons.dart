@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:dhanrashi_mvp/constants.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 enum LinkTextType {
   DARK,
@@ -111,7 +111,7 @@ class _OptionButtonState extends State<OptionButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: kTextFieldPadding,
+      padding: DefaultValues.kTextFieldPadding(context),
       child: ElevatedButton(
         onPressed: () {
           setState(() {

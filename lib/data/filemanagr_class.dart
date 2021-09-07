@@ -4,8 +4,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dhanrashi_mvp/constants.dart';
-import 'package:dhanrashi_mvp/data/settings_class.dart';
+import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:dhanrashi_mvp/models/settings_class.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 
