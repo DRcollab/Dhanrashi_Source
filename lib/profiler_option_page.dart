@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
-import 'dashboard_old.dart';
+import 'dashboard.dart';
 import 'profiler.dart';
 import 'models/user_data_class.dart';
 

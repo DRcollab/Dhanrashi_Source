@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/constants.dart';
 //import 'components/tile_class.dart';
+import 'components/goal_entry_sheet.dart';
 import 'dashboard.dart';
 import 'models/investment_class.dart';
-import 'components/action_screen.dart';
+import 'components/investment_entry_sheet.dart';
 import 'models/user_data_class.dart';
 import 'investmentinput.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -114,7 +115,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/car.png',
                           //height: 120,
                           //width: 150,
-                          title: 'Buy car',
+                            title: 'Buy car',
                           subText: 'dream car',
                           color: color,
                           titleColor: Colors.white60,
@@ -127,12 +128,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 10,
-                                      investmentDuration: 10,
-                                      expectedRoi: 12,
+                                      goalAmount: 10,
+                                      goalDuration: 10,
+                                      inflation: 4.5,
                                       imageSource: 'images/car.png',
 
                                     ),
@@ -161,12 +162,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 5,
-                                      investmentDuration: 20,
-                                      expectedRoi: 6,
+                                      goalAmount: 5,
+                                      goalDuration: 20,
+                                      inflation: 6,
                                       imageSource: 'images/house.png',
 
                                     ),
@@ -199,12 +200,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 10,
-                                      investmentDuration: 10,
-                                      expectedRoi: 6,
+                                      goalAmount: 10,
+                                      goalDuration: 10,
+                                      inflation: 6,
                                       imageSource: 'images/education.png',
 
                                     ),
@@ -232,12 +233,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 10,
-                                      investmentDuration: 5,
-                                      expectedRoi: 15,
+                                      goalAmount: 10,
+                                      goalDuration: 5,
+                                      inflation: 15,
                                       imageSource: 'images/pension.png',
 
                                     ),
@@ -270,12 +271,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 10,
-                                      investmentDuration: 20,
-                                      expectedRoi: 12,
+                                      goalAmount: 10,
+                                      goalDuration: 20,
+                                      inflation: 12,
                                       imageSource: 'images/tour.png',
                                     ),
                                   ),
@@ -302,12 +303,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 10,
-                                      investmentDuration: 5,
-                                      expectedRoi: 5,
+                                      goalAmount: 10,
+                                      goalDuration: 5,
+                                      inflation: 5,
                                       imageSource: 'images/destination.png',
 
                                     ),
@@ -341,12 +342,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 10,
-                                      investmentDuration: 10,
-                                      expectedRoi: 10,
+                                      goalAmount: 10,
+                                      goalDuration: 10,
+                                      inflation: 10,
                                       imageSource: 'images/healthcare.png',
                                     ),
                                   ),
@@ -373,12 +374,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: GoalSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
-                                      investedAmount: 10,
-                                      investmentDuration: 10,
-                                      expectedRoi: 12,
+                                      goalAmount: 10,
+                                      goalDuration: 10,
+                                      inflation: 12,
                                       imageSource: 'images/products.png',
 
                                     ),

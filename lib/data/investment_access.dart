@@ -99,12 +99,9 @@ class DRInvestAccess{
       }
     }
   }
-  Future fetchInvestmentbyUser(
-      String user,
-     // Investment investment = Investment(),
-      ) async{
+  Future fetchInvestment() async{
     List<InvestDB> listInvest=[];
-    _firestore.collection('pjdhan_investment').where('Uuid', isEqualTo: user)
+    _firestore.collection('pjdhan_investment').where('Uuid', isEqualTo: _currentUser.uid)
         .get()
         .then((QuerySnapshot snapshot){
       snapshot.docs.forEach((f) {
@@ -119,12 +116,14 @@ class DRInvestAccess{
         listInvest.add(
             InvestDB(
                 email:email,
-                investmentDocumentID: docID, userID: userID,investment: Investment(
-          name: investmentName,
-          currentInvestmentAmount: currInvestAmt,
-          annualInvestmentAmount: annualInvestAmt,
-          investmentRoi: investRoI,
-          duration: duration,
+                investmentDocumentID: docID,
+                userID: userID,
+                investment: Investment(
+                  name: investmentName,
+                  currentInvestmentAmount: currInvestAmt,
+                  annualInvestmentAmount: annualInvestAmt,
+                  investmentRoi: investRoI,
+                  duration: duration,
         ) ));
       });
       return listInvest;

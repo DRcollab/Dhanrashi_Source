@@ -3,7 +3,8 @@ import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 
 class AnalyticsTabView extends StatelessWidget {
-  AnalyticsTabView({Key? key}) : super(key: key);
+ // AnalyticsTabView({Key? key}) : super(key: key);
+
 
 
   final   pieData = [

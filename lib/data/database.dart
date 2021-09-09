@@ -2,9 +2,9 @@
 
 import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:flutter/material.dart';
-import 'package:dhanrashi_mvp/data/goal_class.dart';
+//import 'package:dhanrashi_mvp/data/goal_class.dart';
 import '../models/investment_class.dart';
-import 'goal_class.dart';
+//import 'goal_class.dart';
 
 
 var userTable = [
@@ -19,12 +19,12 @@ var userProfileTable = [
 ];
 
 
-List<Goal> Goals = [
-  Goal()
-];
-List<Investment> Investments = <Investment>[];
-List<UserData> Users = <UserData>[];
-
+// List<Goal> Goals = [
+//   Goal()
+// ];
+// List<Investment> Investments = <Investment>[];
+// List<UserData> Users = <UserData>[];
+//
 
 
 

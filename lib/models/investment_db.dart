@@ -8,12 +8,13 @@ class InvestDB{
     required String email,
      String? investmentDocumentID ,
     required String userID,
+    required Investment investment,
     // this.name,
     // this.currentInvestmentAmount,
     // this.annualInvestmentAmount,
     // this.investmentRoi,
     // this.investmentDuration
-     required Investment investment,
+
   }
       ){
     this._email = email;

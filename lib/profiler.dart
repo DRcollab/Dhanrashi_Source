@@ -7,7 +7,7 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
-import 'dashboard_old.dart';
+import 'dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

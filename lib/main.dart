@@ -22,7 +22,7 @@ import 'signup_page.dart';
 import 'package:flutter/material.dart';
 //import 'goalinput.dart';
 import 'investmentinput.dart';
-import 'dashboard_old.dart';
+
 import 'components/constants.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:firebase_core/firebase_core.dart';

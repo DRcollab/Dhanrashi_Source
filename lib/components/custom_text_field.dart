@@ -77,8 +77,8 @@ class CustomTextField extends StatelessWidget {
                   //labelStyle:
         ),
 
-       onEditingComplete: validate,
-        onTap: validate,
+      onEditingComplete: validate,
+       onTap: validate,
       ),
     );
   }

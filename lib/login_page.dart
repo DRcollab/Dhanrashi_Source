@@ -7,12 +7,12 @@ import 'package:dhanrashi_mvp/data/validators.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'dashboard.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
-import 'dashboard_old.dart';
+
 import 'components/on_error_screen.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
@@ -261,7 +261,7 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
          if (_profileReady){
            Navigator.push(context,
-               MaterialPageRoute(builder: (context) => DashBoard(currentUser: _user.user(),)));
+               MaterialPageRoute(builder: (context) => Dashboard(currentUser: _user.user(),)));
          }
          else{
 

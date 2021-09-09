@@ -12,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/constants.dart';
 //import 'components/tile_class.dart';
 import 'models/investment_class.dart';
-import 'components/action_screen.dart';
+import 'components/investment_entry_sheet.dart';
 import 'models/user_data_class.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -130,7 +130,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                         currentUser: widget.currentUser,
                                         //save: _save,
                                         titleMessage: name,
@@ -166,7 +166,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 5,
@@ -205,7 +205,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -239,7 +239,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -278,7 +278,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -311,7 +311,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -351,7 +351,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -384,7 +384,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                    child: ActionSheet(
+                                    child: InvestmentSheet(
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,

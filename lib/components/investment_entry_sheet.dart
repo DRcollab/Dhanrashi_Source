@@ -23,10 +23,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 // int investmentDuration = 8;
 
 
-class ActionSheet extends StatefulWidget {
+class InvestmentSheet extends StatefulWidget {
  // const ActionSheet({Key? key}) : super(key: key);
 
-  String titleMessage;
+  late String titleMessage;
   // var textVar1 = TextEditingController();
   // var textVar2 = TextEditingController();
   // var textVar3 = TextEditingController();
@@ -38,11 +38,11 @@ class ActionSheet extends StatefulWidget {
   String imageSource ='';
  // late void Function(dynamic) save;
   String display = '';
-  var dataToSave;
+
   late var currentUser;
   // final String? Function(String?) validator => return 0;
 
-  ActionSheet({
+  InvestmentSheet({
     this.titleMessage='',
     required this.investedAmount,
     required this.expectedRoi,
@@ -50,15 +50,15 @@ class ActionSheet extends StatefulWidget {
     this.imageSource='',
     this.annualInvestment = 0,
   //  required this.save,
-    this.dataToSave,
+
     required this.currentUser,
   });
 
   @override
-  _ActionSheetState createState() => _ActionSheetState();
+  _InvestmentSheetState createState() => _InvestmentSheetState();
 }
 
-class _ActionSheetState extends State<ActionSheet> {
+class _InvestmentSheetState extends State<InvestmentSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
   List<Task> pieData = [];

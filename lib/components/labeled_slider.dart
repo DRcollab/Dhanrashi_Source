@@ -1,4 +1,4 @@
-import 'package:dhanrashi_mvp/components/action_screen.dart';
+import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
@@ -99,7 +99,9 @@ class _LabeledSliderState extends State<LabeledSlider> {
                     this.controller.clear();
                     widget.sliderValue = double.parse( changeValue.toStringAsFixed(2));
                     widget.onChanged!(widget.sliderValue);
-
+                    controller = TextEditingController(
+                      text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
+                    );
 
 
                   });
