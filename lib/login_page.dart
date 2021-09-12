@@ -277,7 +277,7 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
            //     MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
             Navigator.pop(context);
            Navigator.push(context,
-               MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
+               MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: _loggedInUser.user,)));
 
          }
        }

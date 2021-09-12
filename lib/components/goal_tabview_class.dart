@@ -42,6 +42,7 @@ class GoalsTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    goals = List.empty(growable: true);
    goalDBs.forEach((element) {
      goals.add(element.goal);
    });

@@ -224,9 +224,29 @@ class _DashboardState extends State<Dashboard> {
             body: TabBarView(
               children: [
                // AnalyticsTabView(),
-                AnalyticsTabView(goalDBs:goals, currentUser: widget.currentUser,investmentDBs: investments,longestGoalDuration: longestGoalDuration,longestInvestmentDuration: longestInvestmentDuration,),
-                GoalsTabView(goalDBs:goals, currentUser: widget.currentUser,totalAmount: totalGoalValue,),// 2nd view
-                InvestmentTabView(investmentDBs: investments,currentUser: widget.currentUser,totalInvest: totalInvestValue,),
+                AnalyticsTabView(
+                  goalDBs:goals,
+                  currentUser: widget.currentUser,
+                  investmentDBs: investments,
+                  longestGoalDuration: longestGoalDuration,
+                  longestInvestmentDuration: longestInvestmentDuration,
+                ),
+
+                GoalsTabView(
+                  goalDBs:goals,
+                  currentUser: widget.currentUser,
+                  totalAmount: totalGoalValue,
+                  longestInvestmentDuration: longestInvestmentDuration,
+                  longestGoalDuration: longestGoalDuration,
+                ),// 2nd view
+                InvestmentTabView(
+                  investmentDBs: investments,
+                  currentUser: widget.currentUser,
+                  totalInvest: totalInvestValue,
+                  longestInvestmentDuration: longestInvestmentDuration,
+                  longestGoalDuration: longestGoalDuration,
+
+                ),
 
               ]
             ),

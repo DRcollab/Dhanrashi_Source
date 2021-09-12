@@ -34,6 +34,7 @@ class InvestmentTabView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     //
+    investments = List.empty(growable: true);
     investmentDBs.forEach((element) {
       investments.add(element.investment);
     });

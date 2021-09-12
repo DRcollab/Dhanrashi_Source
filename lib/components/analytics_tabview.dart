@@ -22,7 +22,13 @@ class AnalyticsTabView extends StatelessWidget {
   int longestInvestmentDuration;
 
 //{required this.currentUser, required this.investmentDBs, required this.goalDBs}
-  AnalyticsTabView({required this.currentUser, required this.investmentDBs, required this.goalDBs, required this.longestInvestmentDuration, required this.longestGoalDuration});
+  AnalyticsTabView({
+    required this.currentUser,
+    required this.investmentDBs,
+    required this.goalDBs,
+    required this.longestInvestmentDuration,
+    required this.longestGoalDuration
+  });
 
 
 
@@ -44,17 +50,34 @@ class AnalyticsTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  investments = List.empty(growable: true);
+  goals = List.empty(growable: true);
+  bool fetched = false;
 
+  if(investmentDBs.length>0) {
     investmentDBs.forEach((element) {
       investments.add(element.investment);
     });
+    fetched = true;
+  }
+  else{
+    fetched = false;
+  }
 
+  if(goalDBs.length>0) {
     goalDBs.forEach((element) {
       goals.add(element.goal);
     });
+    fetched = true;
+  }else{
 
-   dataSet = Calculator().getInvVsGoalDetail(investments, goals,longestInvestmentDuration, longestGoalDuration );
+    fetched = false;
+  }
 
+  if(fetched) {
+    dataSet = Calculator().getInvVsGoalDetail(
+        investments, goals, longestInvestmentDuration, longestGoalDuration);
+  }
 
     return Column(
       children: [
@@ -70,7 +93,7 @@ class AnalyticsTabView extends StatelessWidget {
               child: Container(
                 width: 450,
                 height: 220,
-               child: DynamicGraph(resultSet: dataSet,chartType: ChartType.line,),
+               child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) : SizedBox(),
               ),
             ),
 

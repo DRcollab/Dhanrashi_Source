@@ -146,6 +146,7 @@ class Calculator {
     for (int i = 0; i < goals.length; i++) {
       Goal newGoal = goals[i];
       print(newGoal.name);
+      print(goals.length);
 
       List goalAnnualAmt = List.empty(growable: true);
       goalAnnualAmt.add(newGoal.name);
@@ -164,7 +165,7 @@ class Calculator {
       allGoalAnnualAmt.add(goalAnnualAmt);
     }
 
-    print(allGoalAnnualAmt.shape);
+    print(allGoalAnnualAmt);
 
     final shape = allGoalAnnualAmt.shape;
 
