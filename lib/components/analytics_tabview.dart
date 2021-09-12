@@ -1,9 +1,28 @@
+
+import 'package:dhanrashi_mvp/data/financial_calculator.dart';
+import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
+import 'package:dhanrashi_mvp/models/goal.dart';
+import 'package:dhanrashi_mvp/models/goal_db.dart';
+import 'package:dhanrashi_mvp/models/investment.dart';
+import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 
 class AnalyticsTabView extends StatelessWidget {
  // AnalyticsTabView({Key? key}) : super(key: key);
+  late List<InvestDB> investmentDBs;
+  List<Investment> investments = [];
+  List<Goal> goals = [];
+  late var currentUser;
+  late List<GoalDB>  goalDBs;
+  List dataSet = List.empty(growable: true);
+  int longestGoalDuration;
+  int longestInvestmentDuration;
+
+//{required this.currentUser, required this.investmentDBs, required this.goalDBs}
+  AnalyticsTabView({required this.currentUser, required this.investmentDBs, required this.goalDBs, required this.longestInvestmentDuration, required this.longestGoalDuration});
 
 
 
@@ -25,14 +44,34 @@ class AnalyticsTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    investmentDBs.forEach((element) {
+      investments.add(element.investment);
+    });
+
+    goalDBs.forEach((element) {
+      goals.add(element.goal);
+    });
+
+   dataSet = Calculator().getInvVsGoalDetail(investments, goals,longestInvestmentDuration, longestGoalDuration );
+
+
     return Column(
       children: [
         Stack(
-         // mainAxisAlignment: MainAxisAlignment.center,
+         alignment: Alignment.topCenter,
           children: [
             Container(
                 width:220, height: 220,
                 child: DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top:250.0),
+              child: Container(
+                width: 450,
+                height: 220,
+               child: DynamicGraph(resultSet: dataSet,chartType: ChartType.line,),
+              ),
             ),
 
             Padding(

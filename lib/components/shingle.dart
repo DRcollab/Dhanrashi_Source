@@ -8,12 +8,14 @@ class Shingle extends StatelessWidget {
   String subtitle;
   String value = '';
   String leadingImage ='';
+  Widget? trailing;
 
   Shingle( {
     required this.title,
     required this.subtitle,
     this.value= '',
     this.leadingImage ='',
+    this.trailing,
   } );
 
   @override
@@ -21,12 +23,13 @@ class Shingle extends StatelessWidget {
     return Card(
       child: ListTile(
         leading:Image.asset(this.leadingImage,height: 20,width: 20,),
+        trailing: trailing,
         title: Text(this.title,style: DefaultValues.kH3(context),),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Aim : ${this.subtitle} Lakh'),
-            Text('Duration: ${value} years')
+            Text( this.subtitle),
+            Text( value)
           ],
         ),
 

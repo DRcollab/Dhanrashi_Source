@@ -68,16 +68,17 @@ class _LabeledSliderState extends State<LabeledSlider> {
             padding: const EdgeInsets.only(left: 8.0,top: 0.0,right: 8.0,bottom: 0.0),
             child: NumberInputField(
               enabled: widget.textEditable,
-              validator: widget.validator,
+              //validator: widget.validator,
               controller: this.controller,
               label:widget.labelText,
               hintText: '',
               suffix: widget.suffix,
               getValue: (){
                 setState(() {
-                  widget.sliderValue = double.parse(double.parse( this.controller.text).toStringAsFixed(2));
+                  widget.sliderValue = double.parse(double.parse( this.controller.text).roundToDouble().toStringAsFixed(2));
                   widget.onChanged!(widget.sliderValue);
-
+                  print(this.controller.text);
+                  print( double.parse(this.controller.text).roundToDouble() );
                 });
 
               },
@@ -89,6 +90,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
             child: Slider(
                 min: widget.min,
                 max:widget.max,
+             //   divisions: (widget.max-widget.min+1).toInt()*2,
                 //divisions: widget.divisions,
                 activeColor: kPresentTheme.accentColor,
                 inactiveColor: kPresentTheme.alternateColor,
@@ -96,11 +98,14 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
                 onChanged:   (changeValue) {
                   setState(() {
+                    print(this.controller.text);
+                    print( double.parse(this.controller.text).roundToDouble() );
                     this.controller.clear();
                     widget.sliderValue = double.parse( changeValue.toStringAsFixed(2));
                     widget.onChanged!(widget.sliderValue);
                     controller = TextEditingController(
                       text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
+
                     );
 
 

@@ -3,7 +3,7 @@
 import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:flutter/material.dart';
 //import 'package:dhanrashi_mvp/data/goal_class.dart';
-import '../models/investment_class.dart';
+import '../models/investment.dart';
 //import 'goal_class.dart';
 
 

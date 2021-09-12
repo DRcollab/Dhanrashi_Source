@@ -1,22 +1,33 @@
+import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/main.dart';
+import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'investment_entry_sheet.dart';
 import 'shingle.dart';
 import 'maps.dart';
+import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
+import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
+import 'package:dhanrashi_mvp/data/financial_calculator.dart';
+
 
 class GoalsTabView extends StatelessWidget {
   //GoalsTabView({Key? key}) : super(key: key);
 
-  late List<GoalDB>  goals;
+  late List<GoalDB>  goalDBs;
+  List dataSet = List.empty(growable: true);
+  int longestGoalDuration;
+  int longestInvestmentDuration;
   var currentUser;
   double totalAmount;
-  GoalsTabView({required this.goals, required this.currentUser,this.totalAmount=0});
-
+  GoalsTabView({required this.goalDBs, required this.currentUser,this.totalAmount=0, this.longestInvestmentDuration = 0, this.longestGoalDuration=0});
+   List<Goal> goals = [];
+   List names  = [];
   final   pieData = [
 
     Task('Investment', 21, kPresentTheme.accentColor),
@@ -26,37 +37,30 @@ class GoalsTabView extends StatelessWidget {
   ];
 
 
-  // Column(
-  // children: [
-  // Container(
-  // height: 200,
-  // width: 200,
-  // child: DonutChart(pieData: pieData
-  // )
-  // ),
-  //
-  // Container(
-  // height: 400,
-  // child: ListView(
-  // children: [
-  //
-  //
-  //
-  // ],
-  // ),
-  // )
-  // ],
-  // );
+
 
   @override
   Widget build(BuildContext context) {
+
+   goalDBs.forEach((element) {
+     goals.add(element.goal);
+   });
+
+  dataSet = Calculator().getGoalDetail(goals,longestInvestmentDuration, longestGoalDuration);
+
+   print('length is : ${goals}');
+  // print('another is ${_goalList}');
+
     return Column(
       children: [
         Container(
             height: 150,
-            width: 150,
-            child: DonutChart(pieData: pieData
+            width: 450,
+            child: DynamicGraph(
+              chartType: ChartType.bar,
+              resultSet: dataSet,
             )
+          //DonutChart(pieData: pieData)
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -80,10 +84,35 @@ class GoalsTabView extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(left:8.0),
                   child: Shingle(
-                    leadingImage: goalIcons[goals[index].goal.name],
-                    title:  goals[index].goal.name,
-                    subtitle: goals[index].goal.goalAmount.toString(),
-                    value:goals[index].goal.duration.toString()
+                    leadingImage: goalIcons[goals[index].name],
+                    title:  goals[index].name,
+                    subtitle: 'Goal: ${goals[index].goalAmount.toString()} Lakh INR',
+                    value:'Duration : ${goals[index].duration.toString()} Years',
+                    trailing: IconButton(
+                        icon: Icon(Icons.edit) ,
+                      onPressed: (){
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => SingleChildScrollView(
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                child: GoalSheet(
+                                  currentUser: this.currentUser,
+                                  titleMessage: goals[index].name,
+                                  goalAmount: goals[index].goalAmount,
+                                  goalDuration: goals[index].duration,
+                                  inflation: goals[index].inflation,
+                                  imageSource: 'images/destination.png',
+
+                                ),
+                              ),
+                            ));
+                      },
+
+
+                    ),
+
                   ),
                 );
 

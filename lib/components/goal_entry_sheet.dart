@@ -8,6 +8,7 @@ import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/goal_access.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
+import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
@@ -42,7 +43,7 @@ class GoalSheet extends StatefulWidget {
   String imageSource ='';
   // late void Function(dynamic) save;
   String display = '';
-
+  String buttonText;
   late var currentUser;
   // final String? Function(String?) validator => return 0;
 
@@ -58,6 +59,7 @@ class GoalSheet extends StatefulWidget {
     //  required this.save,
 
     required this.currentUser,
+    this.buttonText = 'Save',
   });
 
   @override
@@ -149,13 +151,32 @@ class _GoalSheetState extends State<GoalSheet> {
       Utility.showErrorMessage(context, e.toString());
 
     }
-
-
-
-
   }
 
+  void _updateGoalSolo( GoalDB goalDB, String docStatus ) async {
+    DateTime currentPhoneDate = DateTime.now();
 
+    var docID= goalDB.goalDocumentID;
+    try {
+      fireStore.collection('pjdhan_goal').doc(docID).update({
+        'email': goalDB.email,
+        'Uuid': goalDB.user,
+        'Updated_id': 'system',
+        'goal_name': goalDB.goal.name,
+        'goal_description': goalDB.goal.description,
+        'goal_duration': goalDB.goal.duration,
+        'goal_amount': goalDB.goal.goalAmount,
+        'insert_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'status': docStatus
+      })
+          .then((value)=>print("Goal updated"));
+    }
+    catch (e) {
+      print( 'Exception while updating $docID $e');
+    }
+
+  }
 
 
   @override
@@ -207,16 +228,9 @@ class _GoalSheetState extends State<GoalSheet> {
                       buttonColor: kPresentTheme.alternateColor,
                       //icon: Icons.save,
                       textColor: kPresentTheme.highLightColor,
-                      buttonText: 'Save',
+                      buttonText: widget.buttonText,
                       onPressed:()  {
-                        print(' To Be saved .......:');
-                        print('email: ${widget.currentUser.email}');
-                        print('uid : ${widget.currentUser.uid}');
-                        print(widget.titleMessage);
-                       // print('Annual Inv : ${Investment}');
-                        print('current Inv: ${goalAmount}');
-                        print('duration: ${goalDuration}');
-                        print('ROI : ${inflation}');
+
 
 
                         var goal =  Goal(
@@ -232,7 +246,11 @@ class _GoalSheetState extends State<GoalSheet> {
 
                         setState(() {
 
+                          if(widget.buttonText == 'Save')
                          _save(goal);
+                          else{
+
+                          }
 
                         });
 

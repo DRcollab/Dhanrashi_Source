@@ -5,20 +5,20 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'constant.dart';
 import 'package:matrix2d/matrix2d.dart';
 
-enum chartType { bar, line, pie }
+enum ChartType { bar, line, pie }
 enum calculationType { Investment, Goal, InvVsGoal }
 
-class DynamicGraphPage extends StatefulWidget {
-  DynamicGraphPage({required this.resultSet, required this.chartType});
+class DynamicGraph extends StatefulWidget {
+  DynamicGraph({required this.resultSet, required this.chartType});
 
   final List resultSet;
-  final String chartType;
+  final ChartType chartType;
 
   @override
-  _DynamicGraphPageState createState() => _DynamicGraphPageState();
+  _DynamicGraphState createState() => _DynamicGraphState();
 }
 
-class _DynamicGraphPageState extends State<DynamicGraphPage> {
+class _DynamicGraphState extends State<DynamicGraph> {
   late List<YearWiseAmount> _allInvestmentAmount;
 
   late List<charts.Series<YearWiseAmount, String>> _barChartData;
@@ -30,8 +30,7 @@ class _DynamicGraphPageState extends State<DynamicGraphPage> {
 
     print('Make Data: $allInvestmentAnnualAmt');
 
-    int noStack = allInvestmentAnnualAmt.shape[0] -
-        2; //Number of goals - 1; hardcoded for now
+    int noStack = allInvestmentAnnualAmt.shape[0] -  2; //Number of goals - 1; hardcoded for now
     int noOfYear = allInvestmentAnnualAmt.shape[1] - 1; // hardcoded for now
 
     _barChartData = List.empty(growable: true);
@@ -109,7 +108,7 @@ class _DynamicGraphPageState extends State<DynamicGraphPage> {
 
   Widget getWidget() {
     print('get Widget');
-    if (widget.chartType == chartType.bar.toString()) {
+    if (widget.chartType == ChartType.bar) {
       return new charts.BarChart(_barChartData,
           animate: true,
           // defaultRenderer: new charts.BarRendererConfig(
@@ -119,7 +118,7 @@ class _DynamicGraphPageState extends State<DynamicGraphPage> {
           //     // To change the radius of the bars, use [ConstCornerStrategy]
           //     cornerStrategy: const charts.ConstCornerStrategy(30)),
           barGroupingType: charts.BarGroupingType.stacked,
-          vertical: false);
+          vertical: true);
     } else {
       return new charts.LineChart(_lineChartData,
           defaultRenderer:
@@ -148,50 +147,13 @@ class _DynamicGraphPageState extends State<DynamicGraphPage> {
   Widget build(BuildContext context) {
     //print('DynamicGraph_Page: ${widget.resultSet}');
 
-    if (widget.chartType == chartType.bar.toString()) {
+    if (widget.chartType == ChartType.bar) {
       _makeDataforBar();
     } else {
       _makeDataforLine();
     }
 
-    return MaterialApp(
-        title: 'Dynamic Page',
-        showPerformanceOverlay: false,
-        theme: ThemeData(
-          // primaryColor: const Color(0xff262545),
-          // primaryColorDark: const Color(0xff201f39),
-          // brightness: Brightness.dark,
-          primarySwatch: Colors.lime,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Investments'),
-          ),
-
-          //body: DonutAutoLabelChart.withSampleData(),
-          //body: GaugeChart.withSampleData(),
-          //body: TimeSeriesBar.withSampleData(),
-          //body: SimpleSeriesLegend.withSampleData(),
-          body: Center(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  //height: 500,
-                  children: [
-                    Expanded(
-                      //child:
-                      //StackedHorizontalBarChart.withSampleData(resultSet),
-                      //StackedBarChart.withRandomData(),
-                      child: getWidget(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ));
+    return getWidget();
   }
 }
 

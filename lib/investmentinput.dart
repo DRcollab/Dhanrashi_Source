@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/constants.dart';
 //import 'components/tile_class.dart';
-import 'models/investment_class.dart';
+
 import 'components/investment_entry_sheet.dart';
 import 'models/user_data_class.dart';
 
@@ -38,7 +38,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
   Color titleColor = Colors.black;
 
-  var investment = Investment.create();
+
 
   String name = '';
 

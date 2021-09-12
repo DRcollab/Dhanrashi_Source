@@ -6,12 +6,12 @@ import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
 
   late String hintText = "";
   bool passWord = false;
   bool hidePassword = true;
-  var key;
+  //var key;
   final String? Function(String?) validator;
   TextEditingController controller;
   late IconData icon;
@@ -21,12 +21,13 @@ class CustomTextField extends StatelessWidget {
   double radius;
   String label;
   TextInputAction? textInputAction;
+  bool autofocus;
 
   CustomTextField({
     this.hintText='',
     this.passWord=false,
     this.hidePassword = true,
-    this.key,
+    //this.key,
     required this.controller,
     required this.validator,
     this.icon = Icons.add_chart_outlined,
@@ -35,8 +36,16 @@ class CustomTextField extends StatelessWidget {
     this.radius = 25,
     this.label='',
     this.textInputAction = TextInputAction.next,
-    this.errorText=''});
+    this.errorText='',
+    this.autofocus = true,
 
+  });
+
+  @override
+  _CustomTextFieldState createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,23 +55,24 @@ class CustomTextField extends StatelessWidget {
 
 
       child: TextFormField(
-        controller: this.controller,
-
-        obscureText: passWord && this.hidePassword,
-        textInputAction: this.textInputAction,
+        controller: this.widget.controller,
+        autofocus: widget.autofocus,
+        obscureText: widget.passWord && this.widget.hidePassword,
+        textInputAction: this.widget.textInputAction,
         style: DefaultValues.kH3(context),
-        validator: this.validator,
+        validator: this.widget.validator,
         decoration: InputDecoration(
                   contentPadding: DefaultValues.kDefaultPaddingAllSame(context),
                   enabledBorder: kFormTextBorder,
                   errorBorder: kFormTextBorder,
                   focusedErrorBorder: kFormTextBorder,
-                  prefixIcon: Icon(icon,color: kPresentTheme.accentColor,),
-                  suffixIcon: this.passWord ? IconButton(
-                      onPressed:showPassword,
-                      icon:  this.hidePassword ? Icon(Icons.remove_red_eye_outlined) : Icon(Icons.remove_red_eye_sharp),
+                  prefixIcon: Icon(widget.icon,color: kPresentTheme.accentColor,),
+                  suffixIcon: this.widget.passWord ? IconButton(
+                      onPressed:widget.showPassword,
+                      icon:  this.widget.hidePassword ? Icon(Icons.remove_red_eye_outlined) : Icon(Icons.remove_red_eye_sharp),
                   ) : null,
                   fillColor: kPresentTheme.accentColor,
+
                   border: OutlineInputBorder(
                           gapPadding: 2.0,
                          borderRadius: BorderRadius.circular(25.0),
@@ -70,15 +80,15 @@ class CustomTextField extends StatelessWidget {
                                color: Color(0xFF004752),
                                     )
                             ),
-                  hintText: this.hintText,
+                  hintText: this.widget.hintText,
                   hintStyle: DefaultValues.kHintTextStyle(context),
-                  errorText: errorText,
-                  labelText: label,
+                  errorText: widget.errorText,
+                  labelText: widget.label,
                   //labelStyle:
         ),
 
-      onEditingComplete: validate,
-       onTap: validate,
+      onEditingComplete: widget.validate,
+       onTap: widget.validate,
       ),
     );
   }
@@ -170,8 +180,8 @@ class NumberInputField extends StatefulWidget {
 
   String hintText = "";
   bool passWord = false;
-  var key;
-  final String? Function(String?) validator;
+
+ // final String? Function(String?) validator;
   TextEditingController controller;
 
   final Function()? getValue;
@@ -180,18 +190,20 @@ class NumberInputField extends StatefulWidget {
   String label;
   String suffix ='';
   bool enabled;
+
   NumberInputField({
     this.hintText = '',
     this.passWord=false,
-    this.key,
+
     required this.controller,
-    required this.validator,
+    //required this.validator,
     this.getValue,
     this.radius = 25,
     this.label='',
     this.errorText='',
     this.suffix='',
     this.enabled = true,
+
   });
 
 
@@ -216,24 +228,27 @@ class _NumberInputFieldState extends State<NumberInputField> {
               padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
               child: Container(
                 height: 60,width: 120,
-                child: TextFormField(
+                child: TextField(
+                    textAlign: TextAlign.end,
+                    enableInteractiveSelection: false,
                     enabled: widget.enabled,
-                    inputFormatters: [],
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[.0-9]')),],
                     controller: widget.controller,
 
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     style: kInputTextStyle,
-                    validator: widget.validator,
+                    //validator: widget.validator,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),
+                        disabledBorder: InputBorder.none,
 
                         errorBorder: OutlineInputBorder(
 
                             gapPadding: 2.0,
                             borderRadius: BorderRadius.circular(5.0),
                             borderSide: BorderSide(
-                              color: Colors.black12,
+                              color: Colors.red,//Colors.black12,
                             )
                         ),
                         focusedErrorBorder:  OutlineInputBorder(
@@ -244,25 +259,24 @@ class _NumberInputFieldState extends State<NumberInputField> {
                               color: Colors.black12,
                             )
                         ),
-                        enabledBorder: kFormTextBorder,
+                        //enabledBorder: kFormTextBorder,
                         fillColor: kPresentTheme.accentColor,
                         border: OutlineInputBorder(
                             gapPadding: 1.0,
-                            borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             borderSide: BorderSide(
                               color: Color(0xFF004752),
                             )
                         ),
                     hintText: widget.hintText,
-                    hintStyle: DefaultValues.kHintTextStyle(context),
-                    errorText: widget.errorText,
+                   // errorText: widget.errorText,
 
                       //labelStyle:
                     ),
 
-                   onEditingComplete: widget.getValue,
+                  onEditingComplete: widget.getValue,
 
-                   //onTap: widget.validate,
+                  // onTap: widget.validate,
 
             ),
               ),),

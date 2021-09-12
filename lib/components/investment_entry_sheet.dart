@@ -74,6 +74,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
  // Investment currentInvestment = Investment();
   late FirebaseFirestore fireStore;
   late var investAccess;
+  double totalInvestment = 0.0;
 
   double calculateInterset( ){
 
@@ -107,6 +108,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     investmentDuration = widget.investmentDuration;
     interestValue = calculateInterset();
     annualInvestment = widget.annualInvestment;
+    totalInvestment = investedAmount + widget.annualInvestment;
     super.initState();
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
@@ -155,6 +157,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
     //print(fireStore.toString());
     interestValue = calculateInterset();
+    totalInvestment = investedAmount + annualInvestment;
 
   //  print('PV : $investedAmount and IV:$interestValue');
 
@@ -193,7 +196,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.start,
                  children: [
-                   Image.asset(widget.imageSource, height: 50, width: 50,),
+                   Image.asset(widget.imageSource, height: 30, width: 30,),
                    Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH1(context),))),
                    CommandButton(
                      buttonColor: kPresentTheme.alternateColor,
@@ -263,18 +266,18 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                            height: 10, width: 12 ,color: kPresentTheme.accentColor),
                        Padding(
                          padding: const EdgeInsets.only(left : 8.0),
-                         child: Text('Invested Amount'),
+                         child: Text('Total Investment'),
                        ),
 
                      ],
                    ),
-                   Text('${investedAmount} Lakh',style: DefaultValues.kH3(context),),
+                   Text('${totalInvestment.toStringAsFixed(2)} Lakh',style: DefaultValues.kH3(context),),
                    Row(
                      children: [
                        Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
                        Padding(
                          padding: const EdgeInsets.only(left : 8.0),
-                         child: Text('Interest Amount'),
+                         child: Text('Total Interest'),
                        ),
 
                      ],
@@ -283,7 +286,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                    SizedBox(height: 5,width: double.infinity,),
                    Container(height: 2,width: double.infinity,color: Colors.black12,),
                    SizedBox(height: 5,width: double.infinity,),
-                   Text('${(investedAmount+interestValue).toStringAsFixed(2)} Lakh',
+                   Text('${(totalInvestment+interestValue).toStringAsFixed(2)} Lakh',
                           style: DefaultValues.kH1(context),
                    ),
                  ],
@@ -309,7 +312,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
              sliderValue: investedAmount,
              min: 1,
              max: 100,
-             labelText: 'Invested Amount (in Lakhs)',
+             labelText: 'Invested Amount',
              suffix: 'Lakhs',
            ),
          ),
@@ -330,7 +333,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
               sliderValue: annualInvestment,
               min: 0,
               max: 100,
-              labelText: 'Annual Investment (in Lakhs)',
+              labelText: 'Annual Investment',
               suffix: 'Lakhs',
             ),
           ),

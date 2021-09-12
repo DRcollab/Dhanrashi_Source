@@ -6,10 +6,12 @@ import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
+import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
+import 'data/financial_calculator.dart';
 import 'data/goal_access.dart';
 import 'investmentinput.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,8 @@ class _DashboardState extends State<Dashboard> {
   List<InvestDB> investments=[];
   double totalGoalValue = 0.0;
   double totalInvestValue = 0.0;
+  int longestInvestmentDuration = 0;
+  int longestGoalDuration = 0;
 
 
   @override
@@ -76,6 +80,9 @@ class _DashboardState extends State<Dashboard> {
         double amount=f.get('goal_amount');
         totalGoalValue = totalGoalValue+amount;
         int duration=f.get('goal_duration');
+        if(duration > longestGoalDuration){
+          longestGoalDuration = duration;
+        }
         //double inflation = f.get('inflation');
         setState(() {
 
@@ -119,6 +126,9 @@ class _DashboardState extends State<Dashboard> {
         double annualInvestAmt=f.get('annualInvestAmt');
         double investRoI=f.get('investRoI');
         int duration=f.get('investment_duration');
+        if(duration > longestInvestmentDuration){
+          longestInvestmentDuration = duration;
+        }
 
         setState(() {
           investments.add(
@@ -214,9 +224,9 @@ class _DashboardState extends State<Dashboard> {
             body: TabBarView(
               children: [
                // AnalyticsTabView(),
-                AnalyticsTabView(),
-                GoalsTabView(goals:goals, currentUser: widget.currentUser,totalAmount: totalGoalValue,),// 2nd view
-                InvestmentTabView(investments: investments,currentUser: widget.currentUser,totalInvest: totalInvestValue,),
+                AnalyticsTabView(goalDBs:goals, currentUser: widget.currentUser,investmentDBs: investments,longestGoalDuration: longestGoalDuration,longestInvestmentDuration: longestInvestmentDuration,),
+                GoalsTabView(goalDBs:goals, currentUser: widget.currentUser,totalAmount: totalGoalValue,),// 2nd view
+                InvestmentTabView(investmentDBs: investments,currentUser: widget.currentUser,totalInvest: totalInvestValue,),
 
               ]
             ),

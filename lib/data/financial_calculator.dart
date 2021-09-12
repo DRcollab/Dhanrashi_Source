@@ -5,57 +5,9 @@ import 'package:dhanrashi_mvp/models/goal.dart';
 //import 'package:finance/finance.dart';
 
 class Calculator {
-  List<Investment> _investmentPortfolio = [
-    Investment(
-        name: 'Cash',
-        currentInvestmentAmount: 10,
-        annualInvestmentAmount: 2,
-        investmentRoi: .04,
-        duration: 10),
-    Investment(
-        name: 'Equity',
-        currentInvestmentAmount: 20,
-        annualInvestmentAmount: 7,
-        investmentRoi: .12,
-        duration: 15),
-    Investment(
-        name: 'PF',
-        currentInvestmentAmount: 10,
-        annualInvestmentAmount: 2,
-        investmentRoi: .085,
-        duration: 20),
-  ];
 
-  List<Goal> _goalList = [
-    Goal(
-      name: 'Home',
-      description: 'Home Fund',
-      goalAmount: 10,
-      duration: 2,
-      inflation: 0.04,
-    ),
-    Goal(
-      name: 'Education',
-      description: 'Need cash for Education',
-      goalAmount: 70,
-      duration: 8,
-      inflation: 0.04,
-    ),
-    Goal(
-      name: 'Retirement',
-      description: 'Retirement Fund',
-      goalAmount: 200,
-      duration: 20,
-      inflation: 0.04,
-    ),
-    Goal(
-      name: 'Secret',
-      description: 'Retirement Fund',
-      goalAmount: 100,
-      duration: 10,
-      inflation: 0.04,
-    ),
-  ];
+
+
 
   int longestInvestmentDuration = 0,
       longestGoalDuration = 0,
@@ -102,10 +54,10 @@ class Calculator {
   // TODO : need to find out the longest duration among the investment and goals
   // based on that populate the investment and goals
 
-  List getInvestmentDetail() {
-    longestInvestmentDuration =
-        getLongestInvestmentDuration(_investmentPortfolio);
-    longestGoalDuration = getLongestGoalDuration(_goalList);
+  List getInvestmentDetail(List<Investment> investment, int lI, int gI) {
+    longestInvestmentDuration = lI;
+
+   longestGoalDuration = gI;
 
     print('longestInvestmentDuration = $longestInvestmentDuration');
     print('longestGoalDuration = $longestGoalDuration');
@@ -114,8 +66,8 @@ class Calculator {
 
     double futureValue = 0;
 
-    for (int i = 0; i < _investmentPortfolio.length; i++) {
-      Investment newInv = _investmentPortfolio[i];
+    for (int i = 0; i < investment.length; i++) {
+      Investment newInv = investment[i];
       print(newInv.name);
 
       List investmentAnnualAmt = List.empty(growable: true);
@@ -176,10 +128,12 @@ class Calculator {
     return allInvestmentAnnualAmt;
   }
 
-  List getGoalDetail() {
-    longestInvestmentDuration =
-        getLongestInvestmentDuration(_investmentPortfolio);
-    longestGoalDuration = getLongestGoalDuration(_goalList);
+
+
+  List getGoalDetail(List<Goal> goals, int lI, int gI) {
+    longestInvestmentDuration = lI;
+
+    longestGoalDuration = gI;
 
     print('InGetgoalDetail()');
     print('longestInvestmentDuration = $longestInvestmentDuration');
@@ -189,8 +143,8 @@ class Calculator {
 
     double yearEndAmount = 0;
 
-    for (int i = 0; i < _goalList.length; i++) {
-      Goal newGoal = _goalList[i];
+    for (int i = 0; i < goals.length; i++) {
+      Goal newGoal = goals[i];
       print(newGoal.name);
 
       List goalAnnualAmt = List.empty(growable: true);
@@ -245,17 +199,17 @@ class Calculator {
     return allGoalAnnualAmt;
   }
 
-  List getInvVsGoalDetail() {
-    longestInvestmentDuration =
-        getLongestInvestmentDuration(_investmentPortfolio);
-    longestGoalDuration = getLongestGoalDuration(_goalList);
+  List getInvVsGoalDetail(List<Investment> inv, List<Goal> gol, int lI, int gI) {
+    // longestInvestmentDuration =
+    //     getLongestInvestmentDuration(_investmentPortfolio);
+    // longestGoalDuration = getLongestGoalDuration(_goalList);
 
     print('In getInvVsGoalDetail()');
     print('longestInvestmentDuration = $longestInvestmentDuration');
     print('longestGoalDuration = $longestGoalDuration');
 
-    List allGoalAnnualAmt = getGoalDetail();
-    List allInvestmentAnnualAmt = getInvestmentDetail();
+    List allGoalAnnualAmt = getGoalDetail(gol,lI, gI);
+    List allInvestmentAnnualAmt = getInvestmentDetail(inv, lI, gI);
     List investmenetVsGgoal = List.empty(growable: true);
 
     if (allInvestmentAnnualAmt.isNotEmpty) {

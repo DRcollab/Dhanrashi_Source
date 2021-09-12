@@ -34,6 +34,7 @@ class LoginPage extends StatefulWidget {
 //UserData currentUser = UserData.create();
 
 DRUserAccess? currentUser;
+// determine whether user opted for reset
 
 LoginPage({this.currentUser});
 
@@ -41,17 +42,15 @@ LoginPage({this.currentUser});
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
+class _LoginPageState extends State<LoginPage> {
 
    bool profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
     DRUserAccess? currentUser; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
   // The currentUser will be displayed on dhanrashi or other places....
 
-  final _userText = TextEditingController();
-  final _passWord = TextEditingController();
-  var _userKey = GlobalKey<FormState>(); // Used for user email validation
-  var _passKey = GlobalKey<FormState>(); // Used fot password validation
-  int cardIndex = 0;
+  // bool useForReset = false;
+
+   int cardIndex = 0;
 
 
   /// Goto Logger class definition to see how login is happening
@@ -70,8 +69,8 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
 
   @override
   void dispose(){
-    _userText.dispose();
-    _passWord.dispose();
+
+
     super.dispose();
   }
 
@@ -114,6 +113,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
           child: InputCard(
           titleText: titleText[cardIndex],
           children: [
+             //Logger(),
             cardView[cardIndex],
             Padding(
               padding:DefaultValues.kTextFieldPadding(context),
@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage>  with InputValidationMixin{
 
                   onPressed: () {
                     setState(() {
-
+                      //useForReset = true;
                       if(cardIndex == 0)
                             cardIndex = 1;
                       else
@@ -219,12 +219,12 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
    late final _loggedInUser;
   String _errorText = "";
-  final _userText = TextEditingController();
-  final _passWord = TextEditingController();
-  var _userKey = GlobalKey<FormState>(); // Used for user email validation
-  var _passKey = GlobalKey<FormState>(); // Used fot password validation
+  late final _userText;
+  late final _passWord;
+  late final  _loginKey;// = GlobalKey<FormState>(); // Used for user email validation
+  late final _passwordKey;// = GlobalKey<FormState>(); // Used fot password validation
 
-  var _user = UserHandeler(userTable, userProfileTable);
+ var _user = UserHandeler(userTable, userProfileTable);
   //var _userProfile = UserHandeler(userProfileTable);
 
    bool loginState = false;
@@ -235,16 +235,22 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
   @override
   void dispose(){
-    _userText.dispose();
-    _passWord.dispose();
+   _userText.dispose();
+   _passWord.dispose();
+
     super.dispose();
   }
 
   @override
   void initState() {
     // TODO: implement initState
+    _loginKey = GlobalKey<FormState>();
+    _passwordKey = GlobalKey<FormState>();
+    _userText = TextEditingController();
+     _passWord = TextEditingController();
     super.initState();
-    future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
+
+   future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
 
   }
 
@@ -269,9 +275,9 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
            // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
            // Navigator.push(context,
            //     MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
-
+            Navigator.pop(context);
            Navigator.push(context,
-               MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: _loggedInUser.user,)));
+               MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
 
          }
        }
@@ -304,13 +310,14 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
         Padding(
             padding:DefaultValues.kTextFieldPadding(context),
             child: Form(
-              key: _userKey,
+              key: _loginKey,
               child: CustomTextField(
                   controller: _userText,
+                  autofocus: true,
                   hintText: "enter email",
                   passWord: false,
                   icon: Icons.email,
-
+                  textInputAction: TextInputAction.next,
                   validator: (value) {
                     if(eMailValid( value.toString() ))
                       return null;
@@ -321,7 +328,8 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
                 validate: (){
                     setState(() {
                       _errorText = "";
-                    });
+                      print('errorText');
+                   });
                 },
 
               ),
@@ -330,10 +338,11 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
         Padding(
           padding:DefaultValues.kTextFieldPadding(context),
           child: Form(
-            key: _passKey,
+            key: _passwordKey,
 
             child: CustomTextField(
-
+              autofocus: false,
+              textInputAction: TextInputAction.done,
               validator: (value){
                 if(passWordValid(value.toString()))
                   return null;
@@ -370,10 +379,10 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
           borderRadius: BorderRadius.circular(25.0),
           onPressed: () {
 
-
+//
             setState(() {
-              if(_userKey.currentState!.validate()) {
-                if(_passKey.currentState!.validate()){
+              if(_loginKey.currentState!.validate()) {
+                if(_passwordKey.currentState!.validate()){
 
                   // Async function to enable login
                   _login(_userText.text, _passWord.text);

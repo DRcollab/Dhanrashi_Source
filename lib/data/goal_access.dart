@@ -5,16 +5,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 
-class DRGoalAccess{
- late final _firestore;
- late final _currentUser;
+class DRGoalAccess {
+  late final _firestore;
+  late final _currentUser;
 
 
-  DRGoalAccess(FirebaseFirestore firestore, var currentUser){
+  DRGoalAccess(FirebaseFirestore firestore, var currentUser) {
     this._firestore = firestore;
     this._currentUser = currentUser;
   }
-
 
 
   // Future storeGoal(
@@ -42,63 +41,59 @@ class DRGoalAccess{
   //   }
   // }
 
-  Future storeGoalSolo(
-      Goal goals,) async {
+  Future storeGoalSolo(Goal goals,) async {
     DateTime currentPhoneDate = DateTime.now();
 
-      try {
-        await _firestore.collection('pjdhan_goal').add({
-          'email': _currentUser.email,
-          'Uuid': _currentUser.uid,
-          'Updated_id': 'system',
-          'goal_name': goals.name,
-          'goal_description': goals.description,
-          'goal_duration': goals.duration,
-          'goal_amount': goals.goalAmount,
-          'inflation': 8.9,
-          'insert_dts': Timestamp.fromDate(currentPhoneDate),
-          'update_dts': Timestamp.fromDate(currentPhoneDate),
-          'status': 'Active',
-        })
-            .then((value)=>print("Goal added"));
-      }
-      catch (e) {
-        throw e;
-      }
-
+    try {
+      await _firestore.collection('pjdhan_goal').add({
+        'email': _currentUser.email,
+        'Uuid': _currentUser.uid,
+        'Updated_id': 'system',
+        'goal_name': goals.name,
+        'goal_description': goals.description,
+        'goal_duration': goals.duration,
+        'goal_amount': goals.goalAmount,
+        'inflation': 8.9,
+        'insert_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'status': 'Active',
+      })
+          .then((value) => print("Goal added"));
+    }
+    catch (e) {
+      throw e;
+    }
   }
 
-  // Future<dynamic> updateGoal(
-  //     List<GoalDB> listGoals,
-  //     String docStatus
-  //     ) async {
-  //   DateTime currentPhoneDate = DateTime.now();
-  //   for (var j = 0; j< listGoals.length; j++) {
-  //     var docID= listGoals[j].goalDocumentID;
-  //     try {
-  //       _firestore.collection('pjdhan_goal').doc(listGoals[j].goalDocumentID).update({
-  //         'email': listGoals[j].email,
-  //         'Uuid': listGoals[j].user,
-  //         'Updated_id': 'system',
-  //         'goal_name': listGoals[j].name,
-  //         'goal_description': listGoals[j].description,
-  //         'goal_duration': listGoals[j].goalDuration,
-  //         'goal_amount': listGoals[j].goalAmount,
-  //         'insert_dts': Timestamp.fromDate(currentPhoneDate),
-  //         'update_dts': Timestamp.fromDate(currentPhoneDate),
-  //         'status': docStatus
-  //       })
-  //           .then((value)=>print("Goal updated"));
-  //     }
-  //     catch (e) {
-  //       print( 'Exception while updating $docID $e');
-  //     }
-  //   }
-  // }
-  Future fetchGoals() async{
-    List<GoalDB> listGoal=[];
-    try{
-      _firestore.collection('pjdhan_goal').where('Uuid', isEqualTo: _currentUser.uid)
+  Future<dynamic> updateGoalSolo(GoalDB goalDB, String docStatus) async {
+    DateTime currentPhoneDate = DateTime.now();
+
+    var docID = goalDB.goalDocumentID;
+    try {
+      _firestore.collection('pjdhan_goal').doc(docID).update({
+        'email': goalDB.email,
+        'Uuid': goalDB.user,
+        'Updated_id': 'system',
+        'goal_name': goalDB.goal.name,
+        'goal_description': goalDB.goal.description,
+        'goal_duration': goalDB.goal.duration,
+        'goal_amount': goalDB.goal.goalAmount,
+        'insert_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'status': docStatus
+      })
+          .then((value) => print("Goal updated"));
+    }
+    catch (e) {
+      print('Exception while updating $docID $e');
+    }
+  }
+
+  Future fetchGoals() async {
+    List<GoalDB> listGoal = [];
+    try {
+      _firestore.collection('pjdhan_goal').where(
+          'Uuid', isEqualTo: _currentUser.uid)
           .get()
           .then((QuerySnapshot snapshot) {
         snapshot.docs.forEach((f) {
@@ -139,9 +134,16 @@ class DRGoalAccess{
         }
       }
       );
-    }catch(e){
+    } catch (e) {
       throw e;
     }
-
   }
+
+
+
+
+
+
+
+
 }

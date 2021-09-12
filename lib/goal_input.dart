@@ -8,7 +8,7 @@ import 'components/constants.dart';
 //import 'components/tile_class.dart';
 import 'components/goal_entry_sheet.dart';
 import 'dashboard.dart';
-import 'models/investment_class.dart';
+import 'models/investment.dart';
 import 'components/investment_entry_sheet.dart';
 import 'models/user_data_class.dart';
 import 'investmentinput.dart';
@@ -38,7 +38,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
 
   Color titleColor = Colors.black;
 
-  var investment = Investment.create();
+  //var investment = Investment();
 
   String name = '';
 
