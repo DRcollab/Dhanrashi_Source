@@ -44,6 +44,7 @@ dependencies:
   #firebase_core: ^1.5.0 # new
   google_fonts: ^2.0.0
   fluttertoast: ^8.0.8
+  loading_gifs: ^0.3.0
 
 
 

@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'components/constants.dart';
 import 'components/custom_text_field.dart';
 import 'components/buttons.dart';
+import 'models/profile.dart';
 import 'models/user_data_class.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'confirmation_page.dart';
@@ -21,7 +22,8 @@ import 'components/band_class.dart';  // confirmation page contains band class o
 import 'package:dhanrashi_mvp/data/database.dart';
 import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 /// Used to collect data from different screen of the profiler page and compile the data
@@ -29,7 +31,7 @@ class Collector{
 
 
   DateTime _dateOfBirth = DateTime.now();
-  double _annualIncome = 0.0 ;
+  String _annualIncome = '' ;
   var  _fName = TextEditingController() ;
   var _lName = TextEditingController();
 
@@ -38,7 +40,7 @@ class Collector{
   Collector(){
 
       _dateOfBirth = DateTime.now();
-     _annualIncome = 0;
+     _annualIncome = '';
      _fName = TextEditingController();
      _lName = TextEditingController();
 
@@ -69,7 +71,7 @@ class Collector{
 
 
   /// setter of Annual Income
-  set annualIncome(double income){
+  set annualIncome(String income){
 
     _annualIncome = income;
 
@@ -96,7 +98,7 @@ class Collector{
   }
 
 /// getter of Income
- double get annualIncome{
+ String get annualIncome{
 
     return _annualIncome;
 
@@ -167,7 +169,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
   static bool  _dateKeyValidation  = false;
   static bool _incomeValidation = false;
   String errorText = ''; // Used to display message on date validation
-
+  late FirebaseFirestore fireStore;
   String profileImageSource = '';
 
 ///  Holds the different screen header display .
@@ -193,7 +195,12 @@ class _ProfilerPageState extends State<ProfilerPage> {
   void initState() {
 
     super.initState();
+
+
   }
+
+
+
 
 
 
@@ -224,7 +231,13 @@ class _ProfilerPageState extends State<ProfilerPage> {
     IncomePicker(
       validate:(value){
 
-        List <double> incomeRangeList  = [1,5,10,20,0, ];
+        List <String> incomeRangeList  = [
+          "Below 1 Lakh ",
+          "1 Lakh to 5 lakh",
+          "5 Lakh  to 10 Lakh",
+          "Above 10 Lakh",
+          "NA",
+        ];
 
         profileCollector.annualIncome = incomeRangeList[value!.round()];
         _incomeValidation = true;
@@ -607,7 +620,7 @@ class _IncomePickerState extends State<IncomePicker> {
         titleText: "Your income range",
         children: [
           RadioListTile(
-              value: 1,
+              value: 0,
               groupValue: selectedValue,
               title: Text("Below 1 Lakh ", style:DefaultValues.kNormal2(context),),
 
@@ -621,7 +634,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
               }),
           RadioListTile(
-              value: 2,
+              value: 1,
               groupValue: selectedValue,
               title: Text("Above 1 Lakh to 5 lakh", style:DefaultValues.kNormal2(context),),
 
@@ -636,7 +649,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
               }),
           RadioListTile(
-              value: 3,
+              value: 2,
               groupValue: selectedValue,
               title: Text("Above 5 Lakh  to 10 Lakh", style:DefaultValues.kNormal2(context),),
 
@@ -650,7 +663,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
               }),
           RadioListTile(
-              value: 4,
+              value: 3,
               groupValue: selectedValue,
               title: Text("Above 10 Lakh ", style:DefaultValues.kNormal2(context),),
 
@@ -664,7 +677,7 @@ class _IncomePickerState extends State<IncomePicker> {
 
               }),
           RadioListTile(
-              value: 5,
+              value: 4,
               groupValue: selectedValue,
               title: Text("Prefer not to disclose ", style:DefaultValues.kNormal2(context),),
 

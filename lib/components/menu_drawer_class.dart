@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import '../login_page.dart';
+import '../login_screen.dart';
 
 class MenuDrawer extends StatefulWidget {
  // const MenuDrawer({Key? key}) : super(key: key);
@@ -146,7 +147,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     print(widget.currentUser);
                     //userLoggedIn = false;
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                     print(widget.currentUser.email);
                   });
 

@@ -2,7 +2,9 @@
 /// Login page consists  two view element 1. Logger and 2. Resetter
 ///
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
+import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
@@ -14,6 +16,8 @@ import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
 
 import 'components/on_error_screen.dart';
+import 'landing.dart';
+import 'models/profile.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,20 +33,20 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 
-class LoginPage extends StatefulWidget {
+class Login_Page extends StatefulWidget {
 
 //UserData currentUser = UserData.create();
 
-DRUserAccess? currentUser;
+//DRUserAccess? currentUser;
 // determine whether user opted for reset
 
-LoginPage({this.currentUser});
+
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _Login_PageState createState() => _Login_PageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _Login_PageState extends State<Login_Page> {
 
    bool profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
     DRUserAccess? currentUser; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
@@ -60,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
    void initState() {
      // TODO: implement initState
      super.initState();
-     currentUser = widget.currentUser;
+     //currentUser = widget.currentUser;
 
 
 
@@ -159,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignUpPage(currentUser: widget.currentUser,),
+                        builder: (context) => SignUpPage(),
                       ),
                     );
                   },
@@ -219,24 +223,27 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
    late final _loggedInUser;
   String _errorText = "";
-  late final _userText;
-  late final _passWord;
+ late final _userText;
+ late final _passWord;
   late final  _loginKey;// = GlobalKey<FormState>(); // Used for user email validation
   late final _passwordKey;// = GlobalKey<FormState>(); // Used fot password validation
 
  var _user = UserHandeler(userTable, userProfileTable);
-  //var _userProfile = UserHandeler(userProfileTable);
+
 
    bool loginState = false;
   // late DRUserAccess currentUser;
 
    late FirebaseAuth fireAuth ;
+   late FirebaseFirestore fireStore;
+   late DRProfileAccess profileAccess;
   bool _hidePassword = true;
+ late Profile profile;
 
   @override
   void dispose(){
-   _userText.dispose();
-   _passWord.dispose();
+  // _userText.dispose();
+  // _passWord.dispose();
 
     super.dispose();
   }
@@ -246,46 +253,97 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
     // TODO: implement initState
     _loginKey = GlobalKey<FormState>();
     _passwordKey = GlobalKey<FormState>();
-    _userText = TextEditingController();
-     _passWord = TextEditingController();
+   _userText = TextEditingController();
+    _passWord = TextEditingController();
+    profile = Profile.create(); // Custom
     super.initState();
 
-   future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
+   future: Firebase.initializeApp().whenComplete(() {
+     fireAuth = FirebaseAuth.instance;
+     fireStore = FirebaseFirestore.instance;
+         });
 
   }
 
 
+
+   Future fetchProfile( var currentUser) async {
+
+     // late Profile profile;
+
+     try {
+       fireStore.collection('pjdhan_users').where(
+           'Uid', isEqualTo: currentUser.uid)
+           .get()
+           .then((QuerySnapshot snapshot) {
+         snapshot.docs.forEach((f) {
+           String email = f.get('email');
+           String userID = f.get('Uid');
+           String docID = fireStore
+               .collection('pjdhan_users')
+               .doc()
+               .id;
+
+           String firstName = f.get('first_name');
+           String lastName = f.get('last_name');
+           Timestamp dob = f.get('DOB');
+           String incomeRange = f.get('income');
+
+           setState(() {
+             profile = Profile(
+               firstName: firstName,
+               lastName: lastName,
+               DOB: dob.toDate(),
+               incomeRange: incomeRange,
+               docId: docID,
+             );
+           });
+
+
+
+         });
+       });
+       //return profile;
+     }catch(e){
+       print('This is the error : -> $e');
+     }
+   }
+
+
+
+
+
+
   // This async method implements login
    void _login(String id, String pwd) async {
-     //currentUser = DRUserAccess(fireAuth);
-    //_loggedInUser
+
+
      try{
        var _loggedInUser = await  fireAuth.signInWithEmailAndPassword(email: id, password: pwd); // DRUserAccess(fireAuth).authUser(id, pwd);
        if (_loggedInUser.user != null) {
-         // userLoggedIn = true;
-         _profileReady = _user.fetchProfile(); // preserved for fetching user profile.
 
-         if (_profileReady){
-           Navigator.push(context,
-               MaterialPageRoute(builder: (context) => Dashboard(currentUser: _user.user(),)));
-         }
-         else{
+         profileAccess = DRProfileAccess(fireStore, _loggedInUser.user);
 
-
-           // Will goto profiler page to get the profile from user. if user denies then some code to be fetched.
-           // Navigator.push(context,
-           //     MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: _loggedInUser.user,)));
+       //  profile = await  profileAccess.fetchProfile();
+         fetchProfile(_loggedInUser.user);
+          Future.delayed(Duration(seconds: 3));
+         print(' Profile doc Id : ${profile.docId}');
+          if(profile.docId != '') {
             Navigator.pop(context);
-           Navigator.push(context,
-               MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: _loggedInUser.user,)));
-
-         }
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) =>
+                    Dashboard(currentUser: _loggedInUser.user,)));
+          }
+          else{
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) =>
+                    ProfilerOptionPage(currentUser: _loggedInUser.user,)));
+          }
        }
 
 
      }catch(e){
-       // Navigator.push(context,
-       //     MaterialPageRoute(builder: (context) => ErrorPage()));
 
        Utility.showErrorMessage(context, e.toString());
         print(e);
@@ -312,12 +370,12 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
             child: Form(
               key: _loginKey,
               child: CustomTextField(
-                  controller: _userText,
-                  autofocus: true,
+                 controller: _userText,
+
                   hintText: "enter email",
                   passWord: false,
                   icon: Icons.email,
-                  textInputAction: TextInputAction.next,
+                //  textInputAction: TextInputAction.next,
                   validator: (value) {
                     if(eMailValid( value.toString() ))
                       return null;
@@ -327,7 +385,10 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
                 validate: (){
                     setState(() {
-                      _errorText = "";
+                      if(_errorText != ''){
+                        _errorText = '';
+                      }
+
                       print('errorText');
                    });
                 },
@@ -341,8 +402,8 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
             key: _passwordKey,
 
             child: CustomTextField(
-              autofocus: false,
-              textInputAction: TextInputAction.done,
+
+             // textInputAction: TextInputAction.done,
               validator: (value){
                 if(passWordValid(value.toString()))
                   return null;
@@ -352,11 +413,14 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
 
               validate: (){
                 setState(() {
-                  _errorText = "";
+                  if(_errorText != ''){
+                    _errorText = '';
+                  }
+
                 });
               },
 
-              controller: _passWord,
+             controller: _passWord,
               hintText: 'Enter Password',
               passWord: true,
               hidePassword: _hidePassword,
@@ -385,7 +449,8 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
                 if(_passwordKey.currentState!.validate()){
 
                   // Async function to enable login
-                  _login(_userText.text, _passWord.text);
+                 _login(_userText.text, _passWord.text);
+                  //print('profile from outseide :${profile.docId}');
 
 
                 } // end of outside
@@ -397,7 +462,7 @@ class _LoggerState extends State<Logger> with InputValidationMixin {
       ],
     );
 
-
+// copy here
   }
 }
 
@@ -433,7 +498,7 @@ class _ResetterState extends State<Resetter>  with InputValidationMixin{
       await fireAuth.sendPasswordResetEmail(email: emailController.text);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => Login_Page()),
       );
       // fireAuth.sendPasswordResetEmail(email: emailController.text);
     }catch(e){

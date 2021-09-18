@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 
 class AnalyticsTabView extends StatelessWidget {
  // AnalyticsTabView({Key? key}) : super(key: key);
@@ -50,11 +51,12 @@ class AnalyticsTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
   investments = List.empty(growable: true);
   goals = List.empty(growable: true);
   bool fetched = false;
 
-  if(investmentDBs.length>0) {
+  if(investmentDBs.isNotEmpty) {
     investmentDBs.forEach((element) {
       investments.add(element.investment);
     });
@@ -64,7 +66,7 @@ class AnalyticsTabView extends StatelessWidget {
     fetched = false;
   }
 
-  if(goalDBs.length>0) {
+  if(goalDBs.isNotEmpty) {
     goalDBs.forEach((element) {
       goals.add(element.goal);
     });
@@ -74,9 +76,19 @@ class AnalyticsTabView extends StatelessWidget {
     fetched = false;
   }
 
-  if(fetched) {
+  print('fetched = $fetched');
+  print('goal db${goalDBs.length}');
+  print('goal db${investmentDBs.length}');
+
+  if(investments.isNotEmpty && goals.isNotEmpty) {
+    print('longest inv time : $longestInvestmentDuration');
+    print('longest goal time : $longestGoalDuration');
+
+    fetched = true;
     dataSet = Calculator().getInvVsGoalDetail(
         investments, goals, longestInvestmentDuration, longestGoalDuration);
+  }else{
+    fetched = false;
   }
 
     return Column(
@@ -88,20 +100,21 @@ class AnalyticsTabView extends StatelessWidget {
                 width:220, height: 220,
                 child: DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top:250.0),
-              child: Container(
-                width: 450,
-                height: 220,
-               child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) : SizedBox(),
-              ),
-            ),
 
             Padding(
               padding: const EdgeInsets.all(35.0),
               child: Container(
                   width:150, height: 150,
                   child: DonutChart(pieData: pieData1)),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(top:250.0),
+              child: Container(
+                width: 450,
+                height: 220,
+                child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(circularProgressIndicator, scale: 5),
+              ),
             ),
           ],
 

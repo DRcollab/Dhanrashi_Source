@@ -238,7 +238,7 @@ class _GoalSheetState extends State<GoalSheet> {
                           description: 'No description',
                           goalAmount: goalAmount,
                           duration: goalDuration,
-                          inflation: inflation,
+                          inflation: inflation/100,
                         );
 
                         print('.... printing inv:;;;;;;;;');

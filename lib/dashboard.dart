@@ -78,6 +78,7 @@ class _DashboardState extends State<Dashboard> {
         String goalName=f.get('goal_name');
         String goalDescription=f.get('goal_description');
         double amount=f.get('goal_amount');
+        double inflation = f.get('inflation');
         totalGoalValue = totalGoalValue+amount;
         int duration=f.get('goal_duration');
         if(duration > longestGoalDuration){
@@ -96,7 +97,7 @@ class _DashboardState extends State<Dashboard> {
                   description: goalDescription,
                   goalAmount: amount,
                   duration: duration,
-                  inflation: 4.5,
+                  inflation: inflation,
                 ),
               )
           );
@@ -154,28 +155,6 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-
-  _fetch() async {
-
-    try {
-      goalAccess = DRGoalAccess(fireStore, widget.currentUser);
-
-        goalAccess.fetchGoals().then((value){
-          setState(() {
-            goals= value;
-          });
-        }).onError((error,stack){
-          print('000000+++++++++++++++++++00000000');
-          print('Got an error :${error.toString()}');
-        });
-
-
-      print('In DR fetch ');
-      print(goals);
-    }catch(e){
-     print(' Unseeeedull ${e.toString()}');
-    }
-  }
 
 
   @override

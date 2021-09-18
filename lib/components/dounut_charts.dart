@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +72,8 @@ class DonutChart extends StatelessWidget {
       // ],
       defaultRenderer: new charts.ArcRendererConfig(
           arcWidth: this.arcWidth,
+         startAngle: 4 / 5 * pi,
+         arcLength: 7 / 5 * pi,
           arcRendererDecorators: viewLabel ? [
 
             new charts.ArcLabelDecorator(

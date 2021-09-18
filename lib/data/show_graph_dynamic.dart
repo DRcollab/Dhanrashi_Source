@@ -122,8 +122,12 @@ class _DynamicGraphState extends State<DynamicGraph> {
     } else {
       return new charts.LineChart(_lineChartData,
           defaultRenderer:
-              new charts.LineRendererConfig(includeArea: true, stacked: true),
-          animate: true);
+              new charts.LineRendererConfig(
+                  includeArea: true,
+                  stacked: true),
+                  animate: true,
+
+        );
 
       // return new charts.BarChart(_barChartData,
       //     animate: true,

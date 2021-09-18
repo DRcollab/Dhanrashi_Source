@@ -13,7 +13,7 @@ class CustomTextField extends StatefulWidget {
   bool hidePassword = true;
   //var key;
   final String? Function(String?) validator;
-  TextEditingController controller;
+  TextEditingController? controller;
   late IconData icon;
   final Function()? validate;
    Function()? showPassword;
@@ -21,14 +21,14 @@ class CustomTextField extends StatefulWidget {
   double radius;
   String label;
   TextInputAction? textInputAction;
-  bool autofocus;
+
 
   CustomTextField({
     this.hintText='',
     this.passWord=false,
     this.hidePassword = true,
     //this.key,
-    required this.controller,
+    this.controller,
     required this.validator,
     this.icon = Icons.add_chart_outlined,
     this.showPassword,
@@ -37,7 +37,7 @@ class CustomTextField extends StatefulWidget {
     this.label='',
     this.textInputAction = TextInputAction.next,
     this.errorText='',
-    this.autofocus = true,
+
 
   });
 
@@ -46,6 +46,10 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +60,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
       child: TextFormField(
         controller: this.widget.controller,
-        autofocus: widget.autofocus,
+
         obscureText: widget.passWord && this.widget.hidePassword,
         textInputAction: this.widget.textInputAction,
         style: DefaultValues.kH3(context),
@@ -74,8 +78,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   fillColor: kPresentTheme.accentColor,
 
                   border: OutlineInputBorder(
+
                           gapPadding: 2.0,
                          borderRadius: BorderRadius.circular(25.0),
+
                           borderSide: BorderSide(
                                color: Color(0xFF004752),
                                     )
@@ -87,8 +93,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   //labelStyle:
         ),
 
-      onEditingComplete: widget.validate,
-       onTap: widget.validate,
+      onEditingComplete: (){
+          if(widget.validate!=null)
+          widget.validate!();
+
+
+      },
+       onTap: () {
+         if(widget.validate!=null)
+          widget.validate!();
+
+       }
       ),
     );
   }

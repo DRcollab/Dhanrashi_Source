@@ -219,7 +219,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                              annualInvestmentAmount: annualInvestment,
                              currentInvestmentAmount: investedAmount,
                              duration: investmentDuration,
-                             investmentRoi: interestValue,
+                             investmentRoi: interestValue/100,
                            );
 
                        print('.... printing inv:;;;;;;;;');

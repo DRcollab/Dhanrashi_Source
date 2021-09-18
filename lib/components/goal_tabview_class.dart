@@ -6,6 +6,7 @@ import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'investment_entry_sheet.dart';
@@ -42,12 +43,23 @@ class GoalsTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    bool fetched = false;
     goals = List.empty(growable: true);
-   goalDBs.forEach((element) {
-     goals.add(element.goal);
-   });
+    if(goalDBs.length>0){
+      goalDBs.forEach((element) {
+        goals.add(element.goal);
 
-  dataSet = Calculator().getGoalDetail(goals,longestInvestmentDuration, longestGoalDuration);
+      });
+      fetched = true;
+      dataSet = Calculator().getGoalDetail(goals,longestInvestmentDuration, longestGoalDuration);
+
+    }else{
+
+      fetched = false;
+    }
+
+
+
 
    print('length is : ${goals}');
   // print('another is ${_goalList}');
@@ -57,10 +69,10 @@ class GoalsTabView extends StatelessWidget {
         Container(
             height: 150,
             width: 450,
-            child: DynamicGraph(
+            child: fetched ? DynamicGraph(
               chartType: ChartType.bar,
               resultSet: dataSet,
-            )
+            ) : Image.asset(circularProgressIndicator, scale: 3),
           //DonutChart(pieData: pieData)
         ),
         Row(

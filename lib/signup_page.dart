@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'components/custom_text_field.dart';
 
 import 'components/custom_text.dart';
+import 'login_screen.dart';
 import 'profiler.dart';
 import 'models/user_data_class.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,9 +41,9 @@ import 'package:dhanrashi_mvp/components/constants.dart';
 
   //const Logging({Key? key}) : super(key: key);
 
-  var currentUser;
+ // var currentUser;
 
-    SignUpPage({required this.currentUser});
+   // SignUpPage({});
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -256,7 +257,7 @@ import 'package:dhanrashi_mvp/components/constants.dart';
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
                     );
                   },
                 ),

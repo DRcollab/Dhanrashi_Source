@@ -2,6 +2,7 @@
 import 'dart:ffi';
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
+import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
@@ -11,11 +12,13 @@ import 'main.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
 import 'components/band_class.dart';
+import 'models/profile.dart';
 import 'models/user_data_class.dart';
 import 'components/buttons.dart';
 import 'data/user_handler.dart';
 import 'data/database.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ConfirmationPage extends StatefulWidget {
 
@@ -39,16 +42,24 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   var _userHandler = UserHandeler(userTable, userProfileTable);
   var dobController = TextEditingController();
   var incomeController  = TextEditingController();
-
-
+  late FirebaseFirestore fireStore;
+  late DRProfileAccess profileAccess;
 
 
   @override
   void initState() {
     // TODO: implement initState
     Collector profileCollector = widget.collector;
+    future:Firebase.initializeApp().whenComplete(() {
+      fireStore =  FirebaseFirestore.instance;
+      profileAccess = DRProfileAccess(fireStore, widget.currentUser);
+    });
     super.initState();
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -149,19 +160,26 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
                 /// on pressing this button data will be saved in database ...
                 setState(() {
+                  Profile profile = Profile(
+                    firstName: widget.collector.fName.text,
+                    lastName: widget.collector.lName.text,
+                    DOB:widget.collector.dateOfBirth,
+                    incomeRange: widget.collector.annualIncome.toString(),
+                  );
 
+                 profileAccess.storeProfile(profile);
 
-                  widget.currentUserProfile.setFName(widget.collector.fName.text); /// calling User data methods -- open user_data_class.dart file
-                  widget.currentUserProfile.setLName(widget.collector.lName.text);/// calling User data methods -- open user_data_class.dart file
-                  widget.currentUserProfile.setIncome(widget.collector.annualIncome.toString());/// calling User data methods -- open user_data_class.dart file
-                  widget.currentUserProfile.setDOB(widget.collector.dateAsString());/// calling User data methods -- open user_data_class.dart file
-
-               //   _userHandler.createUser(widget.currentUser); /// creating user from currentUser data -- open usr_handler.dart
-
-                  _userHandler.addProfile();  /// adding user profile to the database -- mock database [UserPtofileTable]
-
-
-                  _userHandler.printUserData();
+               //    widget.currentUserProfile.setFName(widget.collector.fName.text); /// calling User data methods -- open user_data_class.dart file
+               //    widget.currentUserProfile.setLName(widget.collector.lName.text);/// calling User data methods -- open user_data_class.dart file
+               //    widget.currentUserProfile.setIncome(widget.collector.annualIncome.toString());/// calling User data methods -- open user_data_class.dart file
+               //    widget.currentUserProfile.setDOB(widget.collector.dateAsString());/// calling User data methods -- open user_data_class.dart file
+               //
+               // //   _userHandler.createUser(widget.currentUser); /// creating user from currentUser data -- open usr_handler.dart
+               //
+               //    _userHandler.addProfile();  /// adding user profile to the database -- mock database [UserPtofileTable]
+               //
+               //
+               //    _userHandler.printUserData();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
                 });

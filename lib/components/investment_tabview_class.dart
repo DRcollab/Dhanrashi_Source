@@ -3,6 +3,7 @@ import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 import '../investmentinput.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
@@ -33,23 +34,29 @@ class InvestmentTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    bool fetched = false;
     //
     investments = List.empty(growable: true);
-    investmentDBs.forEach((element) {
-      investments.add(element.investment);
-    });
+    if(investmentDBs.length>0){
+      investmentDBs.forEach((element) {
+        investments.add(element.investment);
+      });
+      dataSet = Calculator().getInvestmentDetail(investments, longestInvestmentDuration, longestGoalDuration);
+      fetched = true;
+    }
 
-   dataSet = Calculator().getInvestmentDetail(investments, longestInvestmentDuration, longestGoalDuration);
+
+
   print(dataSet);
     return Column(
       children: [
         Container(
             height: 150,
             width: 450,
-            child: DynamicGraph(
+            child: fetched ? DynamicGraph(
               chartType: ChartType.bar,
               resultSet: dataSet,
-            )
+            ) : Image.asset(circularProgressIndicator, scale: 10),
         ),
        Row(
          mainAxisAlignment: MainAxisAlignment.spaceAround,
