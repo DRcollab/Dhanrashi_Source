@@ -16,7 +16,7 @@ import 'data/filemanagr_class.dart';
 import 'data/user_access.dart';
 import 'investmentinput.dart';
 //import 'goalinput.dart';
-import 'login_page.dart';
+
 import 'profiler.dart';
 import 'signup_page.dart';
 
@@ -29,7 +29,7 @@ import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-late DRUserAccess currentUser; //UserData('', '_fName', '_lName', '_dob', '_income');
+//late DRUserAccess currentUser; //UserData('', '_fName', '_lName', '_dob', '_income');
 
 bool loginState = false;
 
@@ -81,7 +81,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP> {
 
 
   void _login() async {
-   currentUser=DRUserAccess(fireAuth);
+  var currentUser=DRUserAccess(fireAuth);
 
    // var loggedInUser = await userAccess.authUser('subhaaspa@gmail.com','shubha123');
 

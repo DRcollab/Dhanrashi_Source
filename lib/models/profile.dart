@@ -11,6 +11,8 @@ class Profile {
         required this.incomeRange,
         required this.DOB,
          this.docId,
+        required this.uid,
+        required this.email,
 
       });
 
@@ -20,6 +22,8 @@ class Profile {
     this.incomeRange = '';
     this.DOB = DateTime.now();
     this.docId = '';
+    this.uid ='';
+    this.email = '';
   }
 
   late String  firstName;
@@ -27,5 +31,7 @@ class Profile {
    late String incomeRange;
    late DateTime DOB;
    late String? docId;
+   late String uid;
+   late String email;
 
 }

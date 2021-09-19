@@ -6,6 +6,7 @@ import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/reset_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 import 'dashboard.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
 
   var _user = UserHandeler(userTable, userProfileTable);
 
-
+  bool clickedLogin = false;
   bool loginState = false;
   // late DRUserAccess currentUser;
 
@@ -97,51 +98,59 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   }
 
 
-  void fetchProfile( var currentUser) async {
-
-    // late Profile profile;
-
-    try {
-      fireStore.collection('pjdhan_users').where(
-          'Uid', isEqualTo: currentUser.uid)
-          .get()
-          .then((QuerySnapshot snapshot) {
-        snapshot.docs.forEach((f) {
-          String email = f.get('email');
-          String userID = f.get('Uid');
-          String docID = fireStore
-              .collection('pjdhan_users')
-              .doc()
-              .id;
-
-          String firstName = f.get('first_name');
-          String lastName = f.get('last_name');
-          Timestamp dob = f.get('DOB');
-          String incomeRange = f.get('income');
-
-          print(' Inside fetchProfile: firstName is : $firstName}');
-
-            profile = Profile(
-              firstName: firstName,
-              lastName: lastName,
-              DOB: dob.toDate(),
-              incomeRange: incomeRange,
-              docId: docID,
-            );
-
-
-          print(' Inside fetchProfile after profiling: firstName is : ${profile.firstName}');
-
-
-        });
-      });
-     // return profile;
-    }catch(e){
-      print('This is the error : -> $e');
-      throw e;
-    }
-  }
-
+  // Future<Profile?> fetchProfile( var currentUser) async {
+  //
+  //   // late Profile profile;
+  //
+  //
+  //     fireStore.collection('pjdhan_users').where(
+  //         'Uid', isEqualTo: currentUser.uid)
+  //         .get()
+  //         .then((QuerySnapshot snapshot) {
+  //           if(snapshot.docs.isEmpty){
+  //             Navigator.pop(context);
+  //             Navigator.push(context,
+  //                 MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: currentUser,)));
+  //           }
+  //       snapshot.docs.forEach((f) {
+  //         String email = f.get('email');
+  //         String userID = f.get('Uid');
+  //         String docID = f.id;
+  //
+  //         String firstName = f.get('first_name');
+  //         String lastName = f.get('last_name');
+  //         Timestamp dob = f.get('DOB');
+  //         String incomeRange = f.get('income');
+  //
+  //         print(' Inside fetchProfile: firstName is : $firstName}');
+  //
+  //           profile = Profile(
+  //             firstName: firstName,
+  //             lastName: lastName,
+  //             DOB: dob.toDate(),
+  //             incomeRange: incomeRange,
+  //             docId: docID,
+  //           );
+  //
+  //         print(' Inside fetchProfile after profiling: firstName is : ${profile.firstName}');
+  //
+  //         if(profile != null) {
+  //           Navigator.pop(context);
+  //           Navigator.push(context,
+  //               MaterialPageRoute(builder: (context) =>
+  //                   Dashboard(currentUser: _loggedInUser.user,)));
+  //         }
+  //
+  //
+  //       });
+  //           return profile;
+  //     }).catchError((e){
+  //         throw e;
+  //     });
+  //
+  //
+  // }
+  //
 
 
 
@@ -150,34 +159,70 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   // This async method implements login
   void _login(String id, String pwd) async {
 
-      //Profile profile = Profile.create();
+
     try{
       var _loggedInUser = await  fireAuth.signInWithEmailAndPassword(email: id, password: pwd);
       if (_loggedInUser.user != null) {
 
-        //profileAccess = DRProfileAccess(fireStore, _loggedInUser.user);
+        profile.uid = _loggedInUser.user!.uid;
+        profile.uid = _loggedInUser.user!.email!;
 
-          fetchProfile(_loggedInUser.user);
-        //fetchProfile(_loggedInUser.user);
-        await Future.delayed(Duration(seconds: 2));
-        print(' Profile doc Id : ${profile.docId}');
-        if(profile.docId != '') {
-          Navigator.pop(context);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) =>
-                  Dashboard(currentUser: _loggedInUser.user,)));
-        }
-        else{
-          Navigator.pop(context);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) =>
-                  ProfilerOptionPage(currentUser: _loggedInUser.user,)));
-        }
+        fireStore.collection('pjdhan_users').where(
+            'Uid', isEqualTo: _loggedInUser.user!.uid)
+            .get()
+            .then((QuerySnapshot snapshot) {
+          if(snapshot.docs.isEmpty){
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: profile.uid,)));
+          }
+          snapshot.docs.forEach((f) {
+            String email = f.get('email');
+            String userID = f.get('Uid');
+            String docID = f.id;
+
+            String firstName = f.get('first_name');
+            String lastName = f.get('last_name');
+            Timestamp dob = f.get('DOB');
+            String incomeRange = f.get('income');
+
+            print(' Inside fetchProfile: firstName is : $firstName}');
+
+            profile = Profile(
+              firstName: firstName,
+              lastName: lastName,
+              DOB: dob.toDate(),
+              incomeRange: incomeRange,
+              docId: docID,
+              uid:userID,
+              email: email,
+            );
+
+            print(' Inside fetchProfile after profiling: firstName is : ${profile.firstName}');
+
+            if(profile.docId !='') {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>
+                      Dashboard(
+                        currentUser: profile, //_loggedInUser.user,
+                      )));
+            }
+
+
+          });
+          return profile;
+        }).catchError((e){
+          throw e;
+        });
+
+
+
       }
 
 
     }catch(e){
-
+      clickedLogin = false;
       Utility.showErrorMessage(context, e.toString());
       print(e);
     }
@@ -287,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
             ),
           ),
           ErrorText( errorText: _errorText,),
-          CommandButton(
+          !clickedLogin ? CommandButton(
             buttonText: 'Login',
             buttonColor: kPresentTheme.accentColor,
             textColor: kPresentTheme.lightWeightColor,
@@ -298,7 +343,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
               setState(() {
                 if(_loginKey.currentState!.validate()) {
                   if(_passwordKey.currentState!.validate()){
-
+                    clickedLogin = true;
                     // Async function to enable login
                     _login(_userText.text, _passWord.text);
                     //print('profile from outseide :${profile.docId}');
@@ -309,7 +354,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
               });
 
             },
-          ),
+          ):Image.asset(circularProgressIndicator, scale: 5),
         ],
       ),
                 Padding(

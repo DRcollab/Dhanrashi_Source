@@ -98,14 +98,16 @@ class AnalyticsTabView extends StatelessWidget {
           children: [
             Container(
                 width:220, height: 220,
-                child: DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,),
+                child: fetched? DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,):Text('Hey! hold a bit', style: DefaultValues.kH1(context),),
             ),
 
             Padding(
               padding: const EdgeInsets.all(35.0),
               child: Container(
                   width:150, height: 150,
-                  child: DonutChart(pieData: pieData1)),
+                  child:fetched? DonutChart(pieData: pieData1):Text(' I am fecthing ....', style: DefaultValues.kH2(context),),
+              
+              )
             ),
 
             Padding(

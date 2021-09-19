@@ -45,6 +45,8 @@ class DRProfileAccess {
             DOB: dob.toDate(),
             incomeRange: incomeRange,
              docId: docID,
+             uid:userID,
+             email: email,
           );
         });
       });

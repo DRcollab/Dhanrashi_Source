@@ -165,6 +165,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     lastName: widget.collector.lName.text,
                     DOB:widget.collector.dateOfBirth,
                     incomeRange: widget.collector.annualIncome.toString(),
+                    uid:widget.currentUser.uid,
+                    email: widget.currentUser.email,
                   );
 
                  profileAccess.storeProfile(profile);

@@ -7,15 +7,19 @@ import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
 import 'dashboard.dart';
+import 'empty_page_inputs.dart';
+import 'models/profile.dart';
 import 'profiler.dart';
 import 'models/user_data_class.dart';
+import 'data/profile_access.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class ProfilerOptionPage extends StatelessWidget {
+class ProfilerOptionPage extends StatefulWidget {
   //const ProfilerOptionPage({Key? key}) : super(key: key);
 
   final  currentUser;
-  final String currentUserName = "";
-
 
   ProfilerOptionPage({required this.currentUser}){
 
@@ -23,12 +27,33 @@ class ProfilerOptionPage extends StatelessWidget {
    // print(currentUser.user!.email);
   }
 
+  @override
+  _ProfilerOptionPageState createState() => _ProfilerOptionPageState();
+}
 
+class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
+
+
+
+
+  final String currentUserName = "";
+  late DRProfileAccess profileAccess;
+  late FirebaseFirestore fireStore;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    future:Firebase.initializeApp().whenComplete(() {
+      fireStore =  FirebaseFirestore.instance;
+      profileAccess = DRProfileAccess(fireStore, widget.currentUser);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      currentUser: this.currentUser,
+      currentUser: this.widget.currentUser,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +74,7 @@ class ProfilerOptionPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 18, left: 8, right: 8,bottom: 8),
-                  child: Text("Hey ! ${currentUser!.email}  \nThanks for choosing us",
+                  child: Text("Hey ! ${widget.currentUser!.email}  \nThanks for choosing us",
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -100,7 +125,7 @@ class ProfilerOptionPage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                            builder: (context) => ProfilerPage(currentUser: this.currentUser,),
+                            builder: (context) => ProfilerPage(currentUser: this.widget.currentUser,),
                         )
                         );
                       },
@@ -115,7 +140,22 @@ class ProfilerOptionPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         buttonText: "No, I am not sharing",
                         onPressed: (){
-                          // TODO code to got to loading page
+
+                            Profile profile = Profile(
+                              firstName: 'N/A',
+                              lastName: 'N/A',
+                              DOB:DateTime.now(),
+                              incomeRange: 'N/A',
+                              uid:this.widget.currentUser.uid,
+                              email: this.widget.currentUser.email,
+                            );
+
+                            profileAccess.storeProfile(profile);
+
+
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+
                         }, ),
                   )
                 ]

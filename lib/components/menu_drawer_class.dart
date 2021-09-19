@@ -1,20 +1,25 @@
 /// This code is written by Shubhadeep
 
 import 'package:dhanrashi_mvp/components/settings_sheet.dart';
+import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
+import 'package:dhanrashi_mvp/goal_input.dart';
+import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/main.dart';
+import 'package:dhanrashi_mvp/profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:stacked/stacked_annotations.dart';
 
-import '../login_page.dart';
+
 import '../login_screen.dart';
 
 class MenuDrawer extends StatefulWidget {
  // const MenuDrawer({Key? key}) : super(key: key);
-  final currentUser;
+ late final currentUser;
 
   MenuDrawer({this.currentUser});
 
@@ -42,6 +47,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
 
+   // if()
+
     print(widget.currentUser);
     return Drawer(
 
@@ -54,7 +61,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //Image.asset('images/goldsrain.png'),
-                CircleAvatar(radius: 50,backgroundColor: kPresentTheme.accentColor,),
+                CircleAvatar(radius: 40,backgroundColor: kPresentTheme.accentColor,),
                 Align(
                     alignment: Alignment.topRight,
 
@@ -62,7 +69,23 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 Align(
                     alignment: Alignment.bottomLeft,
 
-                    child: widget.currentUser!=null ? Text(widget.currentUser.email, style:DefaultValues.kNormal2(context),) : SizedBox(),
+                    child: widget.currentUser!=null ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.currentUser.email,
+                            style:DefaultValues.kNormal2(context),
+                          ),
+
+                        ],
+                      ),
+                    ) : SizedBox(),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left:8, top:80),
+                  child: Text((widget.currentUser!=null) & (widget.currentUser.firstName!='N/A')? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
+                      :'', style: DefaultValues.kH2(context),),
                 ),
               ],
             ),
@@ -74,7 +97,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
           ),
           Flexible(
             child: Container(
-
               child: ListView(
                 children: [
 
@@ -83,21 +105,40 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     //contentPadding: EdgeInsets.all(10),
                     leading: FaIcon(FontAwesomeIcons.userFriends,size: 30,color:kPresentTheme.accentColor, ),
                     title: Text('Update profile' ,style:DefaultValues.kNormal2(context), ),
-                    onTap: (){}
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              ProfileView(currentUser: widget.currentUser,)));
+                    }
                     ,
 
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 30,color:kPresentTheme.accentColor),
                     title: Text('Go to Dashboard', style: DefaultValues.kNormal2(context)),
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              Dashboard(currentUser: widget.currentUser,)));
+                    },
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.plus,size: 30,color:kPresentTheme.accentColor),
                     title: Text('Add Investments', style: DefaultValues.kNormal2(context)),
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              InvestmentInputScreen(currentUser: widget.currentUser,)));
+                    },
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.bullseye, size: 30,color:kPresentTheme.accentColor),
                     title: Text('Add Goals', style: DefaultValues.kNormal2(context)),
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              GoalsInputScreen(currentUser: widget.currentUser,)));
+                    },
                   ),
 
                   ListTile(
