@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
 
           fetchProfile(_loggedInUser.user);
         //fetchProfile(_loggedInUser.user);
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(Duration(seconds: 2));
         print(' Profile doc Id : ${profile.docId}');
         if(profile.docId != '') {
           Navigator.pop(context);

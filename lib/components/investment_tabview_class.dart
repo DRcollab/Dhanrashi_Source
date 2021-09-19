@@ -1,3 +1,4 @@
+import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/shingle.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
@@ -82,8 +83,34 @@ class InvestmentTabView extends StatelessWidget {
                 child: Shingle(
                     leadingImage: investmentIcons[this.investments[index].name],
                     title:  investments[index].name,
-                    subtitle: investments[index].currentInvestmentAmount.toString(),
-                    value:investments[index].duration.toString()
+                    subtitle: 'Intial investment :${investments[index].currentInvestmentAmount.toString()} \nAnnual Investment:${investments[index].annualInvestmentAmount * 12}',
+                    value:'Investment Duration: ${investments[index].duration.toString()} \nExpected ROI:${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit) ,
+                      onPressed: (){
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => SingleChildScrollView(
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                child: InvestmentSheet(
+                                  uniqueId: investmentDBs[index].investmentId,
+                                  currentUser: this.currentUser,
+                                  titleMessage: investments[index].name,
+                                  investedAmount: investments[index].currentInvestmentAmount,
+                                  annualInvestment: investments[index].annualInvestmentAmount,
+                                  investmentDuration: investments[index].duration,
+                                  expectedRoi: investments[index].investmentRoi * 100,
+                                  imageSource: 'images/destination.png',
+                                  type: 'Update',
+                                ),
+                              ),
+                            ));
+                      },
+
+
+                    ),
                 ),
               );
 

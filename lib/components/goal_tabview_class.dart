@@ -47,6 +47,7 @@ class GoalsTabView extends StatelessWidget {
     goals = List.empty(growable: true);
     if(goalDBs.length>0){
       goalDBs.forEach((element) {
+
         goals.add(element.goal);
 
       });
@@ -111,13 +112,14 @@ class GoalsTabView extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                 child: GoalSheet(
+                                  uniquId: goalDBs[index].goalDocumentID,
                                   currentUser: this.currentUser,
                                   titleMessage: goals[index].name,
                                   goalAmount: goals[index].goalAmount,
                                   goalDuration: goals[index].duration,
-                                  inflation: goals[index].inflation,
+                                  inflation: goals[index].inflation * 100,
                                   imageSource: 'images/destination.png',
-
+                                  type: 'Update',
                                 ),
                               ),
                             ));

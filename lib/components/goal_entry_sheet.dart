@@ -30,21 +30,14 @@ class GoalSheet extends StatefulWidget {
   // const ActionSheet({Key? key}) : super(key: key);
 
   String titleMessage;
-  // var textVar1 = TextEditingController();
-  // var textVar2 = TextEditingController();
-  // var textVar3 = TextEditingController();
-
   double goalAmount = 0;
-
   int goalDuration = 0;
- // double annualInvestment = 0;
   double inflation = 4.5;
-
   String imageSource ='';
-  // late void Function(dynamic) save;
   String display = '';
-  String buttonText;
+  String? uniquId;
   late var currentUser;
+  late String type='Save';
   // final String? Function(String?) validator => return 0;
 
   GoalSheet({
@@ -57,9 +50,9 @@ class GoalSheet extends StatefulWidget {
     this.imageSource='',
 
     //  required this.save,
-
+    this.uniquId,
     required this.currentUser,
-    this.buttonText = 'Save',
+    this.type = 'Save',
   });
 
   @override
@@ -124,6 +117,18 @@ class _GoalSheetState extends State<GoalSheet> {
 
     // print(fireStore.toString());
   }
+
+  void _update(GoalDB goalDB) async {
+    try{
+      await goalAccess.updateGoalSolo(goalDB,'Active');
+    }
+    catch(e){
+      Utility.showErrorMessage(context, e.toString());
+    }
+
+
+  }
+
 
   void _save(Goal goal) async {
     final snackBar = SnackBar(
@@ -228,7 +233,7 @@ class _GoalSheetState extends State<GoalSheet> {
                       buttonColor: kPresentTheme.alternateColor,
                       //icon: Icons.save,
                       textColor: kPresentTheme.highLightColor,
-                      buttonText: widget.buttonText,
+                      buttonText: widget.type,
                       onPressed:()  {
 
 
@@ -246,10 +251,21 @@ class _GoalSheetState extends State<GoalSheet> {
 
                         setState(() {
 
-                          if(widget.buttonText == 'Save')
+                          if(widget.type == 'Save')
                          _save(goal);
                           else{
+                            print("from click--================>");
+                            print(widget.currentUser.email,);
+                          print(widget.currentUser.uid);
+                          print(widget.uniquId);
+                          var  goalDB = GoalDB(
+                              email: widget.currentUser.email,
+                              user: widget.currentUser.uid,
+                              goalDocumentID: widget.uniquId!,
+                              goal:goal,
 
+                            );
+                          _update(goalDB);
                           }
 
                         });

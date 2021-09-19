@@ -169,17 +169,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
                  profileAccess.storeProfile(profile);
 
-               //    widget.currentUserProfile.setFName(widget.collector.fName.text); /// calling User data methods -- open user_data_class.dart file
-               //    widget.currentUserProfile.setLName(widget.collector.lName.text);/// calling User data methods -- open user_data_class.dart file
-               //    widget.currentUserProfile.setIncome(widget.collector.annualIncome.toString());/// calling User data methods -- open user_data_class.dart file
-               //    widget.currentUserProfile.setDOB(widget.collector.dateAsString());/// calling User data methods -- open user_data_class.dart file
-               //
-               // //   _userHandler.createUser(widget.currentUser); /// creating user from currentUser data -- open usr_handler.dart
-               //
-               //    _userHandler.addProfile();  /// adding user profile to the database -- mock database [UserPtofileTable]
-               //
-               //
-               //    _userHandler.printUserData();
+
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
                 });

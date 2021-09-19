@@ -27,10 +27,6 @@ class InvestmentSheet extends StatefulWidget {
  // const ActionSheet({Key? key}) : super(key: key);
 
   late String titleMessage;
-  // var textVar1 = TextEditingController();
-  // var textVar2 = TextEditingController();
-  // var textVar3 = TextEditingController();
-
   double investedAmount = 0;
   double expectedRoi = 0;
   int investmentDuration = 0;
@@ -38,7 +34,8 @@ class InvestmentSheet extends StatefulWidget {
   String imageSource ='';
  // late void Function(dynamic) save;
   String display = '';
-
+  String? uniqueId;
+  String type;
   late var currentUser;
   // final String? Function(String?) validator => return 0;
 
@@ -50,8 +47,9 @@ class InvestmentSheet extends StatefulWidget {
     this.imageSource='',
     this.annualInvestment = 0,
   //  required this.save,
-
     required this.currentUser,
+    this.uniqueId,
+    this.type = 'Save',
   });
 
   @override
@@ -116,6 +114,17 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     });
 
    // print(fireStore.toString());
+  }
+
+  void _update(InvestDB investDB) async {
+    try{
+      await investAccess.updateInvestmentSolo(investDB,'Active');
+    }
+    catch(e){
+      Utility.showErrorMessage(context, e.toString());
+    }
+
+
   }
 
   void _save(Investment investment) async {
@@ -202,7 +211,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      buttonColor: kPresentTheme.alternateColor,
                      //icon: Icons.save,
                      textColor: kPresentTheme.highLightColor,
-                     buttonText: 'Save',
+                     buttonText: widget.type,
                      onPressed:()  {
                       print(' To Be saved .......:');
                        print('email: ${widget.currentUser.email}');
@@ -219,15 +228,25 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                              annualInvestmentAmount: annualInvestment,
                              currentInvestmentAmount: investedAmount,
                              duration: investmentDuration,
-                             investmentRoi: interestValue/100,
+                             investmentRoi: expectedRoi/100,
                            );
 
                        print('.... printing inv:;;;;;;;;');
                        print(inv);
 
                        setState(() {
-
+                        if(widget.type == 'Save') {
                           _save(inv);
+                        }
+                        else{
+                          var investDB = InvestDB(
+                            email: widget.currentUser.email,
+                            userID: widget.currentUser.uid,
+                            investmentDocumentID: widget.uniqueId,
+                            investment: inv,
+                          );
+                          _update(investDB);
+                        }
 
                        });
 

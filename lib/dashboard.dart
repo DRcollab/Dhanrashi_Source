@@ -13,6 +13,7 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import 'data/financial_calculator.dart';
 import 'data/goal_access.dart';
+import 'empty_page_inputs.dart';
 import 'investmentinput.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
@@ -46,6 +47,9 @@ class _DashboardState extends State<Dashboard> {
   double totalInvestValue = 0.0;
   int longestInvestmentDuration = 0;
   int longestGoalDuration = 0;
+  bool isGoalEmpty = false;
+  bool isInvestmentEmpty = false;
+
 
 
   @override
@@ -56,8 +60,11 @@ class _DashboardState extends State<Dashboard> {
     //future:Firebase.initializeApp().then((value) => null)
     future:Firebase.initializeApp().then((value) {
       fireStore =  FirebaseFirestore.instance;
-      fetchGoals();
-      fetchInvestment();
+
+        fetchGoals();
+        fetchInvestment();
+
+
      // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
     }).onError((error, stackTrace){
       print( ' THer it is :   ${error.toString()}');
@@ -71,10 +78,20 @@ class _DashboardState extends State<Dashboard> {
     fireStore.collection('pjdhan_goal').where('Uuid', isEqualTo: widget.currentUser.uid)
         .get()
         .then((QuerySnapshot snapshot){
+      if( snapshot.docs.isEmpty){
+        // setState(() {
+        //   isGoalEmpty = snapshot.docs.isEmpty;
+        // });
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+      }
+
       snapshot.docs.forEach((f) {
         String email=f.get('email');
         String userID=f.get('Uuid');
-        String docID=fireStore.collection('pjdhan_goal').doc().id;
+        String docID=f.id;
+        print('docid : $docID');
         String goalName=f.get('goal_name');
         String goalDescription=f.get('goal_description');
         double amount=f.get('goal_amount');
@@ -85,7 +102,7 @@ class _DashboardState extends State<Dashboard> {
           longestGoalDuration = duration;
         }
         //double inflation = f.get('inflation');
-        setState(() {
+       setState(() {
 
           goals.add(
               GoalDB(
@@ -101,11 +118,10 @@ class _DashboardState extends State<Dashboard> {
                 ),
               )
           );
-        });
+       });
 
       });
-      print('++++++++++++++++++++++++++++++');
-      print( goals.length);
+     //  print('is Goal Empty : $isGoalEmpty');
       //return  goals;
     }
     );
@@ -117,10 +133,21 @@ class _DashboardState extends State<Dashboard> {
     fireStore.collection('pjdhan_investment').where('Uuid', isEqualTo: widget.currentUser.uid)
         .get()
         .then((QuerySnapshot snapshot){
+      if(snapshot.docs.isEmpty){
+        // setState(() {
+        //   isInvestmentEmpty = snapshot.docs.isEmpty;
+        // });
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+
+      }
+
       snapshot.docs.forEach((f) {
         String email=f.get('email');
         String userID=f.get('Uuid');
-        String docID=fireStore.collection('pjdhan_investment').doc().id;
+        String docID= f.id;
+        print('docid inv: $docID');
         String investmentName=f.get('investment_name');
         double currInvestAmt=f.get('currInvestAmt');
         totalInvestValue = totalInvestValue + currInvestAmt;
@@ -131,7 +158,8 @@ class _DashboardState extends State<Dashboard> {
           longestInvestmentDuration = duration;
         }
 
-        setState(() {
+       setState(() {
+
           investments.add(
               InvestDB(
                 email:email,
@@ -146,9 +174,9 @@ class _DashboardState extends State<Dashboard> {
                 ) ,
               )
           );
-        });
+       });
 
-
+      //  print('is Inv empty : $isInvestmentEmpty');
       });
      // return listInvest;
     }
@@ -159,9 +187,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print('current user is :${widget.currentUser.uid}');
-    //fetchGoals();
-    print(goals);
+
+
 
     return DefaultTabController(
           length: 3,

@@ -73,22 +73,20 @@ class DRInvestAccess{
       }
   }
 
-  Future<dynamic> updateInvestment(
-      List<InvestDB> listInvestment,
-      String documentStatus,) async {
+  Future<dynamic> updateInvestmentSolo( InvestDB investDB, String documentStatus,) async {
     DateTime currentPhoneDate = DateTime.now();
-    for (var j = 0; j< listInvestment.length; j++) {
-      var docID= listInvestment[j].investmentId;
+
+      var docID= investDB.investmentId;
       try {
-        _firestore.collection('pjdhan_investment').doc(listInvestment[j].investmentId).update({
-          'email': listInvestment[j].email,
-          'Uuid': listInvestment[j].userId,
+        _firestore.collection('pjdhan_investment').doc(investDB.investmentId).update({
+          'email': investDB.email,
+          'Uuid': investDB.userId,
           'Updated_id': 'system',
-          'investment_name': listInvestment[j].investment.name,
-          'currInvestAmt': listInvestment[j].investment.currentInvestmentAmount,
-          'annualInvestAmt': listInvestment[j].investment.annualInvestmentAmount,
-          'investRoI': listInvestment[j].investment.investmentRoi,
-          'investment_duration': listInvestment[j].investment.duration,
+          'investment_name': investDB.investment.name,
+          'currInvestAmt': investDB.investment.currentInvestmentAmount,
+          'annualInvestAmt': investDB.investment.annualInvestmentAmount,
+          'investRoI': investDB.investment.investmentRoi,
+          'investment_duration': investDB.investment.duration,
           'update_dts': Timestamp.fromDate(currentPhoneDate),
           'status': documentStatus,
         })
@@ -97,8 +95,10 @@ class DRInvestAccess{
       catch (e) {
         print( 'Exception while updating $docID $e');
       }
-    }
+
   }
+
+
   Future fetchInvestment() async{
     List<InvestDB> listInvest=[];
     _firestore.collection('pjdhan_investment').where('Uuid', isEqualTo: _currentUser.uid)
