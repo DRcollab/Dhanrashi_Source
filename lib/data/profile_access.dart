@@ -38,6 +38,7 @@ class DRProfileAccess {
           String lastName = f.get('last_name');
           Timestamp dob = f.get('DOB');
           String incomeRange = f.get('income');
+          String image = f.get('image_source');
 
            profile =   Profile(
             firstName: firstName,
@@ -47,6 +48,7 @@ class DRProfileAccess {
              docId: docID,
              uid:userID,
              email: email,
+             profileImage: image,
           );
         });
       });

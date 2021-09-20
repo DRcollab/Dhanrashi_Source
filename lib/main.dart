@@ -7,6 +7,7 @@ import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:dhanrashi_mvp/components/on_error_screen.dart';
 //import 'package:dhanrashi_mvp/goalinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
+import 'package:dhanrashi_mvp/sip_calculator.dart';
 import 'package:dhanrashi_mvp/test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';

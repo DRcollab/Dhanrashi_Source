@@ -167,6 +167,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     incomeRange: widget.collector.annualIncome.toString(),
                     uid:widget.currentUser.uid,
                     email: widget.currentUser.email,
+                    profileImage: widget.collector.profileImage,
                   );
 
                  profileAccess.storeProfile(profile);

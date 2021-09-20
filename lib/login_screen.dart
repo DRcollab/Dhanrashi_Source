@@ -40,7 +40,7 @@ class LoginScreen extends StatefulWidget with InputValidationMixin{
 
 class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   bool profileReady = false; // will be used to determine if profiler page to be navigated or to dhanrashi
-  DRUserAccess? currentUser; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
+  //DRUserAccess? currentUser; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
   // The currentUser will be displayed on dhanrashi or other places....
 
   // bool useForReset = false;
@@ -185,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
             String lastName = f.get('last_name');
             Timestamp dob = f.get('DOB');
             String incomeRange = f.get('income');
+            String image = f.get('image_source');
 
             print(' Inside fetchProfile: firstName is : $firstName}');
 
@@ -196,6 +197,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
               docId: docID,
               uid:userID,
               email: email,
+              profileImage: image,
             );
 
             print(' Inside fetchProfile after profiling: firstName is : ${profile.firstName}');
@@ -243,172 +245,183 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
 
     return CustomScaffold(
 
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.monetization_on),
-              Text('Dhanrashi', style:DefaultValues.kH1(context),),
-            ],
-          ),
           Padding(
-            padding: const EdgeInsets.only(left: 18.0,right:18.0,top:28.0,bottom:18),
-            child: InputCard(
-              titleText: 'Login Page',
+
+            padding: DefaultValues.kAdaptedTopPadding(context, 80),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Logger(),
-            Column(
-            children: [
-            Padding(
-            padding:DefaultValues.kTextFieldPadding(context),
-              child: Form(
-                key: _loginKey,
-                child: CustomTextField(
-                  controller: _userText,
-
-                  hintText: "enter email",
-                  passWord: false,
-                  icon: Icons.email,
-                  //  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if(eMailValid( value.toString() ))
-                      return null;
-                    else
-                      return validEmailMessage;
-                  },
-
-                  validate: (){
-                    setState(() {
-                      if(_errorText != ''){
-                        _errorText = '';
-                      }
-
-                      print('errorText');
-                    });
-                  },
-
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.monetization_on),
+                    Text('Dhanrashi', style:DefaultValues.kH1(context),),
+                  ],
                 ),
-              )
-          ),
-          Padding(
-            padding:DefaultValues.kTextFieldPadding(context),
-            child: Form(
-              key: _passwordKey,
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0,right:18.0,top:28.0,bottom:18),
+                  child: InputCard(
+                    titleText: 'Login Page',
+                    children: [
+                      //Logger(),
+                  Column(
+                  children: [
+                  Padding(
+                  padding:DefaultValues.kTextFieldPadding(context),
+                    child: Form(
+                      key: _loginKey,
+                      child: CustomTextField(
+                        controller: _userText,
 
-              child: CustomTextField(
+                        hintText: "enter email",
+                        passWord: false,
+                        icon: Icons.email,
+                        //  textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if(eMailValid( value.toString() ))
+                            return null;
+                          else
+                            return validEmailMessage;
+                        },
 
-                // textInputAction: TextInputAction.done,
-                validator: (value){
-                  if(passWordValid(value.toString()))
-                    return null;
-                  else
-                    return validPasswordMessage;
-                },
+                        validate: (){
+                          setState(() {
+                            if(_errorText != ''){
+                              _errorText = '';
+                            }
 
-                validate: (){
-                  setState(() {
-                    if(_errorText != ''){
-                      _errorText = '';
-                    }
+                            print('errorText');
+                          });
+                        },
 
-                  });
-                },
-
-                controller: _passWord,
-                hintText: 'Enter Password',
-                passWord: true,
-                hidePassword: _hidePassword,
-                icon: Icons.password_sharp,
-                showPassword: (){
-                  setState(() {
-                    _hidePassword = !_hidePassword;
-                  });
-                },
-                // key: _passKey,
-
-              ),
-            ),
-          ),
-          ErrorText( errorText: _errorText,),
-          !clickedLogin ? CommandButton(
-            buttonText: 'Login',
-            buttonColor: kPresentTheme.accentColor,
-            textColor: kPresentTheme.lightWeightColor,
-            borderRadius: BorderRadius.circular(25.0),
-            onPressed: () {
-
-//
-              setState(() {
-                if(_loginKey.currentState!.validate()) {
-                  if(_passwordKey.currentState!.validate()){
-                    clickedLogin = true;
-                    // Async function to enable login
-                    _login(_userText.text, _passWord.text);
-                    //print('profile from outseide :${profile.docId}');
-
-
-                  } // end of outside
-                }
-              });
-
-            },
-          ):Image.asset(circularProgressIndicator, scale: 5),
-        ],
-      ),
+                      ),
+                    )
+                ),
                 Padding(
                   padding:DefaultValues.kTextFieldPadding(context),
-                  child: LinkText(
-                      type: LinkTextType.DARK,
-                      linkText: "Trouble login ? Click here to resolve",
-                      displaySize: 18.0,
+                  child: Form(
+                    key: _passwordKey,
 
-                      onPressed: () {
-                        Navigator.push(
+                    child: CustomTextField(
+
+                      // textInputAction: TextInputAction.done,
+                      validator: (value){
+                        if(passWordValid(value.toString()))
+                          return null;
+                        else
+                          return validPasswordMessage;
+                      },
+
+                      validate: (){
+                        setState(() {
+                          if(_errorText != ''){
+                            _errorText = '';
+                          }
+
+                        });
+                      },
+
+                      controller: _passWord,
+                      hintText: 'Enter Password',
+                      passWord: true,
+                      hidePassword: _hidePassword,
+                      icon: Icons.password_sharp,
+                      showPassword: (){
+                        setState(() {
+                          _hidePassword = !_hidePassword;
+                        });
+                      },
+                      // key: _passKey,
+
+                    ),
+                  ),
+                ),
+                ErrorText( errorText: _errorText,),
+                !clickedLogin ? CommandButton(
+                  buttonText: 'Login',
+                  textSize: 20 * DefaultValues.adaptForSmallDevice(context),
+                  buttonColor: kPresentTheme.accentColor,
+                  textColor: kPresentTheme.lightWeightColor,
+                  borderRadius: BorderRadius.circular(25.0),
+                  onPressed: () {
+
+//
+                    setState(() {
+                      if(_loginKey.currentState!.validate()) {
+                        if(_passwordKey.currentState!.validate()){
+                          clickedLogin = true;
+                          // Async function to enable login
+                          _login(_userText.text, _passWord.text);
+                          //print('profile from outseide :${profile.docId}');
+
+
+                        } // end of outside
+                      }
+                    });
+
+                  },
+                ):Image.asset(circularProgressIndicator, scale: 5),
+              ],
+            ),
+                      Padding(
+                        padding:DefaultValues.kTextFieldPadding(context),
+                        child: LinkText(
+                            type: LinkTextType.DARK,
+
+                            linkText: "Trouble login ? Click here to resolve",
+                            displaySize: 18.0 *  DefaultValues.adaptForSmallDevice(context),
+
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ResetScreen(),
+                                  )
+                              );
+                            }
+
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Not have a login id ?",
+                        style:DefaultValues.kNormal2(context),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CommandButton(
+                        textSize: 20 * DefaultValues.adaptForSmallDevice(context),
+                        buttonText: "Click Here to Sign Up",
+                        borderRadius: BorderRadius.circular(20),
+                        buttonColor: kPresentTheme.alternateColor,
+                        textColor: kPresentTheme.accentColor,
+
+                        //type: LinkTextType.DARK,
+                        onPressed: () {
+
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ResetScreen(),
-                            )
-                        );
-                      }
+                              builder: (context) => SignUpPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
 
-                  ),
+                  ],
                 ),
               ],
             ),
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Not have a login id ?",
-                  style:DefaultValues.kNormal2(context),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CommandButton(
-                  buttonText: "Click Here to Sign Up",
-                  borderRadius: BorderRadius.circular(20),
-                  buttonColor: kPresentTheme.alternateColor,
-                  textColor: kPresentTheme.accentColor,
-
-                  //type: LinkTextType.DARK,
-                  onPressed: () {
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignUpPage(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-            ],
           ),
         ],
       ),

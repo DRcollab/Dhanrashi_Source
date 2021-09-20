@@ -13,6 +13,7 @@ class Profile {
          this.docId,
         required this.uid,
         required this.email,
+        required this.profileImage,
 
       });
 
@@ -24,6 +25,7 @@ class Profile {
     this.docId = '';
     this.uid ='';
     this.email = '';
+    this.profileImage = '';
   }
 
   late String  firstName;
@@ -33,5 +35,6 @@ class Profile {
    late String? docId;
    late String uid;
    late String email;
+   late String profileImage;
 
 }

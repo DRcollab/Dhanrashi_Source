@@ -34,6 +34,7 @@ class Collector{
   String _annualIncome = '' ;
   var  _fName = TextEditingController() ;
   var _lName = TextEditingController();
+  String profileImage = 'images/profiles/profile_image0.png';
 
 /// Constructor of  the class
 
@@ -43,7 +44,7 @@ class Collector{
      _annualIncome = '';
      _fName = TextEditingController();
      _lName = TextEditingController();
-
+      profileImage = 'images/profiles/profile_image0.png';
 
 
   }
@@ -199,20 +200,14 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
   }
 
-
-
-
-
-
   final List<Widget> CardChoice = [
-
-
 
     NamePicker(
       fName: profileCollector._fName,
       lName: profileCollector.lName,
       lnameKey: _lnameKey,
       nameKey: _nameKey,
+      profilePhotoSource: profileCollector.profileImage,
 
 
         ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
@@ -398,12 +393,18 @@ class NamePicker extends StatefulWidget {
 
   var fName = TextEditingController();
   var lName = TextEditingController();
-
+  String profilePhotoSource = 'images/profiles/profile_image0.png';
 
   var nameKey = GlobalKey<FormState>();
   var lnameKey = GlobalKey<FormState>();
 
-  NamePicker( {required this.fName, required this.lName, required this.nameKey, required this.lnameKey, });
+  NamePicker( {
+    required this.fName,
+    required this.lName,
+    required this.nameKey,
+    required this.lnameKey,
+    required this.profilePhotoSource,
+  });
 
 
   setVariants(nameKey, lnameKey){
@@ -420,7 +421,7 @@ class NamePicker extends StatefulWidget {
 
 class _NamePickerState extends State<NamePicker> {
 
-  String _profilePhotoSource = 'images/profiles/profile_image0.png';
+
   var jSon;
 
 
@@ -433,7 +434,7 @@ class _NamePickerState extends State<NamePicker> {
     //  _profilePhotoSource = jSon.fileContent['profile'];
     // //  print('profile pict is :: $_profilePhotoSource');
     // }
-    print('profile pict is :: $_profilePhotoSource');
+    print('profile pict is :: $widget.profilePhotoSource');
 
 
   }
@@ -462,12 +463,13 @@ class _NamePickerState extends State<NamePicker> {
                               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                               child: PhotoSheet(getChoice: (value){
                                       setState(() {
-                                        this._profilePhotoSource = 'images/profiles/profile_image$value.png';
+                                        widget.profilePhotoSource = 'images/profiles/profile_image$value.png';
                                       });
                                    //  var settings = JsonHandler(fileName: 'settings.json');
                                    //  settings.createFile({'profile':this._profilePhotoSource});
 
-                                      print(this._profilePhotoSource);
+                                      print(widget.profilePhotoSource);
+
                               },)
                             ),
                           ));
@@ -475,7 +477,7 @@ class _NamePickerState extends State<NamePicker> {
                     ,
                     child: CircleAvatar(
                         radius: 40,
-                        backgroundImage:AssetImage(this._profilePhotoSource),
+                        backgroundImage:AssetImage(widget.profilePhotoSource),
                     ),
                   ),
 

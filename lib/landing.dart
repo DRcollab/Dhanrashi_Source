@@ -65,6 +65,7 @@ class _LandingState extends State<Landing> {
           String lastName = f.get('last_name');
           Timestamp dob = f.get('DOB');
           String incomeRange = f.get('income');
+          String image = f.get('image_source');
 
           setState(() {
             profile = Profile(
@@ -75,6 +76,7 @@ class _LandingState extends State<Landing> {
               docId: docID,
               uid: userID,
               email: email,
+              profileImage: image,
             );
           });
 

@@ -30,12 +30,18 @@ class ProfileView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-           Image.asset('images/profile_image.png', height: 250,width: 250,alignment: Alignment.topCenter,),
+          // Image.asset('images/profile_image.png', height: 150,width: 250,alignment: Alignment.topCenter,),
+            SizedBox(height: 130 * DefaultValues.adaptForSmallDevice(context),),
             ReportCard(
               requiredTitleBar: false,
               borderRadius: BorderRadius.circular(20),
               baseColor: kPresentTheme.themeColor,
               children: [
+                CircleAvatar(
+                  radius: 40 * DefaultValues.adaptForSmallDevice(context),
+                  backgroundColor: kPresentTheme.accentColor,
+                  backgroundImage: AssetImage(this.currentUser.profileImage),
+                ),
                 Text('${currentUser.firstName} ${currentUser.lastName}',style: DefaultValues.kH1(context),),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -66,7 +72,9 @@ class ProfileView extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left:60.0, right: 60.0),
+              padding: EdgeInsets.only(
+                  left:60.0 * DefaultValues.adaptForSmallDevice(context),
+                  right: 60.0 *  DefaultValues.adaptForSmallDevice(context) ),
               child: CommandButton(
                   onPressed: (){
                     Navigator.pop(context);
@@ -75,7 +83,7 @@ class ProfileView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   textColor: kPresentTheme.accentColor,
                   buttonText: 'Cancel',
-                  
+
 
               ),
             )

@@ -21,6 +21,7 @@ class MenuDrawer extends StatefulWidget {
  // const MenuDrawer({Key? key}) : super(key: key);
  late final currentUser;
 
+
   MenuDrawer({this.currentUser});
 
   @override
@@ -31,6 +32,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
   late FirebaseAuth fireAuth ;
   var userParticular;
   bool isUserLoggedIn = false;
+
 
   @override
   void initState()  {
@@ -48,8 +50,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
   Widget build(BuildContext context) {
 
    // if()
+    if(widget.currentUser != null){
+      if(widget.currentUser.firstName != 'N/A'){
+        isUserLoggedIn = true;
+      }
+    }
 
-    print(widget.currentUser);
     return Drawer(
 
       child: Column(
@@ -61,7 +67,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //Image.asset('images/goldsrain.png'),
-                CircleAvatar(radius: 40,backgroundColor: kPresentTheme.accentColor,),
+                CircleAvatar(
+                  radius: 40,backgroundColor: kPresentTheme.accentColor,
+                  backgroundImage: AssetImage(isUserLoggedIn  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
+                ),
                 Align(
                     alignment: Alignment.topRight,
 
@@ -84,7 +93,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left:8, top:80),
-                  child: Text((widget.currentUser!=null) & (widget.currentUser.firstName!='N/A')? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
+                  child: Text(isUserLoggedIn ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
                       :'', style: DefaultValues.kH2(context),),
                 ),
               ],

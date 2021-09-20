@@ -242,7 +242,8 @@ class _NumberInputFieldState extends State<NumberInputField> {
             Flexible(child: Padding(
               padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
               child: Container(
-                height: 60,width: 120,
+                height: 60 * DefaultValues.adaptForSmallDevice(context),
+                width: 120,
                 child: TextField(
                     textAlign: TextAlign.end,
                     enableInteractiveSelection: false,
@@ -252,7 +253,7 @@ class _NumberInputFieldState extends State<NumberInputField> {
 
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
-                    style: kInputTextStyle,
+                    style:DefaultValues.kInputTextStyle(context),
                     //validator: widget.validator,
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(8),

@@ -65,7 +65,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,top: 0.0,right: 8.0,bottom: 0.0),
+            padding: DefaultValues.kDefaultHorizontalSymmetricPadding(context),
             child: NumberInputField(
               enabled: widget.textEditable,
               //validator: widget.validator,
@@ -86,7 +86,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
           ),
           Padding(
-            padding: const EdgeInsets.only(top:40.0),
+            padding: const EdgeInsets.only(top:40.0 ),
             child: Slider(
                 min: widget.min,
                 max:widget.max,

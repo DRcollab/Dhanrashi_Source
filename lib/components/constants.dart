@@ -54,8 +54,6 @@ DhanrashiTheme kPresentTheme = kLimeTheme;
 
 
 
-var kInputTextStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,
-    color: kPresentTheme.accentColor);
 
 
 final kFormTextBorder = OutlineInputBorder(
@@ -179,6 +177,17 @@ class DefaultValues {
   static kDefaultPaddingAllSame(context) => EdgeInsets.all
     (8.0 * adaptForSmallDevice(context));
 
+  static kDefaultHorizontalSymmetricPadding(context) => EdgeInsets.symmetric(
+    horizontal: 8 * adaptForSmallDevice(context)
+  );
 
+  static  kInputTextStyle(context) => TextStyle(
+      fontSize: 20.0 * adaptForSmallDevice(context), 
+      fontWeight: FontWeight.bold,
+      color: kPresentTheme.accentColor);
+
+  static kAdaptedTopPadding(context, double value)
+  => EdgeInsets.only(top:value * adaptForSmallDevice(context)
+  );
 }
 
