@@ -22,7 +22,7 @@ DhanrashiTheme kLimeTheme =  DhanrashiTheme(
 
   alternateColor: Color(0xffb5c210),
   accentColor: Color(0xFF004752),
-  shadowColor: Colors.black38,
+  shadowColor: Colors.black12,
   linkTextColor: Color(0xFF193F6C),
   borderColor: Colors.white24,
 

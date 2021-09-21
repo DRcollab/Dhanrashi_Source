@@ -76,19 +76,7 @@ class _GoalSheetState extends State<GoalSheet> {
   late FirebaseFirestore fireStore;
   late var goalAccess;
 
-  // double calculateInterset( ){
-  //
-  //   double interest;
-  //   // double roi = expectedRoi /100;
-  //   futureValue = fv(expectedRoi/100,investmentDuration, annualInvestment, investedAmount, 0);
-  //   double investedPortion = investedAmount + annualInvestment * investmentDuration;
-  //
-  //   interest = futureValue - investedPortion;
-  //
-  //
-  //   return double.parse(interest.toStringAsFixed(1)) ;
-  //
-  // }
+
 
 //TODO
   double fv(double r, int nper, double pmt, double pv, int type){
@@ -102,12 +90,11 @@ class _GoalSheetState extends State<GoalSheet> {
   @override
   void initState(){
 
-    // print(widget.investmentDuration);
+
     goalAmount = widget.goalAmount;
     inflation = widget.inflation;
     goalDuration = widget.goalDuration;
-   // interestValue = calculateInterset();
-   // annualInvestment = widget.annualInvestment;
+
 
     super.initState();
     future:Firebase.initializeApp().whenComplete(() {
@@ -115,7 +102,7 @@ class _GoalSheetState extends State<GoalSheet> {
       goalAccess = DRGoalAccess(fireStore, widget.currentUser);
     });
 
-    // print(fireStore.toString());
+
   }
 
   void _update(GoalDB goalDB) async {
@@ -136,7 +123,7 @@ class _GoalSheetState extends State<GoalSheet> {
     );
     print(fireStore.toString());
 
- // DRGoalAccess().fetchGoals();
+
 
     try{
       await goalAccess.storeGoalSolo(goal);
@@ -187,10 +174,7 @@ class _GoalSheetState extends State<GoalSheet> {
   @override
   Widget build(BuildContext context) {
 
-    //print(fireStore.toString());
-   // interestValue = calculateInterset();
 
-    //  print('PV : $investedAmount and IV:$interestValue');
 
     pieData = [
 
@@ -252,8 +236,10 @@ class _GoalSheetState extends State<GoalSheet> {
 
                         setState(() {
 
-                          if(widget.type == 'Save')
-                         _save(goal);
+                          if(widget.type == 'Save') {
+                            print('inflation: ${goal.inflation}');
+                            _save(goal);
+                          }
                           else{
                             print("from click--================>");
                             print(widget.currentUser.email,);

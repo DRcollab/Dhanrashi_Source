@@ -164,6 +164,8 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
       var _loggedInUser = await  fireAuth.signInWithEmailAndPassword(email: id, password: pwd);
       if (_loggedInUser.user != null) {
 
+        print(_loggedInUser.user!.email );
+
         profile.uid = _loggedInUser.user!.uid;
         profile.email = _loggedInUser.user!.email!;
 

@@ -32,6 +32,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
   late FirebaseAuth fireAuth ;
   var userParticular;
   bool isUserLoggedIn = false;
+  bool userHasProfile = false;
 
 
   @override
@@ -51,8 +52,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
    // if()
     if(widget.currentUser != null){
+      isUserLoggedIn = true;
       if(widget.currentUser.firstName != 'N/A'){
-        isUserLoggedIn = true;
+        userHasProfile = true;
+      }
+      else{
+        userHasProfile = false;
       }
     }
 
@@ -69,7 +74,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 //Image.asset('images/goldsrain.png'),
                 CircleAvatar(
                   radius: 40,backgroundColor: kPresentTheme.accentColor,
-                  backgroundImage: AssetImage(isUserLoggedIn  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
+                  backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
                 ),
                 Align(
                     alignment: Alignment.topRight,
@@ -93,7 +98,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left:8, top:80),
-                  child: Text(isUserLoggedIn ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
+                  child: Text(userHasProfile ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
                       :'', style: DefaultValues.kH2(context),),
                 ),
               ],

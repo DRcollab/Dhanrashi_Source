@@ -53,7 +53,7 @@ class DRGoalAccess {
         'goal_description': goals.description,
         'goal_duration': goals.duration,
         'goal_amount': goals.goalAmount,
-        'inflation': 8.9,
+        'inflation': goals.inflation,
         'insert_dts': Timestamp.fromDate(currentPhoneDate),
         'update_dts': Timestamp.fromDate(currentPhoneDate),
         'status': 'Active',

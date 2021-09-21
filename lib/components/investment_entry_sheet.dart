@@ -164,11 +164,11 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   @override
   Widget build(BuildContext context) {
 
-    //print(fireStore.toString());
+
     interestValue = calculateInterset();
     totalInvestment = investedAmount + annualInvestment;
 
-  //  print('PV : $investedAmount and IV:$interestValue');
+
 
      pieData = [
 
@@ -182,15 +182,14 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     return Container(
       color: Color(0x00000000),
       child: Wrap(
-         // shrinkWrap: true,
-        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
         children: [
          Container(
            decoration: BoxDecoration(
-               color: kPresentTheme.themeColor,//Color(0x00000000),
+               color: kPresentTheme.themeColor,
                boxShadow: [
                  BoxShadow(
-                   color: Colors.black12,
+                   color: kPresentTheme.shadowColor,
                    offset: Offset.zero,
                    blurRadius: 0.5,
                    spreadRadius: 1,

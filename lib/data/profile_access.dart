@@ -94,7 +94,7 @@ class DRProfileAccess {
         'Uid': _currentUser.uid,
         'first_name': profile.firstName,
         'last_name': profile.lastName,
-
+        'image_source':profile.profileImage,
         'DOB': profile.DOB,
         'income': profile.incomeRange,
 
