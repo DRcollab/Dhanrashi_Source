@@ -1,6 +1,7 @@
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/custom_card.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
+import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -66,7 +67,11 @@ class ProfileView extends StatelessWidget {
                     buttonColor: kPresentTheme.accentColor,
                     buttonText: 'Update',
                     textColor: kPresentTheme.lightWeightColor,
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              ProfilerPage(currentUser: this.currentUser,)));
+                    },
                   ),
                 )
               ],

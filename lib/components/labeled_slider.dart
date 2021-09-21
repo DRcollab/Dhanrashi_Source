@@ -86,7 +86,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
           ),
           Padding(
-            padding: const EdgeInsets.only(top:40.0 ),
+            padding: DefaultValues.kAdaptedTopPadding(context, 40),
             child: Slider(
                 min: widget.min,
                 max:widget.max,

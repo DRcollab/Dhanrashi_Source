@@ -66,6 +66,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         style: DefaultValues.kH3(context),
         validator: this.widget.validator,
         decoration: InputDecoration(
+                  isDense : true,
                   contentPadding: DefaultValues.kDefaultPaddingAllSame(context),
                   enabledBorder: kFormTextBorder,
                   errorBorder: kFormTextBorder,
@@ -79,7 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
                   border: OutlineInputBorder(
 
-                          gapPadding: 2.0,
+                          gapPadding: 1.0,
                          borderRadius: BorderRadius.circular(25.0),
 
                           borderSide: BorderSide(

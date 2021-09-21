@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
       if (_loggedInUser.user != null) {
 
         profile.uid = _loggedInUser.user!.uid;
-        profile.uid = _loggedInUser.user!.email!;
+        profile.email = _loggedInUser.user!.email!;
 
         fireStore.collection('pjdhan_users').where(
             'Uid', isEqualTo: _loggedInUser.user!.uid)
@@ -174,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
           if(snapshot.docs.isEmpty){
             Navigator.pop(context);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: profile.uid,)));
+                MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: profile,)));
           }
           snapshot.docs.forEach((f) {
             String email = f.get('email');

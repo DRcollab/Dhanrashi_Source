@@ -81,6 +81,7 @@ class DefaultValues {
   static double adaptForSmallDevice(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.
+    print('Adapted Width :${size.width} and adapted height:${size.height}' );
     if (size.height < 600) {
       return 0.6;
     }
@@ -88,9 +89,43 @@ class DefaultValues {
     return 1.0;
   }
 
+  static double reduceWidthAsPerScreen(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    // For tiny devices.
+    print('Adapted Width :${size.width} and adapted height:${size.height}' );
+    if (size.width < 300) {
+      return 0.8;
+    }
+    // For normal devices.
+    return 1.0;
+  }
+
+
+  static double adaptFontsForSmallDevice(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    // For tiny devices.
+    if (size.height < 600) {
+      return 0.6;
+    }
+    // For normal devices.
+    return 1.0;
+  }
+
+  static double adaptByValue(BuildContext context, double value) {
+    final size = MediaQuery.of(context).size;
+    // For tiny devices.
+    if (size.height < 600) {
+      return value;
+    }
+    // For normal devices.
+    return 1.0;
+  }
+
+
+
   static TextStyle kTitleTextStyle(context) {
     var kTitleTextStyle = TextStyle(
-      fontSize: 20.0 * adaptForSmallDevice(context),
+      fontSize: 20.0 * adaptFontsForSmallDevice(context),
       fontFamily: 'Fredoka',
       color: Colors.white38,
     );
@@ -101,20 +136,21 @@ class DefaultValues {
 
 
   static TextStyle kH1(context) => TextStyle(
-    fontSize: 24 * adaptForSmallDevice(context),
+    fontSize: 24 * adaptFontsForSmallDevice(context),
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
   );
 
 
   static TextStyle kH2(context) => TextStyle(
-    fontSize: 20 * adaptForSmallDevice(context),
+    fontSize: 20 * adaptFontsForSmallDevice(context),
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
   );
 
   static TextStyle kH3(context) => TextStyle(
-    fontSize: 18 * adaptForSmallDevice(context),
+    fontSize: 18 * adaptFontsForSmallDevice(context),
+    height: 1,
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
   );
@@ -126,38 +162,38 @@ class DefaultValues {
 
 
   static  kNormal1(context) => TextStyle(
-    fontSize: 20 * adaptForSmallDevice(context),
+    fontSize: 20 * adaptFontsForSmallDevice(context),
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
 
   );
 
   static kNormal2(context) => TextStyle(
-    fontSize: 18* adaptForSmallDevice(context) ,
+    fontSize: 18* adaptFontsForSmallDevice(context) ,
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
   );
 
   static kNormal3(context) => TextStyle(
-    fontSize: 12* adaptForSmallDevice(context),
+    fontSize: 12* adaptFontsForSmallDevice(context),
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
   );
 
   static kNormalTextStyle(context) => TextStyle(
     color: Colors.white,
-    fontSize: 20.0* adaptForSmallDevice(context) ,
+    fontSize: 20.0* adaptFontsForSmallDevice(context) ,
   );
 
   static  kDarkTextStyle(context) => TextStyle(
     color: kPresentTheme.highLightColor,
     fontWeight: FontWeight.bold,
-    fontSize: 20.0* adaptForSmallDevice(context) ,
+    fontSize: 20.0* adaptFontsForSmallDevice(context) ,
   );
 
   static kAdviceTextStyleDark(context) => TextStyle(
     color: kPresentTheme.accentColor,
-    fontSize: 18.0 *adaptForSmallDevice(context),
+    fontSize: 18.0 *adaptFontsForSmallDevice(context),
     fontStyle: FontStyle.italic,
   );
 
@@ -182,12 +218,27 @@ class DefaultValues {
   );
 
   static  kInputTextStyle(context) => TextStyle(
-      fontSize: 20.0 * adaptForSmallDevice(context), 
+      fontSize: 20.0 * adaptFontsForSmallDevice(context),
       fontWeight: FontWeight.bold,
       color: kPresentTheme.accentColor);
 
   static kAdaptedTopPadding(context, double value)
   => EdgeInsets.only(top:value * adaptForSmallDevice(context)
+
   );
+
+  static kAdaptedBottoemPadding(context, double value)
+  => EdgeInsets.only(bottom:value * adaptForSmallDevice(context)
+
+  );
+  static kAdaptedLeftPadding(context, double value)
+  => EdgeInsets.only(left:value * adaptForSmallDevice(context)
+
+  );
+  static kAdaptedRightPadding(context, double value)
+  => EdgeInsets.only(right:value * adaptForSmallDevice(context)
+
+  );
+
 }
 

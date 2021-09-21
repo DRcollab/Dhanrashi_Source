@@ -79,17 +79,26 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top:0.0),
-                  child: Image.asset('images/investment_banner.png', height: 400, width: 400,alignment: Alignment.topLeft),
+                  child: Image.asset('images/investment_banner.png',
+                                height: 400 * DefaultValues.adaptForSmallDevice(context), 
+                                width: 400 * DefaultValues.adaptForSmallDevice(context),
+                                alignment: Alignment.topLeft),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 18.0,top: 140.0),
+                  padding:  EdgeInsets.only(
+                      left: 18.0,
+                      top: 140.0 * DefaultValues.adaptForSmallDevice(context),
+                  ),
                   child: Text("Investments",
                     style:DefaultValues.kH1(context),
 
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 18.0,top: 170.0),
+                  padding:  EdgeInsets.only(
+                            left: 18.0,
+                            top: 170.0 * DefaultValues.adaptForSmallDevice(context),
+                      ),
                   child: Text("Choose one of  these",
                     style:DefaultValues.kNormal2(context),
 
@@ -115,8 +124,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                       Expanded(
                         child: Tile(
                           imageSource: 'images/mutual.png',
-                          //height: 120,
-                          //width: 150,
+
                           title: 'Mutual Fund',
                           subText: 'Equity and debt funds',
                           color: color,

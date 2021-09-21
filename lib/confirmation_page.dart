@@ -1,5 +1,5 @@
 
-import 'dart:ffi';
+
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
@@ -71,15 +71,15 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       currentUser: widget.currentUser,
       child: Container(
 
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
 
             children : [
 
               Image.asset('images/confirmed.png',
-                height: 200,
-                width: 200,
+                height: 200 * DefaultValues.adaptForSmallDevice(context),
+                width: 200 * DefaultValues.adaptForSmallDevice(context),
 
               ),
               Padding(

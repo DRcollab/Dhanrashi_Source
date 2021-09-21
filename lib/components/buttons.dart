@@ -61,11 +61,12 @@ class CommandButton extends StatelessWidget {
 
         onPressed: this.onPressed,
         child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding:  EdgeInsets.all(10.0 * DefaultValues.adaptForSmallDevice(context)),
             child: Text(
               buttonText,
               style: TextStyle(
               color: this.textColor,
+
           ),
         ),
       ),

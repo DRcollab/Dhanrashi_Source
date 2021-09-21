@@ -97,24 +97,30 @@ class AnalyticsTabView extends StatelessWidget {
          alignment: Alignment.topCenter,
           children: [
             Container(
-                width:220, height: 220,
+                width:220 * DefaultValues.adaptByValue(context, 0.8),
+              height: 220 * DefaultValues.adaptByValue(context, 0.8),
                 child: fetched? DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,):Text('Hey! hold a bit', style: DefaultValues.kH1(context),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(35.0),
+              padding:  EdgeInsets.all(
+                  35.0 * DefaultValues.adaptByValue(context,0.8),
+              ),
               child: Container(
-                  width:150, height: 150,
+                  width:150 * DefaultValues.adaptByValue(context,0.8),
+                  height: 150 * DefaultValues.adaptByValue(context, 0.8),
                   child:fetched? DonutChart(pieData: pieData1):Text(' I am fecthing ....', style: DefaultValues.kH2(context),),
               
               )
             ),
 
             Padding(
-              padding: const EdgeInsets.only(top:250.0),
+              padding:  EdgeInsets.only(
+                  top:250.0 * DefaultValues.adaptByValue(context, 0.6),
+              ),
               child: Container(
-                width: 450,
-                height: 220,
+                width: 450 * DefaultValues.adaptByValue(context, 0.8),
+                height: 220 * DefaultValues.adaptByValue(context, 0.8),
                 child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(circularProgressIndicator, scale: 5),
               ),
             ),

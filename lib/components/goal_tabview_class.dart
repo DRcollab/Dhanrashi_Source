@@ -92,7 +92,7 @@ class GoalsTabView extends StatelessWidget {
           ],
         ),
         Container(
-         height: 400 * DefaultValues.adaptForSmallDevice(context),
+         height: 400 * DefaultValues.adaptByValue(context,0.50),
           child: ListView.builder(
               itemBuilder: (context, index){
                 return Padding(

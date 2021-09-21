@@ -307,7 +307,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
            // viewNavigationButton = false;
             print('name ${profileCollector.fName.text}');
-
+            Navigator.pop(context);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ConfirmationPage(
                   currentUser: widget.currentUser,

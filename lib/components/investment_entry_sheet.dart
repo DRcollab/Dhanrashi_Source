@@ -205,13 +205,16 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.start,
                  children: [
-                   Image.asset(widget.imageSource, height: 30, width: 30,),
+                   Image.asset(widget.imageSource,
+                     height: 30 * DefaultValues.adaptForSmallDevice(context),
+                     width: 30 * DefaultValues.adaptForSmallDevice(context),) ,
                    Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH1(context),))),
                    CommandButton(
                      buttonColor: kPresentTheme.alternateColor,
                      //icon: Icons.save,
                      textColor: kPresentTheme.highLightColor,
                      buttonText: widget.type,
+                     textSize: 20 * DefaultValues.adaptFontsForSmallDevice(context),
                      onPressed:()  {
                       print(' To Be saved .......:');
                        print('email: ${widget.currentUser.email}');
@@ -272,17 +275,22 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
            children: [
 
              Container(
-               height: 180,width: 180,
+               height: 180 * DefaultValues.adaptForSmallDevice(context),
+                 width: 180 * DefaultValues.adaptForSmallDevice(context),
                  child: DonutChart(pieData: pieData,)),
-             Container(height: 180,width: 180,
+             Container(
+                height: 180 * DefaultValues.adaptForSmallDevice(context),
+                  width: 180 * DefaultValues.reduceWidthAsPerScreen(context),
                child: Column(
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
-                   SizedBox(height: 30,),
+                   SizedBox(height: 30* DefaultValues.adaptForSmallDevice(context) ,),
                    Row(
                      children: [
                        Container(
-                           height: 10, width: 12 ,color: kPresentTheme.accentColor),
+                           height: 10 * DefaultValues.adaptForSmallDevice(context), 
+                           width: 12  * DefaultValues.reduceWidthAsPerScreen(context),
+                           color: kPresentTheme.accentColor),
                        Padding(
                          padding: const EdgeInsets.only(left : 8.0),
                          child: Text('Total Investment'),

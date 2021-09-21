@@ -49,24 +49,31 @@ class Tile extends StatelessWidget {
 
                       children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: DefaultValues.kDefaultPaddingAllSame(context),
                             child: Align(
                               alignment: Alignment.topLeft,
-                              child: Image.asset(this.imageSource,height: 50, width: 50,)),
+                              child: Image.asset(this.imageSource,
+                                      height: 50 * DefaultValues.adaptForSmallDevice(context),
+                                      width: 50 * DefaultValues.adaptForSmallDevice(context),
+                              )),
                                 ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 18.0, top:8.0),
+                            padding:  EdgeInsets.only(
+                                        left: 18.0 * DefaultValues.adaptForSmallDevice(context),
+                                        top:8.0 * DefaultValues.adaptForSmallDevice(context),
+                            ) ,
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Text(
                                   this.title,
-                                  style: TextStyle(fontSize: 20,color: titleColor, fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 20 * DefaultValues.adaptFontsForSmallDevice(context),
+                                            color: titleColor, fontWeight: FontWeight.bold),
                         ),
                       ),
 
                     ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 18.0, ),
+                              padding: DefaultValues.kAdaptedLeftPadding(context, 18),
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(this.subText, style: TextStyle(color: titleColor),)),
@@ -81,7 +88,9 @@ class Tile extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 18.0, bottom: 18.0),
                               child: Align(
                                 alignment: Alignment.bottomRight,
-                                child: Icon(Icons.style, size: 20,)),
+                                child: Icon(Icons.style,
+                                  size: 20 * DefaultValues.adaptFontsForSmallDevice(context),
+                                )),
                           ),
                         ],
                       ),

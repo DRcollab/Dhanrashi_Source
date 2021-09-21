@@ -71,9 +71,9 @@ class DonutChart extends StatelessWidget {
       //   )
       // ],
       defaultRenderer: new charts.ArcRendererConfig(
-          arcWidth: this.arcWidth,
-         startAngle: 4 / 5 * pi,
-         arcLength: 7 / 5 * pi,
+          arcWidth: (this.arcWidth * DefaultValues.adaptByValue(context, 0.8)).ceil(),
+         // startAngle: 4 / 5 * pi,
+         // arcLength: 7 / 5 * pi,
           arcRendererDecorators: viewLabel ? [
 
             new charts.ArcLabelDecorator(

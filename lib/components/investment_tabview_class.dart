@@ -62,7 +62,7 @@ class InvestmentTabView extends StatelessWidget {
        Row(
          mainAxisAlignment: MainAxisAlignment.spaceAround,
          children: [
-           Text('Total Investment Amount: ${totalInvest}'),
+           Text('Total Investment Amount: ${totalInvest.toStringAsFixed(2)}'),
            FloatingActionButton(
               backgroundColor: kPresentTheme.accentColor,
                child: Icon(Icons.add),
@@ -75,7 +75,7 @@ class InvestmentTabView extends StatelessWidget {
          ],
        ),
         Container(
-          height: 400,
+          height: 400* DefaultValues.adaptByValue(context,0.50) ,
           child: ListView.builder(
             itemBuilder: (context, index){
               return Padding(

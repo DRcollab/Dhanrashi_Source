@@ -233,6 +233,7 @@ class _GoalSheetState extends State<GoalSheet> {
                       buttonColor: kPresentTheme.alternateColor,
                       //icon: Icons.save,
                       textColor: kPresentTheme.highLightColor,
+                      textSize: 20 * DefaultValues.adaptFontsForSmallDevice(context),
                       buttonText: widget.type,
                       onPressed:()  {
 
@@ -292,17 +293,22 @@ class _GoalSheetState extends State<GoalSheet> {
             children: [
 
               Container(
-                  height: 180,width: 180,
+                  height: 180 * DefaultValues.adaptForSmallDevice(context),
+                  width: 180 * DefaultValues.adaptForSmallDevice(context),
                   child: DonutChart(pieData: pieData,)),
-              Container(height: 180,width: 180,
+              Container(
+                height: 180 * DefaultValues.adaptForSmallDevice(context),
+                width: 180 * DefaultValues.reduceWidthAsPerScreen(context),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 30,),
+                    SizedBox(height: 30 * DefaultValues.adaptForSmallDevice(context),),
                     Row(
                       children: [
                         Container(
-                            height: 10, width: 12 ,color: kPresentTheme.accentColor),
+                            height: 10 * DefaultValues.adaptForSmallDevice(context),
+                            width: 12 * DefaultValues.reduceWidthAsPerScreen(context) ,
+                            color: kPresentTheme.accentColor),
                         Padding(
                           padding: const EdgeInsets.only(left : 8.0),
                           child: Text('Goal Amount'),
