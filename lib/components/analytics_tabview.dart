@@ -58,8 +58,6 @@ class AnalyticsTabView extends StatelessWidget {
 
   if(investmentDBs.isNotEmpty) {
     investmentDBs.forEach((element) {
-      print('* + * + * +');
-      print(element.investment.name);
       investments.add(element.investment);
     });
     fetched = true;
@@ -71,7 +69,6 @@ class AnalyticsTabView extends StatelessWidget {
 
   if(goalDBs.isNotEmpty) {
     goalDBs.forEach((element) {
-      print(element.goal.name);
       goals.add(element.goal);
     });
     fetched = true;

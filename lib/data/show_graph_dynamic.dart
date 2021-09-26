@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 //import 'Archive/stacked.dart';
@@ -42,7 +43,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
         if(j%5==0) {
           _allInvestmentAmount
               .add(
-              YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j])));
+              YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j]),DefaultValues.graphColors[i%15]));
         }
       }
 
@@ -58,7 +59,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
           measureFn: (YearWiseAmount yearWiseAmount, _) =>
               yearWiseAmount.amount,
           displayName: allInvestmentAnnualAmt[i][0].toString(),
-          //colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
+          colorFn: (YearWiseAmount yearWiseAmount, __) => charts.ColorUtil.fromDartColor(yearWiseAmount.color!),
 
           //colorFn: (_, __) => barColor,
         ),
@@ -84,7 +85,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
       for (int j = 1; j <= noOfYear; j++) {
         _allInvestmentAmount
-            .add(YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j])));
+            .add(YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j]),DefaultValues.graphColors[i%15]));
       }
       print('allInvestmenamt: $_allInvestmentAmount');
 
@@ -168,6 +169,6 @@ class YearWiseAmount {
   //final String type;
   final int year;
   final double amount;
-
-  YearWiseAmount(this.year, this.amount);
+  Color? color;
+  YearWiseAmount(this.year, this.amount, this.color);
 }

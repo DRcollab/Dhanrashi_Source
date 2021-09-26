@@ -105,6 +105,7 @@ class GoalsTabView extends StatelessWidget {
                 return Padding(
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Shingle(
+                    barColor: DefaultValues.graphColors[index%15],
                     leadingImage: goalIcons[goals[index].name],
                     title:  goals[index].name,
                     subtitle: 'Goal: ${goals[index].goalAmount.toString()} Lakh INR',

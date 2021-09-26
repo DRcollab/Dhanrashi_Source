@@ -85,8 +85,9 @@ class InvestmentTabView extends StatelessWidget {
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(
                     leadingImage: investmentIcons[this.investments[index].name],
+                    barColor:DefaultValues.graphColors[index%15],
                     title:  investments[index].name,
-                    subtitle: 'Intial investment :${investments[index].currentInvestmentAmount.toString()} \nAnnual Investment:${investments[index].annualInvestmentAmount * 12}',
+                    subtitle: 'Intial investment :${investments[index].currentInvestmentAmount.toString()} \nAnnual Investment:${investments[index].annualInvestmentAmount}',
                     value:'Investment Duration: ${investments[index].duration.toString()} \nExpected ROI:${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
                     trailing: IconButton(
                       icon: Icon(Icons.edit) ,

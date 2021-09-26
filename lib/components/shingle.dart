@@ -10,6 +10,7 @@ class Shingle extends StatelessWidget {
   String value = '';
   String leadingImage ='';
   Widget? trailing;
+  Color barColor;
 
   Shingle( {
     required this.title,
@@ -17,23 +18,47 @@ class Shingle extends StatelessWidget {
     this.value= '',
     this.leadingImage ='',
     this.trailing,
+    this.barColor=Colors.white,
   } );
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListTile(
-        leading:Image.asset(this.leadingImage,height: 10.h,width: 10.w,),
-        trailing: trailing,
-        title: Text(this.title,style: DefaultValues.kH3(context),),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text( this.subtitle),
-            Text( value)
-          ],
-        ),
 
+      child: Stack(
+
+        children: [
+          Container(
+            height: 11.5.h,
+            width: 2.w,
+
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(5)),
+              color: this.barColor,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 2.0),
+            child: ListTile(
+              leading:Stack(
+                children: [
+                  Image.asset(this.leadingImage,height: 10.h,width: 10.w,),
+
+                ],
+              ),
+              trailing: trailing,
+              title: Text(this.title,style: DefaultValues.kH3(context),),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text( this.subtitle),
+                  Text( value)
+                ],
+              ),
+
+            ),
+          ),
+        ],
       ),
     );
   }

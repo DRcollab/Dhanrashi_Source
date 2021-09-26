@@ -246,5 +246,34 @@ class DefaultValues {
 
   );
 
+  static List<Color> graphColors = [
+
+      Color(0xFF004752),
+      Color(0xffb5c210),
+      Color(0xff005213),
+      Colors.amber,
+      Colors.purple,
+      Colors.orange,
+      Colors.red,
+      Colors.indigo,
+      Colors.lightBlue,
+      Colors.yellow,
+      Color(0xff324d3b),
+      Color(0xff4d2b69),
+      Colors.deepOrange,
+      Color(0xffd181de),
+      Color(0xff5696c7),
+
+
+
+
+
+
+
+
+
+  ];
+
 }
+
 
