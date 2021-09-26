@@ -97,10 +97,20 @@ class AnalyticsTabView extends StatelessWidget {
         Stack(
          alignment: Alignment.topCenter,
           children: [
-            Container(
-                width:220 * DefaultValues.adaptByValue(context, 0.8),
-              height: 220 * DefaultValues.adaptByValue(context, 0.8),
-                child: fetched? DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,):Text('Hey! hold a bit', style: DefaultValues.kH1(context),),
+            GestureDetector(
+              onTap: (){
+                print('clicked on pie');
+              },
+              child: Container(
+
+                  width:220 * DefaultValues.adaptByValue(context, 0.8),
+                height: 220 * DefaultValues.adaptByValue(context, 0.8),
+                 child: fetched? GestureDetector(
+                   onTap: (){
+                     print('clicked on pie');
+                    },
+                     child: DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,)):Text('Hey! hold a bit', style: DefaultValues.kH1(context),),
+              ),
             ),
 
             Padding(
@@ -110,7 +120,7 @@ class AnalyticsTabView extends StatelessWidget {
               child: Container(
                   width:150 * DefaultValues.adaptByValue(context,0.8),
                   height: 150 * DefaultValues.adaptByValue(context, 0.8),
-                  child:fetched? DonutChart(pieData: pieData1):Text(' I am fecthing ....', style: DefaultValues.kH2(context),),
+                 child:fetched? DonutChart(pieData: pieData1):Text(' I am fecthing ....', style: DefaultValues.kH2(context),),
               
               )
             ),
@@ -121,7 +131,7 @@ class AnalyticsTabView extends StatelessWidget {
               ),
               child: Container(
                 width: 450 * DefaultValues.adaptByValue(context, 0.8),
-                height: 220 * DefaultValues.adaptByValue(context, 0.8),
+                height: 320 * DefaultValues.adaptByValue(context, 0.8),
                 child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(circularProgressIndicator, scale: 5),
               ),
             ),

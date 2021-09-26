@@ -9,6 +9,7 @@ import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import '../chart_view.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'investment_entry_sheet.dart';
@@ -74,9 +75,35 @@ class GoalsTabView extends StatelessWidget {
 
               height: 20.h,
               width: 450,
-              child: fetched ? DynamicGraph(
-                chartType: ChartType.bar,
-                resultSet: dataSet,
+              child: fetched ? Stack(
+
+                children: [
+                  DynamicGraph(
+                    chartType: ChartType.bar,
+                    resultSet: dataSet,
+                    gallopYears: 5,
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              ChartView(
+                                chartChild: DynamicGraph(
+                                  isVertical: false,
+                                  chartType: ChartType.bar,
+                                  resultSet: dataSet,
+                                  gallopYears: 1,
+                                ),
+
+                              )));
+                    },
+                    child: Container(
+                      color: Color(0x00000000),
+                      height: 20.h,
+                      width: 100.w,
+                    ),
+                  ),
+                ],
               ) : Image.asset(circularProgressIndicator, scale: 3),
             //DonutChart(pieData: pieData)
           ),
@@ -105,6 +132,7 @@ class GoalsTabView extends StatelessWidget {
                 return Padding(
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Shingle(
+                    maxHeight: 8.h,
                     barColor: DefaultValues.graphColors[index%15],
                     leadingImage: goalIcons[goals[index].name],
                     title:  goals[index].name,

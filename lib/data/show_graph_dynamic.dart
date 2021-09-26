@@ -10,10 +10,18 @@ enum ChartType { bar, line, pie }
 enum calculationType { Investment, Goal, InvVsGoal }
 
 class DynamicGraph extends StatefulWidget {
-  DynamicGraph({required this.resultSet, required this.chartType});
+
+  DynamicGraph({
+    required this.resultSet,
+    required this.chartType,
+    this.isVertical = true,
+    this.gallopYears = 1,
+  });
 
   final List resultSet;
   final ChartType chartType;
+  final bool isVertical;
+  final int gallopYears;
 
   @override
   _DynamicGraphState createState() => _DynamicGraphState();
@@ -40,7 +48,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
       _allInvestmentAmount = List.empty(growable: true);
 
       for (int j = 1; j <= noOfYear; j++) {
-        if(j%5==0) {
+        if(j% widget.gallopYears==0) {
           _allInvestmentAmount
               .add(
               YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j]),DefaultValues.graphColors[i%15]));
@@ -100,9 +108,10 @@ class _DynamicGraphState extends State<DynamicGraph> {
           measureFn: (YearWiseAmount yearWiseAmount, _) =>
               yearWiseAmount.amount,
           displayName: allInvestmentAnnualAmt[i][0].toString(),
-          //colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
+          colorFn: (YearWiseAmount yearWiseAmount, __) => charts.ColorUtil.fromDartColor(yearWiseAmount.color!),
 
           //colorFn: (_, __) => barColor,
+        //  labelAccessorFn: (YearWiseAmount row,_) =>'${row.amount}',
         ),
       );
       print(_lineChartData.toString());
@@ -114,22 +123,37 @@ class _DynamicGraphState extends State<DynamicGraph> {
     print('get Widget');
     if (widget.chartType == ChartType.bar) {
       return new charts.BarChart(_barChartData,
+
           animate: true,
-          // defaultRenderer: new charts.BarRendererConfig(
+          //defaultRenderer: new charts.BarRendererConfig(
           //     // By default, bar renderer will draw rounded bars with a constant
           //     // radius of 100.
           //     // To not have any rounded corners, use [NoCornerStrategy]
           //     // To change the radius of the bars, use [ConstCornerStrategy]
           //     cornerStrategy: const charts.ConstCornerStrategy(30)),
           barGroupingType: charts.BarGroupingType.stacked,
-          vertical: true);
+          vertical: widget.isVertical);
     } else {
       return new charts.LineChart(_lineChartData,
+        behaviors: [
+
+          charts.ChartTitle('Year', behaviorPosition: charts.BehaviorPosition.bottom,
+
+          ),
+          charts.ChartTitle('Investments',behaviorPosition: charts.BehaviorPosition.start),
+          charts.ChartTitle('Goals',behaviorPosition: charts.BehaviorPosition.end),
+
+
+        ],
           defaultRenderer:
-              new charts.LineRendererConfig(
+                  charts.LineRendererConfig(
                   includeArea: true,
-                  stacked: false),
+                  stacked: false,
+                    strokeWidthPx: 3,
+                    roundEndCaps: true,
+                  ),
                   animate: true,
+
 
         );
 

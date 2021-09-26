@@ -68,7 +68,8 @@ class DonutChart extends StatelessWidget {
       //    // cellPadding: EdgeInsets.only(right: 4.0,bottom: 4.0),
       //    // entryTextStyle:
       //
-      //   )
+      //   ),
+      //
       // ],
       defaultRenderer: new charts.ArcRendererConfig(
           arcWidth: (this.arcWidth * DefaultValues.adaptByValue(context, 0.8)).ceil(),
@@ -80,6 +81,7 @@ class DonutChart extends StatelessWidget {
               labelPosition: charts.ArcLabelPosition.auto
             )
           ] : [],
+
 
 
       )

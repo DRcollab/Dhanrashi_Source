@@ -1,3 +1,4 @@
+import 'package:dhanrashi_mvp/chart_view.dart';
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/shingle.dart';
@@ -5,8 +6,11 @@ import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import '../investmentinput.dart';
+import 'buttons.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
@@ -56,10 +60,37 @@ class InvestmentTabView extends StatelessWidget {
           flex:2,
           child: Container(
               height: 20.h,
-              width: 450,
-              child: fetched ? DynamicGraph(
-                chartType: ChartType.bar,
-                resultSet: dataSet,
+              width: 100.w,
+              child: fetched ? Stack(
+                children: [
+
+                  DynamicGraph(
+                    chartType: ChartType.bar,
+                    resultSet: dataSet,
+                    gallopYears: 5,
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              ChartView(
+                                chartChild: DynamicGraph(
+                                  isVertical: false,
+                                  chartType: ChartType.bar,
+                                  resultSet: dataSet,
+                                  gallopYears: 1,
+                                ),
+
+                              )));
+                    },
+                    child: Container(
+                      color: Color(0x00000000),
+                      height: 20.h,
+                      width: 100.w,
+                    ),
+                  ),
+
+                ],
               ) : Image.asset(circularProgressIndicator, scale: 3),
           ),
         ),
@@ -84,6 +115,7 @@ class InvestmentTabView extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(
+                    maxHeight: 11.5.h,
                     leadingImage: investmentIcons[this.investments[index].name],
                     barColor:DefaultValues.graphColors[index%15],
                     title:  investments[index].name,
