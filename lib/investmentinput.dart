@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/constants.dart';
 //import 'components/tile_class.dart';
-
+import 'package:sizer/sizer.dart';
 import 'components/investment_entry_sheet.dart';
 import 'models/user_data_class.dart';
 
@@ -80,14 +80,16 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top:0.0),
                   child: Image.asset('images/investment_banner.png',
-                                height: 400 * DefaultValues.adaptForSmallDevice(context), 
-                                width: 400 * DefaultValues.adaptForSmallDevice(context),
-                                alignment: Alignment.topLeft),
+                                height: 19.h,
+                                width: 100.w,
+                                fit: BoxFit.fitHeight,
+                                //alignment: Alignment.topLeft,
+                  ),
                 ),
                 Padding(
                   padding:  EdgeInsets.only(
-                      left: 18.0,
-                      top: 140.0 * DefaultValues.adaptForSmallDevice(context),
+                      left: 5.w,
+                      top: 18.h,
                   ),
                   child: Text("Investments",
                     style:DefaultValues.kH1(context),
@@ -96,8 +98,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                 ),
                 Padding(
                   padding:  EdgeInsets.only(
-                            left: 18.0,
-                            top: 170.0 * DefaultValues.adaptForSmallDevice(context),
+                            left: 5.w,
+                            top: 21.h,
                       ),
                   child: Text("Choose one of  these",
                     style:DefaultValues.kNormal2(context),
@@ -112,7 +114,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
           Expanded(
             flex:5,
             child: Container(
-              height: 500,
+             // height: 20.h,
               child:ListView(
                   shrinkWrap: false,
 
@@ -125,7 +127,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                         child: Tile(
                           imageSource: 'images/mutual.png',
 
-                          title: 'Mutual Fund',
+                          title: 'Mutual\nFund',
+                          title2: 'Fund',
                           subText: 'Equity and debt funds',
                           color: color,
                           titleColor: Colors.white60,
@@ -200,7 +203,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                           imageSource: 'images/bonds.png',
                          // height: 120,
                          // width: 150,
-                          title: 'Debts & Bonds',
+                          title: 'Debts &\n Bonds',
                           subText: 'Govt Bonds company debentures',
                           color: alternateColor,
                           titleColor: titleColor,
@@ -234,7 +237,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                           imageSource: 'images/stock.png',
                         //  height: 120,
                         //  width: 150,
-                          title: 'Equity',
+                          title: 'Stocks &\nDerivatives',
                           subText: 'Stock market investments',
                           color: color,
                           titleColor: Colors.white60,
@@ -273,7 +276,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                           imageSource: 'images/real-estate.png',
                          // height: 120,
                          // width: 150,
-                          title: 'Real Estate',
+                          title: 'Real\n Estate',
                           subText: 'Lands, houses, complexes etc.',
                           color:color,
                           titleColor: Colors.white60,
@@ -306,8 +309,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                           imageSource: 'images/bank.png',
                         //  height: 120,
                         //  width: 150,
-                          title: 'Bank FD',
-                          subText: 'NSC, KVP, RD, Bank term deposits',
+                          title: 'Fixed\nDeposits',
+                          subText: 'Post Office or Bank \nterm deposits',
                           color: alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
@@ -346,7 +349,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                           imageSource: 'images/coin.png',
                       //    height: 120,
                        //   width: 150,
-                          title: 'Gold',
+                          title: 'Gold\n& Bullions',
                           subText: 'Jewellery ',
                           color:alternateColor,
                           titleColor: titleColor,

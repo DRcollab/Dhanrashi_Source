@@ -7,12 +7,14 @@ import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/profile_view.dart';
+import 'package:dhanrashi_mvp/sip_calculator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:sizer/sizer.dart';
 
 
 import '../login_screen.dart';
@@ -66,48 +68,52 @@ class _MenuDrawerState extends State<MenuDrawer> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          DrawerHeader(
+          Container(
+            height: 30.h,
+            child: DrawerHeader(
 
-            child: Stack(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //Image.asset('images/goldsrain.png'),
-                CircleAvatar(
-                  radius: 40,backgroundColor: kPresentTheme.accentColor,
-                  backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
-                ),
-                Align(
-                    alignment: Alignment.topRight,
+              child: Stack(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //Image.asset('images/goldsrain.png'),
+                  CircleAvatar(
+                    radius: 4.h,backgroundColor: kPresentTheme.accentColor,
+                    backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
+                  ),
+                  Align(
+                      alignment: Alignment.topRight,
 
-                    child: Text('Dhanrashi', style:DefaultValues.kH1(context),)),
-                Align(
-                    alignment: Alignment.bottomLeft,
+                      child: Text('Dhanrashi', style:DefaultValues.kH1(context),)),
+                  Align(
+                      alignment: Alignment.bottomLeft,
 
-                    child: widget.currentUser!=null ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            widget.currentUser.email,
-                            style:DefaultValues.kNormal2(context),
-                          ),
+                      child: widget.currentUser!=null ? Padding(
+                        padding:  EdgeInsets.all(2.w),
+                        child: Row(
+                          children: [
+                            Text(
+                              widget.currentUser.email,
+                              style:DefaultValues.kNormal2(context),
+                            ),
 
-                        ],
-                      ),
-                    ) : SizedBox(),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left:8, top:80),
-                  child: Text(userHasProfile ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
-                      :'', style: DefaultValues.kH2(context),),
-                ),
-              ],
+                          ],
+                        ),
+                      ) : SizedBox(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left:2.w, top:10.h),
+                    child: Text(userHasProfile ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
+                        :'', style: DefaultValues.kH2(context),),
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: kPresentTheme.alternateColor,
+
+              ),
+
+
             ),
-            decoration: BoxDecoration(
-              color: kPresentTheme.alternateColor,
-            ),
-
-
           ),
           Flexible(
             child: Container(
@@ -117,7 +123,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                   ListTile(
                     //contentPadding: EdgeInsets.all(10),
-                    leading: FaIcon(FontAwesomeIcons.userFriends,size: 30,color:kPresentTheme.accentColor, ),
+                    leading: FaIcon(FontAwesomeIcons.userFriends,size: 24.sp,color:kPresentTheme.accentColor, ),
                     title: Text('Update profile' ,style:DefaultValues.kNormal2(context), ),
                     onTap: (){
                       Navigator.push(context,
@@ -128,7 +134,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                   ),
                   ListTile(
-                    leading: FaIcon(FontAwesomeIcons.chartPie,size: 30,color:kPresentTheme.accentColor),
+                    leading: FaIcon(FontAwesomeIcons.chartPie,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Go to Dashboard', style: DefaultValues.kNormal2(context)),
                     onTap: (){
                       Navigator.push(context,
@@ -137,7 +143,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     },
                   ),
                   ListTile(
-                    leading: FaIcon(FontAwesomeIcons.plus,size: 30,color:kPresentTheme.accentColor),
+                    leading: FaIcon(FontAwesomeIcons.plus,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Add Investments', style: DefaultValues.kNormal2(context)),
                     onTap: (){
                       Navigator.push(context,
@@ -146,7 +152,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     },
                   ),
                   ListTile(
-                    leading: FaIcon(FontAwesomeIcons.bullseye, size: 30,color:kPresentTheme.accentColor),
+                    leading: FaIcon(FontAwesomeIcons.bullseye, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Add Goals', style: DefaultValues.kNormal2(context)),
                     onTap: (){
                       Navigator.push(context,
@@ -156,7 +162,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
 
                   ListTile(
-                    leading: FaIcon(FontAwesomeIcons.wrench, size: 30,color:kPresentTheme.accentColor),
+                    leading: FaIcon(FontAwesomeIcons.wrench, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Settings', style: DefaultValues.kNormal2(context)),
                     onTap: (){
                       showModalBottomSheet(
@@ -183,8 +189,14 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   Container(height: 2,width: double.infinity,color: Colors.black12,),
                   SizedBox(height: 10,width: double.infinity,),
                   ListTile(
-                    leading: FaIcon(FontAwesomeIcons.calculator, size: 30,color:kPresentTheme.accentColor),
+                    leading: FaIcon(FontAwesomeIcons.calculator, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('SIP Calculator', style: DefaultValues.kNormal2(context)),
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              SIPCalculator(),),);
+                    }
+                    ,
                   ),
                 ],
               ),
@@ -192,7 +204,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           ),
           Container(
               child: ListTile(
-                leading:Icon(Icons.logout,size: 35,color:kPresentTheme.accentColor),
+                leading:Icon(Icons.logout,size: 26.sp,color:kPresentTheme.accentColor),
                 title: Text('Logout',style: DefaultValues.kNormal2(context)),
                enabled: widget.currentUser!=null,
                 onTap: () async {

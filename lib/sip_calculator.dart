@@ -5,6 +5,7 @@ import 'components/buttons.dart';
 import 'components/constants.dart';
 import 'components/dounut_charts.dart';
 import 'components/labeled_slider.dart';
+import 'package:sizer/sizer.dart';
 
 class SIPCalculator extends StatefulWidget {
  // const SIPCalculator({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                         ]
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding:  EdgeInsets.all(2.w),
                       child: Center(child: Text('SIP Calculator', style: DefaultValues.kH1(context),)),
                     ),
                   ),
@@ -76,20 +77,20 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                     children: [
 
                       Container(
-                          height: 180 * DefaultValues.adaptForSmallDevice(context),width: 180 * DefaultValues.adaptForSmallDevice(context),
+                          height: 24.h,width: 48.w,
                           child: DonutChart(pieData: pieData,)),
-                      Container(height: 180,width: 180,
+                      Container(height: 22.h,width: 44.w,
 
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 30 * DefaultValues.adaptForSmallDevice(context),),
+                            SizedBox(height: 3.h ,),
                             Row(
                               children: [
                                 Container(
-                                    height: 10, width: 12 ,color: kPresentTheme.accentColor),
+                                    height: 1.h, width: 2.w ,color: kPresentTheme.accentColor),
                                 Padding(
-                                  padding: const EdgeInsets.only(left : 8.0),
+                                  padding:  EdgeInsets.only(left : 2.w),
                                   child: Text('Total Investment'),
                                 ),
 
@@ -98,7 +99,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                             Text('${totalInvestment.toStringAsFixed(2)} Lakh',style: DefaultValues.kH3(context),),
                             Row(
                               children: [
-                                Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
+                                Container(height: 1.h, width: 2.w ,color: kPresentTheme.alternateColor),
                                 Padding(
                                   padding: const EdgeInsets.only(left : 8.0),
                                   child: Text('Total Interest'),
@@ -107,9 +108,9 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                               ],
                             ),
                             Text('${interestValue} Lakh',style: DefaultValues.kH3(context),),
-                            SizedBox(height: 5,width: double.infinity,),
-                            Container(height: 2,width: double.infinity,color: Colors.black12,),
-                            SizedBox(height: 5,width: double.infinity,),
+                            SizedBox(height: 0.5.h,width: double.infinity,),
+                            Container(height: 0.2.h,width: double.infinity,color: Colors.black12,),
+                            SizedBox(height: 0.5.h,width: double.infinity,),
                             Text('${(totalInvestment+interestValue).toStringAsFixed(2)} Lakh',
                               style: DefaultValues.kH1(context),
                             ),
@@ -137,7 +138,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top:30.0),
+                          padding: EdgeInsets.only(top:3.h),
                           child: Row(
                             children: [
                               Radio(
@@ -160,7 +161,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
 
             Padding(
-              padding: const EdgeInsets.only(left:8.0, right: 8.0),
+              padding:  EdgeInsets.only(left:2.w, right: 2.w),
               child: LabeledSlider(
                 onChanged: (value){
 
@@ -181,7 +182,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left:8.0, right: 8.0),
+              padding: EdgeInsets.only(left:2.w, right: 2.w),
               child: LabeledSlider(
                 onChanged: (value){
 
@@ -202,7 +203,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left:8.0, right: 8.0),
+              padding: EdgeInsets.only(left:2.w, right: 2.w),
               child: LabeledSlider(
                 onChanged: (value){
                   setState(() {
@@ -222,7 +223,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left:8.0, right: 8.0),
+              padding: EdgeInsets.only(left:2.w, right: 2.w),
               child: LabeledSlider(
                 onChanged: (value){
                   setState(() {

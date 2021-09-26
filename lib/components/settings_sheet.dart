@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'constants.dart';
+import 'package:sizer/sizer.dart';
 
 class SettingSheet extends StatelessWidget {
   const SettingSheet({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class SettingSheet extends StatelessWidget {
                 ]
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 8.w),
               child: Container(
 
                 child: Row(
@@ -59,7 +60,7 @@ class SettingSheet extends StatelessWidget {
 
             children: [
 
-             Center(child: Image.asset('images/settings.png', height: 200, width: 200,)),
+             Center(child: Image.asset('images/settings.png', height: 20.h, width: 100.w,)),
               ListTile(
                 leading: FaIcon(FontAwesomeIcons.themeisle),
                 title: Text('Current Theme', style:DefaultValues.kH1(context),),

@@ -17,6 +17,7 @@ import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sizer/sizer.dart';
 
 // double investedAmount = 10;
 // double expectedRoi = 23;
@@ -198,22 +199,22 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                ]
            ),
            child: Padding(
-             padding: const EdgeInsets.all(8.0),
+             padding:  EdgeInsets.symmetric(vertical: 1.h,horizontal: 2.w),
              child: Container(
 
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.start,
                  children: [
                    Image.asset(widget.imageSource,
-                     height: 30 * DefaultValues.adaptForSmallDevice(context),
-                     width: 30 * DefaultValues.adaptForSmallDevice(context),) ,
-                   Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH1(context),))),
+                     height: 3.h ,
+                     width: 6.w ,) ,
+                   Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH2(context),))),
                    CommandButton(
                      buttonColor: kPresentTheme.alternateColor,
                      //icon: Icons.save,
                      textColor: kPresentTheme.highLightColor,
                      buttonText: widget.type,
-                     textSize: 20 * DefaultValues.adaptFontsForSmallDevice(context),
+                     textSize: 12.sp,
                      onPressed:()  {
                       print(' To Be saved .......:');
                        print('email: ${widget.currentUser.email}');
@@ -274,24 +275,24 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
            children: [
 
              Container(
-               height: 180 * DefaultValues.adaptForSmallDevice(context),
-                 width: 180 * DefaultValues.adaptForSmallDevice(context),
+               height: 22.h,
+                 width: 48.w,
                  child: DonutChart(pieData: pieData,)),
              Container(
-                height: 180 * DefaultValues.adaptForSmallDevice(context),
-                  width: 180 * DefaultValues.reduceWidthAsPerScreen(context),
+                height: 22.h,
+                  width: 48.w,
                child: Column(
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
-                   SizedBox(height: 30* DefaultValues.adaptForSmallDevice(context) ,),
+                   SizedBox(height: 3.h,),
                    Row(
                      children: [
                        Container(
-                           height: 10 * DefaultValues.adaptForSmallDevice(context), 
-                           width: 12  * DefaultValues.reduceWidthAsPerScreen(context),
+                           height: 1.5.h,
+                           width: 3.w,
                            color: kPresentTheme.accentColor),
                        Padding(
-                         padding: const EdgeInsets.only(left : 8.0),
+                         padding: EdgeInsets.only(left : 2.w),
                          child: Text('Total Investment'),
                        ),
 
@@ -300,18 +301,18 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                    Text('${totalInvestment.toStringAsFixed(2)} Lakh',style: DefaultValues.kH3(context),),
                    Row(
                      children: [
-                       Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
+                       Container(height: 1.h, width: 2.w ,color: kPresentTheme.alternateColor),
                        Padding(
-                         padding: const EdgeInsets.only(left : 8.0),
+                         padding:  EdgeInsets.only(left : 2.w),
                          child: Text('Total Interest'),
                        ),
 
                      ],
                    ),
                    Text('${interestValue} Lakh',style: DefaultValues.kH3(context),),
-                   SizedBox(height: 5,width: double.infinity,),
-                   Container(height: 2,width: double.infinity,color: Colors.black12,),
-                   SizedBox(height: 5,width: double.infinity,),
+                   SizedBox(height: 0.6.h,width: double.infinity,),
+                   Container(height: 0.3.h,width: double.infinity,color: Colors.black12,),
+                   SizedBox(height: 0.2.h,width: double.infinity,),
                    Text('${(totalInvestment+interestValue).toStringAsFixed(2)} Lakh',
                           style: DefaultValues.kH1(context),
                    ),
@@ -322,7 +323,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
          ),
 
          Padding(
-           padding: const EdgeInsets.only(left:8.0, right: 8.0),
+           padding: EdgeInsets.only(left:2.w, right: 2.w),
            child: LabeledSlider(
              onChanged: (value){
 
@@ -343,7 +344,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
            ),
          ),
           Padding(
-            padding: const EdgeInsets.only(left:8.0, right: 8.0),
+            padding: EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
               onChanged: (value){
 
@@ -364,7 +365,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:8.0, right: 8.0),
+            padding: EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
               onChanged: (value){
                 setState(() {
@@ -384,7 +385,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:8.0, right: 8.0),
+            padding: EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
               onChanged: (value){
                 setState(() {

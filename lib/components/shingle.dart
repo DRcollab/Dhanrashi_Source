@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:sizer/sizer.dart';
 
 class Shingle extends StatelessWidget {
   //const Shingle({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class Shingle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading:Image.asset(this.leadingImage,height: 20,width: 20,),
+        leading:Image.asset(this.leadingImage,height: 10.h,width: 10.w,),
         trailing: trailing,
         title: Text(this.title,style: DefaultValues.kH3(context),),
         subtitle: Column(

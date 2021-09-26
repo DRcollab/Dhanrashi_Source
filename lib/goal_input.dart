@@ -13,6 +13,7 @@ import 'components/investment_entry_sheet.dart';
 import 'models/user_data_class.dart';
 import 'investmentinput.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sizer/sizer.dart';
 
 
 
@@ -79,14 +80,14 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top:0.0),
                   child: Image.asset('images/goals.png',
-                                  height: 400 * DefaultValues.adaptForSmallDevice(context),
-                                  width: 400 * DefaultValues.adaptForSmallDevice(context),
+                                  height: 19.h,
+                                  width: 100.w,
                                   alignment: Alignment.topLeft),
                 ),
                 Padding(
                   padding:  EdgeInsets.only(
-                                left: 18.0,
-                                top: 140.0* DefaultValues.adaptForSmallDevice(context),
+                                left: 5.w,
+                                top: 18.h,
                         ),
                   child: Text("Goals",
                     style:DefaultValues.kH1(context),
@@ -95,8 +96,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                 ),
                 Padding(
                   padding:  EdgeInsets.only(
-                              left: 18.0,
-                              top: 170.0 * DefaultValues.adaptForSmallDevice(context),
+                              left: 5.w,
+                              top: 21.h,
                     ),
                   child: Text("Choose one of  these",
                     style:DefaultValues.kNormal2(context),
@@ -111,7 +112,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
           Expanded(
             flex:5,
             child: Container(
-              height: 500,
+
               child:ListView(
                 shrinkWrap: false,
                 children: [
@@ -124,7 +125,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/car.png',
                           //height: 120,
                           //width: 150,
-                            title: 'Buy car',
+                            title: 'Own\na car',
                           subText: 'dream car',
                           color: color,
                           titleColor: Colors.white60,
@@ -158,8 +159,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/house.png',
                           //height: 20,
                           //width: 150,
-                          title: 'My Dream ',
-                          subText: 'House',
+                          title: 'My Dream\nHouse',
+                          subText: 'Owning a house',
                           color: alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
@@ -196,7 +197,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/education.png',
                           // height: 120,
                           // width: 150,
-                          title: 'Children',
+                          title: 'Children\nEducation',
                           subText: 'Education',
                           color: alternateColor,
                           titleColor: titleColor,
@@ -229,7 +230,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/pension.png',
                           //  height: 120,
                           //  width: 150,
-                          title: 'Retirement',
+                          title: 'Decent\nRetirement',
                           subText: 'a peaceful life',
                           color: color,
                           titleColor: Colors.white60,
@@ -267,7 +268,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/tour.png',
                           // height: 120,
                           // width: 150,
-                          title: 'Domestic',
+                          title: 'To see\nMy Country',
                           subText: 'tours and travel',
                           color:color,
                           titleColor: Colors.white60,
@@ -299,7 +300,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/destination.png',
                           //  height: 120,
                           //  width: 150,
-                          title: 'Foreign',
+                          title: 'To see \nthe World',
                           subText: 'Tour',
                           color: alternateColor,
                           titleColor: titleColor,
@@ -338,7 +339,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/healthcare.png',
                           //    height: 120,
                           //   width: 150,
-                          title: 'Parents Health',
+                          title: 'Parents \nHealth',
                           subText: ' ',
                           color:alternateColor,
                           titleColor: titleColor,

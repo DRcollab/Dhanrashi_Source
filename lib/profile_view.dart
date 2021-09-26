@@ -4,6 +4,7 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 import 'components/buttons.dart';
 import 'models/profile.dart';
@@ -32,7 +33,7 @@ class ProfileView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
           // Image.asset('images/profile_image.png', height: 150,width: 250,alignment: Alignment.topCenter,),
-            SizedBox(height: 130 * DefaultValues.adaptForSmallDevice(context),),
+            SizedBox(height: 15.h ),
             ReportCard(
               requiredTitleBar: false,
               borderRadius: BorderRadius.circular(20),
@@ -45,23 +46,23 @@ class ProfileView extends StatelessWidget {
                 ),
                 Text('${currentUser.firstName} ${currentUser.lastName}',style: DefaultValues.kH1(context),),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
                   child: Text(currentUser.email, style: DefaultValues.kNormal2(context),),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
                   child: Text('Income Range: ${currentUser.incomeRange}', style: DefaultValues.kNormal2(context),),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
                   child: Text( 'Date of Birth :${DateFormat('dd-MM-yyyy').format(currentUser.DOB.toLocal())}', style: DefaultValues.kNormal2(context),),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
                   child: Text( 'Age:${ageAsString} years', style: DefaultValues.kNormal2(context),),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
                   child: CommandButton(
                     borderRadius: BorderRadius.circular(5),
                     buttonColor: kPresentTheme.accentColor,
@@ -78,8 +79,8 @@ class ProfileView extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  left:60.0 * DefaultValues.adaptForSmallDevice(context),
-                  right: 60.0 *  DefaultValues.adaptForSmallDevice(context) ),
+                  left:36.w,
+                  right: 36.w, ),
               child: CommandButton(
                   onPressed: (){
                     Navigator.pop(context);

@@ -1,5 +1,7 @@
 import 'package:dhanrashi_mvp/components/theme_class.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 
 
 //var userLoggedIn = false; // used to determine whether
@@ -136,30 +138,35 @@ class DefaultValues {
 
 
   static TextStyle kH1(context) => TextStyle(
-    fontSize: 24 * adaptFontsForSmallDevice(context),
+    fontSize: 18.sp, //* adaptFontsForSmallDevice(context),
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
   );
 
 
   static TextStyle kH2(context) => TextStyle(
-    fontSize: 20 * adaptFontsForSmallDevice(context),
+    fontSize: 16.sp,// * adaptFontsForSmallDevice(context),
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
   );
 
   static TextStyle kH3(context) => TextStyle(
-    fontSize: 18 * adaptFontsForSmallDevice(context),
+    fontSize: 14.sp, //* adaptFontsForSmallDevice(context),
     height: 1,
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
   );
   ///
   ///
+  static TextStyle kH4(context) => TextStyle(
+    fontSize: 12.sp, //* adaptFontsForSmallDevice(context),
+    height: 1,
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.normal,
+  );
 
 
-
-
+  static const kCurveRadius = 15.0;
 
   static  kNormal1(context) => TextStyle(
     fontSize: 20 * adaptFontsForSmallDevice(context),
@@ -169,13 +176,13 @@ class DefaultValues {
   );
 
   static kNormal2(context) => TextStyle(
-    fontSize: 18* adaptFontsForSmallDevice(context) ,
+    fontSize: 15.sp,//* adaptFontsForSmallDevice(context) ,
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
   );
 
   static kNormal3(context) => TextStyle(
-    fontSize: 12* adaptFontsForSmallDevice(context),
+    fontSize: 12.sp,//* adaptFontsForSmallDevice(context),
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
   );
@@ -203,29 +210,28 @@ class DefaultValues {
   );
 
   static kTextFieldPadding(context) =>  EdgeInsets.fromLTRB(
-  18.0 * adaptForSmallDevice(context),
-  8.0 * adaptForSmallDevice(context),
-  18.0 * adaptForSmallDevice(context),
-  8.0 * adaptForSmallDevice(context),
+  6.w, //* adaptForSmallDevice(context),
+  1.h, //* adaptForSmallDevice(context),
+  8.w, //* adaptForSmallDevice(context),
+  1.h, //* adaptForSmallDevice(context),
 
   );
 
   static kDefaultPaddingAllSame(context) => EdgeInsets.all
-    (8.0 * adaptForSmallDevice(context));
+    (1.h, //* adaptForSmallDevice(context)
+       );
 
   static kDefaultHorizontalSymmetricPadding(context) => EdgeInsets.symmetric(
-    horizontal: 8 * adaptForSmallDevice(context)
+    horizontal: 2.w
   );
 
   static  kInputTextStyle(context) => TextStyle(
-      fontSize: 20.0 * adaptFontsForSmallDevice(context),
+      fontSize: 15.sp,
       fontWeight: FontWeight.bold,
       color: kPresentTheme.accentColor);
 
   static kAdaptedTopPadding(context, double value)
-  => EdgeInsets.only(top:value * adaptForSmallDevice(context)
-
-  );
+  => EdgeInsets.only(top:value );
 
   static kAdaptedBottoemPadding(context, double value)
   => EdgeInsets.only(bottom:value * adaptForSmallDevice(context)

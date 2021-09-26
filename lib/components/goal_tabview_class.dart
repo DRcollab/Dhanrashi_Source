@@ -1,4 +1,6 @@
+import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
+import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/main.dart';
@@ -15,6 +17,7 @@ import 'maps.dart';
 import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
+import 'package:sizer/sizer.dart';
 
 
 class GoalsTabView extends StatelessWidget {
@@ -59,44 +62,48 @@ class GoalsTabView extends StatelessWidget {
       fetched = false;
     }
 
-
-
-
    print('length is : ${goals}');
   // print('another is ${_goalList}');
 
     return Column(
+
       children: [
-        Container(
-            height: 150,
-            width: 450,
-            child: fetched ? DynamicGraph(
-              chartType: ChartType.bar,
-              resultSet: dataSet,
-            ) : Image.asset(circularProgressIndicator, scale: 3),
-          //DonutChart(pieData: pieData)
+        Flexible(
+          flex:2,
+          child: Container(
+
+              height: 20.h,
+              width: 450,
+              child: fetched ? DynamicGraph(
+                chartType: ChartType.bar,
+                resultSet: dataSet,
+              ) : Image.asset(circularProgressIndicator, scale: 3),
+            //DonutChart(pieData: pieData)
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text('Total Goal Amount: ${totalAmount}'),
-            FloatingActionButton(
-                backgroundColor: kPresentTheme.accentColor,
-                child: Icon(Icons.add),
-                mini: true,
-                onPressed:(){
+        Flexible(
+          flex:1,
+          child: ListTile(
+           // leading: FaIcon(FontAwesomeIcons.list),
+            title: Text('Total Goal Amount: ${totalAmount}', style: DefaultValues.kNormal3(context),),
+            trailing: RoundButton(
+              icon: Icons.add,
+                onPress:(){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
                 }
-            )
-          ],
+            ),
+
+
+
+          ),
         ),
         Container(
-         height: 400 * DefaultValues.adaptByValue(context,0.50),
+         height: 50.h, //* DefaultValues.adaptByValue(context,0.50),
           child: ListView.builder(
               itemBuilder: (context, index){
                 return Padding(
-                  padding: const EdgeInsets.only(left:8.0),
+                  padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Shingle(
                     leadingImage: goalIcons[goals[index].name],
                     title:  goals[index].name,

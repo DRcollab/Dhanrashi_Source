@@ -217,6 +217,8 @@ class _DashboardState extends State<Dashboard> {
                     indicatorColor: kPresentTheme.accentColor,
                     labelColor: Colors.white,
                     unselectedLabelColor: Colors.black,
+                    labelStyle: DefaultValues.kH4(context),
+
                     tabs: [
                       Tab(text:'Analytics'),
                       Tab(text:'Goals'),

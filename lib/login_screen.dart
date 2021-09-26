@@ -12,6 +12,7 @@ import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
+import 'package:sizer/sizer.dart';
 
 import 'components/on_error_screen.dart';
 import 'landing.dart';
@@ -245,203 +246,209 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   @override
   Widget build(BuildContext context) {
 
-    return CustomScaffold(
+    return Sizer(
 
-      child: ListView(
-        children: [
-          Padding(
+      builder: (context,orientation, deviceType) {
+        return CustomScaffold(
 
-            padding: DefaultValues.kAdaptedTopPadding(context, 80),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
+          child: ListView(
+            children: [
+              Padding(
+
+                padding: DefaultValues.kAdaptedTopPadding(context, 10.h),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.monetization_on),
-                    Text('Dhanrashi', style:DefaultValues.kH1(context),),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0,right:18.0,top:28.0,bottom:18),
-                  child: InputCard(
-                    titleText: 'Login Page',
-                    children: [
-                      //Logger(),
-                  Column(
-                  children: [
-                  Padding(
-                  padding:DefaultValues.kTextFieldPadding(context),
-                    child: Form(
-                      key: _loginKey,
-                      child: CustomTextField(
-                        controller: _userText,
-
-                        hintText: "enter email",
-                        passWord: false,
-                        icon: Icons.email,
-                        //  textInputAction: TextInputAction.next,
-                        validator: (value) {
-                          if(eMailValid( value.toString() ))
-                            return null;
-                          else
-                            return validEmailMessage;
-                        },
-
-                        validate: (){
-                          setState(() {
-                            if(_errorText != ''){
-                              _errorText = '';
-                            }
-
-                            print('errorText');
-                          });
-                        },
-
-                      ),
-                    )
-                ),
-                Padding(
-                  padding:DefaultValues.kTextFieldPadding(context),
-                  child: Form(
-                    key: _passwordKey,
-
-                    child: CustomTextField(
-
-                      // textInputAction: TextInputAction.done,
-                      validator: (value){
-                        if(passWordValid(value.toString()))
-                          return null;
-                        else
-                          return validPasswordMessage;
-                      },
-
-                      validate: (){
-                        setState(() {
-                          if(_errorText != ''){
-                            _errorText = '';
-                          }
-
-                        });
-                      },
-
-                      controller: _passWord,
-                      hintText: 'Enter Password',
-                      passWord: true,
-                      hidePassword: _hidePassword,
-                      icon: Icons.password_sharp,
-                      showPassword: (){
-                        setState(() {
-                          _hidePassword = !_hidePassword;
-                        });
-                      },
-                      // key: _passKey,
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.monetization_on),
+                        Text('Dhanrashi', style:DefaultValues.kH1(context),),
+                      ],
                     ),
-                  ),
-                ),
-                ErrorText( errorText: _errorText,),
-                !clickedLogin ? CommandButton(
-                  buttonText: 'Login',
-                  textSize: 20 * DefaultValues.adaptForSmallDevice(context),
-                  buttonColor: kPresentTheme.accentColor,
-                  textColor: kPresentTheme.lightWeightColor,
-                  borderRadius: BorderRadius.circular(25.0),
-                  onPressed: () {
+                    Padding(
+                      padding:  EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
+                      child: InputCard(
 
-//
-                    setState(() {
-                      if(_loginKey.currentState!.validate()) {
-                        if(_passwordKey.currentState!.validate()){
-                          clickedLogin = true;
-                          // Async function to enable login
-                          _login(_userText.text, _passWord.text);
-                          //print('profile from outseide :${profile.docId}');
-
-
-                        } // end of outside
-                      }
-                    });
-
-                  },
-                ):Image.asset(circularProgressIndicator, scale: 5),
-              ],
-            ),
+                        titleText: 'Login Page',
+                        children: [
+                          //Logger(),
+                      Column(
+                      children: [
                       Padding(
-                        padding:DefaultValues.kTextFieldPadding(context),
-                        child: LinkText(
-                            type: LinkTextType.DARK,
+                      padding:DefaultValues.kTextFieldPadding(context),
+                        child: Form(
+                          key: _loginKey,
+                          child: CustomTextField(
+                            controller: _userText,
 
-                            linkText: "Trouble login ? Click here to resolve",
-                            displaySize: 18.0 *  DefaultValues.adaptForSmallDevice(context),
+                            hintText: "enter email",
+                            passWord: false,
+                            icon: Icons.email,
+                            //  textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if(eMailValid( value.toString() ))
+                                return null;
+                              else
+                                return validEmailMessage;
+                            },
 
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ResetScreen(),
-                                  )
-                              );
-                            }
+                            validate: (){
+                              setState(() {
+                                if(_errorText != ''){
+                                  _errorText = '';
+                                }
+
+                                print('errorText');
+                              });
+                            },
+
+                          ),
+                        )
+                    ),
+                    Padding(
+                      padding:DefaultValues.kTextFieldPadding(context),
+                      child: Form(
+                        key: _passwordKey,
+
+                        child: CustomTextField(
+
+                          // textInputAction: TextInputAction.done,
+                          validator: (value){
+                            if(passWordValid(value.toString()))
+                              return null;
+                            else
+                              return validPasswordMessage;
+                          },
+
+                          validate: (){
+                            setState(() {
+                              if(_errorText != ''){
+                                _errorText = '';
+                              }
+
+                            });
+                          },
+
+                          controller: _passWord,
+                          hintText: 'Enter Password',
+                          passWord: true,
+                          hidePassword: _hidePassword,
+                          icon: Icons.password_sharp,
+                          showPassword: (){
+                            setState(() {
+                              _hidePassword = !_hidePassword;
+                            });
+                          },
+                          // key: _passKey,
 
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Not have a login id ?",
-                        style:DefaultValues.kNormal2(context),
-                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommandButton(
-                        textSize: 20 * DefaultValues.adaptForSmallDevice(context),
-                        buttonText: "Click Here to Sign Up",
-                        borderRadius: BorderRadius.circular(20),
-                        buttonColor: kPresentTheme.alternateColor,
-                        textColor: kPresentTheme.accentColor,
+                    ErrorText( errorText: _errorText,),
+                    !clickedLogin ? CommandButton(
+                      buttonText: 'Login',
+                      textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
+                      buttonColor: kPresentTheme.accentColor,
+                      textColor: kPresentTheme.lightWeightColor,
+                      borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
+                      onPressed: () {
 
-                        //type: LinkTextType.DARK,
-                        onPressed: () {
+//
+                        setState(() {
+                          if(_loginKey.currentState!.validate()) {
+                            if(_passwordKey.currentState!.validate()){
+                              clickedLogin = true;
+                              // Async function to enable login
+                              _login(_userText.text, _passWord.text);
+                              //print('profile from outseide :${profile.docId}');
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SignUpPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
 
+                            } // end of outside
+                          }
+                        });
+
+                      },
+                    ):Image.asset(circularProgressIndicator, scale: 5),
                   ],
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calculator),
-            label: 'SIP Calculator',
+                          Padding(
+                            padding:DefaultValues.kTextFieldPadding(context),
+                            child: LinkText(
+                                type: LinkTextType.DARK,
 
+                                linkText: "Trouble login ? Click here to resolve",
+                                displaySize: 12.sp, //*  DefaultValues.adaptForSmallDevice(context),
+
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ResetScreen(),
+                                      )
+                                  );
+                                }
+
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Not have a login id ?",
+                            style:DefaultValues.kNormal2(context),
+                          ),
+                        ),
+                        Padding(
+                          padding:  EdgeInsets.all(1.h),
+                          child: CommandButton(
+                            textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
+                            buttonText: "Click Here to Sign Up",
+                            borderRadius: BorderRadius.circular(20),
+                            buttonColor: kPresentTheme.alternateColor,
+                            textColor: kPresentTheme.accentColor,
+
+                            //type: LinkTextType.DARK,
+                            onPressed: () {
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUpPage(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
-              label: 'Inflation Data'
+          bottomNavigationBar: BottomNavigationBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: FaIcon(FontAwesomeIcons.calculator),
+                label: 'SIP Calculator',
+
+              ),
+              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
+                  label: 'Inflation Data'
+              ),
+              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
+                  label: 'Settings'
+              ),
+            ],
           ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
-              label: 'Settings'
-          ),
-        ],
-      ),
+        );
+      }
     );
   }
 }

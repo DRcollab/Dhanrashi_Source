@@ -11,6 +11,7 @@ import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
+import 'package:sizer/sizer.dart';
 
 import 'components/on_error_screen.dart';
 import 'landing.dart';
@@ -93,7 +94,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 18.0,right:18.0,top:28.0,bottom:18),
+            padding: EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
             child: InputCard(
               titleText: "Reset Login Page",
               children: [
@@ -123,10 +124,12 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
                     Padding(
                       padding:DefaultValues.kTextFieldPadding(context),
                       child: CommandButton(
-                        textColor: Colors.white,
+
                         buttonColor: kPresentTheme.accentColor,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
                         buttonText: 'Reset Password',
+                        textColor: kPresentTheme.lightWeightColor,
+                        textSize: 12.sp,
                         onPressed: () {
 
                           setState(() {
@@ -153,7 +156,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
                   child: LinkText(
                       type: LinkTextType.DARK,
                       linkText: "Recalled the password ? Go back",
-                      displaySize: 18.0,
+                      displaySize: 12.sp,
 
                       onPressed: () {
                         Navigator.push(
@@ -182,7 +185,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
                 padding: const EdgeInsets.all(8.0),
                 child: CommandButton(
                   buttonText: "Click Here to Sign Up",
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
                   buttonColor: kPresentTheme.alternateColor,
                   textColor: kPresentTheme.accentColor,
 

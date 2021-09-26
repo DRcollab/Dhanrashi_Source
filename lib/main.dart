@@ -12,6 +12,7 @@ import 'package:dhanrashi_mvp/test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'components/theme_class.dart';
 import 'data/filemanagr_class.dart';
 import 'data/user_access.dart';
@@ -100,28 +101,16 @@ class _DhanrashiMVPState extends State<DhanrashiMVP> {
 
   @override
   Widget build(BuildContext context) {
-    //fireAuth = FirebaseAuth.instance;
+    return Sizer(
+        builder: (context, orientation, deviceType){
+          return MaterialApp(
+            home:LoginScreen(),
 
-   // _login();
-
-
-   // context.read<FileController>().readSettings();
-  // kPresentTheme = context.select((FileController controller) => controller.settings !=null ? controller.settings.theme:kPresentTheme);
-    return MaterialApp(
-      title: 'Flutter Demo',
-   //    routes: {
-   //      '/': (context) => LoginPage(),
-   //      '/profiler_opt': (context) => ProfilerOptionPage(currentUser: currentUser,),
-   //      '/profiler': (context) => ProfilerPage(currentUser: currentUser),
-   // //     '/profiler_confirm':(context) => ConfirmationPage(collector: collector, currentUser: currentUser)
-   //    },
-
-      //home:ProfilerPage(currentUser: currentUser),
-      //
-     // home: !userLoggedIn ? LoginPage() : Dashboard(currentUser: currentUser),
-      home:LoginScreen(),
-     // home: InvestmentInputScreen(currentUser: currentUser,),
+          );
+    }
     );
+
+
   }
 }
 

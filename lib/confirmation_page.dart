@@ -7,7 +7,7 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:sizer/sizer.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
@@ -67,6 +67,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     // print(widget.collector);
     // print(widget.collector.dateOfBirth);
 
+    double age = (widget.collector.dateOfBirth.difference(DateTime.now()).inDays/365);
+
+    String ageAsString = age.ceil().toString();
+
     return CustomScaffold(
       currentUser: widget.currentUser,
       child: Container(
@@ -78,16 +82,16 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             children : [
 
               Image.asset('images/confirmed.png',
-                height: 200 * DefaultValues.adaptForSmallDevice(context),
-                width: 200 * DefaultValues.adaptForSmallDevice(context),
+                height: 25.h,
+                width: 100.w,
 
               ),
               Padding(
-                padding: const EdgeInsets.only(left:8.0, bottom: 0),
+                padding:  EdgeInsets.only(left:2.w, bottom: 0),
                 child: Text(" Confirm your entries", style:DefaultValues.kH1(context),),
               ),
               Padding(
-                padding: const EdgeInsets.only(left:18.0, top:0),
+                padding: EdgeInsets.only(left:4.w, top:0),
                 child: Text(widget.currentUser.email, style:DefaultValues.kNormal2(context),),
               ),
               Column(
@@ -126,7 +130,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     text: '${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year}',
 
 
-                    subText: "age",
+                    subText: 'Age:${ageAsString} years',
                     buttonIcon:  Icons.edit ,
                    alternateIcon: Icons.subdirectory_arrow_right,
 
@@ -147,10 +151,10 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
 
           Padding(
-            padding: const EdgeInsets.only(left:18.0, right: 18.0, top: 8.0,),
+            padding:  EdgeInsets.only(left:4.w, right: 4.w, top: 1.h,),
             child: CommandButton(
               textColor: Colors.white,
-              textSize: 15,
+              textSize: 12.sp,
               //icon:Icons.save,
               borderRadius: BorderRadius.circular(20),
               buttonText: "Add User Details",

@@ -58,7 +58,17 @@ class Calculator {
     longestInvestmentDuration = lI;
 
    longestGoalDuration = gI;
+     var longestDuration = 0;
 
+     if(gI>lI){
+       longestDuration = gI;
+     }
+     else{
+       longestDuration = lI;
+     }
+      // longestGoalDuration =   gI>lI ? gI : lI;
+
+    print('longestDuration in get inv : $longestDuration');
     print('longestInvestmentDuration = $longestInvestmentDuration');
     print('longestGoalDuration = $longestGoalDuration');
 
@@ -73,7 +83,7 @@ class Calculator {
       List investmentAnnualAmt = List.empty(growable: true);
       investmentAnnualAmt.add(newInv.name);
       //for (int j = 0; j < newInv.investmentDuration; j++) {
-      for (int j = 0; j < longestInvestmentDuration; j++) {
+      for (int j = 0; j < longestDuration; j++) {
         // TODO: Need to fix the calculation error for cash at 11th Year
         if (j < newInv.duration) {
           futureValue = fv(newInv.investmentRoi, j + 1,
@@ -117,7 +127,7 @@ class Calculator {
     List<dynamic> invstYear = List.empty(growable: true);
     invstYear.add('Year');
     //Populate the year to the column
-    for (int i = 1; i <= longestInvestmentDuration; i++) {
+    for (int i = 1; i <= longestDuration; i++) {
       invstYear.add(i);
     }
 
@@ -130,10 +140,20 @@ class Calculator {
 
 
 
-  List getGoalDetail(List<Goal> goals, int lI, int gI) {
-    longestInvestmentDuration = lI;
+  List getGoalDetail(List<Goal> goals, int longestInv, int longestGoal) {
+    longestInvestmentDuration = longestInv;
 
-    longestGoalDuration = gI;
+    longestGoalDuration = longestGoal;
+
+    var longestDuration = 0;
+    if(longestGoal>longestInv){
+      longestDuration = longestGoal;
+    }
+    else{
+      longestDuration = longestInv;
+    }
+
+    print('longestDuration in getGoal: $longestDuration');
 
     print('InGetgoalDetail()');
     print('longestInvestmentDuration = $longestInvestmentDuration');
@@ -151,7 +171,7 @@ class Calculator {
       List goalAnnualAmt = List.empty(growable: true);
       goalAnnualAmt.add(newGoal.name);
       //for (int j = 0; j < newInv.investmentDuration; j++) {
-      for (int j = 0; j < longestGoalDuration; j++) {
+      for (int j = 0; j < longestDuration; j++) {
         if (j + 1 == newGoal.duration) {
           yearEndAmount = newGoal.goalAmount;
         } else if (j + 1 > newGoal.duration) {
@@ -189,7 +209,7 @@ class Calculator {
     List<dynamic> goalYear = List.empty(growable: true);
     goalYear.add('Year');
     //Populate the year to the column
-    for (int i = 1; i <= longestGoalDuration; i++) {
+    for (int i = 1; i <= longestDuration; i++) {
       goalYear.add(i);
     }
 
@@ -204,6 +224,12 @@ class Calculator {
     // longestInvestmentDuration =
     //     getLongestInvestmentDuration(_investmentPortfolio);
     // longestGoalDuration = getLongestGoalDuration(_goalList);
+
+    var longestDuration = 0;
+
+    longestGoalDuration =   gI>lI ? gI : lI;
+
+    print('longestDuration : $longestDuration');
 
     print('In getInvVsGoalDetail()');
     print('longestInvestmentDuration = $longestInvestmentDuration');

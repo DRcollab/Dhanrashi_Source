@@ -89,8 +89,10 @@ class InputCard extends StatelessWidget {
               ),
             ), // Title Bar of the custom card
             Container(
+
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+               mainAxisAlignment: MainAxisAlignment.center,
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: this.children,
               ),
             )

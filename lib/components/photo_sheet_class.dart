@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'constants.dart';
 import 'action_circle.dart';
+import 'package:sizer/sizer.dart';
 
 class PhotoSheet extends StatefulWidget {
 
@@ -46,7 +47,7 @@ class _PhotoSheetState extends State<PhotoSheet> {
                 ]
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(2.w),
               child: Container(
 
                 child: Row(
@@ -80,7 +81,7 @@ class _PhotoSheetState extends State<PhotoSheet> {
               children: [
 
                 Padding(
-                  padding: const EdgeInsets.all(18.0),
+                  padding:  EdgeInsets.symmetric(vertical: 2.h, horizontal: 8.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -125,7 +126,7 @@ class _PhotoSheetState extends State<PhotoSheet> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(18.0),
+                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 8.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -167,7 +168,7 @@ class _PhotoSheetState extends State<PhotoSheet> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(18.0),
+                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 8.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

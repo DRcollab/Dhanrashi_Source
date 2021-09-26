@@ -39,8 +39,11 @@ class _DynamicGraphState extends State<DynamicGraph> {
       _allInvestmentAmount = List.empty(growable: true);
 
       for (int j = 1; j <= noOfYear; j++) {
-        _allInvestmentAmount
-            .add(YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j])));
+        if(j%5==0) {
+          _allInvestmentAmount
+              .add(
+              YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j])));
+        }
       }
 
       // var barColor = charts.MaterialPalette.teal.shadeDefault;
@@ -124,7 +127,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
           defaultRenderer:
               new charts.LineRendererConfig(
                   includeArea: true,
-                  stacked: true),
+                  stacked: false),
                   animate: true,
 
         );

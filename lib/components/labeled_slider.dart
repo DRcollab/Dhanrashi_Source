@@ -2,7 +2,7 @@ import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
-
+import 'package:sizer/sizer.dart';
 class LabeledSlider extends StatefulWidget {
 // const LabeledSlider({Key? key}) : super(key: key);
 
@@ -86,7 +86,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
           ),
           Padding(
-            padding: DefaultValues.kAdaptedTopPadding(context, 40),
+            padding: DefaultValues.kAdaptedTopPadding(context, 6.h),
             child: Slider(
                 min: widget.min,
                 max:widget.max,

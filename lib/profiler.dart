@@ -3,7 +3,7 @@
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
-
+import 'package:sizer/sizer.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
@@ -117,15 +117,7 @@ class Collector{
 
 
 /// Not for here
-double scaleSmallDevice(BuildContext context) {
-  final size = MediaQuery.of(context).size;
-  // For tiny devices.
-  if (size.height < 600) {
-    return 0.6;
-  }
-  // For normal devices.
-  return 1.0;
-}
+
 
 
 /// Start of Profiler Page
@@ -178,7 +170,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
     "Great, Let's start with your name",
     'Pick your date of birth',
     //'Your age factors how  you choose your investments.',
-    'Declaration of your Income will help us recommend you financial product',
+    'Your information will be safe with us',
     ''
   ];
 
@@ -252,7 +244,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
     /// toggles the view of save button and navigation button
     ///
     Widget navButton = NavigationButtonSet(   ///
-      spaceBetween: 20,
+      spaceBetween: 2.w,
       leftButtonText: "Back",
       rightButtonText: "Next",
 
@@ -347,18 +339,17 @@ class _ProfilerPageState extends State<ProfilerPage> {
          mainAxisAlignment: MainAxisAlignment.center,
          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            //Image.asset('images/profile_image.png',height: 200,width: 200,),
+
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                //padding: const EdgeInsets.only(left:18, top:28),
-                child: Text(
 
-                  headers[index],
-                  style: TextStyle(
-                    color: kPresentTheme.accentColor,
-                    fontSize: 24.0 * scaleSmallDevice(context),
-                    fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding:  EdgeInsets.symmetric(vertical:2.h, horizontal: 4.w),
+                  child: Text(
+
+                    headers[index],
+                    style: DefaultValues.kH2(context),
                   ),
                 ),
               ),
@@ -448,7 +439,7 @@ class _NamePickerState extends State<NamePicker> {
 
 
     return  Padding(
-        padding: EdgeInsets.only(top:28,left: 18,right: 18,bottom: 8),
+        padding: EdgeInsets.only(top:4.h,left: 4.w,right: 4.w,bottom: 2.h),
         child: InputCard(
               titleText: "",
               mainAxisAlignment: MainAxisAlignment.start,
@@ -476,13 +467,13 @@ class _NamePickerState extends State<NamePicker> {
                     }
                     ,
                     child: CircleAvatar(
-                        radius: 40,
+                        radius: 11.w,
                         backgroundImage:AssetImage(widget.profilePhotoSource),
                     ),
                   ),
 
 
-                  SizedBox(height: 30,),
+                  SizedBox(height: 4.h,),
                   Padding(
                       padding:DefaultValues.kTextFieldPadding(context),
                           child: Form(
@@ -504,12 +495,7 @@ class _NamePickerState extends State<NamePicker> {
                           ),
                         ),
                   Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            18.0 *DefaultValues.adaptForSmallDevice(context),
-                            8.0 *DefaultValues.adaptForSmallDevice(context) ,
-                            18.0 *DefaultValues.adaptForSmallDevice(context) ,
-                            28.0 *DefaultValues.adaptForSmallDevice(context),
-                        ),
+                        padding: DefaultValues.kTextFieldPadding(context),
                             child: Form(
                               key: widget.lnameKey,
                               child: CustomTextField(
@@ -558,7 +544,7 @@ class _DOBPickerState extends State<DOBPicker> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 28, left:18, right: 18),
+      padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
       child: GradientCard(
         child: Column(
           children: [
@@ -617,7 +603,7 @@ class _IncomePickerState extends State<IncomePicker> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 28,left:18, right : 18),
+      padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
       child: InputCard(
         titleText: "Your income range",
         children: [

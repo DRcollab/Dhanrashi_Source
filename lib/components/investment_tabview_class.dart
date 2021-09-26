@@ -1,4 +1,5 @@
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
+import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/shingle.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
@@ -9,7 +10,7 @@ import '../investmentinput.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
-
+import 'package:sizer/sizer.dart';
 import 'maps.dart';
 
 class InvestmentTabView extends StatelessWidget {
@@ -51,35 +52,37 @@ class InvestmentTabView extends StatelessWidget {
   print(dataSet);
     return Column(
       children: [
-        Container(
-            height: 150,
-            width: 450,
-            child: fetched ? DynamicGraph(
-              chartType: ChartType.bar,
-              resultSet: dataSet,
-            ) : Image.asset(circularProgressIndicator, scale: 10),
+        Flexible(
+          flex:2,
+          child: Container(
+              height: 20.h,
+              width: 450,
+              child: fetched ? DynamicGraph(
+                chartType: ChartType.bar,
+                resultSet: dataSet,
+              ) : Image.asset(circularProgressIndicator, scale: 3),
+          ),
         ),
-       Row(
-         mainAxisAlignment: MainAxisAlignment.spaceAround,
-         children: [
-           Text('Total Investment Amount: ${totalInvest.toStringAsFixed(2)}'),
-           FloatingActionButton(
-              backgroundColor: kPresentTheme.accentColor,
-               child: Icon(Icons.add),
-               mini: true,
-               onPressed:(){
-             Navigator.push(context,
-                 MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
-           }
-           )
-         ],
+       Flexible(
+         flex:1,
+         child: ListTile(
+           title:  Text('Total Investment Amount: ${totalInvest.toStringAsFixed(2)}',style: DefaultValues.kNormal3(context)),
+           trailing: RoundButton(
+               icon:Icons.add,
+               onPress:(){
+                 Navigator.push(context,
+                     MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
+               }
+           ),
+
+         ),
        ),
         Container(
-          height: 400* DefaultValues.adaptByValue(context,0.50) ,
+          height: 50.h,//* DefaultValues.adaptByValue(context,0.50) ,
           child: ListView.builder(
             itemBuilder: (context, index){
               return Padding(
-                padding: const EdgeInsets.only(left:8.0),
+                padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(
                     leadingImage: investmentIcons[this.investments[index].name],
                     title:  investments[index].name,

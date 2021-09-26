@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/custom_text_field.dart';
+import 'package:sizer/sizer.dart';
 
 class Band extends StatefulWidget {
 //  const Band({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ bool isEditing = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:  EdgeInsets.symmetric(vertical:1.h, horizontal:1.w),
       child: Container(
           decoration: BoxDecoration(
 
@@ -61,18 +62,18 @@ bool isEditing = false;
 
 
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.symmetric(vertical:1.h, horizontal:1.w),
           child: Row(
            // crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 8,top:0,right: 0, bottom: 0),
+                      padding: EdgeInsets.only(left: 1.w,top:0,right: 0, bottom: 0),
                       child: this.widget.headingChild,
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 30,top:0,right: 0, bottom: 0),
+                        padding:  EdgeInsets.only(left: 10.w,top:0,right: 0, bottom: 0),
                         child: Container(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -89,7 +90,7 @@ bool isEditing = false;
                                   editingController: this.widget.controller,
                                   isEditing: this.isEditing,
                                   initialText: this.widget.text,
-                                  style: TextStyle(fontSize: 18),),
+                                  style: TextStyle(fontSize: 14.sp),),
                               ),
                               Text(this.widget.subText),
 

@@ -5,6 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sizer/sizer.dart';
+
+
 
 class CustomTextField extends StatefulWidget {
 
@@ -53,7 +56,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 50.0 - 50.0 * DefaultValues.adaptForSmallDevice(context),
+      height: 10.h, //- 50.0 * DefaultValues.adaptForSmallDevice(context),
       alignment: Alignment.bottomCenter,
       // color: Colors.amber,
 
@@ -80,7 +83,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
                   border: OutlineInputBorder(
 
-                          gapPadding: 1.0,
+                          gapPadding: 1.h,
                          borderRadius: BorderRadius.circular(25.0),
 
                           borderSide: BorderSide(
@@ -122,13 +125,13 @@ class EditableTextField extends StatefulWidget {
   bool isEditing = false;
   TextEditingController editingController;
   String initialText = "Initial Text";
-  TextStyle style;
+  late TextStyle style;
 
 
   EditableTextField({
     this.isEditing=false,
     this.initialText = 'Initial Text',
-    this.style = const TextStyle(fontSize: 10),
+   required this.style,
     required this.editingController });
 
 
@@ -156,15 +159,14 @@ class _EditableTextFieldState extends State<EditableTextField> {
   @override
   Widget build(BuildContext context) {
 
-    print('88888888');
-    print(widget.isEditing);
+
     if(widget.isEditing) {
       return TextField(
         controller: widget.editingController,
         onSubmitted: (value) {
           setState(() {
             widget.initialText = value;
-            //widget.isEditing = false;
+
           });
 
         },
@@ -236,15 +238,15 @@ class _NumberInputFieldState extends State<NumberInputField> {
             Expanded(
               flex:2,
               child: Padding(
-                padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
+                padding:  EdgeInsets.only(left: 0.0, right: 2.w, top:2.h, bottom: 0.0),
                 child: Text(widget.label),
               ),
             ),
             Flexible(child: Padding(
-              padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
+              padding:  EdgeInsets.only(left: 0.0, right: 2.w, top:2.h, bottom: 0.0),
               child: Container(
-                height: 60 * DefaultValues.adaptForSmallDevice(context),
-                width: 120,
+                height: 6.h,
+                width: 52.w,
                 child: TextField(
                     textAlign: TextAlign.end,
                     enableInteractiveSelection: false,
@@ -257,7 +259,7 @@ class _NumberInputFieldState extends State<NumberInputField> {
                     style:DefaultValues.kInputTextStyle(context),
                     //validator: widget.validator,
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
+                        contentPadding: EdgeInsets.all(2.w),
                         disabledBorder: InputBorder.none,
 
                         errorBorder: OutlineInputBorder(

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:sizer/sizer.dart';
 
 enum LinkTextType {
   DARK,
@@ -61,7 +62,8 @@ class CommandButton extends StatelessWidget {
 
         onPressed: this.onPressed,
         child: Padding(
-            padding:  EdgeInsets.all(10.0 * DefaultValues.adaptForSmallDevice(context)),
+            padding:  EdgeInsets.fromLTRB(2.w,1.h,2.w,1.h // * DefaultValues.adaptForSmallDevice(context)
+            ),
             child: Text(
               buttonText,
               style: TextStyle(
@@ -204,7 +206,7 @@ class NavigationButtonSet extends StatelessWidget {
     this.leftButtonColor = this.rightButtonColor = kPresentTheme.alternateColor; // Defined color from present theme.
 
     return Container(
-      height: 50,
+      height: 5.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
