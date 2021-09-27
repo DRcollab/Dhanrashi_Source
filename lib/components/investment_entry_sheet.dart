@@ -46,7 +46,7 @@ class InvestmentSheet extends StatefulWidget {
     required this.expectedRoi,
     required this.investmentDuration,
     this.imageSource='',
-    this.annualInvestment = 0,
+    this.annualInvestment = 1,
   //  required this.save,
     required this.currentUser,
     this.uniqueId,
@@ -69,7 +69,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   double expectedRoi = 1;
   int investmentDuration = 1;
   double interestValue = 0 ;        // holds calculated value of futureValue of the investment
-  double annualInvestment = 0;
+  double annualInvestment = 1;
  // Investment currentInvestment = Investment();
   late FirebaseFirestore fireStore;
   late var investAccess;
@@ -167,7 +167,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
 
     interestValue = calculateInterset();
-    totalInvestment = investedAmount + annualInvestment;
+    totalInvestment = investedAmount + annualInvestment*investmentDuration;
 
 
 
@@ -358,7 +358,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
               },
               sliderValue: annualInvestment,
-              min: 0,
+              min: 0.06,
               max: 100,
               labelText: 'Annual Investment',
               suffix: 'Lakhs',

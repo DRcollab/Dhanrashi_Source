@@ -1,4 +1,6 @@
 import 'dart:core';
+import 'dart:ffi';
+import 'dart:math';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -6,7 +8,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'constant.dart';
 import 'package:matrix2d/matrix2d.dart';
 
-enum ChartType { bar, line, pie }
+enum ChartType { bar, line, pie , gauge}
 enum calculationType { Investment, Goal, InvVsGoal }
 
 class DynamicGraph extends StatefulWidget {
@@ -32,6 +34,10 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
   late List<charts.Series<YearWiseAmount, String>> _barChartData;
   late List<charts.Series<YearWiseAmount, int>> _lineChartData;
+  late List<charts.Series<Task, String>> _pieChartData;
+  late List<charts.Series<Task, String>> _pieChartDataGoal;
+  late double ratio = 0;
+
   //late List<charts.Series<YearWiseAmount, int>> _chartData;
 
   void _makeDataforBar() {
@@ -98,7 +104,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
       print('allInvestmenamt: $_allInvestmentAmount');
 
       // var barColor = charts.MaterialPalette.teal.shadeDefault;
-      var barColor = charts.MaterialPalette.deepOrange.shadeDefault;
+     // var barColor = charts.MaterialPalette.deepOrange.shadeDefault;
 
       _lineChartData.add(
         new charts.Series(
@@ -119,8 +125,64 @@ class _DynamicGraphState extends State<DynamicGraph> {
     }
   }
 
+  void _makeDataForGauge(){
+   List allInvestmentAnnualAmt = widget.resultSet;
+   int noOfYear = allInvestmentAnnualAmt.shape[1] - 1;
+
+   double invValueatlastYear = double.parse( allInvestmentAnnualAmt[0][noOfYear]);
+   double goalValueatlastYear =double.parse( allInvestmentAnnualAmt[1][noOfYear]);
+    ratio = goalValueatlastYear/invValueatlastYear;
+  print('invValueatlastYear: $invValueatlastYear');
+    double val = 45.67;
+    List<Task>   pieData = [
+
+      Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
+      Task('Interest Earned', goalValueatlastYear ,kPresentTheme.alternateColor),
+    ];
+
+
+
+    //var goalValueatlastYear = allInvestmentAnnualAmt[1][noOfYear];
+
+    print('--------=============');
+   // print(invValueatlastYear);
+
+    _pieChartData = List.empty(growable: true);
+    _pieChartData.add(
+      new charts.Series(
+        id: 'inv',
+        data: [pieData[0]],
+        domainFn: (Task yearWiseAmount, _) => yearWiseAmount.task,
+        measureFn: (Task yearWiseAmount, _) =>
+        yearWiseAmount.value,
+        displayName:'title', //allInvestmentAnnualAmt[0][0].toString(),
+        colorFn: (Task yearWiseAmount, __) => charts.ColorUtil.fromDartColor(yearWiseAmount.color),
+
+
+      ),
+    );
+   _pieChartDataGoal = List.empty(growable: true);
+   _pieChartDataGoal.add(
+     new charts.Series(
+       id: 'inv',
+       data: [pieData[1]],
+       domainFn: (Task yearWiseAmount, _) => yearWiseAmount.task,
+       measureFn: (Task yearWiseAmount, _) =>
+       yearWiseAmount.value,
+       displayName:'title', //allInvestmentAnnualAmt[0][0].toString(),
+       colorFn: (Task yearWiseAmount, __) => charts.ColorUtil.fromDartColor(yearWiseAmount.color),
+
+
+     ),
+   );
+
+
+
+  }
+
   Widget getWidget() {
     print('get Widget');
+
     if (widget.chartType == ChartType.bar) {
       return new charts.BarChart(_barChartData,
 
@@ -133,8 +195,9 @@ class _DynamicGraphState extends State<DynamicGraph> {
           //     cornerStrategy: const charts.ConstCornerStrategy(30)),
           barGroupingType: charts.BarGroupingType.stacked,
           vertical: widget.isVertical);
-    } else {
-      return new charts.LineChart(_lineChartData,
+    } else if(widget.chartType == ChartType.line){
+      return new charts.LineChart(
+        _lineChartData,
         behaviors: [
 
           charts.ChartTitle('Year', behaviorPosition: charts.BehaviorPosition.bottom,
@@ -168,6 +231,130 @@ class _DynamicGraphState extends State<DynamicGraph> {
       //     barGroupingType: charts.BarGroupingType.stacked,
       //     vertical: false);
     }
+    else{
+      // Gauge style charts
+      bool viewLabel = false;
+      return Stack(
+        alignment: Alignment.topCenter,
+        children: [
+
+          Container(
+            width:220,
+            height:220,
+            child: charts.PieChart<String>(
+              List.from(_pieChartData),
+              animate: true,
+
+              animationDuration: Duration(milliseconds: 200),
+              // behaviors: [
+              //
+              //   charts.DatumLegend(
+              //     outsideJustification: charts.OutsideJustification.middleDrawArea,
+              //     horizontalFirst: false,
+              //     desiredMaxColumns: 2,
+              //    // cellPadding: EdgeInsets.only(right: 4.0,bottom: 4.0),
+              //    // entryTextStyle:
+              //
+              //   ),
+              //
+              // ],
+              defaultRenderer: new charts.ArcRendererConfig(
+                arcWidth: (20 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
+                 startAngle: 1 * pi,
+                 arcLength: 7 / 5 * pi,
+                arcRendererDecorators: viewLabel ? [
+
+                new charts.ArcLabelDecorator(
+                    labelPosition: charts.ArcLabelPosition.auto
+                )
+                ] : [],
+
+
+
+              )
+              ,
+            ),
+          ),
+          Padding(
+              padding:  EdgeInsets.all(
+                35.0 * DefaultValues.adaptByValue(context,0.8),
+              ),
+              child: Container(
+                width:150 * DefaultValues.adaptByValue(context,0.8),
+                height: 150 * DefaultValues.adaptByValue(context, 0.8),
+                 child:charts.PieChart<String>(
+                   List.from(_pieChartDataGoal),
+                   animate: true,
+
+                   animationDuration: Duration(milliseconds: 200),
+                   // behaviors: [
+                   //
+                   //   charts.DatumLegend(
+                   //     outsideJustification: charts.OutsideJustification.middleDrawArea,
+                   //     horizontalFirst: false,
+                   //     desiredMaxColumns: 2,
+                   //    // cellPadding: EdgeInsets.only(right: 4.0,bottom: 4.0),
+                   //    // entryTextStyle:
+                   //
+                   //   ),
+                   //
+                   // ],
+                   defaultRenderer: new charts.ArcRendererConfig(
+                     arcWidth: (20 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
+                     startAngle: 1 * pi,
+                     arcLength: ratio * pi,
+                     arcRendererDecorators: viewLabel ? [
+
+                     new charts.ArcLabelDecorator(
+                         labelPosition: charts.ArcLabelPosition.auto
+                     )
+                     ] : [],
+
+
+
+                   )
+                   ,
+                 ),
+
+              )
+          ),
+          Padding(
+            padding: EdgeInsets.only(left:18.0,top:200),
+            child: Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 10,width: 20,
+                    color: DefaultValues.graphColors[0],
+
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
+                    child: Text('Investments'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
+                    child: Container(
+                      height: 10,width: 20,
+                      color: DefaultValues.graphColors[1],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
+                    child: Text('Goals'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+
+
+
+        ],
+      );
+    }
   }
 
   @override
@@ -181,10 +368,13 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
     if (widget.chartType == ChartType.bar) {
       _makeDataforBar();
-    } else {
+    } else if (widget.chartType == ChartType.line)
+      {
       _makeDataforLine();
     }
-
+    else{
+      _makeDataForGauge();
+    }
     return getWidget();
   }
 }
@@ -195,4 +385,13 @@ class YearWiseAmount {
   final double amount;
   Color? color;
   YearWiseAmount(this.year, this.amount, this.color);
+}
+
+class Task{
+  String task = '';
+  double value = 0.0;
+  Color color = Color(0);
+  Task(this.task,this.value,this.color);
+
+
 }

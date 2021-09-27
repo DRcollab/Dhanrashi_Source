@@ -29,13 +29,7 @@ class InvestmentTabView extends StatelessWidget {
   double totalInvest;
   late List<Investment> investments = [];
   List dataSet = List.empty(growable: true);
-  final   pieData = [
 
-    Task('Investment', 10, kPresentTheme.accentColor),
-    Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
-
-
-  ];
 
   @override
   Widget build(BuildContext context) {

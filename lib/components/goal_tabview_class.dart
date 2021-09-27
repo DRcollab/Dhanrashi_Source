@@ -33,13 +33,13 @@ class GoalsTabView extends StatelessWidget {
   GoalsTabView({required this.goalDBs, required this.currentUser,this.totalAmount=0, this.longestInvestmentDuration = 0, this.longestGoalDuration=0});
    List<Goal> goals = [];
    List names  = [];
-  final   pieData = [
-
-    Task('Investment', 21, kPresentTheme.accentColor),
-    Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
-    Task('Car', 10 ,Colors.black26),
-
-  ];
+  // final   pieData = [
+  //
+  //   Task('Investment', 21, kPresentTheme.accentColor),
+  //   Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
+  //   Task('Car', 10 ,Colors.black26),
+  //
+  // ];
 
 
 

@@ -63,7 +63,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
       child: TextFormField(
         controller: this.widget.controller,
-
+        onFieldSubmitted: (_)=>FocusScope.of(context).nextFocus(),
         obscureText: widget.passWord && this.widget.hidePassword,
         textInputAction: this.widget.textInputAction,
         style: DefaultValues.kH3(context),
@@ -230,6 +230,9 @@ class NumberInputField extends StatefulWidget {
 }
 
 class _NumberInputFieldState extends State<NumberInputField> {
+
+  bool autofocus = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -248,13 +251,14 @@ class _NumberInputFieldState extends State<NumberInputField> {
                 height: 6.h,
                 width: 52.w,
                 child: TextField(
+                    autofocus: this.autofocus,
                     textAlign: TextAlign.end,
                     enableInteractiveSelection: false,
                     enabled: widget.enabled,
                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[.0-9]')),],
                     controller: widget.controller,
-
-                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_)=> FocusScope.of(context).unfocus(),
+                    textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
                     style:DefaultValues.kInputTextStyle(context),
                     //validator: widget.validator,
@@ -293,7 +297,13 @@ class _NumberInputFieldState extends State<NumberInputField> {
                       //labelStyle:
                     ),
 
-                  onEditingComplete: widget.getValue,
+                  onEditingComplete: (){
+                      setState(() {
+                        autofocus = false;
+                        widget.getValue!();
+                      });
+
+                      },
 
                   // onTap: widget.validate,
 

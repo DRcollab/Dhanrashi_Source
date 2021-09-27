@@ -218,16 +218,28 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
           });
           return profile;
         }).catchError((e){
+          setState(() {
+            clickedLogin = false;
+          });
+
           throw e;
         });
 
 
 
       }
+      else{
+        setState(() {
+          clickedLogin = false;
+        });
+
+      }
 
 
     }catch(e){
-      clickedLogin = false;
+      setState(() {
+        clickedLogin = false;
+      });
       Utility.showErrorMessage(context, e.toString());
       print(e);
     }

@@ -33,21 +33,21 @@ class AnalyticsTabView extends StatelessWidget {
 
 
 
-  final   pieData = [
+  // final   pieData = [
+  //
+  //   Task('Investment', 10, kPresentTheme.accentColor),
+  //   Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
+  //
+  //
+  // ];
 
-    Task('Investment', 10, kPresentTheme.accentColor),
-    Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
-
-
-  ];
-
-  final   pieData1 = [
-
-    Task('Investment', 21, kPresentTheme.accentColor),
-    Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
-    Task('Car', 10 ,kPresentTheme.alternateColor.withBlue(129)),
-
-  ];
+  // final   pieData1 = [
+  //
+  //   Task('Investment', 21, kPresentTheme.accentColor),
+  //   Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
+  //   Task('Car', 10 ,kPresentTheme.alternateColor.withBlue(129)),
+  //
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -94,49 +94,35 @@ class AnalyticsTabView extends StatelessWidget {
 
     return Column(
       children: [
-        Stack(
-         alignment: Alignment.topCenter,
-          children: [
-            GestureDetector(
-              onTap: (){
-                print('clicked on pie');
-              },
-              child: Container(
+        fetched?
+        DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,)
+        // DonutChart(
+        //   pieData: pieData,
+        //   viewLabel: false,
+        //   arcWidth: 30,)
+            :Text('Loading.......', style: DefaultValues.kH1(context),),
 
-                  width:220 * DefaultValues.adaptByValue(context, 0.8),
-                height: 220 * DefaultValues.adaptByValue(context, 0.8),
-                 child: fetched? GestureDetector(
-                   onTap: (){
-                     print('clicked on pie');
-                    },
-                     child: DonutChart(pieData: pieData, viewLabel: false, arcWidth: 30,)):Text('Hey! hold a bit', style: DefaultValues.kH1(context),),
-              ),
-            ),
+        // Padding(
+        //   padding:  EdgeInsets.all(
+        //       35.0 * DefaultValues.adaptByValue(context,0.8),
+        //   ),
+        //   child: Container(
+        //       width:150 * DefaultValues.adaptByValue(context,0.8),
+        //       height: 150 * DefaultValues.adaptByValue(context, 0.8),
+        //     // child:fetched? DonutChart(pieData: pieData1):Text(' I am fecthing ....', style: DefaultValues.kH2(context),),
+        //
+        //   )
+        // ),
 
-            Padding(
-              padding:  EdgeInsets.all(
-                  35.0 * DefaultValues.adaptByValue(context,0.8),
-              ),
-              child: Container(
-                  width:150 * DefaultValues.adaptByValue(context,0.8),
-                  height: 150 * DefaultValues.adaptByValue(context, 0.8),
-                 child:fetched? DonutChart(pieData: pieData1):Text(' I am fecthing ....', style: DefaultValues.kH2(context),),
-              
-              )
-            ),
-
-            Padding(
-              padding:  EdgeInsets.only(
-                  top:250.0 * DefaultValues.adaptByValue(context, 0.6),
-              ),
-              child: Container(
-                width: 450 * DefaultValues.adaptByValue(context, 0.8),
-                height: 320 * DefaultValues.adaptByValue(context, 0.8),
-                child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(circularProgressIndicator, scale: 5),
-              ),
-            ),
-          ],
-
+        Padding(
+          padding:  EdgeInsets.only(
+              top:1.0 * DefaultValues.adaptByValue(context, 0.6),
+          ),
+          child: Container(
+            width: 450 * DefaultValues.adaptByValue(context, 0.8),
+            height: 320 * DefaultValues.adaptByValue(context, 0.8),
+            child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(circularProgressIndicator, scale: 5),
+          ),
         ),
       ],
     );
