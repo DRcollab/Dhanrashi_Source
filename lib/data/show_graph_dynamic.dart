@@ -36,7 +36,8 @@ class _DynamicGraphState extends State<DynamicGraph> {
   late List<charts.Series<YearWiseAmount, int>> _lineChartData;
   late List<charts.Series<Task, String>> _pieChartData;
   late List<charts.Series<Task, String>> _pieChartDataGoal;
-  late double ratio = 0;
+  late double goal_ratio = 0;
+  late double inv_ratio = 0;
 
   //late List<charts.Series<YearWiseAmount, int>> _chartData;
 
@@ -130,10 +131,13 @@ class _DynamicGraphState extends State<DynamicGraph> {
    int noOfYear = allInvestmentAnnualAmt.shape[1] - 1;
 
    double invValueatlastYear = double.parse( allInvestmentAnnualAmt[0][noOfYear]);
-   double goalValueatlastYear =double.parse( allInvestmentAnnualAmt[1][noOfYear]);
-    ratio = goalValueatlastYear/invValueatlastYear;
+   double goalValueatlastYear = double.parse( allInvestmentAnnualAmt[1][noOfYear]);
+   
+    inv_ratio = 7/5;
+    goal_ratio = (goalValueatlastYear/invValueatlastYear)*inv_ratio;
+
   print('invValueatlastYear: $invValueatlastYear');
-    double val = 45.67;
+
     List<Task>   pieData = [
 
       Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
@@ -261,7 +265,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
               defaultRenderer: new charts.ArcRendererConfig(
                 arcWidth: (20 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
                  startAngle: 1 * pi,
-                 arcLength: 7 / 5 * pi,
+                 arcLength: inv_ratio * pi,
                 arcRendererDecorators: viewLabel ? [
 
                 new charts.ArcLabelDecorator(
@@ -302,7 +306,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                    defaultRenderer: new charts.ArcRendererConfig(
                      arcWidth: (20 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
                      startAngle: 1 * pi,
-                     arcLength: ratio * pi,
+                     arcLength: goal_ratio * pi,
                      arcRendererDecorators: viewLabel ? [
 
                      new charts.ArcLabelDecorator(
