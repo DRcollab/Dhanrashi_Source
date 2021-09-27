@@ -7,6 +7,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 //import 'Archive/stacked.dart';
 import 'constant.dart';
 import 'package:matrix2d/matrix2d.dart';
+import 'package:sizer/sizer.dart';
 
 enum ChartType { bar, line, pie , gauge}
 enum calculationType { Investment, Goal, InvVsGoal }
@@ -132,7 +133,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
    double invValueatlastYear = double.parse( allInvestmentAnnualAmt[0][noOfYear]);
    double goalValueatlastYear = double.parse( allInvestmentAnnualAmt[1][noOfYear]);
-   
+
     inv_ratio = 7/5;
     goal_ratio = (goalValueatlastYear/invValueatlastYear)*inv_ratio;
 
@@ -205,10 +206,18 @@ class _DynamicGraphState extends State<DynamicGraph> {
         behaviors: [
 
           charts.ChartTitle('Year', behaviorPosition: charts.BehaviorPosition.bottom,
+                titleStyleSpec: charts.TextStyleSpec(fontSize: 12.sp.toInt(),fontWeight: 'b'),
 
           ),
-          charts.ChartTitle('Investments',behaviorPosition: charts.BehaviorPosition.start),
-          charts.ChartTitle('Goals',behaviorPosition: charts.BehaviorPosition.end),
+          charts.ChartTitle('Investments',behaviorPosition: charts.BehaviorPosition.start,
+            titleStyleSpec: charts.TextStyleSpec(fontSize: 12.sp.toInt()),
+
+
+
+          ),
+          charts.ChartTitle('Goals',behaviorPosition: charts.BehaviorPosition.end,
+            titleStyleSpec: charts.TextStyleSpec(fontSize: 12.sp.toInt()),
+          ),
 
 
         ],
@@ -243,8 +252,8 @@ class _DynamicGraphState extends State<DynamicGraph> {
         children: [
 
           Container(
-            width:220,
-            height:220,
+            width:28.h,
+            height:28.h,
             child: charts.PieChart<String>(
               List.from(_pieChartData),
               animate: true,
@@ -280,12 +289,13 @@ class _DynamicGraphState extends State<DynamicGraph> {
             ),
           ),
           Padding(
-              padding:  EdgeInsets.all(
-                35.0 * DefaultValues.adaptByValue(context,0.8),
+              padding:  EdgeInsets.symmetric(
+                vertical: 4.5.h,
+                horizontal: 2.w,
               ),
               child: Container(
-                width:150 * DefaultValues.adaptByValue(context,0.8),
-                height: 150 * DefaultValues.adaptByValue(context, 0.8),
+                width:18.8.h,
+                height: 18.8.h,
                  child:charts.PieChart<String>(
                    List.from(_pieChartDataGoal),
                    animate: true,
@@ -323,7 +333,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
               )
           ),
           Padding(
-            padding: EdgeInsets.only(left:18.0,top:200),
+            padding: EdgeInsets.only(left:1.w,top:25.h),
             child: Card(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -335,7 +345,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                    child: Text('Investments'),
+                    child: Text('Investments',style: DefaultValues.kH4(context),),
                   ),
                   Padding(
                     padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
@@ -346,7 +356,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                    child: Text('Goals'),
+                    child: Text('Goals',style: DefaultValues.kH4(context)),
                   ),
                 ],
               ),

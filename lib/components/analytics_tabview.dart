@@ -10,6 +10,7 @@ import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import 'package:sizer/sizer.dart';
 
 class AnalyticsTabView extends StatelessWidget {
  // AnalyticsTabView({Key? key}) : super(key: key);
@@ -96,31 +97,17 @@ class AnalyticsTabView extends StatelessWidget {
       children: [
         fetched?
         DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,)
-        // DonutChart(
-        //   pieData: pieData,
-        //   viewLabel: false,
-        //   arcWidth: 30,)
+
             :Text('Loading.......', style: DefaultValues.kH1(context),),
 
-        // Padding(
-        //   padding:  EdgeInsets.all(
-        //       35.0 * DefaultValues.adaptByValue(context,0.8),
-        //   ),
-        //   child: Container(
-        //       width:150 * DefaultValues.adaptByValue(context,0.8),
-        //       height: 150 * DefaultValues.adaptByValue(context, 0.8),
-        //     // child:fetched? DonutChart(pieData: pieData1):Text(' I am fecthing ....', style: DefaultValues.kH2(context),),
-        //
-        //   )
-        // ),
 
         Padding(
           padding:  EdgeInsets.only(
               top:1.0 * DefaultValues.adaptByValue(context, 0.6),
           ),
           child: Container(
-            width: 450 * DefaultValues.adaptByValue(context, 0.8),
-            height: 320 * DefaultValues.adaptByValue(context, 0.8),
+            width: 100.w,
+            height: 41.h,
             child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(circularProgressIndicator, scale: 5),
           ),
         ),
