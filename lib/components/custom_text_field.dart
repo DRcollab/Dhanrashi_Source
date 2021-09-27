@@ -203,16 +203,18 @@ class NumberInputField extends StatefulWidget {
   TextEditingController controller;
 
   final Function()? getValue;
+  Function()? onCompleteEditing;
   String errorText;
   double radius;
   String label;
   String suffix ='';
   bool enabled;
+  final Function()? validator;
 
   NumberInputField({
     this.hintText = '',
     this.passWord=false,
-
+    this.onCompleteEditing,
     required this.controller,
     //required this.validator,
     this.getValue,
@@ -221,7 +223,7 @@ class NumberInputField extends StatefulWidget {
     this.errorText='',
     this.suffix='',
     this.enabled = true,
-
+    this.validator,
   });
 
 
@@ -301,11 +303,12 @@ class _NumberInputFieldState extends State<NumberInputField> {
                       setState(() {
                         autofocus = false;
                         widget.getValue!();
+                        widget.onCompleteEditing!();
                       });
 
                       },
 
-                  // onTap: widget.validate,
+                  onTap: widget.validator,
 
             ),
               ),),

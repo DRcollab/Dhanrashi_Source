@@ -61,7 +61,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
   List<Task> pieData = [];
-
+  bool isEditing = false;
   //String display = '';
   double sliderValue = 5;
   double futureValue = 0;
@@ -210,6 +210,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      width: 6.w ,) ,
                    Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH2(context),))),
                    CommandButton(
+                     enabled: !this.isEditing,
                      buttonColor: kPresentTheme.alternateColor,
                      //icon: Icons.save,
                      textColor: kPresentTheme.highLightColor,
@@ -333,9 +334,16 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
              },
 
-             validator: (value){
-
+             validator: (){
+                   setState(() {
+                     isEditing = true;
+                   });
                 },
+             onEditingComplete: (){
+               setState(() {
+                 isEditing = false;
+               });
+             },
              sliderValue: investedAmount,
              min: 1,
              max: 100,
@@ -354,8 +362,15 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
               },
 
-              validator: (value){
-
+              validator: (){
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              onEditingComplete: (){
+                setState(() {
+                  isEditing = false;
+                });
               },
               sliderValue: annualInvestment,
               min: 0.06,
@@ -374,8 +389,15 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
               },
 
-              validator: (value){
-
+              validator: (){
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              onEditingComplete: (){
+                setState(() {
+                  isEditing = false;
+                });
               },
               min: 1,
               max:30,
@@ -395,8 +417,15 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
               },
 
 
-              validator: (value){
-
+              validator: (){
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              onEditingComplete: (){
+                setState(() {
+                  isEditing = false;
+                });
               },
               min: 1,
               max: 30,

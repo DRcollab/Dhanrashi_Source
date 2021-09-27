@@ -15,11 +15,13 @@ double max = 10; // maximum value of the slider movement
 int textPrecision = 2;
 double collector = 0;
 String suffix = '';
-final String? Function(String?) validator;
+final  Function() validator;
+Function()? onEditingComplete;
 
  Function(double)? onChanged;  // get the  changed value;
 
 LabeledSlider({
+  this.onEditingComplete,
   this.sliderValue=5.0,
   this.labelText='',
   this.min=1,
@@ -67,6 +69,8 @@ class _LabeledSliderState extends State<LabeledSlider> {
           Padding(
             padding: DefaultValues.kDefaultHorizontalSymmetricPadding(context),
             child: NumberInputField(
+              onCompleteEditing: widget.onEditingComplete,
+              validator: widget.validator,
               enabled: widget.textEditable,
               //validator: widget.validator,
               controller: this.controller,

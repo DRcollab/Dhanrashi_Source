@@ -20,6 +20,7 @@ class SIPCalculator extends StatefulWidget {
 class _SIPCalculatorState extends State<SIPCalculator> {
 
   List<Task> pieData = [];
+  bool isEditing=false;
   double investedAmount = 1;
   double interestValue = 0 ;
   double totalInvestment = 1;
@@ -171,7 +172,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
                 },
 
-                validator: (value){
+                validator: (){
 
                 },
                 sliderValue: investedAmount,
@@ -192,7 +193,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
                 },
 
-                validator: (value){
+                validator: (){
 
                 },
                 sliderValue: annualInvestment,
@@ -212,7 +213,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
                 },
 
-                validator: (value){
+                validator: (){
 
                 },
                 min: 1,
@@ -233,7 +234,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                 },
 
 
-                validator: (value){
+                validator: (){
 
                 },
                 min: 1,

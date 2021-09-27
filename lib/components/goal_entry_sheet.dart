@@ -64,7 +64,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
   List<Task> pieData = [];
-
+  bool isEditing = false;
   //String display = '';
   double sliderValue = 5;
   double futureValue = 0;
@@ -215,6 +215,7 @@ class _GoalSheetState extends State<GoalSheet> {
                     Image.asset(widget.imageSource, height: 8.h, width: 8.w,),
                     Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH2(context),))),
                     CommandButton(
+                      enabled: !this.isEditing,
                       buttonColor: kPresentTheme.alternateColor,
                       //icon: Icons.save,
                       textColor: kPresentTheme.highLightColor,
@@ -338,8 +339,15 @@ class _GoalSheetState extends State<GoalSheet> {
 
               },
 
-              validator: (value){
-
+              validator: (){
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              onEditingComplete: (){
+                setState(() {
+                  isEditing = false;
+                });
               },
               sliderValue: goalAmount,
               min: 1,
@@ -379,8 +387,15 @@ class _GoalSheetState extends State<GoalSheet> {
 
               },
 
-              validator: (value){
-
+              validator: (){
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              onEditingComplete: (){
+                setState(() {
+                  isEditing = false;
+                });
               },
               min: 1,
               max:30,
@@ -400,8 +415,15 @@ class _GoalSheetState extends State<GoalSheet> {
               },
 
 
-              validator: (value){
-
+              validator: (){
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              onEditingComplete: (){
+                setState(() {
+                  isEditing = false;
+                });
               },
               min: 1,
               max: 30,

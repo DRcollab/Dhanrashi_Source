@@ -33,8 +33,10 @@ class CommandButton extends StatelessWidget {
   double inducedHeight = 20;
   Color textColor;
   BorderRadius borderRadius = BorderRadius.circular(20.0);
+  bool enabled;
 
   CommandButton({
+    this.enabled = true,
     this.buttonText = '',
     required this.onPressed,
     //required this.icon,
@@ -48,6 +50,7 @@ class CommandButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+
         style: ElevatedButton.styleFrom(
               primary: this.buttonColor,
                 textStyle: TextStyle(
@@ -60,7 +63,8 @@ class CommandButton extends StatelessWidget {
                   ),
               ),// Elevated Button Stylefrom
 
-        onPressed: this.onPressed,
+        onPressed: this.enabled ? this.onPressed : null,
+
         child: Padding(
             padding:  EdgeInsets.fromLTRB(2.w,1.h,2.w,1.h // * DefaultValues.adaptForSmallDevice(context)
             ),
