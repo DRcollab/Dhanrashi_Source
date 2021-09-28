@@ -241,6 +241,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
 
                 GoalsTabView(
+                 // fireStore: this.fireStore,
                   goalDBs:goals,
                   currentUser: widget.currentUser,
                   totalAmount: totalGoalValue,
@@ -248,6 +249,7 @@ class _DashboardState extends State<Dashboard> {
                   longestGoalDuration: longestGoalDuration,
                 ),// 2nd view
                 InvestmentTabView(
+                 // fireStore: this.fireStore,
                   investmentDBs: investments,
                   currentUser: widget.currentUser,
                   totalInvest: totalInvestValue,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
@@ -21,47 +22,66 @@ import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 import 'package:sizer/sizer.dart';
 
 
-class GoalsTabView extends StatelessWidget {
+class GoalsTabView extends StatefulWidget {
   //GoalsTabView({Key? key}) : super(key: key);
-
+  //FirebaseFirestore fireStore;
   late List<GoalDB>  goalDBs;
-  List dataSet = List.empty(growable: true);
   int longestGoalDuration;
   int longestInvestmentDuration;
   var currentUser;
   double totalAmount;
-  GoalsTabView({required this.goalDBs, required this.currentUser,this.totalAmount=0, this.longestInvestmentDuration = 0, this.longestGoalDuration=0});
-   List<Goal> goals = [];
-   List names  = [];
-  // final   pieData = [
-  //
-  //   Task('Investment', 21, kPresentTheme.accentColor),
-  //   Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
-  //   Task('Car', 10 ,Colors.black26),
-  //
-  // ];
 
+  GoalsTabView({
 
-
+    required this.goalDBs,
+    required this.currentUser,
+    this.totalAmount=0,
+    this.longestInvestmentDuration = 0,
+    this.longestGoalDuration=0});
 
   @override
-  Widget build(BuildContext context) {
+  _GoalsTabViewState createState() => _GoalsTabViewState();
+}
 
-    bool fetched = false;
+class _GoalsTabViewState extends State<GoalsTabView> {
+
+  bool fetched = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
     goals = List.empty(growable: true);
-    if(goalDBs.length>0){
-      goalDBs.forEach((element) {
+    if(widget.goalDBs.length>0){
+      widget.goalDBs.forEach((element) {
 
         goals.add(element.goal);
 
       });
       fetched = true;
-      dataSet = Calculator().getGoalDetail(goals,longestInvestmentDuration, longestGoalDuration);
+      dataSet = Calculator().getGoalDetail(goals,widget.longestInvestmentDuration, widget.longestGoalDuration);
 
     }else{
 
       fetched = false;
     }
+    //
+
+
+  }
+
+
+
+  List dataSet = List.empty(growable: true);
+
+   List<Goal> goals = [];
+
+   List names  = [];
+
+  @override
+  Widget build(BuildContext context) {
+
+
 
    print('length is : ${goals}');
   // print('another is ${_goalList}');
@@ -112,12 +132,12 @@ class GoalsTabView extends StatelessWidget {
           flex:1,
           child: ListTile(
            // leading: FaIcon(FontAwesomeIcons.list),
-            title: Text('Total Goal Amount: ${totalAmount}', style: DefaultValues.kNormal3(context),),
+            title: Text('Total Goal Amount: ${widget.totalAmount}', style: DefaultValues.kNormal3(context),),
             trailing: RoundButton(
               icon: Icons.add,
                 onPress:(){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
+                      MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,)));
                 }
             ),
 
@@ -132,6 +152,8 @@ class GoalsTabView extends StatelessWidget {
                 return Padding(
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Shingle(
+
+                    type: 'goal',
                     maxHeight: 8.h,
                     barColor: DefaultValues.graphColors[index%15],
                     leadingImage: goalIcons[goals[index].name],
@@ -148,14 +170,21 @@ class GoalsTabView extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                 child: GoalSheet(
-                                  uniquId: goalDBs[index].goalDocumentID,
-                                  currentUser: this.currentUser,
+                                  uniquId: widget.goalDBs[index].goalDocumentID,
+                                  currentUser: this.widget.currentUser,
                                   titleMessage: goals[index].name,
                                   goalAmount: goals[index].goalAmount,
                                   goalDuration: goals[index].duration,
                                   inflation: goals[index].inflation * 100,
                                   imageSource: 'images/destination.png',
                                   type: 'Update',
+                                  onUpdate: (newGoal){
+                                    print('new inv amount');
+                                    setState(() {
+                                      goals[index] = newGoal;
+                                    });
+                                    print('${goals[index].goalAmount}, ${goals[index].duration}');
+                                  },
                                 ),
                               ),
                             ));

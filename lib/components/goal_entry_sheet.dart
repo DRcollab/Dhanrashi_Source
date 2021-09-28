@@ -39,6 +39,7 @@ class GoalSheet extends StatefulWidget {
   String? uniquId;
   late var currentUser;
   late String type='Save';
+  Function(Goal goal)? onUpdate;
   // final String? Function(String?) validator => return 0;
 
   GoalSheet({
@@ -54,6 +55,7 @@ class GoalSheet extends StatefulWidget {
     this.uniquId,
     required this.currentUser,
     this.type = 'Save',
+    this.onUpdate,
   });
 
   @override
@@ -255,6 +257,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
                             );
                           _update(goalDB);
+                            widget.onUpdate!(goal);
                           }
 
                         });

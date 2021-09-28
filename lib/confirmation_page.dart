@@ -26,8 +26,12 @@ class ConfirmationPage extends StatefulWidget {
   Collector collector;
   var currentUser;
   UserData currentUserProfile = UserData.create();
-
-  ConfirmationPage({ required this.collector, required this.currentUser});
+  bool isItForUpdate = false;
+  ConfirmationPage({
+    required this.collector,
+    required this.currentUser,
+    this.isItForUpdate = false,
+  });
 
 
 
@@ -157,7 +161,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               textSize: 12.sp,
               //icon:Icons.save,
               borderRadius: BorderRadius.circular(20),
-              buttonText: "Add User Details",
+              buttonText: widget.isItForUpdate ? "Add User Details" : 'Update User Profile',
               buttonColor: kPresentTheme.accentColor,
 
               onPressed:(){
@@ -183,7 +187,27 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
               },
             ),
-          )
+          ),
+
+             widget.isItForUpdate ? Padding(
+                padding:  EdgeInsets.only(left:4.w, right: 4.w, top: 1.h,),
+                child: CommandButton(
+                  textColor: Colors.white,
+                  textSize: 12.sp,
+                  //icon:Icons.save,
+                  borderRadius: BorderRadius.circular(20),
+                  buttonText:  'OOps I changed my mind ',
+                  buttonColor: kPresentTheme.accentColor,
+
+                  onPressed:(){
+
+                    /// on pressing this button data will be saved in database ...
+
+                    Navigator.pop(context);
+
+                  },
+                ),
+              ) : SizedBox(),
 
             ]
         ),

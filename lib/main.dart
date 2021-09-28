@@ -18,6 +18,7 @@ import 'data/filemanagr_class.dart';
 import 'data/user_access.dart';
 import 'investmentinput.dart';
 //import 'goalinput.dart';
+import 'components/vanish_keyboard.dart';
 
 import 'profiler.dart';
 import 'signup_page.dart';
@@ -103,9 +104,11 @@ class _DhanrashiMVPState extends State<DhanrashiMVP> {
   Widget build(BuildContext context) {
     return Sizer(
         builder: (context, orientation, deviceType){
-          return MaterialApp(
-            home:LoginScreen(),
+          return VanishKeyBoard(
+            child: MaterialApp(
+              home:LoginScreen(),
 
+            ),
           );
     }
     );

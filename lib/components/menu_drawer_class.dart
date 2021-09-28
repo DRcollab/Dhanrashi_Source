@@ -135,7 +135,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 24.sp,color:kPresentTheme.accentColor),
-                    title: Text('Go to Dashboard', style: DefaultValues.kNormal2(context)),
+                    title: Text('Dashboard', style: DefaultValues.kNormal2(context)),
                     onTap: (){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>

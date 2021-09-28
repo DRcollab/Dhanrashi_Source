@@ -38,6 +38,7 @@ class InvestmentSheet extends StatefulWidget {
   String? uniqueId;
   String type;
   late var currentUser;
+  Function(Investment inv)? onUpdate;
   // final String? Function(String?) validator => return 0;
 
   InvestmentSheet({
@@ -51,6 +52,7 @@ class InvestmentSheet extends StatefulWidget {
     required this.currentUser,
     this.uniqueId,
     this.type = 'Save',
+    this.onUpdate,
   });
 
   @override
@@ -250,6 +252,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                             investment: inv,
                           );
                           _update(investDB);
+                          widget.onUpdate!(inv);
                         }
 
                        });
@@ -344,6 +347,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                  isEditing = false;
                });
              },
+
              sliderValue: investedAmount,
              min: 1,
              max: 100,

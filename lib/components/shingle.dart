@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhanrashi_mvp/models/goal.dart';
+import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:sizer/sizer.dart';
@@ -12,8 +15,13 @@ class Shingle extends StatelessWidget {
   Widget? trailing;
   Color barColor;
   late double maxHeight;
+  String updateKey ='';
+
+  String type = 'goal';
+
 
   Shingle( {
+    required this.type,
     required this.title,
     required this.subtitle,
     this.value= '',
@@ -21,7 +29,18 @@ class Shingle extends StatelessWidget {
     this.trailing,
     this.barColor=Colors.white,
     this.maxHeight = 1,
+    this.updateKey = '',
+
   } );
+
+
+
+  late Goal goal;
+  late Investment investment;
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +50,7 @@ class Shingle extends StatelessWidget {
 
           children: [
             Container(
-              height: maxHeight,
+              height: this.maxHeight,
               width: 2.w,
 
               decoration: BoxDecoration(
@@ -49,13 +68,13 @@ class Shingle extends StatelessWidget {
 
                   ],
                 ),
-                trailing: trailing,
+                trailing: this.trailing,
                 title: Text(this.title,style: DefaultValues.kH3(context),),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text( this.subtitle),
-                    Text( value)
+                    Text( this.value),
                   ],
                 ),
 

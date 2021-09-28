@@ -69,6 +69,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
           Padding(
             padding: DefaultValues.kDefaultHorizontalSymmetricPadding(context),
             child: NumberInputField(
+              onFocusLost: widget.onEditingComplete,
               onCompleteEditing: widget.onEditingComplete,
               validator: widget.validator,
               enabled: widget.textEditable,

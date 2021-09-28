@@ -210,6 +210,7 @@ class NumberInputField extends StatefulWidget {
   String suffix ='';
   bool enabled;
   final Function()? validator;
+  final Function()? onFocusLost;
 
   NumberInputField({
     this.hintText = '',
@@ -224,6 +225,7 @@ class NumberInputField extends StatefulWidget {
     this.suffix='',
     this.enabled = true,
     this.validator,
+    this.onFocusLost,
   });
 
 
@@ -234,6 +236,25 @@ class NumberInputField extends StatefulWidget {
 class _NumberInputFieldState extends State<NumberInputField> {
 
   bool autofocus = false;
+  FocusNode numericFocusNode = FocusNode();
+
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    numericFocusNode.addListener(() {
+      if(!numericFocusNode.hasFocus){
+        setState(() {
+          widget.onFocusLost!();
+          print('done');
+        });
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -253,6 +274,7 @@ class _NumberInputFieldState extends State<NumberInputField> {
                 height: 6.h,
                 width: 52.w,
                 child: TextField(
+                     focusNode: numericFocusNode,
                     autofocus: this.autofocus,
                     textAlign: TextAlign.end,
                     enableInteractiveSelection: false,
