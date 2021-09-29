@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
@@ -91,7 +92,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                       left: 5.w,
                       top: 18.h,
                   ),
-                  child: Text("Investments",
+                  child: Text("Investments: ${Global.investmentCount}" ,
                     style:DefaultValues.kH1(context),
 
                   ),
@@ -150,7 +151,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                         expectedRoi: 12,
                                         annualInvestment: 1,
                                         imageSource: 'images/mutual.png',
-
+                                        onUpdate: (value){
+                                          setState(() {
+                                           // Global.investmentCount;
+                                          });
+                                        },
                             ),
                                   ),
                                 ));

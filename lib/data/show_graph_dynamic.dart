@@ -5,7 +5,7 @@ import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 //import 'Archive/stacked.dart';
-import 'constant.dart';
+
 import 'package:matrix2d/matrix2d.dart';
 import 'package:sizer/sizer.dart';
 

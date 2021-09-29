@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
@@ -64,6 +65,11 @@ class _DashboardState extends State<Dashboard> {
         fetchGoals();
         fetchInvestment();
 
+      Global.goalCount = goals.length;
+      Global.investmentCount = investments.length;
+      print('0000-------------------00000');
+      print(goals.length);
+      print(investments.length);
 
      // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
     }).onError((error, stackTrace){
@@ -71,10 +77,12 @@ class _DashboardState extends State<Dashboard> {
     }
 
     );
+
   }
 
   Future fetchGoals() async{
 
+    Global.goalCount = 0;
     fireStore.collection('pjdhan_goal').where('Uuid', isEqualTo: widget.currentUser.uid)
         .get()
         .then((QuerySnapshot snapshot){
@@ -118,6 +126,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               )
           );
+          Global.goalCount++;
        });
 
       });
@@ -130,6 +139,7 @@ class _DashboardState extends State<Dashboard> {
 
   Future fetchInvestment() async{
 
+    Global.investmentCount = 0;
     fireStore.collection('pjdhan_investment').where('Uuid', isEqualTo: widget.currentUser.uid)
         .get()
         .then((QuerySnapshot snapshot){
@@ -174,6 +184,7 @@ class _DashboardState extends State<Dashboard> {
                 ) ,
               )
           );
+          Global.investmentCount++;
        });
 
       //  print('is Inv empty : $isInvestmentEmpty');

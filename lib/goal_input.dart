@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
@@ -89,7 +90,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 left: 5.w,
                                 top: 18.h,
                         ),
-                  child: Text("Goals",
+                  child: Text("Goals  ${Global.goalCount}",
                     style:DefaultValues.kH1(context),
 
                   ),

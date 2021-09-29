@@ -20,6 +20,7 @@ import 'components/custom_text_field.dart';
 
 import 'components/custom_text.dart';
 import 'login_screen.dart';
+import 'models/profile.dart';
 import 'profiler.dart';
 import 'models/user_data_class.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -64,6 +65,7 @@ import 'package:sizer/sizer.dart';
   var _user = UserHandeler(userTable, userProfileTable);
 
   late FirebaseAuth fireAuth;
+  Profile profile = Profile.create();
 
   @override
   void initState() {
@@ -80,9 +82,10 @@ import 'package:sizer/sizer.dart';
 
       var currentUser = await fireAuth.createUserWithEmailAndPassword(email: id, password: pwd) ;
       if(currentUser.user !=null){
-
+        profile.uid = currentUser.user!.uid;
+        profile.email = currentUser.user!.email!;
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: currentUser.user,)));
+            MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: profile,)));
 
       }
 

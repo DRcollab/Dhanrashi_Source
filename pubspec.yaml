@@ -26,6 +26,7 @@ dependencies:
 
 
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -46,6 +47,7 @@ dependencies:
   fluttertoast: ^8.0.8
   loading_gifs: ^0.3.0
   sizer: ^2.0.15
+
 
 
 
@@ -104,6 +106,9 @@ flutter:
     - images/empty.png
     - images/settings.png
     - images/no_connection.png
+    - images/check.png
+    - images/check_1.gif
+    - images/check_sign.gif
     - images/profiles/profile1.png
     - images/profiles/profile2.png
     - images/profiles/profile3.png
@@ -119,6 +124,7 @@ flutter:
     - images/profiles/profile_image5.png
     - images/profiles/profile_image0.png
     - images/profiles/question.png
+    - audio/done.wav
 
 
 

@@ -25,7 +25,7 @@ class Profile {
     this.docId = '';
     this.uid ='';
     this.email = '';
-    this.profileImage = '';
+    this.profileImage = 'images/profiles/question.png';
   }
 
   late String  firstName;

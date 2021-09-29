@@ -66,7 +66,9 @@ class DRInvestAccess{
           'update_dts': Timestamp.fromDate(currentPhoneDate),
           'status': 'Active',
         })
-            .then((value)=>print("Investment added"));
+            .then((value){
+              return true;
+            });
       }
       catch (e) {
         throw e;

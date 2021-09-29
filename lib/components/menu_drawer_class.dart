@@ -6,6 +6,7 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/main.dart';
+import 'package:dhanrashi_mvp/models/profile.dart';
 import 'package:dhanrashi_mvp/profile_view.dart';
 import 'package:dhanrashi_mvp/sip_calculator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +25,7 @@ class MenuDrawer extends StatefulWidget {
  late final currentUser;
 
 
-  MenuDrawer({this.currentUser});
+  MenuDrawer({required this.currentUser});
 
   @override
   _MenuDrawerState createState() => _MenuDrawerState();

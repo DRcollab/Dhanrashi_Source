@@ -1,10 +1,11 @@
 
 import 'dart:math';
-
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
+import 'package:dhanrashi_mvp/components/work_done.dart';
 import 'package:dhanrashi_mvp/data/goal_access.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
@@ -22,13 +23,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:sizer/sizer.dart';
 
-// double investedAmount = 10;
-// double expectedRoi = 23;
-// int investmentDuration = 8;
+
 
 
 class GoalSheet extends StatefulWidget {
-  // const ActionSheet({Key? key}) : super(key: key);
+
 
   String titleMessage;
   double goalAmount = 0;
@@ -40,7 +39,6 @@ class GoalSheet extends StatefulWidget {
   late var currentUser;
   late String type='Save';
   Function(Goal goal)? onUpdate;
-  // final String? Function(String?) validator => return 0;
 
   GoalSheet({
 
@@ -65,23 +63,24 @@ class GoalSheet extends StatefulWidget {
 class _GoalSheetState extends State<GoalSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
+  bool isSavePressed = false;
   List<Task> pieData = [];
   bool isEditing = false;
+  bool statusOfStoring = false;
   //String display = '';
   double sliderValue = 5;
   double futureValue = 0;
   double goalAmount = 1;
   double inflation = 1;
   int goalDuration = 1;
- // double interestValue = 0 ;        // holds calculated value of futureValue of the investment
- // double annualInvestment = 0;
-  // Investment currentInvestment = Investment();
+
+
   late FirebaseFirestore fireStore;
   late var goalAccess;
 
 
 
-//TODO
+
   double fv(double r, int nper, double pmt, double pv, int type){
 
     double fv = (pv * pow(1 + r, nper ) + pmt * (1 + r * type)*(pow(1+r, nper) -1 )/r);
@@ -100,6 +99,11 @@ class _GoalSheetState extends State<GoalSheet> {
 
 
     super.initState();
+    // _audioCache = AudioCache(
+    //   prefix: 'audio/',
+    //   fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP),
+    // );
+
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
       goalAccess = DRGoalAccess(fireStore, widget.currentUser);
@@ -110,7 +114,13 @@ class _GoalSheetState extends State<GoalSheet> {
 
   void _update(GoalDB goalDB) async {
     try{
-      await goalAccess.updateGoalSolo(goalDB,'Active');
+      await goalAccess.updateGoalSolo(goalDB,'Active').then((value){
+        setState(() {
+          statusOfStoring = true;
+          widget.onUpdate!(goalDB.goal);
+
+        });
+      });
     }
     catch(e){
       Utility.showErrorMessage(context, e.toString());
@@ -121,32 +131,28 @@ class _GoalSheetState extends State<GoalSheet> {
 
 
   void _save(Goal goal) async {
-    final snackBar = SnackBar(
-      content: Text(' Your investments are saved successfully'),
-    );
-    print(fireStore.toString());
 
 
 
-    try{
-      await goalAccess.storeGoalSolo(goal);
-      // Fluttertoast.showToast(
-      //     msg:'Saved successfully',
-      //   toastLength: Toast.LENGTH_LONG,
-      //   gravity: ToastGravity.CENTER,
-      //   backgroundColor: Colors.green,
-      //   textColor: Colors.white,
-      //   fontSize: 16.0,
-      // );
+      await goalAccess.storeGoalSolo(goal).then((value){
+        setState(() {
+          statusOfStoring = true;
+          Global.goalCount++;
+        });
+       // _audioCache.play('done.wav');
+      }).catchError((onError){
+        Utility.showErrorMessage(context, e.toString());
+      });
 
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-    }
-    catch(e){
-      Utility.showErrorMessage(context, e.toString());
+    setState(() {
+      this.isSavePressed = true;
+    });
 
-    }
+
   }
+
+
 
   void _updateGoalSolo( GoalDB goalDB, String docStatus ) async {
     DateTime currentPhoneDate = DateTime.now();
@@ -188,11 +194,10 @@ class _GoalSheetState extends State<GoalSheet> {
     ];
 
 
-    return Container(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,) : Container(
       color: Color(0x00000000),
       child: Wrap(
-        // shrinkWrap: true,
-        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
         children: [
           Container(
             decoration: BoxDecoration(
@@ -242,7 +247,9 @@ class _GoalSheetState extends State<GoalSheet> {
 
                           if(widget.type == 'Save') {
                             print('inflation: ${goal.inflation}');
-                            _save(goal);
+                           _save(goal);
+
+                            this.isSavePressed = true;
                           }
                           else{
                             print("from click--================>");
@@ -257,12 +264,13 @@ class _GoalSheetState extends State<GoalSheet> {
 
                             );
                           _update(goalDB);
-                            widget.onUpdate!(goal);
+
+                            this.isSavePressed = true;
                           }
 
                         });
 
-                        Navigator.pop(context);
+
 
 
                         //

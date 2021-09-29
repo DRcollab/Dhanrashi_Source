@@ -1,10 +1,11 @@
 
 import 'dart:math';
-
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
+import 'package:dhanrashi_mvp/components/work_done.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,8 @@ class InvestmentSheet extends StatefulWidget {
 class _InvestmentSheetState extends State<InvestmentSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
+  bool isSavePressed = false;
+  bool statusOfStoring = false;
   List<Task> pieData = [];
   bool isEditing = false;
   //String display = '';
@@ -121,7 +124,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   void _update(InvestDB investDB) async {
     try{
-      await investAccess.updateInvestmentSolo(investDB,'Active');
+      await investAccess.updateInvestmentSolo(investDB,'Active').then((value){
+        statusOfStoring = true;
+      });
     }
     catch(e){
       Utility.showErrorMessage(context, e.toString());
@@ -137,24 +142,23 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     print(fireStore.toString());
 
 
-    try{
-      await investAccess.storeInvestmentSolo(investment);
-      // Fluttertoast.showToast(
-      //     msg:'Saved successfully',
-      //   toastLength: Toast.LENGTH_LONG,
-      //   gravity: ToastGravity.CENTER,
-      //   backgroundColor: Colors.green,
-      //   textColor: Colors.white,
-      //   fontSize: 16.0,
-      // );
 
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      await  investAccess.storeInvestmentSolo(investment).then((value){
+        setState(() {
+          statusOfStoring = true;
+          Global.investmentCount++;
 
-    }
-     catch(e){
-         Utility.showErrorMessage(context, e.toString());
+        });
+      }).catchError((onError){
+        Utility.showErrorMessage(context, e.toString());
 
-     }
+      });
+
+
+      setState(() {
+        this.isSavePressed = true;
+      });
+
 
 
 
@@ -182,7 +186,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     ];
 
 
-    return Container(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,) : Container(
       color: Color(0x00000000),
       child: Wrap(
 
@@ -243,6 +247,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                        setState(() {
                         if(widget.type == 'Save') {
                           _save(inv);
+                          this.isSavePressed = true;
                         }
                         else{
                           var investDB = InvestDB(
@@ -253,11 +258,12 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                           );
                           _update(investDB);
                           widget.onUpdate!(inv);
+                          this.isSavePressed = true;
                         }
 
                        });
 
-                       Navigator.pop(context);
+                      // Navigator.pop(context);
 
 
                        //
