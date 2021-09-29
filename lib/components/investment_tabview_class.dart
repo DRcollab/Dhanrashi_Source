@@ -168,7 +168,8 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                                   onUpdate: (newInv){
                                     print('new inv amount');
                                     setState(() {
-                                      investments[index] = newInv;
+                                      investments[index] = newInv!;
+
                                     });
                                     print('${investments[index].annualInvestmentAmount}, ${investments[index].currentInvestmentAmount}');
                                   },

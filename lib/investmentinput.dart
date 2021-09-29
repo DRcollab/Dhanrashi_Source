@@ -39,7 +39,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
   Color titleColor = Colors.black;
 
-
+  int investmentCount = 0;
 
   String name = '';
 
@@ -58,6 +58,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    investmentCount = Global.investmentCount;
     super.initState();
 
 
@@ -92,20 +93,22 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                       left: 5.w,
                       top: 18.h,
                   ),
-                  child: Text("Investments: ${Global.investmentCount}" ,
-                    style:DefaultValues.kH1(context),
+                  child: ListTile(
+                    title: Text("Investments: " ,
+                      style:DefaultValues.kH1(context),
 
+                    ),
+                    trailing: CircleAvatar(
+                      backgroundColor: kPresentTheme.accentColor,
+                      radius: 20,
+                      child: Text(investmentCount.toString(), style: DefaultValues.kH3(context),),
+
+                    ),
+                    subtitle: Text("Choose one of  these",
+                      style:DefaultValues.kNormal2(context),
                   ),
                 ),
-                Padding(
-                  padding:  EdgeInsets.only(
-                            left: 5.w,
-                            top: 21.h,
-                      ),
-                  child: Text("Choose one of  these",
-                    style:DefaultValues.kNormal2(context),
 
-                  ),
                 ),
               ],
             ),
@@ -151,9 +154,12 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                         expectedRoi: 12,
                                         annualInvestment: 1,
                                         imageSource: 'images/mutual.png',
-                                        onUpdate: (value){
+                                        onAdd: (value){
                                           setState(() {
-                                           // Global.investmentCount;
+                                           investmentCount = value;
+                                           print('Investment count');
+                                           print(value);
+
                                           });
                                         },
                             ),
@@ -190,7 +196,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                       annualInvestment: 1,
                                       expectedRoi: 6,
                                       imageSource: 'images/insurance.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          investmentCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -229,7 +239,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                       annualInvestment: 1,
                                       expectedRoi: 6,
                                       imageSource: 'images/bonds.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          investmentCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -263,7 +277,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                       annualInvestment: 1,
                                       expectedRoi: 15,
                                       imageSource: 'images/stock.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          investmentCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -302,6 +320,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                       annualInvestment: 1,
                                       expectedRoi: 12,
                                       imageSource: 'images/real-estate.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          investmentCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -335,6 +358,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                       annualInvestment: 1,
                                       expectedRoi: 5,
                                       imageSource: 'images/bank.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          investmentCount = value;
+                                        });
+                                      },
 
                                     ),
                                   ),
@@ -375,6 +403,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                       annualInvestment: 1,
                                       expectedRoi: 10,
                                       imageSource: 'images/coin.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          investmentCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -408,6 +441,11 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                       annualInvestment: 1,
                                       expectedRoi: 12,
                                       imageSource: 'images/products.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          investmentCount = value;
+                                        });
+                                      },
 
                                     ),
                                   ),

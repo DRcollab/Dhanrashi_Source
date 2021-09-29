@@ -132,7 +132,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
           flex:1,
           child: ListTile(
            // leading: FaIcon(FontAwesomeIcons.list),
-            title: Text('Total Goal Amount: ${widget.totalAmount}', style: DefaultValues.kNormal3(context),),
+            title: Text('Total Goal Amount: ${widget.totalAmount.toStringAsFixed(2)}', style: DefaultValues.kNormal3(context),),
             trailing: RoundButton(
               icon: Icons.add,
                 onPress:(){
@@ -181,7 +181,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                                   onUpdate: (newGoal){
                                     print('new inv amount');
                                     setState(() {
-                                      goals[index] = newGoal;
+                                      goals[index] = newGoal!;
                                     });
                                     print('${goals[index].goalAmount}, ${goals[index].duration}');
                                   },

@@ -39,7 +39,8 @@ class InvestmentSheet extends StatefulWidget {
   String? uniqueId;
   String type;
   late var currentUser;
-  Function(Investment inv)? onUpdate;
+  Function(Investment? inv)? onUpdate;
+  Function(dynamic)? onAdd;
   // final String? Function(String?) validator => return 0;
 
   InvestmentSheet({
@@ -54,6 +55,7 @@ class InvestmentSheet extends StatefulWidget {
     this.uniqueId,
     this.type = 'Save',
     this.onUpdate,
+    this.onAdd,
   });
 
   @override
@@ -105,7 +107,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   @override
   void initState(){
-
+    print(' I am in Init Tstae of invest entry');
+    this.isSavePressed = false;
+    this.statusOfStoring = false;
    // print(widget.investmentDuration);
     investedAmount = widget.investedAmount;
     expectedRoi = widget.expectedRoi;
@@ -126,6 +130,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     try{
       await investAccess.updateInvestmentSolo(investDB,'Active').then((value){
         statusOfStoring = true;
+        widget.onUpdate!(investDB.investment);
       });
     }
     catch(e){
@@ -146,7 +151,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
       await  investAccess.storeInvestmentSolo(investment).then((value){
         setState(() {
           statusOfStoring = true;
-          Global.investmentCount++;
+          widget.onAdd!(Global.investmentCount++);
 
         });
       }).catchError((onError){
@@ -257,7 +262,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                             investment: inv,
                           );
                           _update(investDB);
-                          widget.onUpdate!(inv);
+
                           this.isSavePressed = true;
                         }
 

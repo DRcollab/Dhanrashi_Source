@@ -4,7 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 
 
-class WorkDone extends StatelessWidget {
+class WorkDone extends StatefulWidget {
   
   bool isComplete = false;
   String whatToAdd = 'Investment';
@@ -14,26 +14,55 @@ class WorkDone extends StatelessWidget {
     this.whatToAdd = 'Investment',
   });
 
+  @override
+  _WorkDoneState createState() => _WorkDoneState();
+}
+
+class _WorkDoneState extends State<WorkDone> {
+
+  double _width = 20;
+  double _height = 20;
+  Color color = Colors.white;
 
 
+
+  @override
+  void initState() {
+    _width = 20;
+    _height = 20;
+    color = Colors.white;
+
+    super.initState();
+
+    setState(() {
+      _width = 100.w;
+      _height = 400;
+      color = Colors.green;
+    });
+  }
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: isComplete ? AnimatedContainer(
-        duration: Duration(seconds: 1),
-          height: 400,
-          width: 100.w,
+      child: widget.isComplete ? AnimatedContainer(
+          duration: Duration(seconds: 10),
+          width: _width,
+          height: _height,
+          color: color,
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(80.0),
-                child: Image.asset('images/check_1.gif',
+                child: CircleAvatar(
+                  radius: 80,
+                  backgroundColor: Colors.amber,
+                  child: Image.asset('images/check.png',
 
-                  height: 100,width: 100,),
+                    height: 80,width: 80,),
+                ),
               ),
-              Text('Your ${this.whatToAdd} \nadded successfully ', style: DefaultValues.kH4(context),),
+              Text('Your ${this.widget.whatToAdd} \nadded successfully ', style: DefaultValues.kH4(context),),
             ],
           )) :Image.asset(circularProgressIndicator, scale: 5)
     );

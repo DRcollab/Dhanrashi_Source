@@ -38,7 +38,8 @@ class GoalSheet extends StatefulWidget {
   String? uniquId;
   late var currentUser;
   late String type='Save';
-  Function(Goal goal)? onUpdate;
+  Function(Goal? goal)? onUpdate;
+  Function(dynamic)? onAdd;
 
   GoalSheet({
 
@@ -54,6 +55,7 @@ class GoalSheet extends StatefulWidget {
     required this.currentUser,
     this.type = 'Save',
     this.onUpdate,
+    this.onAdd,
   });
 
   @override
@@ -92,12 +94,13 @@ class _GoalSheetState extends State<GoalSheet> {
   @override
   void initState(){
 
-
+    this.isSavePressed = false;
+    this.statusOfStoring = false;
     goalAmount = widget.goalAmount;
     inflation = widget.inflation;
     goalDuration = widget.goalDuration;
 
-
+    print(' I am in Init Tstae of goal entry');
     super.initState();
     // _audioCache = AudioCache(
     //   prefix: 'audio/',
@@ -138,6 +141,7 @@ class _GoalSheetState extends State<GoalSheet> {
         setState(() {
           statusOfStoring = true;
           Global.goalCount++;
+          widget.onAdd!(Global.goalCount);
         });
        // _audioCache.play('done.wav');
       }).catchError((onError){
@@ -263,7 +267,7 @@ class _GoalSheetState extends State<GoalSheet> {
                               goal:goal,
 
                             );
-                          _update(goalDB);
+                         _update(goalDB);
 
                             this.isSavePressed = true;
                           }

@@ -41,7 +41,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
   Color titleColor = Colors.black;
 
   //var investment = Investment();
-
+  int goalCount = 0;
   String name = '';
 
   double currentInvestmentAmount = 0;
@@ -57,15 +57,17 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    goalCount = Global.goalCount;
+    print('000000wwwwww');
+    print(Global.goalCount);
+
     super.initState();
-    future:Firebase.initializeApp().whenComplete(() =>fireStore =  FirebaseFirestore.instance );
+   // future:Firebase.initializeApp().whenComplete(() =>fireStore =  FirebaseFirestore.instance );
     
   }
 
 
-  _save() async {
 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,21 +92,22 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 left: 5.w,
                                 top: 18.h,
                         ),
-                  child: Text("Goals  ${Global.goalCount}",
-                    style:DefaultValues.kH1(context),
+                  child: ListTile(
+                    title: Text("Goals",
+                      style:DefaultValues.kH1(context),
 
-                  ),
-                ),
-                Padding(
-                  padding:  EdgeInsets.only(
-                              left: 5.w,
-                              top: 21.h,
                     ),
-                  child: Text("Choose one of  these",
-                    style:DefaultValues.kNormal2(context),
-
+                    trailing: CircleAvatar(
+                      backgroundColor: kPresentTheme.accentColor,
+                      radius: 20,
+                      child: Text(goalCount.toString(), style: DefaultValues.kH3(context),),
+                    ),
+                    subtitle: Text("Choose one of  these",
+                      style:DefaultValues.kNormal2(context),
+                    ),
                   ),
                 ),
+
               ],
             ),
           ),
@@ -146,7 +149,14 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 10,
                                       inflation: 4.5,
                                       imageSource: 'images/car.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                          print('Goal count');
+                                          print(value);
 
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -180,7 +190,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 20,
                                       inflation: 6,
                                       imageSource: 'images/house.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -218,7 +232,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 10,
                                       inflation: 6,
                                       imageSource: 'images/education.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -251,7 +269,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 5,
                                       inflation: 15,
                                       imageSource: 'images/pension.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -289,6 +311,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 20,
                                       inflation: 12,
                                       imageSource: 'images/tour.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -321,6 +348,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 5,
                                       inflation: 5,
                                       imageSource: 'images/destination.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
 
                                     ),
                                   ),
@@ -360,6 +392,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 10,
                                       inflation: 10,
                                       imageSource: 'images/healthcare.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -392,6 +429,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       goalDuration: 10,
                                       inflation: 12,
                                       imageSource: 'images/products.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
 
                                     ),
                                   ),
