@@ -20,6 +20,7 @@ import 'investmentinput.dart';
 //import 'goalinput.dart';
 import 'components/vanish_keyboard.dart';
 
+import 'network/connectivity_checker.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
 
@@ -102,6 +103,9 @@ class _DhanrashiMVPState extends State<DhanrashiMVP> {
 
   @override
   Widget build(BuildContext context) {
+
+    
+
     return Sizer(
         builder: (context, orientation, deviceType){
           return VanishKeyBoard(

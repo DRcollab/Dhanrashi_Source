@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:stacked/stacked_annotations.dart';
+
 import 'package:sizer/sizer.dart';
 
 

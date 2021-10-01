@@ -10,8 +10,9 @@ import 'goal_input.dart';
 class EmptyPage extends StatelessWidget {
 
  var currentUser;
+ String message = '';
 
-  EmptyPage({required this.currentUser }) ;
+  EmptyPage({required this.currentUser, this.message = '' }) ;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,18 @@ class EmptyPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
 
+           this.message !='' ? Container(
+             color: Colors.green,
+             child: ListTile(
+
+               leading: CircleAvatar(
+                 backgroundColor: Colors.amber,
+                 child: Image.asset('images/check.png',height: 20,width: 20,),
+
+               ) ,
+                title:Text(message, style: DefaultValues.kH3(context),),
+              ),
+           ):SizedBox(),
             Container(child: Image.asset('images/empty.png'),),
             Padding(
               padding: const EdgeInsets.all(28),

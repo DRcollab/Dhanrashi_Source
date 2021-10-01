@@ -2,18 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/constants.dart';
-//import 'components/tile_class.dart';
+
 import 'components/goal_entry_sheet.dart';
 import 'dashboard.dart';
-import 'models/investment.dart';
-import 'components/investment_entry_sheet.dart';
-import 'models/user_data_class.dart';
+
 import 'investmentinput.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:sizer/sizer.dart';
 
 
@@ -21,7 +19,7 @@ import 'package:sizer/sizer.dart';
 
 
 class GoalsInputScreen extends StatefulWidget {
-  //const InvestmentInputScreen({Key? key}) : super(key: key);
+
 
   var currentUser;
 
@@ -495,7 +493,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
             label: 'Investment',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.chartPie),
+            icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(

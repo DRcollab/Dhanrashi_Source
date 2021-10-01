@@ -3,6 +3,7 @@
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
+import 'models/profile_collector.dart';
 import 'package:sizer/sizer.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
@@ -27,90 +28,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 /// Used to collect data from different screen of the profiler page and compile the data
-class Collector{
 
-
-  DateTime _dateOfBirth = DateTime.now();
-  String _annualIncome = '' ;
-  var  _fName = TextEditingController() ;
-  var _lName = TextEditingController();
-  String profileImage = 'images/profiles/profile_image0.png';
-
-/// Constructor of  the class
-
-  Collector(){
-
-      _dateOfBirth = DateTime.now();
-     _annualIncome = '';
-     _fName = TextEditingController();
-     _lName = TextEditingController();
-      profileImage = 'images/profiles/profile_image0.png';
-
-
-  }
-
-
-
-  /// setter of first Name
-
-  set fName(TextEditingController txt){
-
-      _fName = txt;
-  }
-
-  /// setter of Lastname
-  set lName(TextEditingController txt){
-
-    _lName = txt;
-  }
-
-  /// setter of DOB
-  set dateOfBirth(DateTime dt){
-
-     _dateOfBirth = dt;
-  }
-
-
-  /// setter of Annual Income
-  set annualIncome(String income){
-
-    _annualIncome = income;
-
-  }
-
-
-  /// getter of firstname
- TextEditingController get fName{
-
-    return _fName;
-  }
-
-  /// getter of Lastname
-  TextEditingController get lName{
-
-   return _lName;
-  }
-
-
-/// getter of DOB
- DateTime get dateOfBirth{
-
-    return _dateOfBirth;
-  }
-
-/// getter of Income
- String get annualIncome{
-
-    return _annualIncome;
-
-  }
-
-  String dateAsString(){
-
-      return '${_dateOfBirth.day}/${_dateOfBirth.month}/${_dateOfBirth.year}';
-  }
-
-  }
 
   /// instance of Collector to be used in collecting user data.
 
@@ -150,13 +68,13 @@ class _ProfilerPageState extends State<ProfilerPage> {
   int index = 0; /// Used to iterate to different su screen
 
 
-  var _userHandler = UserHandeler(userTable, userProfileTable); /// used  to  handle user activity like saving and retrieving data
+
 
 
   bool viewNavigationButton = true; /// used to hold comdition to show save button or navigator button
 
-  static var profileCollector = Collector();
-
+   var profileCollector = Collector();
+   late final List<Widget> CardChoice;
   static var _nameKey = GlobalKey<FormState>(); // Used for user email validation
   static var _lnameKey = GlobalKey<FormState>(); // Used fot password validation
   static bool  _dateKeyValidation  = false;
@@ -188,51 +106,51 @@ class _ProfilerPageState extends State<ProfilerPage> {
   void initState() {
 
     super.initState();
+     CardChoice = [
+
+      NamePicker(
+        fName: profileCollector.fName,
+        lName: profileCollector.lName,
+        lnameKey: _lnameKey,
+        nameKey: _nameKey,
+        profilePhotoSource: profileCollector.profileImage,
+
+
+      ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
+
+      DOBPicker(
+        onDateChanged: (valueChanged) {
+
+          //var newFormat = DateFoermat("dd-mm-yyyy");
+
+          profileCollector.dateOfBirth = valueChanged;//'${valueChanged.day}/${valueChanged.month}/${valueChanged.year}';
+
+          _dateKeyValidation = true;
+        },
+      ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
+
+      IncomePicker(
+          validate:(value){
+
+            List <String> incomeRangeList  = [
+              "Below 1 Lakh ",
+              "1 Lakh to 5 lakh",
+              "5 Lakh  to 10 Lakh",
+              "Above 10 Lakh",
+              "NA",
+            ];
+
+            profileCollector.annualIncome = incomeRangeList[value!.round()];
+            _incomeValidation = true;
+          }
+      ), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
+      ///
+      // ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
+    ];
 
 
   }
 
-  final List<Widget> CardChoice = [
-
-    NamePicker(
-      fName: profileCollector._fName,
-      lName: profileCollector.lName,
-      lnameKey: _lnameKey,
-      nameKey: _nameKey,
-      profilePhotoSource: profileCollector.profileImage,
-
-
-        ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
-
-    DOBPicker(
-      onDateChanged: (valueChanged) {
-
-        //var newFormat = DateFoermat("dd-mm-yyyy");
-
-        profileCollector.dateOfBirth = valueChanged;//'${valueChanged.day}/${valueChanged.month}/${valueChanged.year}';
-
-        _dateKeyValidation = true;
-      },
-    ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
-
-    IncomePicker(
-      validate:(value){
-
-        List <String> incomeRangeList  = [
-          "Below 1 Lakh ",
-          "1 Lakh to 5 lakh",
-          "5 Lakh  to 10 Lakh",
-          "Above 10 Lakh",
-          "NA",
-        ];
-
-        profileCollector.annualIncome = incomeRangeList[value!.round()];
-        _incomeValidation = true;
-      }
-    ), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
-    ///
-   // ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
-  ];
 
 
 

@@ -150,7 +150,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
   }
   @override
   void dispose() {
-    widget.editingController.dispose();
+    // widget.editingController.dispose();
     super.dispose();
   }
 

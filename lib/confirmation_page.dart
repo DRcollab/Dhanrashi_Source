@@ -2,12 +2,15 @@
 
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
+import 'package:dhanrashi_mvp/components/work_done.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 import 'package:sizer/sizer.dart';
+import 'models/profile_collector.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
@@ -20,10 +23,11 @@ import 'data/database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 class ConfirmationPage extends StatefulWidget {
 
 
-  Collector collector;
+  Collector collector; // defined in profile_collector.dart
   var currentUser;
   UserData currentUserProfile = UserData.create();
   bool isItForUpdate = false;
@@ -42,8 +46,9 @@ class ConfirmationPage extends StatefulWidget {
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
 
-
-  var _userHandler = UserHandeler(userTable, userProfileTable);
+  bool isComplete = false;
+  bool isSubmitted = false;
+ // var _userHandler = UserHandeler(userTable, userProfileTable);
   var dobController = TextEditingController();
   var incomeController  = TextEditingController();
   late FirebaseFirestore fireStore;
@@ -54,6 +59,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   void initState() {
     // TODO: implement initState
     Collector profileCollector = widget.collector;
+    isSubmitted = false;
+    isComplete = false;
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
       profileAccess = DRProfileAccess(fireStore, widget.currentUser);
@@ -61,6 +68,52 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     super.initState();
   }
 
+
+
+  Future _save(Profile profile,) async {
+    DateTime currentPhoneDate = DateTime.now();
+
+
+      await fireStore.collection('pjdhan_users').add({
+        'email': widget.currentUser.email,
+        'Uid': widget.currentUser.uid,
+        'first_name': profile.firstName,
+        'last_name': profile.lastName,
+        'image_source':profile.profileImage,
+        'DOB': profile.DOB,
+        'income': profile.incomeRange,
+
+
+        'created_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'user_status': 'Active',
+      }).whenComplete((){
+        setState((){
+          isComplete = true;
+        });
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) =>
+                EmptyPage(currentUser: widget.currentUser,message:'Great! Your profile is saved successfully' ,)));
+      }).catchError((onError){
+
+      });
+      //     .then((value){
+      //
+      //   showModalBottomSheet(
+      //       context: context,
+      //       builder: (context) => WorkDone(
+      //         whatToAdd: 'Profile',
+      //         whatToDo: 'adde',
+      //         isComplete : this.isComplete,
+      //       )
+      //   );
+      // });
+
+
+
+
+
+  }
 
 
 
@@ -77,7 +130,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
     return CustomScaffold(
       currentUser: widget.currentUser,
-      child: Container(
+      child: isSubmitted ?Center(
+          child: Image.asset(circularProgressIndicator, scale: 5),): Container(
 
         child: ListView(
             // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -156,7 +210,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
           Padding(
             padding:  EdgeInsets.only(left:4.w, right: 4.w, top: 1.h,),
-            child: CommandButton(
+            child:CommandButton(
               textColor: Colors.white,
               textSize: 12.sp,
               //icon:Icons.save,
@@ -168,6 +222,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
                 /// on pressing this button data will be saved in database ...
                 setState(() {
+                  this.isSubmitted = true;
                   Profile profile = Profile(
                     firstName: widget.collector.fName.text,
                     lastName: widget.collector.lName.text,
@@ -178,11 +233,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     profileImage: widget.collector.profileImage,
                   );
 
-                 profileAccess.storeProfile(profile);
+                 _save(profile);
 
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
                 });
 
               },

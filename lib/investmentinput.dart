@@ -147,7 +147,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: InvestmentSheet(
                                         currentUser: widget.currentUser,
-                                        //save: _save,
+
                                         titleMessage: name,
                                         investedAmount: 10,
                                         investmentDuration: 10,
@@ -173,8 +173,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                       Expanded(
                         child: Tile(
                           imageSource: 'images/insurance.png',
-                          //height: 20,
-                          //width: 150,
+
                           title: 'Insurance',
                           subText: 'Life, health and term',
                           color: alternateColor,
@@ -517,7 +516,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.chartPie),
+            icon: FaIcon(FontAwesomeIcons.chartPie, color: kPresentTheme.accentColor,),
             label: 'Dashboard',
 
           ),

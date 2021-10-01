@@ -127,46 +127,67 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   }
 
   void _update(InvestDB investDB) async {
-    try{
-      await investAccess.updateInvestmentSolo(investDB,'Active').then((value){
-        statusOfStoring = true;
-        widget.onUpdate!(investDB.investment);
-      });
-    }
-    catch(e){
-      Utility.showErrorMessage(context, e.toString());
-    }
+
+    DateTime currentPhoneDate = DateTime.now();
+
+    var docID= investDB.investmentId;
+
+        fireStore.collection('pjdhan_investment').doc(investDB.investmentId).update({
+        'email': investDB.email,
+        'Uuid': investDB.userId,
+        'Updated_id': 'system',
+        'investment_name': investDB.investment.name,
+        'currInvestAmt': investDB.investment.currentInvestmentAmount,
+        'annualInvestAmt': investDB.investment.annualInvestmentAmount,
+        'investRoI': investDB.investment.investmentRoi,
+        'investment_duration': investDB.investment.duration,
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'status': 'Active',
+      }).whenComplete(() {
+          setState(() {
+            statusOfStoring = true;
+            widget.onUpdate!(investDB.investment);
+
+
+          });
+
+        }).catchError((onError){
+          Utility.showErrorMessage(context, onError.toString());
+
+        });
+
 
 
   }
 
   void _save(Investment investment) async {
-    final snackBar = SnackBar(
-      content: Text(' Your investments are saved successfully'),
-    );
-    print(fireStore.toString());
 
+    DateTime currentPhoneDate = DateTime.now();
 
-
-      await  investAccess.storeInvestmentSolo(investment).then((value){
+      await fireStore.collection('pjdhan_investment').add({
+        'email': widget.currentUser.email,
+        'Uuid': widget.currentUser.uid,
+        'Updated_id': 'system',
+        'investment_name': investment.name,
+        'currInvestAmt': investment.currentInvestmentAmount,
+        'annualInvestAmt': investment.annualInvestmentAmount,
+        'investRoI': investment.investmentRoi,
+        'investment_duration': investment.duration,
+        'insert_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'status': 'Active',
+      }).whenComplete(() {
         setState(() {
-          statusOfStoring = true;
-          widget.onAdd!(Global.investmentCount++);
+              statusOfStoring = true;
+              Global.investmentCount++;
+              widget.onAdd!(Global.investmentCount);
+
+            });
+
+      }).catchError((onError){
+          Utility.showErrorMessage(context, e.toString());
 
         });
-      }).catchError((onError){
-        Utility.showErrorMessage(context, e.toString());
-
-      });
-
-
-      setState(() {
-        this.isSavePressed = true;
-      });
-
-
-
-
 
   }
 
@@ -176,22 +197,16 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   @override
   Widget build(BuildContext context) {
 
-
     interestValue = calculateInterset();
     totalInvestment = investedAmount + annualInvestment*investmentDuration;
-
-
-
      pieData = [
 
       Task('Investment', investedAmount, kPresentTheme.accentColor),
       Task('Interest Earned', interestValue ,kPresentTheme.alternateColor),
-
-
     ];
 
 
-    return isSavePressed ? WorkDone(isComplete: statusOfStoring,) : Container(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,) : Container(
       color: Color(0x00000000),
       child: Wrap(
 

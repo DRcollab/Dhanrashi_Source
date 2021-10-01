@@ -116,18 +116,34 @@ class _GoalSheetState extends State<GoalSheet> {
   }
 
   void _update(GoalDB goalDB) async {
-    try{
-      await goalAccess.updateGoalSolo(goalDB,'Active').then((value){
-        setState(() {
-          statusOfStoring = true;
-          widget.onUpdate!(goalDB.goal);
 
+
+    DateTime currentPhoneDate = DateTime.now();
+    print(' i am in update');
+
+    var docID = goalDB.goalDocumentID;
+    print(' i am in update ${docID}');
+
+      fireStore.collection('pjdhan_goal').doc(docID).update({
+        'email': goalDB.email,
+        'Uuid': goalDB.user,
+        'Updated_id': 'system',
+        'goal_name': goalDB.goal.name,
+        'goal_description': goalDB.goal.description,
+        'goal_duration': goalDB.goal.duration,
+        'goal_amount': goalDB.goal.goalAmount,
+        'insert_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'status': 'Active',
+      }).whenComplete((){
+        setState(() {
+              statusOfStoring = true;
+              widget.onUpdate!(goalDB.goal);
+
+            });
+      }).catchError((onError){
+          Utility.showErrorMessage(context, e.toString());
         });
-      });
-    }
-    catch(e){
-      Utility.showErrorMessage(context, e.toString());
-    }
 
 
   }
@@ -135,24 +151,29 @@ class _GoalSheetState extends State<GoalSheet> {
 
   void _save(Goal goal) async {
 
+    DateTime currentPhoneDate = DateTime.now();
 
-
-      await goalAccess.storeGoalSolo(goal).then((value){
+      await fireStore.collection('pjdhan_goal').add({
+        'email': widget.currentUser.email,
+        'Uuid': widget.currentUser.uid,
+        'Updated_id': 'system',
+        'goal_name': goal.name,
+        'goal_description': goal.description,
+        'goal_duration': goal.duration,
+        'goal_amount': goal.goalAmount,
+        'inflation': goal.inflation,
+        'insert_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'status': 'Active',
+      }).whenComplete((){
         setState(() {
-          statusOfStoring = true;
-          Global.goalCount++;
-          widget.onAdd!(Global.goalCount);
-        });
-       // _audioCache.play('done.wav');
+                statusOfStoring = true;
+                Global.goalCount++;
+                widget.onAdd!(Global.goalCount);
+              });
       }).catchError((onError){
-        Utility.showErrorMessage(context, e.toString());
-      });
-
-
-    setState(() {
-      this.isSavePressed = true;
-    });
-
+            Utility.showErrorMessage(context, e.toString());
+          });
 
   }
 
@@ -198,7 +219,7 @@ class _GoalSheetState extends State<GoalSheet> {
     ];
 
 
-    return isSavePressed ? WorkDone(isComplete: statusOfStoring,) : Container(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToAdd: 'Goal', whatToDo: widget.type,) : Container(
       color: Color(0x00000000),
       child: Wrap(
 
@@ -256,10 +277,7 @@ class _GoalSheetState extends State<GoalSheet> {
                             this.isSavePressed = true;
                           }
                           else{
-                            print("from click--================>");
-                            print(widget.currentUser.email,);
-                          print(widget.currentUser.uid);
-                          print(widget.uniquId);
+
                           var  goalDB = GoalDB(
                               email: widget.currentUser.email,
                               user: widget.currentUser.uid,

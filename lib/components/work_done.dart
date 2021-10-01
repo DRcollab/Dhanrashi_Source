@@ -8,10 +8,12 @@ class WorkDone extends StatefulWidget {
   
   bool isComplete = false;
   String whatToAdd = 'Investment';
+  String whatToDo = 'Save';
 
   WorkDone({
     this.isComplete=false,
     this.whatToAdd = 'Investment',
+    this.whatToDo = 'Save'
   });
 
   @override
@@ -36,7 +38,7 @@ class _WorkDoneState extends State<WorkDone> {
 
     setState(() {
       _width = 100.w;
-      _height = 400;
+      _height = 50.h;
       color = Colors.green;
     });
   }
@@ -53,7 +55,7 @@ class _WorkDoneState extends State<WorkDone> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(80.0),
+                padding:  EdgeInsets.symmetric(vertical: 6.h, horizontal: 2.w),
                 child: CircleAvatar(
                   radius: 80,
                   backgroundColor: Colors.amber,
@@ -62,7 +64,7 @@ class _WorkDoneState extends State<WorkDone> {
                     height: 80,width: 80,),
                 ),
               ),
-              Text('Your ${this.widget.whatToAdd} \nadded successfully ', style: DefaultValues.kH4(context),),
+              Text('Your ${this.widget.whatToAdd} is \n${this.widget.whatToDo}d successfully ', style: DefaultValues.kH2(context),),
             ],
           )) :Image.asset(circularProgressIndicator, scale: 5)
     );
