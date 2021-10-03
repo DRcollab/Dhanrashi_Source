@@ -71,6 +71,34 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   }
 
 
+  _edit(int index){
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: GoalSheet(
+              uniquId: widget.goalDBs[index].goalDocumentID,
+              currentUser: this.widget.currentUser,
+              titleMessage: goals[index].name,
+              goalAmount: goals[index].goalAmount,
+              goalDuration: goals[index].duration,
+              inflation: goals[index].inflation * 100,
+              imageSource: goalIcons[goals[index].name],
+              type: 'Update',
+              onUpdate: (newGoal){
+                print('new inv amount');
+                setState(() {
+                  goals[index] = newGoal!;
+                });
+                print('${goals[index].goalAmount}, ${goals[index].duration}');
+              },
+            ),
+          ),
+        ));
+  }
+
 
   List dataSet = List.empty(growable: true);
 
@@ -108,6 +136,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               ChartView(
+                                currentUser: widget.currentUser,
                                 chartChild: DynamicGraph(
                                   isVertical: false,
                                   chartType: ChartType.bar,
@@ -152,7 +181,9 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                 return Padding(
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Shingle(
-
+                    onPressed:(){
+                      _edit(index);
+                    },
                     type: 'goal',
                     maxHeight: 8.h,
                     barColor: DefaultValues.graphColors[index%15],
@@ -161,33 +192,9 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     subtitle: 'Goal: ${goals[index].goalAmount.toString()} Lakh INR',
                     value:'Duration : ${goals[index].duration.toString()} Years',
                     trailing: IconButton(
-                        icon: Icon(Icons.edit) ,
+                        icon: Icon(Icons.delete) ,
                       onPressed: (){
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                child: GoalSheet(
-                                  uniquId: widget.goalDBs[index].goalDocumentID,
-                                  currentUser: this.widget.currentUser,
-                                  titleMessage: goals[index].name,
-                                  goalAmount: goals[index].goalAmount,
-                                  goalDuration: goals[index].duration,
-                                  inflation: goals[index].inflation * 100,
-                                  imageSource: 'images/destination.png',
-                                  type: 'Update',
-                                  onUpdate: (newGoal){
-                                    print('new inv amount');
-                                    setState(() {
-                                      goals[index] = newGoal!;
-                                    });
-                                    print('${goals[index].goalAmount}, ${goals[index].duration}');
-                                  },
-                                ),
-                              ),
-                            ));
+
                       },
 
 

@@ -5,12 +5,13 @@ import 'package:sizer/sizer.dart';
 class ChartView extends StatelessWidget {
 
   late Widget chartChild;
+  var currentUser;
   ChartView(
       {
-    required this.chartChild,
+        required this.chartChild,
+       required  this.currentUser,
         }
       );
-
 
 
 
@@ -20,7 +21,8 @@ class ChartView extends StatelessWidget {
         child:Container(
           child:this.chartChild,
 
-        )
+        ),
+      currentUser: this.currentUser,
     );
   }
 }

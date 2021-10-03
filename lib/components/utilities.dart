@@ -6,6 +6,13 @@ import 'package:sizer/sizer.dart';
 
 class Utility{
 
+
+  static var messages = {
+    'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
+    ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.'
+  };
+
+
   static String cutStringToCharacter(String str1, String str2, String source){
 
     int index1 = source.indexOf('[');

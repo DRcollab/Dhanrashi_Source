@@ -110,6 +110,7 @@ flutter:
     - images/check.png
     - images/check_1.gif
     - images/check_sign.gif
+    - images/connection_lost.png
     - images/profiles/profile1.png
     - images/profiles/profile2.png
     - images/profiles/profile3.png

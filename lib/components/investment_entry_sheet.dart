@@ -67,6 +67,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
   bool isSavePressed = false;
+  bool isTimedOut = false;
   bool statusOfStoring = false;
   List<Task> pieData = [];
   bool isEditing = false;
@@ -111,6 +112,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     print(' I am in Init Tstae of invest entry');
     this.isSavePressed = false;
     this.statusOfStoring = false;
+    this.isTimedOut = false;
    // print(widget.investmentDuration);
     investedAmount = widget.investedAmount;
     expectedRoi = widget.expectedRoi;
@@ -127,7 +129,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
    // print(fireStore.toString());
   }
 
-  void _update(InvestDB investDB) async {
+  Future _update(InvestDB investDB) async {
 
     DateTime currentPhoneDate = DateTime.now();
 
@@ -207,7 +209,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     ];
 
 
-    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,) : Container(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,timedOut: isTimedOut,) : Container(
       color: Color(0x00000000),
       child: Wrap(
 
@@ -272,7 +274,13 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                           [
                              _save(inv),
                             Utility.timeoutAfter(sec: 10, onTimeout: (){
-                              Utility.showErrorMessage(context, 'Time out error');
+                              // Utility.showErrorMessage(
+                              //     context, Utility.messages['timed_out']!);
+
+                              setState(() {
+                                isTimedOut = true;
+
+                              });
 
                             }),
                           ]
@@ -286,9 +294,24 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                             investmentDocumentID: widget.uniqueId,
                             investment: inv,
                           );
-                          _update(investDB);
+
 
                           this.isSavePressed = true;
+                          Future.any(
+                              [
+                                _update(investDB),
+                                Utility.timeoutAfter(sec: 10, onTimeout: (){
+                                  // Utility.showErrorMessage(
+                                  //     context, Utility.messages['timed_out']!);
+                                  setState(() {
+                                    isTimedOut = true;
+
+                                  });
+
+
+                                }),
+                              ]
+                          );
                         }
 
                        });

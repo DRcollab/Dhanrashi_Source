@@ -64,6 +64,36 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   }
 
 
+  _edit(int index){
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: InvestmentSheet(
+              uniqueId: widget.investmentDBs[index].investmentId,
+              currentUser: this.widget.currentUser,
+              titleMessage: investments[index].name,
+              investedAmount: investments[index].currentInvestmentAmount,
+              annualInvestment: investments[index].annualInvestmentAmount,
+              investmentDuration: investments[index].duration,
+              expectedRoi: investments[index].investmentRoi * 100,
+              imageSource: investmentIcons[this.investments[index].name],
+              type: 'Update',
+              onUpdate: (newInv){
+                print('new inv amount');
+                setState(() {
+                  investments[index] = newInv!;
+
+                });
+                print('${investments[index].annualInvestmentAmount}, ${investments[index].currentInvestmentAmount}');
+              },
+            ),
+          ),
+        ));
+  }
+
 
   late List<Investment> investments = [];
 
@@ -96,6 +126,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               ChartView(
+                                currentUser : widget.currentUser,
                                 chartChild: DynamicGraph(
                                   isVertical: false,
                                   chartType: ChartType.bar,
@@ -137,7 +168,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(
-
+                    onPressed:(){
+                      _edit(index);
+                    },
                     type: 'investment',
                     maxHeight: 11.5.h,
                     updateKey: widget.investmentDBs[index].investmentId,
@@ -147,35 +180,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                     subtitle: 'Intial investment :${investments[index].currentInvestmentAmount.toString()} \nAnnual Investment:${investments[index].annualInvestmentAmount}',
                     value:'Investment Duration: ${investments[index].duration.toString()} \nExpected ROI:${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
                     trailing: IconButton(
-                      icon: Icon(Icons.edit) ,
+                      icon: Icon(Icons.delete) ,
                       onPressed: (){
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) => SingleChildScrollView(
-                              child: Container(
-                                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                child: InvestmentSheet(
-                                  uniqueId: widget.investmentDBs[index].investmentId,
-                                  currentUser: this.widget.currentUser,
-                                  titleMessage: investments[index].name,
-                                  investedAmount: investments[index].currentInvestmentAmount,
-                                  annualInvestment: investments[index].annualInvestmentAmount,
-                                  investmentDuration: investments[index].duration,
-                                  expectedRoi: investments[index].investmentRoi * 100,
-                                  imageSource: 'images/destination.png',
-                                  type: 'Update',
-                                  onUpdate: (newInv){
-                                    print('new inv amount');
-                                    setState(() {
-                                      investments[index] = newInv!;
 
-                                    });
-                                    print('${investments[index].annualInvestmentAmount}, ${investments[index].currentInvestmentAmount}');
-                                  },
-                                ),
-                              ),
-                            ));
 
                       },
 

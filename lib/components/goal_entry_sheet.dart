@@ -66,6 +66,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
   bool isSavePressed = false;
+  bool isTimedOut = false;
   List<Task> pieData = [];
   bool isEditing = false;
   bool statusOfStoring = false;
@@ -96,6 +97,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
     this.isSavePressed = false;
     this.statusOfStoring = false;
+    this.isTimedOut = false;
     goalAmount = widget.goalAmount;
     inflation = widget.inflation;
     goalDuration = widget.goalDuration;
@@ -115,7 +117,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
   }
 
-  void _update(GoalDB goalDB) async {
+  Future _update(GoalDB goalDB) async {
 
 
     DateTime currentPhoneDate = DateTime.now();
@@ -219,7 +221,7 @@ class _GoalSheetState extends State<GoalSheet> {
     ];
 
 
-    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToAdd: 'Goal', whatToDo: widget.type,) : Container(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToAdd: 'Goal', whatToDo: widget.type,timedOut: isTimedOut,) : Container(
       color: Color(0x00000000),
       child: Wrap(
 
@@ -273,14 +275,18 @@ class _GoalSheetState extends State<GoalSheet> {
                           if(widget.type == 'Save') {
 
                            this.isSavePressed = true;
-                           this.isSavePressed = true;
+
                            Future.any(
                                [
                                   _save(goal),
                                   Utility.timeoutAfter(sec: 10, onTimeout: (){
-                                              Utility.showErrorMessage(context, 'Time out error');
+                                              // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                    setState(() {
+                                      isTimedOut = true;
 
-                                 }),
+                                    });
+
+                                  }),
                                ]
                            );
 
@@ -294,9 +300,24 @@ class _GoalSheetState extends State<GoalSheet> {
                               goal:goal,
 
                             );
-                         _update(goalDB);
+                          this.isSavePressed = true;
 
-                            this.isSavePressed = true;
+                          Future.any(
+                              [
+                                _update(goalDB),
+                                Utility.timeoutAfter(sec: 10, onTimeout: (){
+                                  // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                  setState(() {
+                                    isTimedOut = true;
+
+                                  });
+
+
+                                }),
+                              ]
+                          );
+
+
                           }
 
                         });

@@ -16,7 +16,7 @@ class Shingle extends StatelessWidget {
   Color barColor;
   late double maxHeight;
   String updateKey ='';
-
+  Function() onPressed;
   String type = 'goal';
 
 
@@ -30,7 +30,7 @@ class Shingle extends StatelessWidget {
     this.barColor=Colors.white,
     this.maxHeight = 1,
     this.updateKey = '',
-
+    required this.onPressed,
   } );
 
 
@@ -61,23 +61,26 @@ class Shingle extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 2.0),
-              child: ListTile(
-                leading:Stack(
-                  children: [
-                    Image.asset(this.leadingImage,height: 10.h,width: 10.w,),
+              child: GestureDetector(
+                onTap: this.onPressed,
+                child: ListTile(
+                  leading:Stack(
+                    children: [
+                      Image.asset(this.leadingImage,height: 10.h,width: 10.w,),
 
-                  ],
-                ),
-                trailing: this.trailing,
-                title: Text(this.title,style: DefaultValues.kH3(context),),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text( this.subtitle),
-                    Text( this.value),
-                  ],
-                ),
+                    ],
+                  ),
+                  trailing: this.trailing,
+                  title: Text(this.title,style: DefaultValues.kH3(context),),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text( this.subtitle),
+                      Text( this.value),
+                    ],
+                  ),
 
+                ),
               ),
             ),
           ],
