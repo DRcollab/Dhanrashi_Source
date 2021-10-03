@@ -62,8 +62,17 @@ class _DashboardState extends State<Dashboard> {
     future:Firebase.initializeApp().then((value) {
       fireStore =  FirebaseFirestore.instance;
 
-        fetchGoals();
-        fetchInvestment();
+        Future.wait(
+            [
+              fetchGoals(),
+              fetchInvestment(),
+            ]
+        );
+      // }catch(e){
+      //   Utility.showErrorMessage(context, e.toString());
+      // }
+
+
 
       Global.goalCount = goals.length;
       Global.investmentCount = investments.length;
@@ -133,7 +142,11 @@ class _DashboardState extends State<Dashboard> {
      //  print('is Goal Empty : $isGoalEmpty');
       //return  goals;
     }
-    );
+    ).catchError((onError){
+      print(' errror occured during fetching data');
+      throw onError;
+
+    });
   }
 
 
@@ -144,10 +157,7 @@ class _DashboardState extends State<Dashboard> {
         .get()
         .then((QuerySnapshot snapshot){
       if(snapshot.docs.isEmpty){
-        // setState(() {
-        //   isInvestmentEmpty = snapshot.docs.isEmpty;
-        // });
-
+        /// On checking if firebase store is empty the user will be redirected to an Empty page promting to add investment and goal;
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
 
@@ -240,7 +250,7 @@ class _DashboardState extends State<Dashboard> {
             ),
                 ),
               ),
-            body: TabBarView(
+            foot: TabBarView(
               children: [
                // AnalyticsTabView(),
                 AnalyticsTabView(

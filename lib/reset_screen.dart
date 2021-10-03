@@ -57,23 +57,36 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
 
   void _reset(String email) async {
 
-    try{
-      await fireAuth.sendPasswordResetEmail(email: emailController.text);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+
+      await fireAuth.sendPasswordResetEmail(email: emailController.text).whenComplete(() {
+        Utility.showMessageAndAsk(
+            context:context,
+            msg:'An Email has been sent to your registered email ${emailController.text} with a link to reset password',
+            takeAction: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+            }
+        );
+
+      }
       );
-      // fireAuth.sendPasswordResetEmail(email: emailController.text);
-    }catch(e){
 
-      Utility.showErrorMessage(context, e.toString());
-      print('error mesage :${e}');
+      //     .catchError((onError){
+      //   Utility.showErrorMessage(context, onError.toString());
+      // });
 
-    }
+
 
   }
 
+  @override
+  void dispose(){
 
+
+    super.dispose();
+  }
 
   var emailController = TextEditingController();
 
@@ -221,6 +234,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
           ),
         ],
       ),
+
     );
   }
 }

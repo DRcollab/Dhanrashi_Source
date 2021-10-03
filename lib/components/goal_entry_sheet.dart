@@ -149,7 +149,7 @@ class _GoalSheetState extends State<GoalSheet> {
   }
 
 
-  void _save(Goal goal) async {
+  Future _save(Goal goal) async {
 
     DateTime currentPhoneDate = DateTime.now();
 
@@ -271,10 +271,19 @@ class _GoalSheetState extends State<GoalSheet> {
                         setState(() {
 
                           if(widget.type == 'Save') {
-                            print('inflation: ${goal.inflation}');
-                           _save(goal);
 
-                            this.isSavePressed = true;
+                           this.isSavePressed = true;
+                           this.isSavePressed = true;
+                           Future.any(
+                               [
+                                  _save(goal),
+                                  Utility.timeoutAfter(sec: 10, onTimeout: (){
+                                              Utility.showErrorMessage(context, 'Time out error');
+
+                                 }),
+                               ]
+                           );
+
                           }
                           else{
 

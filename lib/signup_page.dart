@@ -9,6 +9,7 @@ import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
@@ -53,6 +54,8 @@ import 'package:sizer/sizer.dart';
 
   class _SignUpState extends State<SignUpPage> with InputValidationMixin{
 
+    bool buttonClicked = false;
+
   final _userEmail = TextEditingController();
   final  _userPassword = TextEditingController();
   final _userPassword2 = TextEditingController();
@@ -75,9 +78,6 @@ import 'package:sizer/sizer.dart';
   }
 
   void _createUser(String id, String pwd) async {
-
-       // DRUserAccess(fireAuth).createUser(id, pwd);
-
     try{
 
       var currentUser = await fireAuth.createUserWithEmailAndPassword(email: id, password: pwd) ;
@@ -90,7 +90,9 @@ import 'package:sizer/sizer.dart';
       }
 
     }catch(e){
-
+      setState(() {
+        this.buttonClicked = false;
+      });
       Utility.showErrorMessage(context, e.toString());
     }
 
@@ -208,7 +210,8 @@ import 'package:sizer/sizer.dart';
                         ),
                       ),
                       ErrorText(errorText: _errorText,), //from custom_text
-                      CommandButton(
+                      buttonClicked ?  Image.asset(circularProgressIndicator, scale: 5,
+                      ):CommandButton(
                         textColor: kPresentTheme.lightWeightColor,
                         buttonColor: kPresentTheme.accentColor,
                         buttonText: 'Sign Up',
@@ -224,9 +227,8 @@ import 'package:sizer/sizer.dart';
                                if(_passKey2.currentState!.validate()){
 
                                  /// creates an user in the firebase.
+                                 this.buttonClicked = true;
                                     _createUser(_userEmail.text, _userPassword.text);
-
-
                                }
 
                              }
@@ -236,10 +238,6 @@ import 'package:sizer/sizer.dart';
                               Utility.showErrorMessage(context, 'Something went wrong please restart the app.');
                           /// custom method defined in utilities.dart;
                           });
-
-
-
-
                         },
                       ),
 

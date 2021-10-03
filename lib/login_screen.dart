@@ -1,3 +1,6 @@
+import 'dart:core';
+import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
@@ -15,6 +18,7 @@ import 'components/constants.dart';
 import 'package:sizer/sizer.dart';
 
 import 'components/on_error_screen.dart';
+import 'data/global.dart';
 import 'landing.dart';
 import 'models/profile.dart';
 import 'profiler.dart';
@@ -99,59 +103,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   }
 
 
-  // Future<Profile?> fetchProfile( var currentUser) async {
-  //
-  //   // late Profile profile;
-  //
-  //
-  //     fireStore.collection('pjdhan_users').where(
-  //         'Uid', isEqualTo: currentUser.uid)
-  //         .get()
-  //         .then((QuerySnapshot snapshot) {
-  //           if(snapshot.docs.isEmpty){
-  //             Navigator.pop(context);
-  //             Navigator.push(context,
-  //                 MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: currentUser,)));
-  //           }
-  //       snapshot.docs.forEach((f) {
-  //         String email = f.get('email');
-  //         String userID = f.get('Uid');
-  //         String docID = f.id;
-  //
-  //         String firstName = f.get('first_name');
-  //         String lastName = f.get('last_name');
-  //         Timestamp dob = f.get('DOB');
-  //         String incomeRange = f.get('income');
-  //
-  //         print(' Inside fetchProfile: firstName is : $firstName}');
-  //
-  //           profile = Profile(
-  //             firstName: firstName,
-  //             lastName: lastName,
-  //             DOB: dob.toDate(),
-  //             incomeRange: incomeRange,
-  //             docId: docID,
-  //           );
-  //
-  //         print(' Inside fetchProfile after profiling: firstName is : ${profile.firstName}');
-  //
-  //         if(profile != null) {
-  //           Navigator.pop(context);
-  //           Navigator.push(context,
-  //               MaterialPageRoute(builder: (context) =>
-  //                   Dashboard(currentUser: _loggedInUser.user,)));
-  //         }
-  //
-  //
-  //       });
-  //           return profile;
-  //     }).catchError((e){
-  //         throw e;
-  //     });
-  //
-  //
-  // }
-  //
+
 
 
 
@@ -372,7 +324,14 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                             if(_passwordKey.currentState!.validate()){
                               clickedLogin = true;
                               // Async function to enable login
-                              _login(_userText.text, _passWord.text);
+
+                              try{
+                                _login(_userText.text, _passWord.text);
+                              }catch(e){
+                                Utility.showErrorMessage(context, e.toString());
+                              }
+
+
                               //print('profile from outseide :${profile.docId}');
 
 
@@ -381,7 +340,8 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                         });
 
                       },
-                    ):Image.asset(circularProgressIndicator, scale: 5),
+                    ):Image.asset(circularProgressIndicator, scale: 5,
+                    ),
                   ],
                 ),
                           Padding(

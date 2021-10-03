@@ -1,6 +1,7 @@
 
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 import 'package:dhanrashi_mvp/components/on_error_screen.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -8,12 +9,13 @@ import 'constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dhanrashi_mvp/components/menu_drawer_class.dart';
 import 'package:dhanrashi_mvp/network/connectivity_checker.dart';
+import 'package:connectivity/connectivity.dart';
 
 class CustomScaffold extends StatelessWidget {
   Widget child;
   String title = '';
   Widget? trailing;
-  late Widget body;
+  late Widget foot;
   Widget? bottomNavigationBar;
   var currentUser;
   //final Widget svg = Svg
@@ -22,7 +24,7 @@ class CustomScaffold extends StatelessWidget {
     required this.child,
     this.title = '',
     this.trailing,
-    this.body = const SizedBox(height: 0,width: 0,),
+    this.foot = const SizedBox(height: 0,width: 0,),
     this.bottomNavigationBar = const  SizedBox(height: 0, width: 0,),
     this.currentUser,
   });
@@ -46,39 +48,55 @@ class CustomScaffold extends StatelessWidget {
          // backgroundColor: kPresentTheme.scaffoldColors[0],
 
           body: SafeArea(
-              child: Stack(
-                children: [
-                  this.child,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left:8),
-                        child: GestureDetector(
-                          onTap: () {
+              child: StreamBuilder<Object>(
+                stream: Connectivity().onConnectivityChanged,
+                builder: (context,
+                   AsyncSnapshot snapshot) {
+                  print('kkkkk');
+                  print(snapshot.data);
+                  if( snapshot.hasData &&
+                  snapshot.data != ConnectivityResult.none){
+                    Global.internetAvailable = true;
+                  }else{
+                    Global.internetAvailable = false;
+                  }
+                  return Stack(
+                        children: [
+                        this.child,
+                        Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                              Padding(
+                                    padding: const EdgeInsets.only(left:8),
+                                    child: GestureDetector(
+                                        onTap: () {
 
-                            _scaffoldKey.currentState!.openDrawer();
-                            },
+                                        _scaffoldKey.currentState!.openDrawer();
+                                        },
 
-                          child: Icon(Icons.menu),
-                          //CircleAvatar(radius: 20,backgroundColor: Colors.amber,
+                                    child: Icon(Icons.menu),
+                                    //CircleAvatar(radius: 20,backgroundColor: Colors.amber,
 
 
-                          ),
+                                    ),
+                              ),
+                              Text(this.title),
+                              Padding(
+                              padding: const EdgeInsets.only( right:8.0),
+                              child: Icon(Icons.account_circle_sharp),
+                              ),
+                              ],
                         ),
-                      Text(this.title),
-                      Padding(
-                        padding: const EdgeInsets.only( right:8.0),
-                        child: Icon(Icons.account_circle_sharp),
-                      ),
-                    ],
-                  ),
-                  //),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 100.0),
-                    child: this.body,
-                  ),
-                ],
+                        //),
+                        Padding(
+                        padding: const EdgeInsets.only(top: 100.0),
+                        child: this.foot,
+                        ),
+                        ],
+                  );
+
+
+                }
               ),
           ),
           drawer: MenuDrawer(currentUser: this.currentUser, ),

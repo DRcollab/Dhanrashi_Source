@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'dart:async';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
@@ -160,7 +161,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   }
 
-  void _save(Investment investment) async {
+  Future _save(Investment investment) async {
 
     DateTime currentPhoneDate = DateTime.now();
 
@@ -186,7 +187,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
       }).catchError((onError){
           Utility.showErrorMessage(context, e.toString());
-
+          throw onError;
         });
 
   }
@@ -264,10 +265,19 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                        print('.... printing inv:;;;;;;;;');
                        print(inv);
 
-                       setState(() {
+                       setState(()  {
                         if(widget.type == 'Save') {
-                          _save(inv);
                           this.isSavePressed = true;
+                        Future.any(
+                          [
+                             _save(inv),
+                            Utility.timeoutAfter(sec: 10, onTimeout: (){
+                              Utility.showErrorMessage(context, 'Time out error');
+
+                            }),
+                          ]
+                        );
+
                         }
                         else{
                           var investDB = InvestDB(

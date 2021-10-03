@@ -62,7 +62,7 @@ bool isEditing = false;
 
 
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical:1.h, horizontal:1.w),
+          padding: EdgeInsets.symmetric(vertical:1.h, horizontal:2.w),
           child: Row(
            // crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.start,
