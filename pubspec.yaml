@@ -47,6 +47,7 @@ dependencies:
   loading_gifs: ^0.3.0
   sizer: ^2.0.15
   connectivity: ^3.0.6
+  shared_preferences: ^2.0.8
 
 
 

@@ -10,7 +10,7 @@ class Profile {
         required this.lastName,
         required this.incomeRange,
         required this.DOB,
-         this.docId,
+        this.docId,
         required this.uid,
         required this.email,
         required this.profileImage,
@@ -21,7 +21,7 @@ class Profile {
     this.firstName ='';
     this.lastName = '';
     this.incomeRange = '';
-    this.DOB = DateTime.now();
+    this.DOB = DateTime.parse('1900-01-01');
     this.docId = '';
     this.uid ='';
     this.email = '';

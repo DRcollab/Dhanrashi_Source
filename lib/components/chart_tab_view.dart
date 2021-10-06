@@ -17,12 +17,9 @@ class ChartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-        child:Container(
-          child:this.chartChild,
+    return Container(
+      child:this.chartChild,
 
-        ),
-      currentUser: this.currentUser,
     );
   }
 }

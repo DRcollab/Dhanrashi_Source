@@ -246,15 +246,6 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      buttonText: widget.type,
                      textSize: 12.sp,
                      onPressed:()  {
-                      print(' To Be saved .......:');
-                       print('email: ${widget.currentUser.email}');
-                       print('uid : ${widget.currentUser.uid}');
-                       print(widget.titleMessage);
-                       print('Annual Inv : ${annualInvestment}');
-                       print('current Inv: ${investedAmount}');
-                       print('duration: ${investmentDuration}');
-                       print('ROI : ${interestValue}');
-
 
                        var inv =  Investment(
                              name:widget.titleMessage,
@@ -301,8 +292,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                               [
                                 _update(investDB),
                                 Utility.timeoutAfter(sec: 10, onTimeout: (){
-                                  // Utility.showErrorMessage(
-                                  //     context, Utility.messages['timed_out']!);
+
                                   setState(() {
                                     isTimedOut = true;
 

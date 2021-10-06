@@ -29,10 +29,13 @@ import 'models/investment_db.dart';
 class Dashboard extends StatefulWidget {
 
   var currentUser;
+  String bannerMessage = '';
 
 
-
-  Dashboard({required this.currentUser});
+  Dashboard({
+    required this.currentUser,
+    this.bannerMessage= ''
+  });
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -55,10 +58,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
-    print(' ------------- &&&&&&& Hi ai am gerr ');
-    //future:Firebase.initializeApp().then((value) => null)
     future:Firebase.initializeApp().then((value) {
       fireStore =  FirebaseFirestore.instance;
 
@@ -68,19 +69,12 @@ class _DashboardState extends State<Dashboard> {
               fetchInvestment(),
             ]
         );
-      // }catch(e){
-      //   Utility.showErrorMessage(context, e.toString());
-      // }
 
 
 
       Global.goalCount = goals.length;
       Global.investmentCount = investments.length;
-      print('0000-------------------00000');
-      print(goals.length);
-      print(investments.length);
 
-     // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
     }).onError((error, stackTrace){
       print( ' THer it is :   ${error.toString()}');
     }
@@ -217,7 +211,7 @@ class _DashboardState extends State<Dashboard> {
             currentUser: this.widget.currentUser,
               title: 'Dashboard',
               child: Padding(
-                padding: const EdgeInsets.only(top: 38.0),
+                padding: const EdgeInsets.only(top: 30.0),
                 child: Material(
 
                   child: TabBar(

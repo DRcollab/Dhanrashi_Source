@@ -3,14 +3,17 @@
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/work_done.dart';
+import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'models/profile_collector.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
@@ -22,6 +25,7 @@ import 'data/user_handler.dart';
 import 'data/database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'components/utilities.dart';
 
 
 class ConfirmationPage extends StatefulWidget {
@@ -31,6 +35,7 @@ class ConfirmationPage extends StatefulWidget {
   var currentUser;
   UserData currentUserProfile = UserData.create();
   bool isItForUpdate = false;
+
   ConfirmationPage({
     required this.collector,
     required this.currentUser,
@@ -46,9 +51,10 @@ class ConfirmationPage extends StatefulWidget {
 
 class _ConfirmationPageState extends State<ConfirmationPage> {
 
-  bool isComplete = false;
-  bool isSubmitted = false;
- // var _userHandler = UserHandeler(userTable, userProfileTable);
+  late Profile profile;  // Used to store profile data of the user
+  bool isComplete = false; // to see whether a task assign to async service is complete .. see _save and _update
+  bool isSubmitted = false; // to see if any task has been assign
+  bool isTimedOut = false;
   var dobController = TextEditingController();
   var incomeController  = TextEditingController();
   late FirebaseFirestore fireStore;
@@ -58,9 +64,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   @override
   void initState() {
     // TODO: implement initState
+    profile = Profile.create();
     Collector profileCollector = widget.collector;
     isSubmitted = false;
     isComplete = false;
+    isTimedOut = false;
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
       profileAccess = DRProfileAccess(fireStore, widget.currentUser);
@@ -70,9 +78,56 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
 
 
+  Future _update(Profile profile) async {
+    DateTime currentPhoneDate = DateTime.now();
+    var docID = widget.currentUser.docId;
+    profile.docId = docID;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+
+      fireStore.collection('pjdhan_users').doc(docID).update({
+        'email': profile.email,
+        'Uid': profile.uid,
+        'first_name': profile.firstName,
+        'last_name': profile.lastName,
+        'image_source': profile.profileImage,
+        'DOB':profile.DOB,
+        'income': profile.incomeRange,
+
+        'insert_dts': Timestamp.fromDate(currentPhoneDate),
+        'update_dts': Timestamp.fromDate(currentPhoneDate),
+        'user_status': 'Active',
+      }).whenComplete((){
+        setState((){
+          isComplete = true;
+          prefs.setBool('session_active', true);
+          prefs.setString('user_id',widget.currentUser.uid);
+          prefs.setString('email', widget.currentUser.email!);
+
+          prefs.setString('f_name', profile.firstName);
+          prefs.setString('l_name', profile.lastName);
+          prefs.setString('dob', profile.DOB.toString());
+
+          prefs.setString('income', profile.incomeRange);
+          prefs.setString('doc_id', profile.docId??'');
+          prefs.setString('image', profile.profileImage);
+
+        });
+        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) =>
+            widget.isItForUpdate ? Dashboard(currentUser: profile)
+                : EmptyPage(currentUser: profile,message:'Great! Your profile is saved successfully',)));
+      }).catchError((onError){
+        Utility.showErrorMessage(context, onError.toString());
+      });
+
+  }
+
+
   Future _save(Profile profile,) async {
     DateTime currentPhoneDate = DateTime.now();
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
       await fireStore.collection('pjdhan_users').add({
         'email': widget.currentUser.email,
@@ -90,27 +145,38 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
       }).whenComplete((){
         setState((){
           isComplete = true;
+          prefs.setBool('session_active', true);
+          prefs.setString('user_id',widget.currentUser.uid);
+          prefs.setString('email', widget.currentUser.email!);
+
+          prefs.setString('f_name', profile.firstName);
+          prefs.setString('l_name', profile.lastName);
+          prefs.setString('dob', profile.DOB.toString());
+
+          prefs.setString('income', profile.incomeRange);
+          prefs.setString('doc_id', profile.docId??'');
+          prefs.setString('image', profile.profileImage);
         });
+
+
+        Fluttertoast.showToast(
+            msg:'Your profile updated  successfully',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+
         Navigator.push(context,
             MaterialPageRoute(builder: (context) =>
-                EmptyPage(currentUser: widget.currentUser,message:'Great! Your profile is saved successfully' ,)));
+              widget.isItForUpdate ? Dashboard(currentUser: profile)
+              : EmptyPage(currentUser: profile,message:'Great! Your profile is saved successfully',)));
       }).catchError((onError){
-
+        Utility.showErrorMessage(context, onError.toString());
+      }).then((DocumentReference docRefs){
+          this.profile.docId = docRefs.id;
       });
-      //     .then((value){
-      //
-      //   showModalBottomSheet(
-      //       context: context,
-      //       builder: (context) => WorkDone(
-      //         whatToAdd: 'Profile',
-      //         whatToDo: 'adde',
-      //         isComplete : this.isComplete,
-      //       )
-      //   );
-      // });
-
-
-
 
 
   }
@@ -120,9 +186,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print(widget.collector.dateOfBirth);
-    // print(widget.collector);
-    // print(widget.collector.dateOfBirth);
+
 
     double age = (widget.collector.dateOfBirth.difference(DateTime.now()).inDays/365);
 
@@ -130,7 +194,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
     return CustomScaffold(
       currentUser: widget.currentUser,
-      child: isSubmitted ?Center(
+      child: isSubmitted ? Center(
           child: Image.asset(circularProgressIndicator, scale: 5),): Container(
 
         child: ListView(
@@ -209,21 +273,22 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               ),
 
           Padding(
-            padding:  EdgeInsets.only(left:4.w, right: 4.w, top: 1.h,),
+            padding:  EdgeInsets.only(left:20.w, right: 20.w, top: 1.h,),
             child:CommandButton(
               textColor: Colors.white,
               textSize: 12.sp,
               //icon:Icons.save,
               borderRadius: BorderRadius.circular(20),
-              buttonText: widget.isItForUpdate ? "Add User Details" : 'Update User Profile',
+              buttonText: !widget.isItForUpdate ? "Add User Details" : 'Update User Profile',
               buttonColor: kPresentTheme.accentColor,
 
-              onPressed:(){
+              onPressed:() {
+
 
                 /// on pressing this button data will be saved in database ...
                 setState(() {
                   this.isSubmitted = true;
-                  Profile profile = Profile(
+                  this.profile = Profile(
                     firstName: widget.collector.fName.text,
                     lastName: widget.collector.lName.text,
                     DOB:widget.collector.dateOfBirth,
@@ -231,11 +296,33 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     uid:widget.currentUser.uid,
                     email: widget.currentUser.email,
                     profileImage: widget.collector.profileImage,
+
                   );
 
-                 _save(profile);
+                  if(!widget.isItForUpdate){
+                    Future.any(
+                        [
+                          _save(this.profile),
+                          Utility.timeoutAfter(sec: 10, onTimeout:(){
+                            if(!isComplete){
+                              Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                            }
+                          }),
+                        ]
+                    );
+                  } else{
+                    Future.any(
+                        [
+                          _update(this.profile),
+                          Utility.timeoutAfter(sec: 10, onTimeout:(){
+                            if(!isComplete){
+                              Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                            }
+                          }),
+                        ]
+                    );
 
-
+                  }
                 });
 
               },
@@ -243,7 +330,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
           ),
 
              widget.isItForUpdate ? Padding(
-                padding:  EdgeInsets.only(left:4.w, right: 4.w, top: 1.h,),
+                padding:  EdgeInsets.only(left:20.w, right: 20.w, top: 0.h,),
                 child: CommandButton(
                   textColor: Colors.white,
                   textSize: 12.sp,
@@ -253,11 +340,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   buttonColor: kPresentTheme.accentColor,
 
                   onPressed:(){
-
-                    /// on pressing this button data will be saved in database ...
-
                     Navigator.pop(context);
-
                   },
                 ),
               ) : SizedBox(),

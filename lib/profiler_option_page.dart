@@ -3,6 +3,8 @@
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_gifs/loading_gifs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
@@ -15,6 +17,7 @@ import 'data/profile_access.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'components/utilities.dart';
 
 class ProfilerOptionPage extends StatefulWidget {
   //const ProfilerOptionPage({Key? key}) : super(key: key);
@@ -34,8 +37,8 @@ class ProfilerOptionPage extends StatefulWidget {
 class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
 
 
-
-
+  bool isComplete = false;
+  bool isSubmitted = false;
   final String currentUserName = "";
   late DRProfileAccess profileAccess;
   late FirebaseFirestore fireStore;
@@ -43,6 +46,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
   @override
   void initState() {
     // TODO: implement initState
+    isSubmitted = false;
     super.initState();
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
@@ -50,11 +54,57 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
     });
   }
 
+
+  Future _save(Profile profile,) async {
+    DateTime currentPhoneDate = DateTime.now();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    print('from _save in profile: ${profile.firstName}');
+    await fireStore.collection('pjdhan_users').add({
+      'email': widget.currentUser.email,
+      'Uid': widget.currentUser.uid,
+      'first_name': profile.firstName,
+      'last_name': profile.lastName,
+      'image_source':profile.profileImage,
+      'DOB': profile.DOB,
+      'income': profile.incomeRange,
+
+
+      'created_dts': Timestamp.fromDate(currentPhoneDate),
+      'update_dts': Timestamp.fromDate(currentPhoneDate),
+      'user_status': 'Active',
+    }).whenComplete((){
+      setState((){
+        isComplete = true;
+        prefs.setBool('session_active', true);
+        prefs.setString('user_id',widget.currentUser.uid);
+        prefs.setString('email', widget.currentUser.email!);
+
+        prefs.setString('f_name', profile.firstName);
+        prefs.setString('l_name', profile.lastName);
+        prefs.setString('dob', profile.DOB.toString());
+
+        prefs.setString('income', profile.incomeRange);
+        prefs.setString('doc_id', profile.docId??'');
+        prefs.setString('image', profile.profileImage);
+      });
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) =>
+              EmptyPage(currentUser: profile,message:'Well we will try to  make out something from nothing' ,messageColor: Colors.amber,)));
+    }).catchError((onError){
+
+    });
+
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       currentUser: this.widget.currentUser,
-      child: Column(
+      child: isSubmitted ?  Image.asset(circularProgressIndicator, scale: 5) : Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
 
@@ -106,7 +156,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
             ),
           ),
 
-          Padding(
+           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Container(
               child: Column(
@@ -115,7 +165,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
                 children:[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CommandButton(
+                    child:  CommandButton(
                       textSize: 18,
                       textColor: Colors.black,
                       borderRadius: BorderRadius.circular(20),
@@ -133,7 +183,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CommandButton(
+                    child:  CommandButton(
                       textSize: 18,
                       buttonColor: kPresentTheme.accentColor,
                       textColor: Colors.white,
@@ -151,11 +201,15 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
                               email: this.widget.currentUser.email,
                             );
 
-                            profileAccess.storeProfile(profile);
-
-
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+                            Future.any(
+                                [
+                                  _save(profile),
+                                  Utility.timeoutAfter(sec: 10, onTimeout:(){
+                                    if(!isComplete)
+                                    Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                  }),
+                                ]
+                            );
 
                         }, ),
                   )

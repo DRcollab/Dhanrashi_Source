@@ -11,7 +11,9 @@ import 'package:dhanrashi_mvp/sip_calculator.dart';
 import 'package:dhanrashi_mvp/test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_gifs/loading_gifs.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'components/theme_class.dart';
 import 'data/filemanagr_class.dart';
@@ -20,6 +22,7 @@ import 'investmentinput.dart';
 //import 'goalinput.dart';
 import 'components/vanish_keyboard.dart';
 
+import 'models/profile.dart';
 import 'network/connectivity_checker.dart';
 import 'profiler.dart';
 import 'signup_page.dart';
@@ -66,51 +69,61 @@ class DhanrashiMVP extends StatefulWidget {
   _DhanrashiMVPState createState() => _DhanrashiMVPState();
 }
 
-class _DhanrashiMVPState extends State<DhanrashiMVP> {
+class _DhanrashiMVPState extends State<DhanrashiMVP>  {
 
     late FirebaseAuth fireAuth ;
+    late SharedPreferences prefs;
+    late Profile? profile;
+    bool? sessionActive;
     var userLoggedIn;
   // late FirebaseFirestore firestore;
 
   @override
-  void initState() {
+  void initState()  {
     // TODO: implement initState
     super.initState();
     future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
 
-
-
+      getSession();
 
   }
 
 
-  void _login() async {
-  var currentUser=DRUserAccess(fireAuth);
+  void getSession() async {
+    prefs = await SharedPreferences.getInstance();
+          setState(() {
+            sessionActive = prefs.getBool('session_active');
+            print('Session Insside:  $sessionActive');
+            profile = Profile(
+              firstName: prefs.getString('f_name') ??  '' ,
+              lastName: prefs.getString('l_name') ??  '' ,
+              DOB: DateTime.parse(prefs.getString('dob')?? '1900-01-01'),
+              incomeRange: prefs.getString('income') ??  '' ,
+              docId: prefs.getString('doc_id') ??  '' ,
+              uid: prefs.getString('user_id') ??  '' ,
+              email: prefs.getString('email') ??  '' ,
+              profileImage: prefs.getString('image') ??  '' ,
+            );
 
-   // var loggedInUser = await userAccess.authUser('subhaaspa@gmail.com','shubha123');
+          });
 
-    if(fireAuth.currentUser!=null){
 
-      userLoggedIn = true;
-    }
-    else{
-
-      userLoggedIn = false;
-    }
-    print(loginState);
   }
+
 
 
   @override
   Widget build(BuildContext context) {
 
-    
+
+
+    print('Session: $sessionActive');
 
     return Sizer(
         builder: (context, orientation, deviceType){
           return VanishKeyBoard(
             child: MaterialApp(
-              home:LoginScreen(),
+              home:  sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile),
 
             ),
           );

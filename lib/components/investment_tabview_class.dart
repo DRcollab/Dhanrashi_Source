@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dhanrashi_mvp/chart_view.dart';
+import 'package:dhanrashi_mvp/components/chart_tab_view.dart';
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/shingle.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import '../chart_viewer.dart';
 import '../investmentinput.dart';
 import 'buttons.dart';
 import 'dounut_charts.dart';
@@ -85,6 +86,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                 print('new inv amount');
                 setState(() {
                   investments[index] = newInv!;
+                  widget.investmentDBs[index].investment = investments[index];
 
                 });
                 print('${investments[index].annualInvestmentAmount}, ${investments[index].currentInvestmentAmount}');
@@ -125,7 +127,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                     onTap: (){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
-                              ChartView(
+                              ChartViewer(
                                 currentUser : widget.currentUser,
                                 chartChild: DynamicGraph(
                                   isVertical: false,
@@ -133,8 +135,12 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                                   resultSet: dataSet,
                                   gallopYears: 1,
                                 ),
-
                               )));
+                              // ChartView(
+                              //
+
+                              //
+                              // )));
                     },
                     child: Container(
                       color: Color(0x00000000),
@@ -165,20 +171,32 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
           height: 50.h,//* DefaultValues.adaptByValue(context,0.50) ,
           child: ListView.builder(
             itemBuilder: (context, index){
+             // double futureValue = Calculator.fv(r, nper, pmt, pv, type)
+              double futureValue = Calculator.fv(investments[index].investmentRoi,
+                  investments[index].duration, 
+                  investments[index].annualInvestmentAmount, 
+                  investments[index].currentInvestmentAmount, 0);
+              
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(
                     onPressed:(){
                       _edit(index);
                     },
+                    hasExtraText: true,
                     type: 'investment',
-                    maxHeight: 11.5.h,
+                    maxHeight: 17.h,
                     updateKey: widget.investmentDBs[index].investmentId,
                     leadingImage: investmentIcons[this.investments[index].name],
                     barColor:DefaultValues.graphColors[index%15],
                     title:  investments[index].name,
-                    subtitle: 'Intial investment :${investments[index].currentInvestmentAmount.toString()} \nAnnual Investment:${investments[index].annualInvestmentAmount}',
-                    value:'Investment Duration: ${investments[index].duration.toString()} \nExpected ROI:${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
+                    subtitle: 'Invested:${investments[index].currentInvestmentAmount.toString()} lac INR',
+                    text:'Annual:${investments[index].annualInvestmentAmount} lac INR',
+                    value:' ${investments[index].duration.toString()} Yrs' ,
+                    text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
+                    icon1: Icons.watch_later_outlined,
+                    icon2: FontAwesomeIcons.chartLine,
+                    highlight:'Corpus: ${futureValue.toStringAsFixed(2)} lac' ,
                     trailing: IconButton(
                       icon: Icon(Icons.delete) ,
                       onPressed: (){

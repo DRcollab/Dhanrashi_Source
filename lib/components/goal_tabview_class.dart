@@ -10,7 +10,7 @@ import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_gifs/loading_gifs.dart';
-import '../chart_view.dart';
+import 'chart_tab_view.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'investment_entry_sheet.dart';
@@ -91,6 +91,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                 print('new inv amount');
                 setState(() {
                   goals[index] = newGoal!;
+                  widget.goalDBs[index].goal = goals[index];
                 });
                 print('${goals[index].goalAmount}, ${goals[index].duration}');
               },
@@ -185,12 +186,13 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                       _edit(index);
                     },
                     type: 'goal',
-                    maxHeight: 8.h,
+                    maxHeight: 11.h,
                     barColor: DefaultValues.graphColors[index%15],
                     leadingImage: goalIcons[goals[index].name],
                     title:  goals[index].name,
-                    subtitle: 'Goal: ${goals[index].goalAmount.toString()} Lakh INR',
-                    value:'Duration : ${goals[index].duration.toString()} Years',
+                    subtitle: 'Goal: ${goals[index].goalAmount.toString()} lac',
+                    value:'${goals[index].duration.toString()} Years',
+                    icon1:Icons.watch_later_outlined,
                     trailing: IconButton(
                         icon: Icon(Icons.delete) ,
                       onPressed: (){

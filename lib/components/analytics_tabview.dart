@@ -34,21 +34,7 @@ class AnalyticsTabView extends StatelessWidget {
 
 
 
-  // final   pieData = [
-  //
-  //   Task('Investment', 10, kPresentTheme.accentColor),
-  //   Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
-  //
-  //
-  // ];
 
-  // final   pieData1 = [
-  //
-  //   Task('Investment', 21, kPresentTheme.accentColor),
-  //   Task('Interest Earned', 18 ,kPresentTheme.alternateColor),
-  //   Task('Car', 10 ,kPresentTheme.alternateColor.withBlue(129)),
-  //
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +64,10 @@ class AnalyticsTabView extends StatelessWidget {
     fetched = false;
   }
 
-  print('fetched = $fetched');
-  print('goal db${goalDBs.length}');
-  print('goal db${investmentDBs.length}');
+
 
   if(investments.isNotEmpty && goals.isNotEmpty) {
-    print('longest inv time : $longestInvestmentDuration');
-    print('longest goal time : $longestGoalDuration');
+
 
     fetched = true;
     dataSet = Calculator().getInvVsGoalDetail(

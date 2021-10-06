@@ -13,13 +13,13 @@ class Calculator {
       longestGoalDuration = 0,
       longestDuration = 0;
 
-  double fv(double r, int nper, double pmt, double pv, int type) {
+ static double fv(double r, int nper, double pmt, double pv, int type) {
     double fv = (pv * pow(1 + r, nper) +
         pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
     return fv;
   }
 
-  double sipAmount(double r, int nper, double pv, double fv, int type) {
+ static double sipAmount(double r, int nper, double pv, double fv, int type) {
     double pmt = (fv - pv * pow(1 + r, nper)) /
         ((1 + r * type) * (pow(1 + r, nper) - 1) / r);
     return pmt;
@@ -68,9 +68,9 @@ class Calculator {
      }
       // longestGoalDuration =   gI>lI ? gI : lI;
 
-    print('longestDuration in get inv : $longestDuration');
-    print('longestInvestmentDuration = $longestInvestmentDuration');
-    print('longestGoalDuration = $longestGoalDuration');
+    // print('longestDuration in get inv : $longestDuration');
+    // print('longestInvestmentDuration = $longestInvestmentDuration');
+    // print('longestGoalDuration = $longestGoalDuration');
 
     List allInvestmentAnnualAmt = List.empty(growable: true);
 
@@ -78,7 +78,7 @@ class Calculator {
 
     for (int i = 0; i < investment.length; i++) {
       Investment newInv = investment[i];
-      print(newInv.name);
+    //  print(newInv.name);
 
       List investmentAnnualAmt = List.empty(growable: true);
       investmentAnnualAmt.add(newInv.name);
@@ -99,7 +99,7 @@ class Calculator {
       allInvestmentAnnualAmt.add(investmentAnnualAmt);
     }
 
-    print(allInvestmentAnnualAmt.shape);
+   // print(allInvestmentAnnualAmt.shape);
 
     final shape = allInvestmentAnnualAmt.shape;
 
@@ -132,8 +132,8 @@ class Calculator {
     }
 
     allInvestmentAnnualAmt.add(invstYear);
-    print(allInvestmentAnnualAmt);
-    print(allInvestmentAnnualAmt.shape);
+   // print(allInvestmentAnnualAmt);
+   // print(allInvestmentAnnualAmt.shape);
 
     return allInvestmentAnnualAmt;
   }
@@ -153,11 +153,11 @@ class Calculator {
       longestDuration = longestInv;
     }
 
-    print('longestDuration in getGoal: $longestDuration');
-
-    print('InGetgoalDetail()');
-    print('longestInvestmentDuration = $longestInvestmentDuration');
-    print('longestGoalDuration = $longestGoalDuration');
+  // //  print('longestDuration in getGoal: $longestDuration');
+  //
+  //   print('InGetgoalDetail()');
+  //   print('longestInvestmentDuration = $longestInvestmentDuration');
+  //   print('longestGoalDuration = $longestGoalDuration');
 
     List allGoalAnnualAmt = List.empty(growable: true);
 
@@ -165,8 +165,8 @@ class Calculator {
 
     for (int i = 0; i < goals.length; i++) {
       Goal newGoal = goals[i];
-      print(newGoal.name);
-      print(goals.length);
+      // print(newGoal.name);
+      // print(goals.length);
 
       List goalAnnualAmt = List.empty(growable: true);
       goalAnnualAmt.add(newGoal.name);
@@ -185,8 +185,8 @@ class Calculator {
       allGoalAnnualAmt.add(goalAnnualAmt);
     }
 
-    print(allGoalAnnualAmt);
-
+    // print(allGoalAnnualAmt);
+    //
     final shape = allGoalAnnualAmt.shape;
 
     //Adding the 'Total' column as a row
@@ -214,8 +214,8 @@ class Calculator {
     }
 
     allGoalAnnualAmt.add(goalYear);
-    print(allGoalAnnualAmt);
-    print(allGoalAnnualAmt.shape);
+    // print(allGoalAnnualAmt);
+    // print(allGoalAnnualAmt.shape);
 
     return allGoalAnnualAmt;
   }
@@ -229,11 +229,11 @@ class Calculator {
 
     longestGoalDuration =   gI>lI ? gI : lI;
 
-    print('longestDuration : $longestDuration');
-
-    print('In getInvVsGoalDetail()');
-    print('longestInvestmentDuration = $longestInvestmentDuration');
-    print('longestGoalDuration = $longestGoalDuration');
+    // print('longestDuration : $longestDuration');
+    //
+    // print('In getInvVsGoalDetail()');
+    // print('longestInvestmentDuration = $longestInvestmentDuration');
+    // print('longestGoalDuration = $longestGoalDuration');
 
     List allGoalAnnualAmt = getGoalDetail(gol,lI, gI);
     List allInvestmentAnnualAmt = getInvestmentDetail(inv, lI, gI);
@@ -247,9 +247,9 @@ class Calculator {
       investmenetVsGgoal.add(allGoalAnnualAmt[allGoalAnnualAmt.shape[0] - 2]);
       investmenetVsGgoal.add(allGoalAnnualAmt[allGoalAnnualAmt.shape[0] - 1]);
     }
-
-    print(investmenetVsGgoal.shape);
-    print(investmenetVsGgoal);
+    //
+    // print(investmenetVsGgoal.shape);
+    // print(investmenetVsGgoal);
 
     return investmenetVsGgoal;
   }

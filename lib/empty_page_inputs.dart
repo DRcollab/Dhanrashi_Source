@@ -11,8 +11,8 @@ class EmptyPage extends StatelessWidget {
 
  var currentUser;
  String message = '';
-
-  EmptyPage({required this.currentUser, this.message = '' }) ;
+ Color messageColor;
+  EmptyPage({required this.currentUser, this.message = '', this.messageColor = Colors.green }) ;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class EmptyPage extends StatelessWidget {
           children: [
 
            this.message !='' ? Container(
-             color: Colors.green,
+             color: messageColor,
              child: ListTile(
 
                leading: CircleAvatar(

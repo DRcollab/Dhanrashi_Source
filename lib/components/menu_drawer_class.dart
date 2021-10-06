@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sizer/sizer.dart';
 
@@ -124,6 +125,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                   ListTile(
                     //contentPadding: EdgeInsets.all(10),
+                    enabled: widget.currentUser!=null,
                     leading: FaIcon(FontAwesomeIcons.userFriends,size: 24.sp,color:kPresentTheme.accentColor, ),
                     title: Text('Update profile' ,style:DefaultValues.kNormal2(context), ),
                     onTap: (){
@@ -137,6 +139,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Dashboard', style: DefaultValues.kNormal2(context)),
+                    enabled: widget.currentUser!=null,
                     onTap: (){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
@@ -144,6 +147,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     },
                   ),
                   ListTile(
+                    enabled: widget.currentUser!=null,
                     leading: FaIcon(FontAwesomeIcons.plus,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Add Investments', style: DefaultValues.kNormal2(context)),
                     onTap: (){
@@ -155,6 +159,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.bullseye, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Add Goals', style: DefaultValues.kNormal2(context)),
+                    enabled: widget.currentUser!=null,
                     onTap: (){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
@@ -163,6 +168,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
 
                   ListTile(
+                    enabled: widget.currentUser!=null,
                     leading: FaIcon(FontAwesomeIcons.wrench, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Settings', style: DefaultValues.kNormal2(context)),
                     onTap: (){
@@ -209,11 +215,20 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 title: Text('Logout',style: DefaultValues.kNormal2(context)),
                enabled: widget.currentUser!=null,
                 onTap: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.remove('session_active');
+                  prefs.remove('user_id');
+                  prefs.remove('email');
+                  prefs.remove('f_name');
+                  prefs.remove('l_name');
+                  prefs.remove('dob');
+                  prefs.remove('doc_id');
+                  prefs.remove('image');
+                  prefs.remove('income');
                   setState(() {
                    // currentUser.
                     fireAuth.signOut();
-                    print(widget.currentUser);
-                    //userLoggedIn = false;
+
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginScreen()));
                     print(widget.currentUser.email);

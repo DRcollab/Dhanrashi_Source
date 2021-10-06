@@ -131,7 +131,9 @@ import 'package:sizer/sizer.dart';
                         child: Form(
                           key: _emailKey,
                           child: CustomTextField(
-
+                            onSubmit: (){
+                              _emailKey.currentState!.validate();
+                            },
                             controller: _userEmail,
 
                             validate: (){
@@ -158,7 +160,9 @@ import 'package:sizer/sizer.dart';
                         child: Form(
                           key: _passKey,
                           child: CustomTextField(
-
+                            onSubmit: (){
+                              _passKey.currentState!.validate();
+                            },
                             controller: _userPassword,
 
                             validate: (){
@@ -185,7 +189,9 @@ import 'package:sizer/sizer.dart';
                         child: Form(
                           key: _passKey2,
                           child: CustomTextField(
-
+                            onSubmit: (){
+                              _passKey2.currentState!.validate();
+                            },
                             controller: _userPassword2,
 
                             validate: (){

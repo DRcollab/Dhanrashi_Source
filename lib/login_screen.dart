@@ -1,6 +1,6 @@
 import 'dart:core';
 import 'dart:core';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   late DRProfileAccess profileAccess;
   bool _hidePassword = true;
   late Profile profile;
+  late SharedPreferences prefs;
 
   /// Goto Logger class definition to see how login is happening
   ///
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
     _passWord = TextEditingController();
     profile = Profile.create(); // Custom
     super.initState();
-
+    future: initPrefs();
     future: Firebase.initializeApp().whenComplete(() {
       fireAuth = FirebaseAuth.instance;
       fireStore = FirebaseFirestore.instance;
@@ -103,6 +104,9 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   }
 
 
+  void initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
 
 
@@ -117,32 +121,37 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
       var _loggedInUser = await  fireAuth.signInWithEmailAndPassword(email: id, password: pwd);
       if (_loggedInUser.user != null) {
 
+          profile.uid = _loggedInUser.user!.uid;
+          profile.email = _loggedInUser.user!.email!;
 
+          prefs.setBool('session_active', true);
+          prefs.setString('user_id',_loggedInUser.user!.uid);
+          prefs.setString('email', _loggedInUser.user!.email!);
 
-        profile.uid = _loggedInUser.user!.uid;
-        profile.email = _loggedInUser.user!.email!;
 
         fireStore.collection('pjdhan_users').where(
             'Uid', isEqualTo: _loggedInUser.user!.uid)
             .get()
             .then((QuerySnapshot snapshot) {
-          if(snapshot.docs.isEmpty){
-            Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: profile,)));
-          }
-          snapshot.docs.forEach((f) {
+                    if(snapshot.docs.isEmpty){
+                      Navigator.pop(context);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ProfilerOptionPage(currentUser: profile,)));
+                    }
+            /// on successful retrieving of user details
+
+            snapshot.docs.forEach((f) {
             String email = f.get('email');
             String userID = f.get('Uid');
             String docID = f.id;
-
             String firstName = f.get('first_name');
             String lastName = f.get('last_name');
             Timestamp dob = f.get('DOB');
             String incomeRange = f.get('income');
             String image = f.get('image_source');
 
-            print(' Inside fetchProfile: firstName is : $firstName}');
+            /// Updating profile of user in a profile class object
+            /// This profile object will be sent to all widget and screens
 
             profile = Profile(
               firstName: firstName,
@@ -155,7 +164,22 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
               profileImage: image,
             );
 
-            print(' Inside fetchProfile after profiling: firstName is : ${profile.firstName}');
+            /// Populating shared preference prefs which will be used to determine whether user is logged
+
+            prefs.remove('f_name');
+            prefs.setString('f_name', firstName);
+            prefs.remove('l_name');
+            prefs.setString('l_name', lastName);
+            prefs.remove('dob');
+            prefs.setString('dob', dob.toDate().toString());
+            prefs.remove('income');
+            prefs.setString('income', incomeRange);
+            prefs.remove('doc_id');
+            prefs.setString('doc_id', docID);
+            prefs.remove('image');
+            prefs.setString('image', image);
+
+            /// If user details is FOUND for the user then redirected to the Dashboard...
 
             if(profile.docId !='') {
               Navigator.pop(context);
@@ -168,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
 
 
           });
-          return profile;
+
         }).catchError((e){
           setState(() {
             clickedLogin = false;
@@ -176,8 +200,6 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
 
           throw e;
         });
-
-
 
       }
       else{
@@ -187,18 +209,13 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
 
       }
 
-
     }catch(e){
       setState(() {
         clickedLogin = false;
       });
       Utility.showErrorMessage(context, e.toString());
-      print(e);
+
     }
-
-
-
-
 
   }
 
@@ -256,14 +273,16 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                               else
                                 return validEmailMessage;
                             },
-
+                            onSubmit: (){
+                              _loginKey.currentState!.validate();
+                            },
                             validate: (){
                               setState(() {
                                 if(_errorText != ''){
                                   _errorText = '';
                                 }
 
-                                print('errorText');
+
                               });
                             },
 
@@ -332,7 +351,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                               }
 
 
-                              //print('profile from outseide :${profile.docId}');
+
 
 
                             } // end of outside
@@ -349,7 +368,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                             child: LinkText(
                                 type: LinkTextType.DARK,
 
-                                linkText: "Trouble login ? Click here to resolve",
+                                linkText: "Trouble logging in ? Click here to resolve",
                                 displaySize: 12.sp, //*  DefaultValues.adaptForSmallDevice(context),
 
                                 onPressed: () {

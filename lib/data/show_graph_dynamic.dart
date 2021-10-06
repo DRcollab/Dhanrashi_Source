@@ -45,7 +45,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
   void _makeDataforBar() {
     List allInvestmentAnnualAmt = widget.resultSet;
 
-    print('Make Data: $allInvestmentAnnualAmt');
+    // print('Make Data: $allInvestmentAnnualAmt');
 
     int noStack = allInvestmentAnnualAmt.shape[0] -  2; //Number of goals - 1; hardcoded for now
     int noOfYear = allInvestmentAnnualAmt.shape[1] - 1; // hardcoded for now
@@ -87,8 +87,8 @@ class _DynamicGraphState extends State<DynamicGraph> {
   void _makeDataforLine() {
     List allInvestmentAnnualAmt = widget.resultSet;
 
-    print('Make Data for Line: $allInvestmentAnnualAmt');
-    print(allInvestmentAnnualAmt.shape);
+    // print('Make Data for Line: $allInvestmentAnnualAmt');
+    // print(allInvestmentAnnualAmt.shape);
 
     int noStack = allInvestmentAnnualAmt.shape[0] -
         1; //Number of goals - 1; hardcoded for now
@@ -103,7 +103,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
         _allInvestmentAmount
             .add(YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j]),DefaultValues.graphColors[i%15]));
       }
-      print('allInvestmenamt: $_allInvestmentAmount');
+   //   print('allInvestmenamt: $_allInvestmentAmount');
 
       // var barColor = charts.MaterialPalette.teal.shadeDefault;
      // var barColor = charts.MaterialPalette.deepOrange.shadeDefault;
@@ -122,7 +122,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
         //  labelAccessorFn: (YearWiseAmount row,_) =>'${row.amount}',
         ),
       );
-      print(_lineChartData.toString());
+    //  print(_lineChartData.toString());
       print('I am here');
     }
   }
@@ -137,7 +137,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
     inv_ratio = 7/5;
     goal_ratio = (goalValueatlastYear/invValueatlastYear)*inv_ratio;
 
-  print('invValueatlastYear: $invValueatlastYear');
+ // print('invValueatlastYear: $invValueatlastYear');
 
     List<Task>   pieData = [
 
@@ -149,7 +149,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
     //var goalValueatlastYear = allInvestmentAnnualAmt[1][noOfYear];
 
-    print('--------=============');
+   // print('--------=============');
    // print(invValueatlastYear);
 
     _pieChartData = List.empty(growable: true);
@@ -186,7 +186,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
   }
 
   Widget getWidget() {
-    print('get Widget');
+   // print('get Widget');
 
     if (widget.chartType == ChartType.bar) {
       return new charts.BarChart(_barChartData,

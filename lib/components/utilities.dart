@@ -9,7 +9,8 @@ class Utility{
 
   static var messages = {
     'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
-    ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.'
+    ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
+    'success_update_profile':'Your profile has been succesfully updated.' ,
   };
 
 
@@ -50,7 +51,7 @@ class Utility{
   static showMessageAndAsk({required BuildContext context, required String msg, required Function() takeAction}){
 
     showModalBottomSheet(
-     isDismissible: false,
+     isDismissible: true,
      // backgroundColor: Colors.green,
       context: context,
       builder: (context) => Container(

@@ -25,6 +25,7 @@ class ProfileView extends StatelessWidget {
 
 
   double age = (currentUser.DOB.difference(now).inDays/365);
+  print('Doc Id from PROFILE PAGE ${this.currentUser.docId}');
 
   String ageAsString = age.ceil().toString();
 
@@ -69,9 +70,10 @@ class ProfileView extends StatelessWidget {
                     buttonText: 'Update',
                     textColor: kPresentTheme.lightWeightColor,
                     onPressed: (){
+                      print('DOC IDENTITY: ${currentUser.docId} ');
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
-                              ProfilerPage(currentUser: this.currentUser,)));
+                              ProfilerPage(currentUser: this.currentUser,isItForUpdate: true,)));
                     },
                   ),
                 )
