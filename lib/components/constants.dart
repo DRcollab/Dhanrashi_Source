@@ -2,7 +2,7 @@ import 'package:dhanrashi_mvp/components/theme_class.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-
+//const String circularProgressIndicator = 'images/gifs/rolling.gif';
 
 //var userLoggedIn = false; // used to determine whether
 
@@ -19,6 +19,7 @@ import 'package:sizer/sizer.dart';
 
 DhanrashiTheme kLimeTheme =  DhanrashiTheme(
 
+  progressIndicator:  'images/gifs/rolling.gif',
   themeColor:Color(0xFFfafafa),
   influenceColors: [Color(0xfff0f0f0),Color(0xFFf7f7f7)],
 

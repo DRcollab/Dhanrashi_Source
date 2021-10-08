@@ -2,11 +2,11 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class ChartView extends StatelessWidget {
+class ChartTabView extends StatelessWidget {
 
   late Widget chartChild;
   var currentUser;
-  ChartView(
+  ChartTabView(
       {
         required this.chartChild,
        required  this.currentUser,

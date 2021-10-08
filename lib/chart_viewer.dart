@@ -7,15 +7,18 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'components/chart_tab_view.dart';
 import 'components/constants.dart';
 import 'components/table_view.dart';
+import 'data/show_graph_dynamic.dart';
 
 
 class ChartViewer extends StatefulWidget {
 
-  late Widget chartChild;
+ // late Widget chartChild;
+  List dataSet;
   var currentUser;
   ChartViewer(
   {
-    required this.chartChild,
+    required this.dataSet,
+
     this.currentUser,
   }
       );
@@ -63,11 +66,18 @@ class _ChartViewerState extends State<ChartViewer> {
         ),
         foot: TabBarView(
           children: [
-            ChartView(
+            ChartTabView(
               currentUser: widget.currentUser,
-              chartChild: widget.chartChild,
+              chartChild: DynamicGraph(
+                isVertical: false,
+                chartType: ChartType.bar,
+                resultSet: widget.dataSet,
+                gallopYears: 1,
+              ),
             ),
-            TableView(),
+            TableView(
+              arrayList: widget.dataSet,
+            ),
 
           ],
 

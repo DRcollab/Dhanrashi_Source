@@ -216,7 +216,7 @@ import 'package:sizer/sizer.dart';
                         ),
                       ),
                       ErrorText(errorText: _errorText,), //from custom_text
-                      buttonClicked ?  Image.asset(circularProgressIndicator, scale: 5,
+                      buttonClicked ?  Image.asset(kPresentTheme.progressIndicator, scale: 3,
                       ):CommandButton(
                         textColor: kPresentTheme.lightWeightColor,
                         buttonColor: kPresentTheme.accentColor,

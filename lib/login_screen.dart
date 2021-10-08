@@ -357,9 +357,9 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                             } // end of outside
                           }
                         });
-
+                        //circularProgressIndicator
                       },
-                    ):Image.asset(circularProgressIndicator, scale: 5,
+                    ):Image.asset(kPresentTheme.progressIndicator, scale: 3,
                     ),
                   ],
                 ),

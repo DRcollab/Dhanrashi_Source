@@ -104,7 +104,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       currentUser: this.widget.currentUser,
-      child: isSubmitted ?  Image.asset(circularProgressIndicator, scale: 5) : Column(
+      child: isSubmitted ?  Image.asset(kPresentTheme.progressIndicator, scale: 3) : Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
 

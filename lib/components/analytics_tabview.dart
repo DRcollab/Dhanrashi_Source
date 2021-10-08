@@ -91,7 +91,7 @@ class AnalyticsTabView extends StatelessWidget {
           child: Container(
             width: 100.w,
             height: 41.h,
-            child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(circularProgressIndicator, scale: 5),
+            child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(kPresentTheme.progressIndicator, scale: 3),
           ),
         ),
       ],

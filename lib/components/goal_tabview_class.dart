@@ -10,6 +10,7 @@ import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import '../chart_viewer.dart';
 import 'chart_tab_view.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
@@ -122,8 +123,6 @@ class _GoalsTabViewState extends State<GoalsTabView> {
           flex:2,
           child: Container(
 
-              height: 20.h,
-              width: 450,
               child: fetched ? Stack(
 
                 children: [
@@ -136,14 +135,9 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     onTap: (){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
-                              ChartView(
+                              ChartViewer(
                                 currentUser: widget.currentUser,
-                                chartChild: DynamicGraph(
-                                  isVertical: false,
-                                  chartType: ChartType.bar,
-                                  resultSet: dataSet,
-                                  gallopYears: 1,
-                                ),
+                                dataSet: dataSet,
 
                               )));
                     },
@@ -154,7 +148,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     ),
                   ),
                 ],
-              ) : Image.asset(circularProgressIndicator, scale: 3),
+              ) : Image.asset(kPresentTheme.progressIndicator, scale: 3),
             //DonutChart(pieData: pieData)
           ),
         ),

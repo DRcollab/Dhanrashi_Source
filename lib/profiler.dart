@@ -309,9 +309,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
                 child: Padding(
                   padding:  EdgeInsets.symmetric(vertical:2.h, horizontal: 4.w),
-                  child: Text(
-                    '',
-                  //  headers[index],
+                  child: Text( headers[index],
                     style: DefaultValues.kH2(context),
                   ),
                 ),

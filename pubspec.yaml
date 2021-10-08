@@ -128,6 +128,10 @@ flutter:
     - images/profiles/profile_image0.png
     - images/profiles/question.png
     - audio/done.wav
+    - images/gifs/dual_ring.gif
+    - images/gifs/elipses.gif
+    - images/gifs/rolling.gif
+    - images/gifs/chunk.gif
 
 
 

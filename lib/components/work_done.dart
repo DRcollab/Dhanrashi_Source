@@ -71,7 +71,7 @@ class _WorkDoneState extends State<WorkDone> {
                Text('Your ${this.widget.whatToAdd} is \n${this.widget.whatToDo}d successfully ', style: DefaultValues.kH2(context),)
 
             ],
-          )) :!widget.timedOut ? Image.asset(circularProgressIndicator, scale: 5) :
+          )) :!widget.timedOut ? Image.asset(kPresentTheme.progressIndicator, scale: 3) :
             Container(
 
                 child: Padding(

@@ -26,7 +26,7 @@ import 'data/database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'components/utilities.dart';
-
+import 'components/constants.dart';
 
 class ConfirmationPage extends StatefulWidget {
 
@@ -195,7 +195,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     return CustomScaffold(
       currentUser: widget.currentUser,
       child: isSubmitted ? Center(
-          child: Image.asset(circularProgressIndicator, scale: 5),): Container(
+          child: Image.asset(kPresentTheme.progressIndicator, scale: 3),): Container(
 
         child: ListView(
             // crossAxisAlignment: CrossAxisAlignment.stretch,

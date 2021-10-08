@@ -113,8 +113,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
         Flexible(
           flex:2,
           child: Container(
-              height: 20.h,
-              width: 100.w,
+
               child: fetched ? Stack(
                 children: [
 
@@ -129,12 +128,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                           MaterialPageRoute(builder: (context) =>
                               ChartViewer(
                                 currentUser : widget.currentUser,
-                                chartChild: DynamicGraph(
-                                  isVertical: false,
-                                  chartType: ChartType.bar,
-                                  resultSet: dataSet,
-                                  gallopYears: 1,
-                                ),
+                                dataSet: dataSet,
                               )));
                               // ChartView(
                               //
@@ -150,7 +144,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                   ),
 
                 ],
-              ) : Image.asset(circularProgressIndicator, scale: 3),
+              ) : Image.asset(kPresentTheme.progressIndicator, scale: 3),
           ),
         ),
        Flexible(
@@ -219,3 +213,13 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
     );
   }
 }
+
+
+
+
+// DynamicGraph(
+// isVertical: false,
+// chartType: ChartType.bar,
+// resultSet: dataSet,
+// gallopYears: 1,
+// ),

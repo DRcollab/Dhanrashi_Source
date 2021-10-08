@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
  class DhanrashiTheme {
 
+   final String progressIndicator;
    final Color themeColor; /// Used as main concept of the theme like light and dark  theme
    //final Color influenceColor; /// Second color of the theme , generally it takes a slight different shade from the theme color
    // for a monochromatic design
@@ -40,7 +41,7 @@ import 'package:flutter/material.dart';
 
 
   DhanrashiTheme({
-
+    required this.progressIndicator,
     required this.themeColor,
     required this.influenceColors,
     required this.accentColor,
