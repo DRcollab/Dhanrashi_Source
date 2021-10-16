@@ -9,7 +9,7 @@ import 'components/dounut_charts.dart';
 import 'components/table_view.dart';
 
 
-class IndividualInvestment extends StatelessWidget {
+class IndividualInvestment extends StatefulWidget {
 
   var currentUser;
   late List data;
@@ -24,6 +24,11 @@ class IndividualInvestment extends StatelessWidget {
 });
 
   @override
+  State<IndividualInvestment> createState() => _IndividualInvestmentState();
+}
+
+class _IndividualInvestmentState extends State<IndividualInvestment> {
+  @override
   Widget build(BuildContext context) {
    //
    // List pieData = [
@@ -32,14 +37,14 @@ class IndividualInvestment extends StatelessWidget {
    //  ];
 
     return CustomScaffold(
-      currentUser: this.currentUser,
+      currentUser: this.widget.currentUser,
         child: ListView(
           children: [
             Center(
               child: Container(
                 child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: Text(data[0][0], style: DefaultValues.kH2(context),),
+                  child: Text(widget.data[0][0], style: DefaultValues.kH2(context),),
                 ),
               ),
             ),
@@ -48,11 +53,11 @@ class IndividualInvestment extends StatelessWidget {
                 Container(
                   height: 22.h,
                   width: 48.w,
-                  child: DonutChart(pieData: this.pieData,arcWidth: 18,),),
+                  child: DonutChart(pieData: this.widget.pieData,arcWidth: 18,),),
                 Container(
                   height: 22.h,
                   width: 48.w,
-                  child: DonutChart(pieData: this.futurePieData,arcWidth: 18,),),
+                  child: DonutChart(pieData: this.widget.futurePieData,arcWidth: 18,),),
               ],
             ),
             Card(
@@ -61,7 +66,7 @@ class IndividualInvestment extends StatelessWidget {
               ),
             ),
             TableView(
-              arrayList: this.data,
+              arrayList: this.widget.data,
             ),
           ],
         )

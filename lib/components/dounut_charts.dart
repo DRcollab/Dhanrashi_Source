@@ -26,11 +26,12 @@ class DonutChart extends StatelessWidget {
 
 
 
-  List<charts.Series<Task, String>>seriesPieData  = [];
+ late List<charts.Series<Task, String>>seriesPieData = [];
 
 
   generateData(){
 
+    seriesPieData  = [];
 
 
     seriesPieData.add(

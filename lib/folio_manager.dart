@@ -10,7 +10,7 @@ class FolioManager extends StatelessWidget {
   var currentUser;
   FolioManager({
     this.currentUser,
-})
+});
 
   @override
   Widget build(BuildContext context) {
