@@ -11,6 +11,7 @@ class Shingle extends StatelessWidget {
 
   String title;
   String subtitle;
+  String prefix; // used to store the type prefix to determine which type of investment
   String value = '';
   String leadingImage ='';
   Widget? trailing;
@@ -47,6 +48,7 @@ class Shingle extends StatelessWidget {
     this.highlight = '',
     this.hasExtraText = false,
     this.trailing2,
+    this.prefix='',
   } );
 
 

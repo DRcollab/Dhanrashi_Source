@@ -52,8 +52,7 @@ class CustomScaffold extends StatelessWidget {
                 stream: Connectivity().onConnectivityChanged,
                 builder: (context,
                    AsyncSnapshot snapshot) {
-                  print('kkkkk');
-                  print(snapshot.data);
+
                   if( snapshot.hasData &&
                   snapshot.data != ConnectivityResult.none){
                     Global.internetAvailable = true;

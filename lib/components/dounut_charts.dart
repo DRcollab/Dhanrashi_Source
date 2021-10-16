@@ -32,6 +32,7 @@ class DonutChart extends StatelessWidget {
   generateData(){
 
 
+
     seriesPieData.add(
           charts.Series(
           data: pieData,
@@ -53,6 +54,14 @@ class DonutChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    generateData();
+    print('From inside Pie Chart : ${seriesPieData[0].data[0].task}');
+    print('From inside Pie Chart : ${seriesPieData[0].data[1].task}');
+
+    if(seriesPieData.length>1){
+      print('length > 1');
+      print('From inside Pie Chart : ${seriesPieData[1].data[0].task}');
+      print('From inside Pie Chart : ${seriesPieData[1].data[1].task}');
+    }
 
     return charts.PieChart<String>(
       List.from(seriesPieData),

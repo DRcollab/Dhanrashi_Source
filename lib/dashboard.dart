@@ -86,7 +86,7 @@ class _DashboardState extends State<Dashboard> {
   Future fetchGoals() async{
 
     Global.goalCount = 0;
-    fireStore.collection('pjdhan_goal').where('Uuid', isEqualTo: widget.currentUser.uid)
+    fireStore.collection('pjdhan_goal').where('Uuid', isEqualTo: widget.currentUser.uid).where('status', isEqualTo:'Active')
         .get()
         .then((QuerySnapshot snapshot){
       if( snapshot.docs.isEmpty){
@@ -147,7 +147,7 @@ class _DashboardState extends State<Dashboard> {
   Future fetchInvestment() async{
 
     Global.investmentCount = 0;
-    fireStore.collection('pjdhan_investment').where('Uuid', isEqualTo: widget.currentUser.uid)
+    fireStore.collection('pjdhan_investment').where('Uuid', isEqualTo: widget.currentUser.uid).where('status',isEqualTo:'Active')
         .get()
         .then((QuerySnapshot snapshot){
       if(snapshot.docs.isEmpty){
@@ -164,10 +164,10 @@ class _DashboardState extends State<Dashboard> {
         print('docid inv: $docID');
         String investmentName=f.get('investment_name');
         double currInvestAmt=f.get('currInvestAmt');
-        totalInvestValue = totalInvestValue + currInvestAmt;
         double annualInvestAmt=f.get('annualInvestAmt');
         double investRoI=f.get('investRoI');
         int duration=f.get('investment_duration');
+        totalInvestValue = totalInvestValue + currInvestAmt+annualInvestAmt*duration;
         if(duration > longestInvestmentDuration){
           longestInvestmentDuration = duration;
         }

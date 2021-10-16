@@ -7,6 +7,37 @@ import 'package:sizer/sizer.dart';
 class Utility{
 
 
+  static List<Color> warningColors = [
+    Colors.orangeAccent,
+    Colors.orangeAccent,
+    Colors.orange,
+    Colors.orange,
+    Colors.deepOrangeAccent,
+    Colors.deepOrangeAccent,
+    Colors.deepOrangeAccent,
+    Colors.deepOrange,
+    Colors.deepOrange,
+    Colors.deepOrange,
+    Colors.deepOrange,
+    Colors.redAccent,
+    Colors.redAccent,
+    Colors.redAccent,
+    Colors.redAccent,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+    Colors.red,
+
+
+  ];
+
   static var messages = {
     'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
     ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
@@ -98,5 +129,8 @@ class Utility{
 
     );
   }
+
+
+
 
 }

@@ -7,6 +7,7 @@ import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
+import 'package:dhanrashi_mvp/profile_view.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_gifs/loading_gifs.dart';
@@ -113,6 +114,16 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
           prefs.setString('image', profile.profileImage);
 
         });
+
+        Fluttertoast.showToast(
+          msg:'Your profile updated  successfully',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+
         Navigator.pop(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) =>
@@ -159,14 +170,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         });
 
 
-        Fluttertoast.showToast(
-            msg:'Your profile updated  successfully',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+
 
         Navigator.push(context,
             MaterialPageRoute(builder: (context) =>
@@ -213,63 +217,85 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 child: Text(" Confirm your entries", style:DefaultValues.kH1(context),),
               ),
               Padding(
-                padding: EdgeInsets.only(left:4.w, top:0),
-                child: Text(widget.currentUser.email, style:DefaultValues.kNormal2(context),),
+                padding: EdgeInsets.only(left:4.w, top:0,right: 4.w,bottom: 0.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(widget.currentUser.email, style:DefaultValues.kNormal2(context),),
+                    CommandButton(
+                        onPressed: (){
+
+
+                                 var profile = Profile(
+                                    firstName: widget.collector.fName.text,
+                                    lastName: widget.collector.lName.text,
+                                    DOB: widget.collector.dateOfBirth,
+                                    incomeRange: widget.collector.annualIncome
+                                        .toString(),
+                                    uid: widget.currentUser.uid,
+                                    email: widget.currentUser.email,
+                                    profileImage: widget.collector.profileImage,
+
+                                  );
+                                 Navigator.pop(context);
+                                 Navigator.push(context,
+                                     MaterialPageRoute(builder: (context) =>
+                                     ProfilerPage(currentUser: profile,isItForUpdate: false,)));
+                        },
+                        buttonColor: kPresentTheme.accentColor,
+                        borderRadius: BorderRadius.circular(15),
+                        buttonText: 'Edit',
+                        textColor: kPresentTheme.alternateColor)
+                  ],
+                ),
               ),
-              Column(
-                children: [
-                  Band(
-                    //toggleBandState: this.bandClickCallBack,
-                    headingChild: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor,),
-                    title: "Name",
-                    text: widget.collector.fName.text,
-                    subText: "",
-                    controller: widget.collector.fName,
-                    buttonIcon:Icons.edit,
-                    alternateIcon : Icons.subdirectory_arrow_right,
+              Padding(
+                padding:  EdgeInsets.only(top: 2.h,left: 2.w, right: 2.w),
+                child: Card(
+                  child: Column(
+
+                    children: [
+                      ListTile(
+
+                        leading: Icon(Icons.face_rounded, color: kPresentTheme.alternateColor,),
+                        title: Text('Name'),
+
+                        subtitle: Text(widget.collector.fName.text),
+
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.face_rounded,color: kPresentTheme.alternateColor),
+                        title: Text("Last Name"),
+
+                        subtitle: Text(widget.collector.lName.text),
 
 
+
+
+                      ),
+
+                      ListTile(
+
+                        leading: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
+                        title: Text("Date of Birth"),
+
+                        subtitle: Text('${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year}\nAge:${ageAsString} years'),
+
+
+                      ),
+                      ListTile(
+
+                        leading: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor),
+                        title: Text("Annual Income"),
+
+                        subtitle: Text(widget.collector.annualIncome.toString()),
+
+
+                      ),
+
+                    ],
                   ),
-                  Band(
-                    //toggleBandState: this.bandClickCallBack,
-                    headingChild: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
-                    title: "Last Name",
-                    text: widget.collector.lName.text,
-                    controller: widget.collector.lName,
-                    subText: "",
-                    buttonIcon:   Icons.edit ,
-                    alternateIcon:  Icons.subdirectory_arrow_right,
-
-
-
-                  ),
-
-                  Band(
-
-                    controller: dobController,
-                    headingChild: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
-                    title: "Date of Birth",
-                    text: '${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year}',
-
-
-                    subText: 'Age:${ageAsString} years',
-                    buttonIcon:  Icons.edit ,
-                   alternateIcon: Icons.subdirectory_arrow_right,
-
-                  ),
-                  Band(
-
-                    controller: incomeController,
-                    headingChild: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor),
-                    title: "Annual Income",
-                    text:  widget.collector.annualIncome.toString(),
-                    subText: "",
-                    buttonIcon:   Icons.edit ,
-                    alternateIcon: Icons.subdirectory_arrow_right,
-
-                  ),
-
-                ],
+                ),
               ),
 
           Padding(

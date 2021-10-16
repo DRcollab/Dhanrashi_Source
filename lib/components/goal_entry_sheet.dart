@@ -11,6 +11,7 @@ import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
+import 'band_class.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -28,7 +29,7 @@ import 'package:sizer/sizer.dart';
 
 class GoalSheet extends StatefulWidget {
 
-
+  String prefix = '';
   String titleMessage;
   double goalAmount = 0;
   int goalDuration = 0;
@@ -40,6 +41,8 @@ class GoalSheet extends StatefulWidget {
   late String type='Save';
   Function(Goal? goal)? onUpdate;
   Function(dynamic)? onAdd;
+  late Function()? onTap;
+  late Function() onEditCommit;
 
   GoalSheet({
 
@@ -56,6 +59,9 @@ class GoalSheet extends StatefulWidget {
     this.type = 'Save',
     this.onUpdate,
     this.onAdd,
+    required this.onEditCommit,
+    this.onTap,
+    required this.prefix,
   });
 
   @override
@@ -76,7 +82,7 @@ class _GoalSheetState extends State<GoalSheet> {
   double goalAmount = 1;
   double inflation = 1;
   int goalDuration = 1;
-
+  TextEditingController editingController = TextEditingController();
 
   late FirebaseFirestore fireStore;
   late var goalAccess;
@@ -247,7 +253,16 @@ class _GoalSheetState extends State<GoalSheet> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Image.asset(widget.imageSource, height: 8.h, width: 8.w,),
-                    Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH2(context),))),
+                    Expanded(child: Center(
+                        child: Band(
+                          controller:this.editingController,
+                          onCommit : widget.onEditCommit,
+                          onTap: widget.onTap,
+                          text:widget.titleMessage,
+                          textStyle: DefaultValues.kH2(context),
+                        ),
+                    ),
+                    ),
                     CommandButton(
                       enabled: !this.isEditing,
                       buttonColor: kPresentTheme.alternateColor,
@@ -260,7 +275,9 @@ class _GoalSheetState extends State<GoalSheet> {
 
 
                         var goal =  Goal(
-                          name:widget.titleMessage,
+                          name:this.editingController.text.compareTo(widget.titleMessage)==0
+                              ?this.editingController.text
+                              :widget.prefix+this.editingController.text,
                           description: 'No description',
                           goalAmount: goalAmount,
                           duration: goalDuration,
@@ -394,6 +411,7 @@ class _GoalSheetState extends State<GoalSheet> {
           Padding(
             padding: EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
+              activeColor: kPresentTheme.accentColor,
               onChanged: (value){
 
                 setState(() {
@@ -443,6 +461,7 @@ class _GoalSheetState extends State<GoalSheet> {
           Padding(
             padding:  EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
+              activeColor: kPresentTheme.accentColor,
               onChanged: (value){
                 setState(() {
                   inflation = value;
@@ -470,6 +489,7 @@ class _GoalSheetState extends State<GoalSheet> {
           Padding(
             padding:  EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
+              activeColor: kPresentTheme.accentColor,
               onChanged: (value){
                 setState(() {
                   goalDuration = value.round();

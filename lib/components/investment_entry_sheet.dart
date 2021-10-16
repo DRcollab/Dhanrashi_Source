@@ -10,6 +10,7 @@ import 'package:dhanrashi_mvp/components/work_done.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:flutter/material.dart';
+import 'band_class.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -30,6 +31,7 @@ class InvestmentSheet extends StatefulWidget {
  // const ActionSheet({Key? key}) : super(key: key);
 
   late String titleMessage;
+  late String prefix; // used to determine the type of investment when user has changed the name of the investment
   double investedAmount = 0;
   double expectedRoi = 0;
   int investmentDuration = 0;
@@ -42,6 +44,8 @@ class InvestmentSheet extends StatefulWidget {
   late var currentUser;
   Function(Investment? inv)? onUpdate;
   Function(dynamic)? onAdd;
+  late Function()? onTap;
+  late Function() onEditCommit;
   // final String? Function(String?) validator => return 0;
 
   InvestmentSheet({
@@ -57,6 +61,9 @@ class InvestmentSheet extends StatefulWidget {
     this.type = 'Save',
     this.onUpdate,
     this.onAdd,
+    this.onTap,
+    required this.onEditCommit,
+    required this.prefix,
   });
 
   @override
@@ -83,6 +90,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   late FirebaseFirestore fireStore;
   late var investAccess;
   double totalInvestment = 0.0;
+  TextEditingController editingController = TextEditingController();
 
   double calculateInterset( ){
 
@@ -165,6 +173,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   Future _save(Investment investment) async {
 
+
+
     DateTime currentPhoneDate = DateTime.now();
 
       await fireStore.collection('pjdhan_investment').add({
@@ -202,9 +212,10 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
     interestValue = calculateInterset();
     totalInvestment = investedAmount + annualInvestment*investmentDuration;
+
      pieData = [
 
-      Task('Investment', investedAmount, kPresentTheme.accentColor),
+      Task('Investment', totalInvestment, kPresentTheme.accentColor),
       Task('Interest Earned', interestValue ,kPresentTheme.alternateColor),
     ];
 
@@ -231,13 +242,23 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
              padding:  EdgeInsets.symmetric(vertical: 1.h,horizontal: 2.w),
              child: Container(
 
+               // EditableTextField(
+               //   editingController: this.editingController,
+               //   initialText:widget.titleMessage, style: DefaultValues.kH2(context),)
+               
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.start,
                  children: [
                    Image.asset(widget.imageSource,
                      height: 3.h ,
                      width: 6.w ,) ,
-                   Expanded(child: Center(child: Text(widget.titleMessage, style: DefaultValues.kH2(context),))),
+                   Expanded(child: Center(
+                       child:Band(
+                         onCommit: widget.onEditCommit,
+                         onTap: widget.onTap,
+                         controller: editingController,
+                         text: widget.titleMessage,
+                         textStyle: DefaultValues.kH2(context),) ,),),
                    CommandButton(
                      enabled: !this.isEditing,
                      buttonColor: kPresentTheme.alternateColor,
@@ -248,15 +269,16 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      onPressed:()  {
 
                        var inv =  Investment(
-                             name:widget.titleMessage,
+                             name: this.editingController.text.compareTo(widget.titleMessage)==0
+                                        ?this.editingController.text
+                                        :widget.prefix+this.editingController.text,
                              annualInvestmentAmount: annualInvestment,
                              currentInvestmentAmount: investedAmount,
                              duration: investmentDuration,
                              investmentRoi: expectedRoi/100,
                            );
 
-                       print('.... printing inv:;;;;;;;;');
-                       print(inv);
+
 
                        setState(()  {
                         if(widget.type == 'Save') {
@@ -265,8 +287,6 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                           [
                              _save(inv),
                             Utility.timeoutAfter(sec: 10, onTimeout: (){
-                              // Utility.showErrorMessage(
-                              //     context, Utility.messages['timed_out']!);
 
                               setState(() {
                                 isTimedOut = true;
@@ -306,16 +326,6 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
                        });
 
-                      // Navigator.pop(context);
-
-
-                       //
-                       // print('duration: ${investmentDuration}');
-                       // print('amount: ${investedAmount}');
-                       // print('ROI :${expectedRoi}');
-                       //
-
-
                      }, borderRadius: BorderRadius.circular(10),),
                  ],
                ),
@@ -330,7 +340,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
              Container(
                height: 22.h,
                  width: 48.w,
-                 child: DonutChart(pieData: pieData,)),
+                 child: DonutChart(pieData: pieData,arcWidth: 20,),),
              Container(
                 height: 22.h,
                   width: 48.w,
@@ -378,6 +388,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
          Padding(
            padding: EdgeInsets.only(left:2.w, right: 2.w),
            child: LabeledSlider(
+             activeColor: kPresentTheme.accentColor,
+             perpetualActive: true,
              onChanged: (value){
 
                setState(() {
@@ -398,15 +410,17 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
              },
 
              sliderValue: investedAmount,
-             min: 1,
+             min: 0,
              max: 100,
-             labelText: 'Invested Amount',
+             labelText: 'Initial Investment',
              suffix: 'Lakhs',
            ),
          ),
           Padding(
             padding: EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
+              activeColor: kPresentTheme.accentColor,
+              perpetualActive: true,
               onChanged: (value){
 
                 setState(() {
@@ -426,8 +440,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                 });
               },
               sliderValue: annualInvestment,
-              min: 0.06,
-              max: 100,
+              min: 0,
+              max: 10,
               labelText: 'Annual Investment',
               suffix: 'Lakhs',
             ),
@@ -435,6 +449,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
           Padding(
             padding: EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
+              activeColor: kPresentTheme.accentColor,
+              implementWarning: true,
+              threshold: 20,
               onChanged: (value){
                 setState(() {
                   expectedRoi = value;
@@ -462,13 +479,13 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
           Padding(
             padding: EdgeInsets.only(left:2.w, right: 2.w),
             child: LabeledSlider(
+              activeColor: kPresentTheme.accentColor,
               onChanged: (value){
                 setState(() {
                   investmentDuration = value.round();
                 });
 
               },
-
 
               validator: (){
                 setState(() {

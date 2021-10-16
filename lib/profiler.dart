@@ -67,10 +67,6 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
   int index = 0; /// Used to iterate to different su screen
 
-
-
-
-
   bool viewNavigationButton = true; /// used to hold comdition to show save button or navigator button
 
    var profileCollector = Collector();
@@ -122,7 +118,12 @@ class _ProfilerPageState extends State<ProfilerPage> {
  profileCollector.fName.text = widget.currentUser.firstName;
  profileCollector.lName.text = widget.currentUser.lastName;
  profileCollector.dateOfBirth = widget.currentUser.DOB;
- profileCollector.annualIncome = this.incomeRangeList[this.incomeRangeList.indexOf(widget.currentUser.incomeRange)];
+ if(widget.currentUser.incomeRange!='') {
+   profileCollector.annualIncome =
+   this.incomeRangeList[this.incomeRangeList.indexOf(
+       widget.currentUser.incomeRange)];
+ }
+
 
 
  if(widget.currentUser.DOB.year.toString()!='1900'){
@@ -186,6 +187,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
   @override
   Widget build(BuildContext context) {
 
+    print('call me index : $index');
 
     /// toggles the view of save button and navigation button
     ///
@@ -292,7 +294,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
 
     //Widget comButt =  /// Command Button
-
+    print('call me index : $index');
 
     return CustomScaffold(
       currentUser: widget.currentUser,

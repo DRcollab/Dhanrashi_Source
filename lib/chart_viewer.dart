@@ -33,6 +33,7 @@ class _ChartViewerState extends State<ChartViewer> {
     return DefaultTabController(
       length: 2,
       child: CustomScaffold(
+        currentUser: widget.currentUser,
         child:Padding(
           padding: EdgeInsets.only(top:25),
           child: Material(

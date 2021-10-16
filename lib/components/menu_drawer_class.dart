@@ -139,6 +139,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Dashboard', style: DefaultValues.kNormal2(context)),
+
                     enabled: widget.currentUser!=null,
                     onTap: (){
                       Navigator.push(context,
@@ -157,7 +158,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     },
                   ),
                   ListTile(
-                    leading: FaIcon(FontAwesomeIcons.bullseye, size: 24.sp,color:kPresentTheme.accentColor),
+                    leading: FaIcon(FontAwesomeIcons.plusCircle, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Add Goals', style: DefaultValues.kNormal2(context)),
                     enabled: widget.currentUser!=null,
                     onTap: (){
@@ -166,7 +167,17 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               GoalsInputScreen(currentUser: widget.currentUser,)));
                     },
                   ),
-
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.bullseye, size: 24.sp,color:kPresentTheme.accentColor),
+                    title: Text('Manage folios', style: DefaultValues.kNormal2(context)),
+                    subtitle: Text('Delete and restore your investments and goals'),
+                    enabled: widget.currentUser!=null,
+                    onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              GoalsInputScreen(currentUser: widget.currentUser,)));
+                    },
+                  ),
                   ListTile(
                     enabled: widget.currentUser!=null,
                     leading: FaIcon(FontAwesomeIcons.wrench, size: 24.sp,color:kPresentTheme.accentColor),
@@ -198,6 +209,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.calculator, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('SIP Calculator', style: DefaultValues.kNormal2(context)),
+                    subtitle: Text('Dhanrashi SIP calculator. find how to plan on your investments'),
                     onTap: (){
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>

@@ -51,6 +51,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
   double investmentDuration = 0;
   int _currentTabIndex = 0;
   late FirebaseFirestore fireStore;
+  bool moveKB = false;
 
   @override
   void initState() {
@@ -139,8 +140,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                    :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '#',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
@@ -180,8 +193,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '@',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 5,
@@ -222,8 +247,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: ':',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
@@ -259,8 +296,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '%',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
@@ -301,8 +350,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '&',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
@@ -338,8 +399,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '^',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
@@ -382,8 +455,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '*',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
@@ -419,8 +504,20 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '!',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,

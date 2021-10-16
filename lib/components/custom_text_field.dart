@@ -131,13 +131,15 @@ class EditableTextField extends StatefulWidget {
   TextEditingController editingController;
   String initialText = "Initial Text";
   late TextStyle style;
-
+  late Function()? onTap;
 
   EditableTextField({
     this.isEditing=false,
     this.initialText = 'Initial Text',
-   required this.style,
-    required this.editingController });
+    required this.style,
+    required this.editingController,
+    this.onTap,
+  });
 
 
   @override
@@ -151,7 +153,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
   @override
   void initState() {
     super.initState();
-  //  widget._editingController = TextEditingController(text: widget.initialText);
+   widget.editingController = TextEditingController(text: widget.initialText);
   }
   @override
   void dispose() {
@@ -166,11 +168,13 @@ class _EditableTextFieldState extends State<EditableTextField> {
 
 
     if(widget.isEditing) {
-      return TextField(
+      return TextFormField(
+        style: widget.style,
         controller: widget.editingController,
-        onSubmitted: (value) {
+        onFieldSubmitted: (value) {
           setState(() {
             widget.initialText = value;
+            print(' here is the value: $value');
 
           });
 
@@ -187,11 +191,11 @@ class _EditableTextFieldState extends State<EditableTextField> {
 
           });
         },
+        onTap: widget.onTap,
       );
     }else{
-      print(":::::::::::${widget.initialText}");
-      print(Text(widget.initialText));
-      return Text(widget.initialText);
+
+      return Text(widget.initialText,style: widget.style,);
 
     }
   }

@@ -55,6 +55,8 @@ import 'package:sizer/sizer.dart';
   class _SignUpState extends State<SignUpPage> with InputValidationMixin{
 
     bool buttonClicked = false;
+    bool _hidePassword = true;
+    bool _hidePassword2 = true;
 
   final _userEmail = TextEditingController();
   final  _userPassword = TextEditingController();
@@ -160,6 +162,11 @@ import 'package:sizer/sizer.dart';
                         child: Form(
                           key: _passKey,
                           child: CustomTextField(
+                            showPassword: (){
+                              setState(() {
+                                _hidePassword = !_hidePassword;
+                              });
+                            },
                             onSubmit: (){
                               _passKey.currentState!.validate();
                             },
@@ -178,7 +185,7 @@ import 'package:sizer/sizer.dart';
                                 return validPasswordMessage;
                             },
                             icon: Icons.password_rounded,
-
+                            hidePassword: _hidePassword,
                             hintText: 'Enter Password ',
                             passWord: true,
                           ),
@@ -189,11 +196,16 @@ import 'package:sizer/sizer.dart';
                         child: Form(
                           key: _passKey2,
                           child: CustomTextField(
+                            showPassword: (){
+                              setState(() {
+                                _hidePassword2 = !_hidePassword2;
+                              });
+                            },
                             onSubmit: (){
                               _passKey2.currentState!.validate();
                             },
                             controller: _userPassword2,
-
+                            hidePassword: _hidePassword2,
                             validate: (){
                               setState(() {
                                 _errorText = "";

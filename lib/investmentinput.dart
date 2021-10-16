@@ -53,13 +53,17 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
   int _currentTabIndex = 0 ;
 
+  late bool moveKB = false;
+
   late FirebaseFirestore fireStore;
 
   @override
   void initState() {
     // TODO: implement initState
     investmentCount = Global.investmentCount;
+
     super.initState();
+    moveKB = false;
 
 
   }
@@ -144,10 +148,21 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                        prefix: '#',
                                         currentUser: widget.currentUser,
-
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                         titleMessage: name,
                                         investedAmount: 10,
                                         investmentDuration: 10,
@@ -186,8 +201,20 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                      prefix: '@',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 5,
@@ -229,8 +256,21 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                    :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                      prefix: ':',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
+
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -267,8 +307,20 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                      prefix: '%',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -310,8 +362,20 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                      prefix: '&',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -344,12 +408,24 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                             name = 'Bank FD';
 
                             showModalBottomSheet(
-                                isScrollControlled: true,
+                                isScrollControlled: false,
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                      prefix: '^',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -393,8 +469,20 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                      prefix: '*',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,
@@ -431,8 +519,20 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: InvestmentSheet(
+                                      prefix: '!',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       investedAmount: 10,

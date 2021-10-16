@@ -19,12 +19,21 @@ class _TableViewState extends State<TableView> {
   late int numItems;
   late List<DataColumn> dataColumns = List.empty(growable:true);
   late List<DataRow> dataRows= List.empty(growable:true);
-
+  int columnCount = 0;
 
   @override
   void initState() {
     late List<DataCell> dataCells;
     // TODO: implement initState
+
+
+    print('ARRAy LIST : ${widget.arrayList.length}');
+
+    if(widget.arrayList.length>1){
+      columnCount = widget.arrayList.length-1;
+    }else{
+      columnCount = widget.arrayList.length;
+    }
     numItems = widget.arrayList[0].length;
     print(widget.arrayList);
     print('NUM ITEMS : $numItems');
@@ -36,7 +45,7 @@ class _TableViewState extends State<TableView> {
       ))
     );
 
-    for(int i = 0; i<widget.arrayList.length-1;i++){
+    for(int i = 0; i<columnCount;i++){
     //  print(widget.arrayList[i][0]);
      dataColumns.add( DataColumn(
           label: SizedBox(
@@ -53,11 +62,12 @@ class _TableViewState extends State<TableView> {
       dataCells.add(
           DataCell(
               SizedBox(
+
                 child: Text(i.toString()),
               )
           )
       );
-     for(int j = 0; j<widget.arrayList.length-1; j++) {
+     for(int j = 0; j<columnCount; j++) {
 
        print(widget.arrayList[j][0]);
 
@@ -92,12 +102,15 @@ class _TableViewState extends State<TableView> {
       scrollDirection: Axis.vertical,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: DataTable(
-          headingRowColor: MaterialStateColor.resolveWith((states) => kPresentTheme.alternateColor),
-          columns: dataColumns,
+        child: Center(
+          child: DataTable(
 
-          rows: dataRows,
+            headingRowColor: MaterialStateColor.resolveWith((states) => kPresentTheme.alternateColor),
+            columns: dataColumns,
 
+            rows: dataRows,
+
+          ),
         ),
       ),
     );

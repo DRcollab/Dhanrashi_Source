@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
   Map goalIcons = {
-      'Mutual Fund': 'image',
+
     'Own a car':'images/car.png',
     'Building my own House':'images/house.png',
     'Children Education':'images/education.png',
@@ -10,6 +10,15 @@ import 'package:flutter/material.dart';
     'Foreign tour':'images/destination.png',
     'Parents Health':'images/healthcare.png',
     'Other':'images/products.png',
+    '#':'images/car.png',
+    '@':'images/house.png',
+    ':':'images/education.png',
+    '%':'images/pension.png',
+    '&':'images/tour.png',
+    '^':'images/destination.png',
+    '*':'images/healthcare.png',
+    '!':'images/products.png',
+
 
 };
 
@@ -23,6 +32,14 @@ import 'package:flutter/material.dart';
     'Bank FD':'images/bank.png',
     'Gold':'images/coin.png',
     'Other':'images/products.png',
+    '#': 'images/mutual.png',
+    '@':'images/insurance.png',
+    ':':'images/bonds.png',
+    '%':'images/stock.png',
+    '&':'images/real-estate.png',
+    '^':'images/bank.png',
+    '*':'images/coin.png',
+    '!':'images/products.png',
 
 
   };

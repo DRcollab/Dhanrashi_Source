@@ -47,6 +47,8 @@ class GoalsTabView extends StatefulWidget {
 class _GoalsTabViewState extends State<GoalsTabView> {
 
   bool fetched = false;
+  bool moveKB = false;
+  String prefix = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -80,13 +82,28 @@ class _GoalsTabViewState extends State<GoalsTabView> {
           child: Container(
             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: GoalSheet(
+              prefix: this.prefix,
+              onEditCommit: (){
+                setState(() {
+                  moveKB = false;
+                });
+              },
+              onTap: (){
+                setState(() {
+                  moveKB = true;
+                });
+              },
               uniquId: widget.goalDBs[index].goalDocumentID,
               currentUser: this.widget.currentUser,
-              titleMessage: goals[index].name,
+              titleMessage: '#@:%&^*!'.contains(goals[index].name.substring(0,1))
+                  ?goals[index].name.substring(1)
+                  :goals[index].name,
               goalAmount: goals[index].goalAmount,
               goalDuration: goals[index].duration,
               inflation: goals[index].inflation * 100,
-              imageSource: goalIcons[goals[index].name],
+              imageSource: goalIcons.containsKey(this.goals[index].name)
+                  ?goalIcons[this.goals[index].name]
+                  :goalIcons[this.goals[index].name.substring(0,1)],
               type: 'Update',
               onUpdate: (newGoal){
                 print('new inv amount');
@@ -129,7 +146,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                   DynamicGraph(
                     chartType: ChartType.bar,
                     resultSet: dataSet,
-                    gallopYears: 5,
+                    gallopYears: (widget.longestGoalDuration~/5),
                   ),
                   GestureDetector(
                     onTap: (){
@@ -177,18 +194,31 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Shingle(
                     onPressed:(){
+                      if('#@:%&^*!'.contains(goals[index].name.substring(0,1))){
+                        prefix=goals[index].name.substring(0,1);
+
+                      }else{
+                        prefix='';
+                      }
                       _edit(index);
                     },
                     type: 'goal',
                     maxHeight: 11.h,
                     barColor: DefaultValues.graphColors[index%15],
-                    leadingImage: goalIcons[goals[index].name],
-                    title:  goals[index].name,
+                    leadingImage: goalIcons.containsKey(this.goals[index].name)
+                        ?goalIcons[this.goals[index].name]
+                        :goalIcons[this.goals[index].name.substring(0,1)],
+                    title:  '#@:%&^*!'.contains(goals[index].name.substring(0,1))
+                        ?goals[index].name.substring(1)
+                        :goals[index].name,
+                    prefix: '#@:%&^*!'.contains(goals[index].name.substring(0,1))
+                        ?goals[index].name.substring(0,1)
+                        :'',
                     subtitle: 'Goal: ${goals[index].goalAmount.toString()} lac',
                     value:'${goals[index].duration.toString()} Years',
                     icon1:Icons.watch_later_outlined,
                     trailing: IconButton(
-                        icon: Icon(Icons.delete) ,
+                        icon: Icon(Icons.edit) ,
                       onPressed: (){
 
                       },
