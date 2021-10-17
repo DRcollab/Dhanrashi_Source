@@ -24,7 +24,7 @@ class CustomTextField extends StatefulWidget {
   double radius;
   String label;
   TextInputAction? textInputAction;
-  Function()? onSubmit;
+  Function() onSubmit;
 
 
   CustomTextField({
@@ -41,7 +41,7 @@ class CustomTextField extends StatefulWidget {
     this.label='',
     this.textInputAction = TextInputAction.next,
     this.errorText='',
-    this.onSubmit,
+    required this.onSubmit,
 
   });
 
@@ -66,7 +66,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         controller: this.widget.controller,
         onFieldSubmitted: (_){
           FocusScope.of(context).nextFocus();
-          widget.onSubmit!();
+          widget.onSubmit();
 
         },
         obscureText: widget.passWord && this.widget.hidePassword,

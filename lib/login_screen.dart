@@ -295,7 +295,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                         key: _passwordKey,
 
                         child: CustomTextField(
-
+                          onSubmit: (){},
                           // textInputAction: TextInputAction.done,
                           validator: (value){
                             if(passWordValid(value.toString()))

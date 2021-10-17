@@ -145,19 +145,19 @@ class _LabeledSliderState extends State<LabeledSlider> {
                       changeValue = widget.min;
                     }
 
-                     // if(widget.perpetualActive) {
-                     //     if(changeValue>widget.sliderValue){
-                     //
-                     //       variableMax++;
-                     //       variableMin++;
-                     //     }
-                     //     else{
-                     //       variableMax>= changeValue ? variableMax-- : variableMax = changeValue;
-                     //       variableMin>=widget.min ? variableMin-- : variableMin = widget.min;
-                     //     }
-                     //   print("C:$changeValue");
-                     //
-                     // }
+                     if(widget.perpetualActive) {
+                         if(changeValue>widget.sliderValue){
+
+                           variableMax++;
+                           variableMin++;
+                         }
+                         else{
+                           variableMax>= changeValue ? variableMax-- : variableMax = changeValue;
+                           variableMin>=widget.min ? variableMin-- : variableMin = widget.min;
+                         }
+                       print("C:$changeValue");
+
+                     }
 
                     if(widget.implementWarning){
                       if(changeValue>widget.threshold){

@@ -363,7 +363,7 @@ class _GoalSheetState extends State<GoalSheet> {
               Container(
                   height: 22.h,//* DefaultValues.adaptForSmallDevice(context),
                   width: 22.h,// * DefaultValues.adaptForSmallDevice(context),
-                  child: DonutChart(pieData: pieData,)),
+                  child: DonutChart(pieData: pieData,arcWidth:20)),
               Container(
                 height: 22.h, //* DefaultValues.adaptForSmallDevice(context),
                 width: 22.h, //* DefaultValues.reduceWidthAsPerScreen(context),

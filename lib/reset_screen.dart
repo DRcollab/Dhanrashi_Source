@@ -121,7 +121,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
                         key: _emailKey,
 
                         child: CustomTextField(
-
+                          onSubmit: (){},
                           controller: emailController,
                           icon: Icons.email,
                           validator: (value){
