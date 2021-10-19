@@ -306,14 +306,14 @@ import 'package:sizer/sizer.dart';
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calculator),
+            icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
             label: 'SIP Calculator',
 
           ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
               label: 'Inflation Data'
           ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
               label: 'Settings'
           ),
         ],

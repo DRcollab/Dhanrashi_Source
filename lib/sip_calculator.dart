@@ -34,7 +34,8 @@ class _SIPCalculatorState extends State<SIPCalculator> {
   double annualInvestment = 1;
   double expectedRoi=1;
   final  _sipKey = GlobalKey<ScaffoldState>();
-  //double goalAmount = 0;
+  double goalAmount = 0;
+  double sipAmount = 0;
 
   @override
   initState(){
@@ -80,9 +81,9 @@ class _SIPCalculatorState extends State<SIPCalculator> {
     interestValue = calculateInterset();
     totalInvestment = investedAmount + annualInvestment*investmentDuration;
 
-    //goalAmount = totalInvestment+interestValue;
-   // annualInvestment = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0);
-   // sipAmount = annualInvestment * 100000/12;
+    goalAmount = totalInvestment+interestValue;
+   annualInvestment = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0);
+   sipAmount = annualInvestment * 100000/12;
 
     pieData = [
 
@@ -103,30 +104,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
           body:SafeArea(
             child: ListView(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left:8),
-                      child: GestureDetector(
-                        onTap: () {
 
-                          _sipKey.currentState!.openDrawer();
-                        },
-
-                        child: Icon(Icons.menu),
-                        //CircleAvatar(radius: 20,backgroundColor: Colors.amber,
-
-
-                      ),
-                    ),
-                    Text('SIP Calculator'),
-                    Padding(
-                      padding: const EdgeInsets.only( right:8.0),
-                      child: Icon(Icons.account_circle_sharp),
-                    ),
-                  ],
-                ),
                 Stack(
 
                   children: [
@@ -149,7 +127,23 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                         ),
                         child: Padding(
                           padding:  EdgeInsets.all(2.w),
-                          child: Center(child: Text('SIP Calculator:', style: DefaultValues.kH1(context),)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(width: 20.w,),
+                                          Text('SIP Calculator', style: DefaultValues.kH1(context),),
+                                      Padding(
+                                        padding: EdgeInsets.only(left:18.w),
+                                        child: GestureDetector(
+                                            onTap: (){
+                                              Navigator.pop(context);
+                                            },
+
+                                            child: Icon(Icons.close,color: Colors.red,),
+                                        ),
+                                      ),
+                                    ],
+                          ),
                         ),
                       ),
                     ),
@@ -207,7 +201,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                   ),
                                   Text(
                                     selectedValue == 0 ?'Rs.${(totalInvestment+interestValue).toStringAsFixed(2)} Lakh'
-                                    :'Rs.${1.23.toStringAsFixed(2)}',
+                                    :'Rs.${sipAmount.toStringAsFixed(2)}',
 
                                     style: DefaultValues.kH1(context),)
                                 ],

@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dhanrashi_mvp/components/menu_drawer_class.dart';
@@ -66,7 +67,7 @@ class CustomScaffold extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                               Padding(
-                                    padding: const EdgeInsets.only(left:8),
+                                    padding: EdgeInsets.only(left:2.w),
                                     child: GestureDetector(
                                         onTap: () {
 
@@ -81,14 +82,14 @@ class CustomScaffold extends StatelessWidget {
                               ),
                               Text(this.title),
                               Padding(
-                              padding: const EdgeInsets.only( right:8.0),
+                              padding: EdgeInsets.only( right:2.w),
                               child: Icon(Icons.account_circle_sharp),
                               ),
                               ],
                         ),
                         //),
                         Padding(
-                        padding: const EdgeInsets.only(top: 100.0),
+                        padding: EdgeInsets.only(top: 10.h),
                         child: this.foot,
                         ),
                         ],

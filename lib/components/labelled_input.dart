@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:intl/intl.dart';
 import 'constants.dart';
 import 'custom_text_field.dart';
 
@@ -54,18 +55,19 @@ class _LabeledInputState extends State<LabeledInput> {
 
   var controller = TextEditingController();
 
+  var textFormat;
   double variableMax = 0;
   double variableMin = 0;
   late Color activeColor;
   String label = '';
   String textLabel = '';
-
+  late String _currency;
   bool autofocus = false;
   FocusNode numericFocusNode = FocusNode();
 
   @override
   void initState() {
-
+    textFormat = NumberFormat.simpleCurrency(locale:'en-in');
     if(widget.initialValue>0){
       if(widget.initialValue<1){
         controller.text = (widget.initialValue*100).toString();
@@ -78,6 +80,8 @@ class _LabeledInputState extends State<LabeledInput> {
       controller.text = widget.initialValue.toString();
       textLabel = '';
     }
+
+    _currency = NumberFormat.compactSimpleCurrency(locale: 'en-in').currencySymbol;
 
 
 
@@ -118,16 +122,22 @@ class _LabeledInputState extends State<LabeledInput> {
             child: Row(
               children: [
                 Container(
-                  width:40.w,
+                  width:60.w,
                   height: 6.h,
                   child: TextField(
+                    onChanged: (value){
+                      print(this.controller.text);
 
+                      value = this.controller.text+',';
+                    },
                     focusNode: numericFocusNode,
                     autofocus: this.autofocus,
                     textAlign: TextAlign.end,
                     enableInteractiveSelection: false,
                     enabled: widget.enabled,
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[.0-9]')),],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[.0-9]')),
+                    ],
                     controller: this.controller,
                     onSubmitted: (_)=> FocusScope.of(context).unfocus(),
                     textInputAction: TextInputAction.next,
@@ -135,6 +145,7 @@ class _LabeledInputState extends State<LabeledInput> {
                     style:DefaultValues.kInputTextStyle(context),
                     //validator: widget.validator,
                     decoration: InputDecoration(
+                      // prefixText: _currency,
                       contentPadding: EdgeInsets.all(2.w),
                       disabledBorder: InputBorder.none,
                       icon: widget.icon,
@@ -175,19 +186,20 @@ class _LabeledInputState extends State<LabeledInput> {
                         autofocus = false;
 
                         widget.onCompleteEditing!();
-                        if(double.parse(this.controller.text)>=100000){
-                          value = this.controller.text = (double.parse(this.controller.text)/100000).toStringAsFixed(2);
-                          textLabel = 'Lakhs';
-
-                        }else if(double.parse(this.controller.text)>=1000){
-                          value = this.controller.text = (double.parse(this.controller.text)/1000).toStringAsFixed(2);
-                          value = (double.parse(value)/100).toStringAsFixed(2);
-                          textLabel = 'Thousands';
-                        }else if(double.parse(this.controller.text)>=100){
-                          value = this.controller.text = (double.parse(this.controller.text)/100).toStringAsFixed(2);
-                          textLabel = 'Hundred';
-                          value = (double.parse(value)/1000).toStringAsFixed(2);
-                        }
+                        controller.text = textFormat.format(double.parse( controller.text));
+                        // if(double.parse(this.controller.text)>=100000){
+                        //   value = this.controller.text = (double.parse(this.controller.text)/100000).toStringAsFixed(2);
+                        //   textLabel = 'Lakhs';
+                        //
+                        // }else if(double.parse(this.controller.text)>=1000){
+                        //   value = this.controller.text = (double.parse(this.controller.text)/1000).toStringAsFixed(2);
+                        //   value = (double.parse(value)/100).toStringAsFixed(2);
+                        //   textLabel = 'Thousands';
+                        // }else if(double.parse(this.controller.text)>=100){
+                        //   value = this.controller.text = (double.parse(this.controller.text)/100).toStringAsFixed(2);
+                        //   textLabel = 'Hundred';
+                        //   value = (double.parse(value)/1000).toStringAsFixed(2);
+                        // }
                         widget.getValue!(value);
                       });
 
@@ -196,10 +208,10 @@ class _LabeledInputState extends State<LabeledInput> {
                     onTap: widget.validator,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0),
-                  child: Text(textLabel,style: DefaultValues.kNormal2(context),),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left:8.0),
+                //   child: Text(textLabel,style: DefaultValues.kNormal2(context),),
+                // ),
               ],
             ),
           ),

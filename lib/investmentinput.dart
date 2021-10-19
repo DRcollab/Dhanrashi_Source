@@ -610,17 +610,17 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
 
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.bullseye),
+            icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
             label: 'Goals',
 
 
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.chartPie, color: kPresentTheme.accentColor,),
+            icon: FaIcon(FontAwesomeIcons.chartPie, color: kPresentTheme.accentColor,size: 15.sp,),
             label: 'Dashboard',
 
           ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
               label: 'SIP Calculator'
           ),
 

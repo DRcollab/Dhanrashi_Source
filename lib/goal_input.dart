@@ -586,15 +586,15 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
 
         items: [
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartLine),
+              icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
             label: 'Investment',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,),
+            icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,size: 15.sp,),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calculator),
+            icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
             label: 'SIP Calculator',
           )
         ],
