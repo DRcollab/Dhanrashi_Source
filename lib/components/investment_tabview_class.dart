@@ -258,7 +258,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                     text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
                     icon1: Icons.watch_later_outlined,
                     icon2: FontAwesomeIcons.chartLine,
-                    highlight:'Corpus: ${futureValue.toStringAsFixed(2)} lac' ,
+                    highlight:'Corpus: ${textFormat.format(futureValue)}' ,
                     trailing: IconButton(
                       icon: Icon(Icons.edit) ,
                       onPressed: (){

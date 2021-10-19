@@ -68,18 +68,19 @@ class _LabeledInputState extends State<LabeledInput> {
   @override
   void initState() {
     textFormat = NumberFormat.simpleCurrency(locale:'en-in');
-    if(widget.initialValue>0){
-      if(widget.initialValue<1){
-        controller.text = (widget.initialValue*100).toString();
-        textLabel = 'Thousand';
-      }else{
-        controller.text = widget.initialValue.toString();
-        textLabel = 'Lakh';
-      }
-    }else{
-      controller.text = widget.initialValue.toString();
-      textLabel = '';
-    }
+    controller.text = textFormat.format(widget.initialValue);
+    // if(widget.initialValue>0){
+    //   if(widget.initialValue<1){
+    //     controller.text = (widget.initialValue*100).toString();
+    //     textLabel = 'Thousand';
+    //   }else{
+    //     controller.text = widget.initialValue.toString();
+    //     textLabel = 'Lakh';
+    //   }
+    // }else{
+    //   controller.text = widget.initialValue.toString();
+    //   textLabel = '';
+    // }
 
     _currency = NumberFormat.compactSimpleCurrency(locale: 'en-in').currencySymbol;
 
