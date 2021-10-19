@@ -408,7 +408,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                             name = 'Bank FD';
 
                             showModalBottomSheet(
-                                isScrollControlled: false,
+                                isScrollControlled: true,
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(

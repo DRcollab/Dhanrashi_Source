@@ -54,7 +54,33 @@ class Utility{
 
   }
 
+  static double changeToPeriodicDecimal(double val){
 
+
+    if(val<1){
+      return val*100;
+
+    }else{
+      return val;
+
+    }
+  }
+
+  static String getPeriod(double val){
+    if(val>0){
+      if(val<1){
+        return 'Thousand';
+
+      }else{
+        return 'Lac';
+
+      }
+    } else{
+      return '';
+    }
+
+
+  }
 
   static showErrorMessage(BuildContext context, String e){
     showModalBottomSheet(

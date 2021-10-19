@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/main.dart';
@@ -80,7 +81,8 @@ class _GoalsTabViewState extends State<GoalsTabView> {
         context: context,
         builder: (context) => SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: !moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
             child: GoalSheet(
               prefix: this.prefix,
               onEditCommit: (){
@@ -214,7 +216,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     prefix: '#@:%&^*!'.contains(goals[index].name.substring(0,1))
                         ?goals[index].name.substring(0,1)
                         :'',
-                    subtitle: 'Goal: ${goals[index].goalAmount.toString()} lac',
+                    subtitle: 'Goal: ${Utility.changeToPeriodicDecimal(goals[index].goalAmount).toString()} ${Utility.getPeriod(goals[index].goalAmount)} INR',
                     value:'${goals[index].duration.toString()} Years',
                     icon1:Icons.watch_later_outlined,
                     trailing: IconButton(

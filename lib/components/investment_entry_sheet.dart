@@ -1,6 +1,7 @@
 
 import 'dart:math';
 import 'dart:async';
+import 'package:dhanrashi_mvp/components/maps.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
@@ -21,6 +22,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
+
+import 'labelled_input.dart';
 
 // double investedAmount = 10;
 // double expectedRoi = 23;
@@ -117,7 +120,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   @override
   void initState(){
-    print(' I am in Init Tstae of invest entry');
+
     this.isSavePressed = false;
     this.statusOfStoring = false;
     this.isTimedOut = false;
@@ -267,9 +270,10 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      buttonText: widget.type,
                      textSize: 12.sp,
                      onPressed:()  {
-
+                        print('Prefix is ${widget.prefix}');
                        var inv =  Investment(
-                             name: this.editingController.text.compareTo(widget.titleMessage)==0
+
+                             name: investmentIcons.containsKey(this.editingController.text.trim())
                                         ?this.editingController.text
                                         :widget.prefix+this.editingController.text,
                              annualInvestmentAmount: annualInvestment,
@@ -387,15 +391,13 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
          Padding(
            padding: EdgeInsets.only(left:2.w, right: 2.w),
-           child: LabeledSlider(
-             activeColor: kPresentTheme.accentColor,
-             perpetualActive: true,
-             onChanged: (value){
+           child: LabeledInput(
+              initialValue: investedAmount,
+             label: 'Initial Investment',
+             icon: Icon(Icons.bar_chart),
+             getValue: (value){
 
-               setState(() {
-                 investedAmount = value;
-               });
-
+               investedAmount = double.parse(value.toString());
              },
 
              validator: (){
@@ -403,47 +405,39 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      isEditing = true;
                    });
                 },
-             onEditingComplete: (){
+             onCompleteEditing: (){
                setState(() {
                  isEditing = false;
+
                });
              },
 
-             sliderValue: investedAmount,
-             min: 0,
-             max: 100,
-             labelText: 'Initial Investment',
-             suffix: 'Lakhs',
+
            ),
          ),
           Padding(
             padding: EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledSlider(
-              activeColor: kPresentTheme.accentColor,
-              perpetualActive: true,
-              onChanged: (value){
+            child: LabeledInput(
+              initialValue: annualInvestment,
+             // controller: editingController,
+             label: 'Annual Investment',
+             icon:Icon(Icons.show_chart, color: Colors.amber,),
 
-                setState(() {
-                  annualInvestment = value;
-                });
-
+              getValue: (value){
+                  annualInvestment = double.parse(value.toString());
               },
-
               validator: (){
                 setState(() {
                   isEditing = true;
                 });
               },
-              onEditingComplete: (){
+              onCompleteEditing: (){
                 setState(() {
                   isEditing = false;
+
                 });
               },
-              sliderValue: annualInvestment,
-              min: 0,
-              max: 10,
-              labelText: 'Annual Investment',
-              suffix: 'Lakhs',
+
             ),
           ),
           Padding(
@@ -451,7 +445,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
             child: LabeledSlider(
               activeColor: kPresentTheme.accentColor,
               implementWarning: true,
-              threshold: 20,
+              threshold: 60,
               onChanged: (value){
                 setState(() {
                   expectedRoi = value;
@@ -499,6 +493,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
               },
               min: 1,
               max: 30,
+              divisions: 30,
               labelText: 'Time Period',
               sliderValue: investmentDuration.toDouble(),
               textPrecision: 0,

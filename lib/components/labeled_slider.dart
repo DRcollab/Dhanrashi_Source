@@ -15,6 +15,7 @@ double max = 10; // maximum value of the slider movement
 //int divisions = 1;
 int textPrecision = 2;
 double collector = 0;
+int? divisions;
 String suffix = '';
 double threshold = 0;
 bool perpetualActive = false;
@@ -40,6 +41,7 @@ LabeledSlider({
   this.perpetualActive = false,
   this.implementWarning = false,
   this.threshold = 0,
+  this.divisions,
   required this.activeColor,
 }
     );
@@ -101,21 +103,36 @@ class _LabeledSliderState extends State<LabeledSlider> {
               suffix: widget.suffix,
               getValue: (){
                 setState(() {
-                  if(double.parse( this.controller.text).roundToDouble() > widget.min) {
-                    widget.sliderValue = double.parse(double.parse(this
-                        .controller.text).roundToDouble().toStringAsFixed(2));
-                  }
-                  else{
+                  print('divisions:${widget.divisions}');
+                  double val = double.parse(double.parse(this.controller.text).toStringAsFixed(2));
+                  if( val > widget.min) {
+
+                    if(val<1.0){
+                        if(val<0.1){
+                          variableMax = 0.1;
+                          variableMin = 0.001;
+                          widget.divisions = 50;
+                        }
+                        variableMax = 1;
+                        variableMin = 0.01;
+                        widget.divisions = 50;
+                    }
+
+                   widget.sliderValue = val;
+                  }else {
                     widget.sliderValue = widget.min;
                     this.controller.text = widget.min.toString();
                   }
+
                   print('Slider Value: ${widget.sliderValue} and ${widget.min}');
                  widget.onChanged!(widget.sliderValue);
                   // if(widget.perpetualActive){
-                  //   if(widget.sliderValue >= variableMax-1){
-                  //     variableMax = variableMax + variableMax;
+                  //   if(val>widget.max){
+                  //     variableMax = widget.max + widget.max;
+                  //     variableMin = widget.max;
                   //   }
                   // }
+                  print('divisions#:${widget.divisions}');
                   print(this.controller.text);
                   print( double.parse(this.controller.text).roundToDouble() );
                 });
@@ -127,7 +144,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
           Padding(
             padding: DefaultValues.kAdaptedTopPadding(context, 6.h),
             child: Slider(
-                min: widget.min,
+                min: variableMin,
                 max:variableMax,
                 label:label,
              //   divisions: (widget.max-widget.min+1).toInt()*2,
@@ -135,7 +152,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
                 activeColor: activeColor,
                 inactiveColor: kPresentTheme.alternateColor,
                 value: widget.sliderValue,//double.parse(widget.sliderValue.toStringAsFixed(2) ),
-
+                divisions: widget.divisions,
                 onChanged:   (changeValue) {
                   setState(() {
                     print('Perpetual : ${widget.perpetualActive}');
@@ -145,19 +162,19 @@ class _LabeledSliderState extends State<LabeledSlider> {
                       changeValue = widget.min;
                     }
 
-                     if(widget.perpetualActive) {
-                         if(changeValue>widget.sliderValue){
-
-                           variableMax++;
-                           variableMin++;
-                         }
-                         else{
-                           variableMax>= changeValue ? variableMax-- : variableMax = changeValue;
-                           variableMin>=widget.min ? variableMin-- : variableMin = widget.min;
-                         }
-                       print("C:$changeValue");
-
-                     }
+                     // if(widget.perpetualActive) {
+                     //     if(changeValue>widget.sliderValue){
+                     //
+                     //       variableMax++;
+                     //       variableMin++;
+                     //     }
+                     //     else{
+                     //       variableMax>= changeValue ? variableMax-- : variableMax = changeValue;
+                     //       variableMin>=widget.min ? variableMin-- : variableMin = widget.min;
+                     //     }
+                     //   print("C:$changeValue");
+                     //
+                     // }
 
                     if(widget.implementWarning){
                       if(changeValue>widget.threshold){

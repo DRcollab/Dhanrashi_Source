@@ -3,6 +3,7 @@ import 'package:dhanrashi_mvp/components/chart_tab_view.dart';
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/shingle.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/individual_view.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
@@ -110,6 +111,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               onUpdate: (newInv){
                 print('new inv amount');
                 setState(() {
+
                   investments[index] = newInv!;
                   widget.investmentDBs[index].investment = investments[index];
 
@@ -227,6 +229,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                   investments[index].currentInvestmentAmount, 0);
 
               totalCorpus = futureValue + totalCorpus;
+              print('Value:::::::: ${investments[index].name}');
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(
@@ -247,8 +250,8 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                     prefix: '#@:%&^*!'.contains(investments[index].name.substring(0,1))
                             ?investments[index].name.substring(0,1)
                             :'',
-                    subtitle: 'Invested:${investments[index].currentInvestmentAmount.toString()} lac INR',
-                    text:'Annual:${investments[index].annualInvestmentAmount} lac INR',
+                    subtitle: 'Initial: ${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)} INR',
+                    text:'Annual: ${investments[index].annualInvestmentAmount} lac INR',
                     value:' ${investments[index].duration.toString()} Yrs' ,
                     text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
                     icon1: Icons.watch_later_outlined,

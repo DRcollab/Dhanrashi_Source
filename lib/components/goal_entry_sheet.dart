@@ -23,6 +23,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:sizer/sizer.dart';
+import 'package:dhanrashi_mvp/components/maps.dart';
+
+import 'labelled_input.dart';
 
 
 
@@ -30,6 +33,7 @@ import 'package:sizer/sizer.dart';
 class GoalSheet extends StatefulWidget {
 
   String prefix = '';
+
   String titleMessage;
   double goalAmount = 0;
   int goalDuration = 0;
@@ -62,6 +66,7 @@ class GoalSheet extends StatefulWidget {
     required this.onEditCommit,
     this.onTap,
     required this.prefix,
+
   });
 
   @override
@@ -108,7 +113,7 @@ class _GoalSheetState extends State<GoalSheet> {
     inflation = widget.inflation;
     goalDuration = widget.goalDuration;
 
-    print(' I am in Init Tstae of goal entry');
+
     super.initState();
     // _audioCache = AudioCache(
     //   prefix: 'audio/',
@@ -275,7 +280,8 @@ class _GoalSheetState extends State<GoalSheet> {
 
 
                         var goal =  Goal(
-                          name:this.editingController.text.compareTo(widget.titleMessage)==0
+
+                          name:goalIcons.containsKey(this.editingController.text.trim())
                               ?this.editingController.text
                               :widget.prefix+this.editingController.text,
                           description: 'No description',
@@ -410,31 +416,33 @@ class _GoalSheetState extends State<GoalSheet> {
 
           Padding(
             padding: EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledSlider(
-              activeColor: kPresentTheme.accentColor,
-              onChanged: (value){
-
-                setState(() {
-                  goalAmount = value;
-                });
-
-              },
-
+            child: LabeledInput(
+              initialValue: goalAmount,
+              label:'Goal Value',
+              icon: Icon(Icons.bubble_chart),
+              // activeColor: kPresentTheme.accentColor,
+              // onChanged: (value){
+              //
+              //   setState(() {
+              //     goalAmount = value;
+              //   });
+              //
+              // },
+              getValue: (value){
+                goalAmount = double.parse(value.toString());
+                  },
               validator: (){
                 setState(() {
                   isEditing = true;
                 });
               },
-              onEditingComplete: (){
+              onCompleteEditing: (){
                 setState(() {
                   isEditing = false;
                 });
               },
-              sliderValue: goalAmount,
-              min: 1,
-              max: 100,
-              labelText: 'Goal Amount (in Lakhs)',
-              suffix: 'Lakhs',
+
+
             ),
           ),
           // Padding(
