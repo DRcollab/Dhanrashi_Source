@@ -49,6 +49,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
   bool fetched = false;
   bool moveKB = false;
+  var textFormat;
   late List<donut.Task> pieData;
   late List<donut.Task> futurePieData;
 
@@ -60,7 +61,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    textFormat = NumberFormat.simpleCurrency(locale:'en-in');
     //
     investments = List.empty(growable: true);
     if(widget.investmentDBs.length>0){
@@ -250,8 +251,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                     prefix: '#@:%&^*!'.contains(investments[index].name.substring(0,1))
                             ?investments[index].name.substring(0,1)
                             :'',
-                    subtitle: 'Initial: ${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)} INR',
-                    text:'Annual: ${investments[index].annualInvestmentAmount} lac INR',
+                  //${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)}
+                    subtitle: 'Initial:${textFormat.format(investments[index].currentInvestmentAmount)}',
+                    text:'Annual: ${textFormat.format(  investments[index].annualInvestmentAmount)} ',
                     value:' ${investments[index].duration.toString()} Yrs' ,
                     text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
                     icon1: Icons.watch_later_outlined,

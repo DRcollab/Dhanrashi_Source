@@ -186,7 +186,10 @@ class _LabeledInputState extends State<LabeledInput> {
                         autofocus = false;
 
                         widget.onCompleteEditing!();
+                        value = controller.text;
                         controller.text = textFormat.format(double.parse( controller.text));
+
+                        print(value);
                         // if(double.parse(this.controller.text)>=100000){
                         //   value = this.controller.text = (double.parse(this.controller.text)/100000).toStringAsFixed(2);
                         //   textLabel = 'Lakhs';

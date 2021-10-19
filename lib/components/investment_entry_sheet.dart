@@ -11,6 +11,7 @@ import 'package:dhanrashi_mvp/components/work_done.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'band_class.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
@@ -76,6 +77,7 @@ class InvestmentSheet extends StatefulWidget {
 class _InvestmentSheetState extends State<InvestmentSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
+  var textFormat;
   bool isSavePressed = false;
   bool isTimedOut = false;
   bool statusOfStoring = false;
@@ -124,6 +126,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     this.isSavePressed = false;
     this.statusOfStoring = false;
     this.isTimedOut = false;
+
+    textFormat = NumberFormat.simpleCurrency(locale:'en-in');
+
    // print(widget.investmentDuration);
     investedAmount = widget.investedAmount;
     expectedRoi = widget.expectedRoi;
@@ -365,7 +370,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
                      ],
                    ),
-                   Text('${totalInvestment.toStringAsFixed(2)} Lakh',style: DefaultValues.kH3(context),),
+                   Align(
+                      alignment: Alignment.centerRight,
+                       child: Text('${ textFormat.format(totalInvestment)}',style: DefaultValues.kH3(context),)),
                    Row(
                      children: [
                        Container(height: 1.h, width: 2.w ,color: kPresentTheme.alternateColor),
@@ -376,12 +383,17 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
                      ],
                    ),
-                   Text('${interestValue} Lakh',style: DefaultValues.kH3(context),),
+                   Align(
+                      alignment: Alignment.centerRight,
+                       child: Text('${textFormat.format(interestValue)}',style: DefaultValues.kH3(context),)),
                    SizedBox(height: 0.6.h,width: double.infinity,),
                    Container(height: 0.3.h,width: double.infinity,color: Colors.black12,),
                    SizedBox(height: 0.2.h,width: double.infinity,),
-                   Text('${(totalInvestment+interestValue).toStringAsFixed(2)} Lakh',
-                          style: DefaultValues.kH1(context),
+                   Align(
+                     alignment: Alignment.centerRight,
+                     child: Text('${textFormat.format(totalInvestment+interestValue)}',
+                            style: DefaultValues.kH2(context),
+                     ),
                    ),
                  ],
                ),
