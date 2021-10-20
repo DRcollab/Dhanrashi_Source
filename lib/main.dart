@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'components/constants.dart';
 import 'components/vanish_keyboard.dart';
 import 'models/profile.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
   @override
   Widget build(BuildContext context) {
 
-
+   // print( DefaultValues.textShortFormat.format(10000000000));
 
     print('Session: $sessionActive');
 

@@ -82,8 +82,13 @@ final kFormErrorTextBorder = OutlineInputBorder(
 
 class DefaultValues {
 
-  static final textFormat = NumberFormat.simpleCurrency(locale:'en-in');
+  static final textFormat = NumberFormat.simpleCurrency(locale:'en-in', decimalDigits: 0);
+  static final textFormatWithDecimal = NumberFormat.simpleCurrency(locale:'en-in', decimalDigits: 2);
+  static final textShortFormat = NumberFormat.compactSimpleCurrency(locale:'en-in');
 
+  static final threshold = 9999999999;
+
+ // static final textFormat1 =
   static double adaptForSmallDevice(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.

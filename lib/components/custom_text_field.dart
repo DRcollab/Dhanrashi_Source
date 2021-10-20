@@ -169,6 +169,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
 
     if(widget.isEditing) {
       return TextFormField(
+        textInputAction: TextInputAction.done,
         style: widget.style,
         controller: widget.editingController,
         onFieldSubmitted: (value) {

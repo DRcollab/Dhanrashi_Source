@@ -79,7 +79,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
 
- // bool textBoxLostFocus = false;
+ bool textBoxLostFocus = false;
   bool isSavePressed = false;
   bool isTimedOut = false;
   bool statusOfStoring = false;
@@ -95,6 +95,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   double annualInvestment = 1;
  // Investment currentInvestment = Investment();
   late FirebaseFirestore fireStore;
+  bool text1Active = false;
+  bool text2Active = false;
   late var investAccess;
   double totalInvestment = 0.0;
   int whichTextController = 0;
@@ -220,8 +222,14 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   @override
   Widget build(BuildContext context) {
 
+    double corpusValue = 0;
     interestValue = calculateInterset();
     totalInvestment = investedAmount + annualInvestment*investmentDuration;
+    corpusValue = totalInvestment + interestValue;
+      //
+      if(corpusValue>DefaultValues.threshold){
+        print('corpusValue');
+      }
 
      pieData = [
 
@@ -238,9 +246,11 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
           switch(whichTextController){
             case 1 :
               investedAmount = double.parse(dummy.text);
+              text1Active = false; // determines whether textBox1 in the context recieved a tap and now it is released.
               break;
             case 2:
               annualInvestment = double.parse(dummy.text);
+              text2Active = false;// determines whether textBox2 in the context recieved a tap and now it is released.
               break;
           }
 
@@ -287,7 +297,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                          child:Band(
                            onCommit: (){
                              widget.onEditCommit();
-                            // textBoxLostFocus = true;
+                            textBoxLostFocus = true;
                            },
                            onTap: widget.onTap,
                            controller: titleEditingController,
@@ -398,7 +408,10 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      ),
                      Align(
                         alignment: Alignment.centerRight,
-                         child: Text('${DefaultValues.textFormat.format(totalInvestment)}',style: DefaultValues.kH3(context),)),
+                         child: Text(
+                           corpusValue<DefaultValues.threshold ? '${DefaultValues.textFormatWithDecimal.format(totalInvestment)}'
+                           :'${DefaultValues.textShortFormat.format(totalInvestment)}',
+                           style: DefaultValues.kH3(context),)),
                      Row(
                        children: [
                          Container(height: 1.5.h, width: 3.w ,color: kPresentTheme.alternateColor),
@@ -411,13 +424,19 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      ),
                      Align(
                         alignment: Alignment.centerRight,
-                         child: Text('${DefaultValues.textFormat.format(interestValue)}',style: DefaultValues.kH3(context),)),
+                         child: Text(
+                          corpusValue<DefaultValues.threshold ?'${DefaultValues.textFormatWithDecimal.format(interestValue)}'
+                           :'${DefaultValues.textShortFormat.format(interestValue)}',
+
+                           style: DefaultValues.kH3(context),)),
                      SizedBox(height: 0.6.h,width: double.infinity,),
                      Container(height: 0.3.h,width: double.infinity,color: Colors.black12,),
                      SizedBox(height: 0.2.h,width: double.infinity,),
                      Align(
                        alignment: Alignment.centerRight,
-                       child: Text('${DefaultValues.textFormat.format(totalInvestment+interestValue)}',
+                       child: Text(
+                           corpusValue<DefaultValues.threshold ?'${DefaultValues.textFormatWithDecimal.format(corpusValue)}'
+                          :'${DefaultValues.textShortFormat.format(corpusValue)}',
                               style: DefaultValues.kH2(context),
                        ),
                      ),
@@ -431,7 +450,6 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
              padding: EdgeInsets.only(left:2.w, right: 2.w),
              child: LabeledInput(
                controller: currentInvestmentController,
-
                 initialValue: investedAmount,
                label: 'Initial Investment',
                icon: Icon(Icons.bar_chart),
@@ -444,17 +462,25 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      setState(() {
                        whichTextController = 1;
                        isEditing = true;
+                       text1Active = true;
                         dummy = currentInvestmentController;
-                       annualInvestment = double.parse(annualInvestmentController.text);
-                       annualInvestmentController.text = DefaultValues.textFormat.format(double.parse( annualInvestmentController.text));
-
+                        if(text2Active) {
+                          annualInvestment =
+                              double.parse(annualInvestmentController.text);
+                          annualInvestmentController.text =
+                              DefaultValues.textFormat.format(double.parse(
+                                  annualInvestmentController.text));
+                          text2Active = false;
+                        }
                      });
                   },
                onCompleteEditing: (){
                  setState(() {
                    isEditing = false;
-
+                    text1Active = false;
+                    text2Active = false;
                    investedAmount = double.parse(currentInvestmentController.text);
+
                    currentInvestmentController.text = DefaultValues.textFormat.format(double.parse( currentInvestmentController.text));
 
                  });
@@ -480,8 +506,15 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                     whichTextController = 2;
                     dummy = annualInvestmentController;
                     isEditing = true;
-                    investedAmount = double.parse(currentInvestmentController.text);
-                    currentInvestmentController.text = DefaultValues.textFormat.format(double.parse( currentInvestmentController.text));
+                    text2Active = true;
+                    if(text1Active) {
+                      investedAmount =
+                          double.parse(currentInvestmentController.text);
+                      currentInvestmentController.text =
+                          DefaultValues.textFormat.format(double.parse(
+                              currentInvestmentController.text));
+                      text1Active = false;
+                    }
                   });
                 },
                 onCompleteEditing: (){
@@ -491,6 +524,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
                     annualInvestmentController.text = DefaultValues.textFormat.format(double.parse( annualInvestmentController.text));
                     isEditing = false;
+                    text2Active = false;
+                    text1Active = false;
 
                   });
                 },

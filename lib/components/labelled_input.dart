@@ -58,7 +58,7 @@ class _LabeledInputState extends State<LabeledInput> {
 
 
 
-  var textFormat;
+
   var numberFormat;
   double variableMax = 0;
   double variableMin = 0;
@@ -71,9 +71,9 @@ class _LabeledInputState extends State<LabeledInput> {
 
   @override
   void initState() {
-    textFormat = NumberFormat.simpleCurrency(locale:'en-in');
+
     numberFormat = NumberFormat.decimalPattern();
-    widget.controller.text = textFormat.format(widget.initialValue);
+    widget.controller.text =DefaultValues.textFormat.format(widget.initialValue);
     // if(widget.initialValue>0){
     //   if(widget.initialValue<1){
     //     controller.text = (widget.initialValue*100).toString();
@@ -133,11 +133,7 @@ class _LabeledInputState extends State<LabeledInput> {
                   width:60.w,
                   height: 6.h,
                   child: TextField(
-                    onChanged: (value){
-                      print(widget.controller.text);
 
-                      value = widget.controller.text+',';
-                    },
                     focusNode: numericFocusNode,
                     autofocus: this.autofocus,
                     textAlign: TextAlign.end,
@@ -150,22 +146,22 @@ class _LabeledInputState extends State<LabeledInput> {
                     controller: widget.controller,
                     onSubmitted: (_){
                       FocusScope.of(context).unfocus();
-                      if(!FocusScope.of(context).hasFocus){
-                        String value='';
-                        setState(() {
-                          autofocus = false;
-
-                          widget.onCompleteEditing!();
-                          value = widget.controller.text;
-
-                          widget.controller.text = textFormat.format(double.parse( widget.controller.text));
-
-                          print(value);
-
-
-                          //widget.getValue!(value);
-                        });
-                      }
+                      // if(!FocusScope.of(context).hasFocus){
+                      //   String value='';
+                      //   setState(() {
+                      //     autofocus = false;
+                      //
+                      //     widget.onCompleteEditing!();
+                      //     value = widget.controller.text;
+                      //
+                      //     widget.controller.text =DefaultValues.textFormat.format(double.parse( widget.controller.text));
+                      //
+                      //     print(value);
+                      //
+                      //
+                      //     //widget.getValue!(value);
+                      //   });
+                      // }
 
                     }
                     ,
@@ -210,45 +206,23 @@ class _LabeledInputState extends State<LabeledInput> {
                     ),
 
                     onEditingComplete: (){
-                      String value='';
-                      setState(() {
-                        autofocus = false;
 
+                      setState(() {
+                        //autofocus = false;
                         widget.onCompleteEditing!();
-                        widget.controller.text = textFormat.format(double.parse( widget.controller.text));
-                        print('[[[[[[[');
-                        print(widget.controller.text);
-                        print(value);
-                        // if(double.parse(this.controller.text)>=100000){
-                        //   value = this.controller.text = (double.parse(this.controller.text)/100000).toStringAsFixed(2);
-                        //   textLabel = 'Lakhs';
-                        //
-                        // }else if(double.parse(this.controller.text)>=1000){
-                        //   value = this.controller.text = (double.parse(this.controller.text)/1000).toStringAsFixed(2);
-                        //   value = (double.parse(value)/100).toStringAsFixed(2);
-                        //   textLabel = 'Thousands';
-                        // }else if(double.parse(this.controller.text)>=100){
-                        //   value = this.controller.text = (double.parse(this.controller.text)/100).toStringAsFixed(2);
-                        //   textLabel = 'Hundred';
-                        //   value = (double.parse(value)/1000).toStringAsFixed(2);
-                        // }
-                        //widget.getValue!(value);
-                      });
+                                            });
 
                     },
 
                     onTap: (){
-                      widget.controller.text = widget.initialValue.toStringAsFixed(0);
-
+                     widget.controller.text = widget.initialValue.toStringAsFixed(0);
                       widget.validator!();
                     }
                     ,
                   ),
                 ),
                 // Padding(
-                //   padding: const EdgeInsets.only(left:8.0),
-                //   child: Text(textLabel,style: DefaultValues.kNormal2(context),),
-                // ),
+
               ],
             ),
           ),

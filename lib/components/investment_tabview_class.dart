@@ -251,13 +251,22 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                             ?investments[index].name.substring(0,1)
                             :'',
                   //${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)}
-                    subtitle: 'Initial:${DefaultValues.textFormat.format(investments[index].currentInvestmentAmount)}',
-                    text:'Annual: ${DefaultValues.textFormat.format(  investments[index].annualInvestmentAmount)} ',
+                    subtitle: 'Initial:${
+                       futureValue<DefaultValues.threshold ?DefaultValues.textFormatWithDecimal.format(investments[index].currentInvestmentAmount)
+                    :DefaultValues.textShortFormat.format(investments[index].currentInvestmentAmount)  }',
+
+                    text:'Annual: ${
+                        futureValue<DefaultValues.threshold ? DefaultValues.textFormat.format(  investments[index].annualInvestmentAmount)
+                            :DefaultValues.textShortFormat.format(investments[index].annualInvestmentAmount)
+                    } ',
                     value:' ${investments[index].duration.toString()} Yrs' ,
                     text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
                     icon1: Icons.watch_later_outlined,
                     icon2: FontAwesomeIcons.chartLine,
-                    highlight:'Corpus: ${DefaultValues.textFormat.format(futureValue)}' ,
+                    highlight:'Corpus: ${
+                        futureValue<DefaultValues.threshold ? DefaultValues.textFormat.format(futureValue)
+                        :DefaultValues.textShortFormat.format(futureValue)
+                    }' ,
                     trailing: IconButton(
                       icon: Icon(Icons.edit) ,
                       onPressed: (){

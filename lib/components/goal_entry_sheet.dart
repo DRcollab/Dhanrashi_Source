@@ -432,7 +432,10 @@ class _GoalSheetState extends State<GoalSheet> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                          child: Text('${DefaultValues.textFormat.format(goalAmount)}',style: DefaultValues.kH3(context),)),
+                          child: Text(
+                              (goalAmount+inflationEffect)<DefaultValues.threshold ? '${DefaultValues.textFormatWithDecimal.format(goalAmount)}'
+                              :'${DefaultValues.textShortFormat.format(goalAmount)}'
+                            ,style: DefaultValues.kH3(context),)),
                       Row(
                         children: [
                           Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
@@ -445,13 +448,18 @@ class _GoalSheetState extends State<GoalSheet> {
                       ),
                       Align(
                           alignment: Alignment.centerRight,
-                          child: Text('${DefaultValues.textFormat.format(inflationEffect)}',style: DefaultValues.kH3(context),)),
+                          child: Text(
+                            (goalAmount+inflationEffect)<DefaultValues.threshold ? '${DefaultValues.textFormatWithDecimal.format(inflationEffect)}'
+                            :'${DefaultValues.textShortFormat.format(inflationEffect)}',
+                            style: DefaultValues.kH3(context),)),
                       SizedBox(height: 0.6.h,width: double.infinity,),
                       Container(height: 0.2.h,width: double.infinity,color: Colors.black12,),
                       SizedBox(height: 0.5.h,width: double.infinity,),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: Text('${DefaultValues.textFormat.format(goalAmount+inflationEffect)}',
+                        child: Text(
+                          (goalAmount+inflationEffect)<DefaultValues.threshold ?'${DefaultValues.textFormat.format(goalAmount+inflationEffect)}'
+                          :'${DefaultValues.textShortFormat.format(goalAmount+inflationEffect)}',
                           style: DefaultValues.kH2(context),
                         ),
                       ),
@@ -556,8 +564,6 @@ class _GoalSheetState extends State<GoalSheet> {
                   });
 
                 },
-
-
                 validator: (){
                   setState(() {
                     isEditing = true;
