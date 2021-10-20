@@ -16,7 +16,7 @@ class LabeledInput extends StatefulWidget {
   // final String? Function(String?) validator;
 
   double initialValue;
-  late final Function(dynamic value)? getValue;
+  //late final Function(dynamic value)? getValue;
   Function()? onCompleteEditing;
   String errorText = '';
   double radius = 0;
@@ -26,6 +26,7 @@ class LabeledInput extends StatefulWidget {
   late final Function()? validator;
   late final Function()? onFocusLost;
   late Icon? icon;
+  var controller = TextEditingController();
 
  LabeledInput({
     this.hintText = '',
@@ -33,7 +34,7 @@ class LabeledInput extends StatefulWidget {
     this.onCompleteEditing,
     // required this.controller,
     //required this.validator,
-    this.getValue,
+
     this.radius = 25,
     this.label='',
     this.errorText='',
@@ -43,6 +44,8 @@ class LabeledInput extends StatefulWidget {
     this.onFocusLost,
    this.icon,
    this.initialValue = 0,
+
+   required this.controller,
   });
 
 
@@ -53,9 +56,10 @@ class LabeledInput extends StatefulWidget {
 
 class _LabeledInputState extends State<LabeledInput> {
 
-  var controller = TextEditingController();
+
 
   var textFormat;
+  var numberFormat;
   double variableMax = 0;
   double variableMin = 0;
   late Color activeColor;
@@ -68,7 +72,8 @@ class _LabeledInputState extends State<LabeledInput> {
   @override
   void initState() {
     textFormat = NumberFormat.simpleCurrency(locale:'en-in');
-    controller.text = textFormat.format(widget.initialValue);
+    numberFormat = NumberFormat.decimalPattern();
+    widget.controller.text = textFormat.format(widget.initialValue);
     // if(widget.initialValue>0){
     //   if(widget.initialValue<1){
     //     controller.text = (widget.initialValue*100).toString();
@@ -85,7 +90,6 @@ class _LabeledInputState extends State<LabeledInput> {
     _currency = NumberFormat.compactSimpleCurrency(locale: 'en-in').currencySymbol;
 
 
-
     // activeColor = widget.activeColor;
     // controller = TextEditingController(
     //   text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
@@ -93,20 +97,23 @@ class _LabeledInputState extends State<LabeledInput> {
     // variableMax = widget.max;
     // variableMin = widget.min;
     // //
-    // super.initState();
+     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    controller.dispose();
+    //controller.dispose();
   }
 
 
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Card(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -127,9 +134,9 @@ class _LabeledInputState extends State<LabeledInput> {
                   height: 6.h,
                   child: TextField(
                     onChanged: (value){
-                      print(this.controller.text);
+                      print(widget.controller.text);
 
-                      value = this.controller.text+',';
+                      value = widget.controller.text+',';
                     },
                     focusNode: numericFocusNode,
                     autofocus: this.autofocus,
@@ -137,10 +144,31 @@ class _LabeledInputState extends State<LabeledInput> {
                     enableInteractiveSelection: false,
                     enabled: widget.enabled,
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[.0-9]')),
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+
                     ],
-                    controller: this.controller,
-                    onSubmitted: (_)=> FocusScope.of(context).unfocus(),
+                    controller: widget.controller,
+                    onSubmitted: (_){
+                      FocusScope.of(context).unfocus();
+                      if(!FocusScope.of(context).hasFocus){
+                        String value='';
+                        setState(() {
+                          autofocus = false;
+
+                          widget.onCompleteEditing!();
+                          value = widget.controller.text;
+
+                          widget.controller.text = textFormat.format(double.parse( widget.controller.text));
+
+                          print(value);
+
+
+                          //widget.getValue!(value);
+                        });
+                      }
+
+                    }
+                    ,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
                     style:DefaultValues.kInputTextStyle(context),
@@ -187,9 +215,9 @@ class _LabeledInputState extends State<LabeledInput> {
                         autofocus = false;
 
                         widget.onCompleteEditing!();
-                        value = controller.text;
-                        controller.text = textFormat.format(double.parse( controller.text));
-
+                        widget.controller.text = textFormat.format(double.parse( widget.controller.text));
+                        print('[[[[[[[');
+                        print(widget.controller.text);
                         print(value);
                         // if(double.parse(this.controller.text)>=100000){
                         //   value = this.controller.text = (double.parse(this.controller.text)/100000).toStringAsFixed(2);
@@ -204,12 +232,17 @@ class _LabeledInputState extends State<LabeledInput> {
                         //   textLabel = 'Hundred';
                         //   value = (double.parse(value)/1000).toStringAsFixed(2);
                         // }
-                        widget.getValue!(value);
+                        //widget.getValue!(value);
                       });
 
                     },
 
-                    onTap: widget.validator,
+                    onTap: (){
+                      widget.controller.text = widget.initialValue.toStringAsFixed(0);
+
+                      widget.validator!();
+                    }
+                    ,
                   ),
                 ),
                 // Padding(

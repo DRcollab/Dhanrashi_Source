@@ -1,24 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dhanrashi_mvp/components/buttons.dart';
+
 import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
-import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
-import 'package:dhanrashi_mvp/investmentinput.dart';
-import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:loading_gifs/loading_gifs.dart';
 import '../chart_viewer.dart';
-import 'chart_tab_view.dart';
-import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
-import 'investment_entry_sheet.dart';
 import 'shingle.dart';
 import 'maps.dart';
-import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 import 'package:sizer/sizer.dart';
@@ -216,7 +206,8 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     prefix: '#@:%&^*!'.contains(goals[index].name.substring(0,1))
                         ?goals[index].name.substring(0,1)
                         :'',
-                    subtitle: 'Goal: ${Utility.changeToPeriodicDecimal(goals[index].goalAmount).toString()} ${Utility.getPeriod(goals[index].goalAmount)} INR',
+                //Utility.changeToPeriodicDecimal(goals[index].goalAmount).toString()} ${Utility.getPeriod(goals[index].goalAmount)
+                    subtitle: 'Goal: ${DefaultValues.textFormat.format(goals[index].goalAmount)}',
                     value:'${goals[index].duration.toString()} Years',
                     icon1:Icons.watch_later_outlined,
                     trailing: IconButton(

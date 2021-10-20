@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
@@ -11,6 +12,7 @@ import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'band_class.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
@@ -77,7 +79,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
   bool isSavePressed = false;
-  bool isTimedOut = false;
+   bool isTimedOut = false;
   List<Task> pieData = [];
   bool isEditing = false;
   bool statusOfStoring = false;
@@ -87,8 +89,11 @@ class _GoalSheetState extends State<GoalSheet> {
   double goalAmount = 1;
   double inflation = 1;
   int goalDuration = 1;
-  TextEditingController editingController = TextEditingController();
+  double inflationEffect = 1.0;
 
+  TextEditingController titleEditingController = TextEditingController();
+  TextEditingController goalController = TextEditingController();
+  TextEditingController dummy = TextEditingController();
   late FirebaseFirestore fireStore;
   late var goalAccess;
 
@@ -127,6 +132,25 @@ class _GoalSheetState extends State<GoalSheet> {
 
 
   }
+
+
+  double calculateInterset( ){
+
+    double interest;
+    // double roi = expectedRoi /100;
+    futureValue = fv(inflation/100,goalDuration, 0, goalAmount, 0);
+    double goalPortion = goalAmount;
+
+    double _inflation = futureValue - goalPortion;
+
+
+    return double.parse(_inflation.toStringAsFixed(1)) ;
+
+  }
+
+
+
+
 
   Future _update(GoalDB goalDB) async {
 
@@ -221,313 +245,342 @@ class _GoalSheetState extends State<GoalSheet> {
   @override
   Widget build(BuildContext context) {
 
-
+    inflationEffect = calculateInterset();
+    // totalInvestment = investedAmount + annualInvestment*investmentDuration;
 
     pieData = [
 
-      Task('Investment', goalAmount, kPresentTheme.accentColor),
-      Task('Interest Earned', inflation ,kPresentTheme.alternateColor),
+      Task('Goal', goalAmount, kPresentTheme.accentColor),
+      Task('Inflation Effect', inflationEffect ,kPresentTheme.alternateColor),
 
 
     ];
 
 
-    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToAdd: 'Goal', whatToDo: widget.type,timedOut: isTimedOut,) : Container(
-      color: Color(0x00000000),
-      child: Wrap(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToAdd: 'Goal', whatToDo: widget.type,timedOut: isTimedOut,) : VanishKeyBoard(
+      onTap: (){
+        print('clicked');
+        setState(() {
 
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: kPresentTheme.themeColor,//Color(0x00000000),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    offset: Offset.zero,
-                    blurRadius: 0.5,
-                    spreadRadius: 1,
+          isEditing = false;
 
-                  )
-                ]
-            ),
-            child: Padding(
-              padding:  EdgeInsets.all(1.w),
-              child: Container(
-
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(widget.imageSource, height: 8.h, width: 8.w,),
-                    Expanded(child: Center(
-                        child: Band(
-                          controller:this.editingController,
-                          onCommit : widget.onEditCommit,
-                          onTap: widget.onTap,
-                          text:widget.titleMessage,
-                          textStyle: DefaultValues.kH2(context),
-                        ),
-                    ),
-                    ),
-                    CommandButton(
-                      enabled: !this.isEditing,
-                      buttonColor: kPresentTheme.alternateColor,
-                      //icon: Icons.save,
-                      textColor: kPresentTheme.highLightColor,
-                      textSize: 12.sp,
-                      buttonText: widget.type,
-                      onPressed:()  {
+          goalAmount = double.parse(dummy.text);
+          dummy.text = DefaultValues.textFormat.format(double.parse(dummy.text));
 
 
+        });
 
-                        var goal =  Goal(
+        print('clicked');
+      },
+      child: Container(
+        color: Color(0x00000000),
+        child: Wrap(
 
-                          name:goalIcons.containsKey(this.editingController.text.trim())
-                              ?this.editingController.text
-                              :widget.prefix+this.editingController.text,
-                          description: 'No description',
-                          goalAmount: goalAmount,
-                          duration: goalDuration,
-                          inflation: inflation/100,
-                        );
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: kPresentTheme.themeColor,//Color(0x00000000),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset.zero,
+                      blurRadius: 0.5,
+                      spreadRadius: 1,
 
-                        print('.... printing inv:;;;;;;;;');
-                      //  print(inv);
+                    )
+                  ]
+              ),
+              child: Padding(
+                padding:  EdgeInsets.all(1.w),
+                child: Container(
 
-                        setState(() {
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(widget.imageSource, height: 8.h, width: 8.w,),
+                      Expanded(child: Center(
+                          child: Band(
+                            controller:this.titleEditingController,
+                            onCommit : widget.onEditCommit,
+                            onTap: widget.onTap,
+                            text:widget.titleMessage,
+                            textStyle: DefaultValues.kH2(context),
+                          ),
+                      ),
+                      ),
+                      CommandButton(
+                        enabled: !this.isEditing,
+                        buttonColor: kPresentTheme.alternateColor,
+                        //icon: Icons.save,
+                        textColor: kPresentTheme.highLightColor,
+                        textSize: 12.sp,
+                        buttonText: widget.type,
+                        onPressed:()  {
 
-                          if(widget.type == 'Save') {
 
-                           this.isSavePressed = true;
 
-                           Future.any(
-                               [
-                                  _save(goal),
+                          var goal =  Goal(
+
+                            name:goalIcons.containsKey(this.titleEditingController.text.trim())
+                                ?this.titleEditingController.text
+                                :widget.prefix+this.titleEditingController.text,
+                            description: 'No description',
+                            goalAmount: goalAmount,
+                            duration: goalDuration,
+                            inflation: inflation/100,
+                          );
+
+                          print('.... printing inv:;;;;;;;;');
+                        //  print(inv);
+
+                          setState(() {
+
+                            if(widget.type == 'Save') {
+
+                             this.isSavePressed = true;
+
+                             Future.any(
+                                 [
+                                    _save(goal),
+                                    Utility.timeoutAfter(sec: 10, onTimeout: (){
+                                                // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                      setState(() {
+                                        isTimedOut = true;
+
+                                      });
+
+                                    }),
+                                 ]
+                             );
+
+                            }
+                            else{
+
+                            var  goalDB = GoalDB(
+                                email: widget.currentUser.email,
+                                user: widget.currentUser.uid,
+                                goalDocumentID: widget.uniquId!,
+                                goal:goal,
+
+                              );
+                            this.isSavePressed = true;
+
+                            Future.any(
+                                [
+                                  _update(goalDB),
                                   Utility.timeoutAfter(sec: 10, onTimeout: (){
-                                              // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                    // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
                                     setState(() {
                                       isTimedOut = true;
 
                                     });
 
+
                                   }),
-                               ]
-                           );
-
-                          }
-                          else{
-
-                          var  goalDB = GoalDB(
-                              email: widget.currentUser.email,
-                              user: widget.currentUser.uid,
-                              goalDocumentID: widget.uniquId!,
-                              goal:goal,
-
+                                ]
                             );
-                          this.isSavePressed = true;
-
-                          Future.any(
-                              [
-                                _update(goalDB),
-                                Utility.timeoutAfter(sec: 10, onTimeout: (){
-                                  // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
-                                  setState(() {
-                                    isTimedOut = true;
-
-                                  });
 
 
-                                }),
-                              ]
-                          );
+                            }
 
-
-                          }
-
-                        });
+                          });
 
 
 
 
-                        //
-                        // print('duration: ${investmentDuration}');
-                        // print('amount: ${investedAmount}');
-                        // print('ROI :${expectedRoi}');
-                        //
+                          //
+                          // print('duration: ${investmentDuration}');
+                          // print('amount: ${investedAmount}');
+                          // print('ROI :${expectedRoi}');
+                          //
 
 
-                      }, borderRadius: BorderRadius.circular(10),),
-                  ],
+                        }, borderRadius: BorderRadius.circular(10),),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
 
-          Row(
-            children: [
+            Row(
+              children: [
 
-              Container(
-                  height: 22.h,//* DefaultValues.adaptForSmallDevice(context),
-                  width: 22.h,// * DefaultValues.adaptForSmallDevice(context),
-                  child: DonutChart(pieData: pieData,arcWidth:20)),
-              Container(
-                height: 22.h, //* DefaultValues.adaptForSmallDevice(context),
-                width: 22.h, //* DefaultValues.reduceWidthAsPerScreen(context),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                   SizedBox(height: 3.h,),// * DefaultValues.adaptForSmallDevice(context),),
-                    Row(
-                      children: [
-                        Container(
-                            height: 1.5.h, //* DefaultValues.adaptForSmallDevice(context),
-                            width: 3.w,
-                            color: kPresentTheme.accentColor),
-                        Padding(
-                          padding: EdgeInsets.only(left : 2.w),
-                          child: Text('Goal Amount'),
+                Container(
+                    height: 22.h,//* DefaultValues.adaptForSmallDevice(context),
+                    width: 22.h,// * DefaultValues.adaptForSmallDevice(context),
+                    child: DonutChart(pieData: pieData,arcWidth:20)),
+                Container(
+                  height: 22.h, //* DefaultValues.adaptForSmallDevice(context),
+                  width: 22.h, //* DefaultValues.reduceWidthAsPerScreen(context),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                     SizedBox(height: 3.h,),// * DefaultValues.adaptForSmallDevice(context),),
+                      Row(
+                        children: [
+                          Container(
+                              height: 1.5.h, //* DefaultValues.adaptForSmallDevice(context),
+                              width: 3.w,
+                              color: kPresentTheme.accentColor),
+                          Padding(
+                            padding: EdgeInsets.only(left : 2.w),
+                            child: Text('Goal Amount'),
+                          ),
+
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                          child: Text('${DefaultValues.textFormat.format(goalAmount)}',style: DefaultValues.kH3(context),)),
+                      Row(
+                        children: [
+                          Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
+                          Padding(
+                            padding:  EdgeInsets.only(left : 2.w),
+                            child: Text('Inflationary Effect'),
+                          ),
+
+                        ],
+                      ),
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: Text('${DefaultValues.textFormat.format(inflationEffect)}',style: DefaultValues.kH3(context),)),
+                      SizedBox(height: 0.6.h,width: double.infinity,),
+                      Container(height: 0.2.h,width: double.infinity,color: Colors.black12,),
+                      SizedBox(height: 0.5.h,width: double.infinity,),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text('${DefaultValues.textFormat.format(goalAmount+inflationEffect)}',
+                          style: DefaultValues.kH2(context),
                         ),
-
-                      ],
-                    ),
-                    Text('${goalAmount} Lakh',style: DefaultValues.kH3(context),),
-                    Row(
-                      children: [
-                        Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
-                        Padding(
-                          padding:  EdgeInsets.only(left : 2.w),
-                          child: Text('inflation Amount'),
-                        ),
-
-                      ],
-                    ),
-                    Text('${inflation} Lakh',style: DefaultValues.kH3(context),),
-                    SizedBox(height: 0.6.h,width: double.infinity,),
-                    Container(height: 0.2.h,width: double.infinity,color: Colors.black12,),
-                    SizedBox(height: 0.5.h,width: double.infinity,),
-                    Text('${(goalAmount+inflation).toStringAsFixed(2)} Lakh',
-                      style: DefaultValues.kH1(context),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-
-          Padding(
-            padding: EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledInput(
-              initialValue: goalAmount,
-              label:'Goal Value',
-              icon: Icon(Icons.bubble_chart),
-              // activeColor: kPresentTheme.accentColor,
-              // onChanged: (value){
-              //
-              //   setState(() {
-              //     goalAmount = value;
-              //   });
-              //
-              // },
-              getValue: (value){
-                goalAmount = double.parse(value.toString());
-                  },
-              validator: (){
-                setState(() {
-                  isEditing = true;
-                });
-              },
-              onCompleteEditing: (){
-                setState(() {
-                  isEditing = false;
-                });
-              },
-
-
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-          ),
-          // Padding(
-          //   padding: const EdgeInsets.only(left:8.0, right: 8.0),
-          //   child: LabeledSlider(
-          //     onChanged: (value){
-          //
-          //       setState(() {
-          //         annualInvestment = value;
-          //       });
-          //
-          //     },
-          //
-          //     validator: (value){
-          //
-          //     },
-          //     sliderValue: annualInvestment,
-          //     min: 0,
-          //     max: 100,
-          //     labelText: 'Annual Investment (in Lakhs)',
-          //     suffix: 'Lakhs',
-          //   ),
-          // ),
-          Padding(
-            padding:  EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledSlider(
-              activeColor: kPresentTheme.accentColor,
-              onChanged: (value){
-                setState(() {
-                  inflation = value;
-                });
 
-              },
+            Padding(
+              padding: EdgeInsets.only(left:2.w, right: 2.w),
+              child: LabeledInput(
+                controller: goalController,
+                initialValue: goalAmount,
+                label:'Goal Value',
+                icon: Icon(Icons.bubble_chart),
+                // activeColor: kPresentTheme.accentColor,
+                // onChanged: (value){
+                //
+                //   setState(() {
+                //     goalAmount = value;
+                //   });
+                //
+                // },
+                // getValue: (value){
+                //   goalAmount = double.parse(value.toString());
+                //     },
+                validator: (){
+                  setState(() {
+                    isEditing = true;
+                    dummy = goalController;
 
-              validator: (){
-                setState(() {
-                  isEditing = true;
-                });
-              },
-              onEditingComplete: (){
-                setState(() {
-                  isEditing = false;
-                });
-              },
-              min: 1,
-              max:30,
-              labelText: 'Inflation',
-              sliderValue: inflation,
-              suffix: '%      ',
+                  });
+                },
+                onCompleteEditing: (){
+                  setState(() {
+                    isEditing = false;
+                    goalAmount = (double.parse(goalController.text));
+                    goalController.text = DefaultValues.textFormat.format(double.parse(goalController.text));
+                  });
+                },
+
+
+              ),
             ),
-          ),
-          Padding(
-            padding:  EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledSlider(
-              activeColor: kPresentTheme.accentColor,
-              onChanged: (value){
-                setState(() {
-                  goalDuration = value.round();
-                });
+            // Padding(
+            //   padding: const EdgeInsets.only(left:8.0, right: 8.0),
+            //   child: LabeledSlider(
+            //     onChanged: (value){
+            //
+            //       setState(() {
+            //         annualInvestment = value;
+            //       });
+            //
+            //     },
+            //
+            //     validator: (value){
+            //
+            //     },
+            //     sliderValue: annualInvestment,
+            //     min: 0,
+            //     max: 100,
+            //     labelText: 'Annual Investment (in Lakhs)',
+            //     suffix: 'Lakhs',
+            //   ),
+            // ),
+            Padding(
+              padding:  EdgeInsets.only(left:2.w, right: 2.w),
+              child: LabeledSlider(
+                activeColor: kPresentTheme.accentColor,
+                onChanged: (value){
+                  setState(() {
+                    inflation = value;
+                  });
 
-              },
+                },
 
-
-              validator: (){
-                setState(() {
-                  isEditing = true;
-                });
-              },
-              onEditingComplete: (){
-                setState(() {
-                  isEditing = false;
-                });
-              },
-              min: 1,
-              max: 30,
-              labelText: 'Goal Period',
-              sliderValue: goalDuration.toDouble(),
-              textPrecision: 0,
-              textEditable: false,
-              suffix: 'Years',
+                validator: (){
+                  setState(() {
+                    isEditing = true;
+                  });
+                },
+                onEditingComplete: (){
+                  setState(() {
+                    isEditing = false;
+                  });
+                },
+                min: 1,
+                max:30,
+                labelText: 'Inflation',
+                sliderValue: inflation,
+                suffix: '%      ',
+              ),
             ),
-          ),
+            Padding(
+              padding:  EdgeInsets.only(left:2.w, right: 2.w),
+              child: LabeledSlider(
+                activeColor: kPresentTheme.accentColor,
+                onChanged: (value){
+                  setState(() {
+                    goalDuration = value.round();
+                  });
+
+                },
 
 
-        ],
+                validator: (){
+                  setState(() {
+                    isEditing = true;
+                  });
+                },
+                onEditingComplete: (){
+                  setState(() {
+                    isEditing = false;
+                  });
+                },
+                min: 1,
+                max: 30,
+                labelText: 'Goal Period',
+                sliderValue: goalDuration.toDouble(),
+                textPrecision: 0,
+                textEditable: false,
+                suffix: 'Years',
+              ),
+            ),
+
+
+          ],
+        ),
       ),
     );
   }

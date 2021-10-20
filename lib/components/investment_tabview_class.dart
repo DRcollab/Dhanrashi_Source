@@ -49,8 +49,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
   bool fetched = false;
   bool moveKB = false;
-  var textFormat;
-  late List<donut.Task> pieData;
+   late List<donut.Task> pieData;
   late List<donut.Task> futurePieData;
 
   String prefix = '';
@@ -61,7 +60,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    textFormat = NumberFormat.simpleCurrency(locale:'en-in');
+
     //
     investments = List.empty(growable: true);
     if(widget.investmentDBs.length>0){
@@ -208,7 +207,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
        Flexible(
          flex:1,
          child: ListTile(
-           title:  Text('Total Investment Amount: ${widget.totalInvest.toStringAsFixed(2)}',style: DefaultValues.kNormal3(context)),
+           title:  Text('Total Investment Amount: ${DefaultValues.textFormat.format(widget.totalInvest)}',style: DefaultValues.kNormal3(context)),
            trailing: RoundButton(
                icon:Icons.add,
                onPress:(){
@@ -252,13 +251,13 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                             ?investments[index].name.substring(0,1)
                             :'',
                   //${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)}
-                    subtitle: 'Initial:${textFormat.format(investments[index].currentInvestmentAmount)}',
-                    text:'Annual: ${textFormat.format(  investments[index].annualInvestmentAmount)} ',
+                    subtitle: 'Initial:${DefaultValues.textFormat.format(investments[index].currentInvestmentAmount)}',
+                    text:'Annual: ${DefaultValues.textFormat.format(  investments[index].annualInvestmentAmount)} ',
                     value:' ${investments[index].duration.toString()} Yrs' ,
                     text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
                     icon1: Icons.watch_later_outlined,
                     icon2: FontAwesomeIcons.chartLine,
-                    highlight:'Corpus: ${textFormat.format(futureValue)}' ,
+                    highlight:'Corpus: ${DefaultValues.textFormat.format(futureValue)}' ,
                     trailing: IconButton(
                       icon: Icon(Icons.edit) ,
                       onPressed: (){

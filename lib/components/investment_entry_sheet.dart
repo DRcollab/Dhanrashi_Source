@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:async';
 import 'package:dhanrashi_mvp/components/maps.dart';
+import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
@@ -77,7 +78,8 @@ class InvestmentSheet extends StatefulWidget {
 class _InvestmentSheetState extends State<InvestmentSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
-  var textFormat;
+
+ // bool textBoxLostFocus = false;
   bool isSavePressed = false;
   bool isTimedOut = false;
   bool statusOfStoring = false;
@@ -95,8 +97,11 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   late FirebaseFirestore fireStore;
   late var investAccess;
   double totalInvestment = 0.0;
-  TextEditingController editingController = TextEditingController();
-
+  int whichTextController = 0;
+  TextEditingController titleEditingController = TextEditingController();
+  TextEditingController currentInvestmentController = TextEditingController();
+  TextEditingController annualInvestmentController = TextEditingController();
+  TextEditingController dummy = TextEditingController();
   double calculateInterset( ){
 
     double interest;
@@ -127,9 +132,6 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     this.statusOfStoring = false;
     this.isTimedOut = false;
 
-    textFormat = NumberFormat.simpleCurrency(locale:'en-in');
-
-   // print(widget.investmentDuration);
     investedAmount = widget.investedAmount;
     expectedRoi = widget.expectedRoi;
     investmentDuration = widget.investmentDuration;
@@ -228,294 +230,338 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     ];
 
 
-    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,timedOut: isTimedOut,) : Container(
-      color: Color(0x00000000),
-      child: Wrap(
+    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,timedOut: isTimedOut,) : VanishKeyBoard(
+      onTap: (){
+        print('clicked');
+        setState(() {
+          isEditing = false;
+          switch(whichTextController){
+            case 1 :
+              investedAmount = double.parse(dummy.text);
+              break;
+            case 2:
+              annualInvestment = double.parse(dummy.text);
+              break;
+          }
 
-        children: [
-         Container(
-           decoration: BoxDecoration(
-               color: kPresentTheme.themeColor,
-               boxShadow: [
-                 BoxShadow(
-                   color: kPresentTheme.shadowColor,
-                   offset: Offset.zero,
-                   blurRadius: 0.5,
-                   spreadRadius: 1,
-
-                 )
-               ]
-           ),
-           child: Padding(
-             padding:  EdgeInsets.symmetric(vertical: 1.h,horizontal: 2.w),
-             child: Container(
-
-               // EditableTextField(
-               //   editingController: this.editingController,
-               //   initialText:widget.titleMessage, style: DefaultValues.kH2(context),)
-               
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.start,
-                 children: [
-                   Image.asset(widget.imageSource,
-                     height: 3.h ,
-                     width: 6.w ,) ,
-                   Expanded(child: Center(
-                       child:Band(
-                         onCommit: widget.onEditCommit,
-                         onTap: widget.onTap,
-                         controller: editingController,
-                         text: widget.titleMessage,
-                         textStyle: DefaultValues.kH2(context),) ,),),
-                   CommandButton(
-                     enabled: !this.isEditing,
-                     buttonColor: kPresentTheme.alternateColor,
-                     //icon: Icons.save,
-                     textColor: kPresentTheme.highLightColor,
-                     buttonText: widget.type,
-                     textSize: 12.sp,
-                     onPressed:()  {
-                        print('Prefix is ${widget.prefix}');
-                       var inv =  Investment(
-
-                             name: investmentIcons.containsKey(this.editingController.text.trim())
-                                        ?this.editingController.text
-                                        :widget.prefix+this.editingController.text,
-                             annualInvestmentAmount: annualInvestment,
-                             currentInvestmentAmount: investedAmount,
-                             duration: investmentDuration,
-                             investmentRoi: expectedRoi/100,
-                           );
+          dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
 
 
+        });
 
-                       setState(()  {
-                        if(widget.type == 'Save') {
-                          this.isSavePressed = true;
-                        Future.any(
-                          [
-                             _save(inv),
-                            Utility.timeoutAfter(sec: 10, onTimeout: (){
+        print('clicked');
+      },
+      child: Container(
+        color: Color(0x00000000),
+        child: Wrap(
 
-                              setState(() {
-                                isTimedOut = true;
+          children: [
+           Container(
+             decoration: BoxDecoration(
+                 color: kPresentTheme.themeColor,
+                 boxShadow: [
+                   BoxShadow(
+                     color: kPresentTheme.shadowColor,
+                     offset: Offset.zero,
+                     blurRadius: 0.5,
+                     spreadRadius: 1,
 
-                              });
+                   )
+                 ]
+             ),
+             child: Padding(
+               padding:  EdgeInsets.symmetric(vertical: 1.h,horizontal: 2.w),
+               child: Container(
 
-                            }),
-                          ]
-                        );
+                 // EditableTextField(
+                 //   editingController: this.editingController,
+                 //   initialText:widget.titleMessage, style: DefaultValues.kH2(context),)
 
-                        }
-                        else{
-                          var investDB = InvestDB(
-                            email: widget.currentUser.email,
-                            userID: widget.currentUser.uid,
-                            investmentDocumentID: widget.uniqueId,
-                            investment: inv,
-                          );
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Image.asset(widget.imageSource,
+                       height: 3.h ,
+                       width: 6.w ,) ,
+                     Expanded(child: Center(
+                         child:Band(
+                           onCommit: (){
+                             widget.onEditCommit();
+                            // textBoxLostFocus = true;
+                           },
+                           onTap: widget.onTap,
+                           controller: titleEditingController,
+                           text: widget.titleMessage,
+                           textStyle: DefaultValues.kH2(context),) ,),),
+                     CommandButton(
+                       enabled: !this.isEditing,
+                       buttonColor: kPresentTheme.alternateColor,
+                       //icon: Icons.save,
+                       textColor: kPresentTheme.highLightColor,
+                       buttonText: widget.type,
+                       textSize: 12.sp,
+                       onPressed:()  {
+                          print('Prefix is ${widget.prefix}');
+                         var inv =  Investment(
+
+                               name: investmentIcons.containsKey(this.titleEditingController.text.trim())
+                                          ?this.titleEditingController.text
+                                          :widget.prefix+this.titleEditingController.text,
+                               annualInvestmentAmount: annualInvestment,
+                               currentInvestmentAmount: investedAmount,
+                               duration: investmentDuration,
+                               investmentRoi: expectedRoi/100,
+                             );
 
 
-                          this.isSavePressed = true;
+
+                         setState(()  {
+                          if(widget.type == 'Save') {
+                            this.isSavePressed = true;
                           Future.any(
-                              [
-                                _update(investDB),
-                                Utility.timeoutAfter(sec: 10, onTimeout: (){
+                            [
+                               _save(inv),
+                              Utility.timeoutAfter(sec: 10, onTimeout: (){
 
-                                  setState(() {
-                                    isTimedOut = true;
+                                setState(() {
+                                  isTimedOut = true;
 
-                                  });
+                                });
 
-
-                                }),
-                              ]
+                              }),
+                            ]
                           );
-                        }
 
-                       });
+                          }
+                          else{
+                            var investDB = InvestDB(
+                              email: widget.currentUser.email,
+                              userID: widget.currentUser.uid,
+                              investmentDocumentID: widget.uniqueId,
+                              investment: inv,
+                            );
 
-                     }, borderRadius: BorderRadius.circular(10),),
-                 ],
+
+                            this.isSavePressed = true;
+                            Future.any(
+                                [
+                                  _update(investDB),
+                                  Utility.timeoutAfter(sec: 10, onTimeout: (){
+
+                                    setState(() {
+                                      isTimedOut = true;
+
+                                    });
+
+
+                                  }),
+                                ]
+                            );
+                          }
+
+                         });
+
+                       }, borderRadius: BorderRadius.circular(10),),
+                   ],
+                 ),
                ),
              ),
            ),
-         ),
 
 
-         Row(
-           children: [
+           Row(
+             children: [
 
-             Container(
-               height: 22.h,
-                 width: 48.w,
-                 child: DonutChart(pieData: pieData,arcWidth: 20,),),
-             Container(
-                height: 22.h,
-                  width: 48.w,
-               child: Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   SizedBox(height: 3.h,),
-                   Row(
-                     children: [
-                       Container(
-                           height: 1.5.h,
-                           width: 3.w,
-                           color: kPresentTheme.accentColor),
-                       Padding(
-                         padding: EdgeInsets.only(left : 2.w),
-                         child: Text('Total Investment'),
-                       ),
+               Container(
+                 height: 22.h,
+                   width: 48.w,
+                   child: DonutChart(pieData: pieData,arcWidth: 20,),),
+               Container(
+                  height: 22.h,
+                    width: 48.w,
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     SizedBox(height: 3.h,),
+                     Row(
+                       children: [
+                         Container(
+                             height: 1.5.h,
+                             width: 3.w,
+                             color: kPresentTheme.accentColor),
+                         Padding(
+                           padding: EdgeInsets.only(left : 2.w),
+                           child: Text('Total Investment'),
+                         ),
 
-                     ],
-                   ),
-                   Align(
-                      alignment: Alignment.centerRight,
-                       child: Text('${ textFormat.format(totalInvestment)}',style: DefaultValues.kH3(context),)),
-                   Row(
-                     children: [
-                       Container(height: 1.h, width: 2.w ,color: kPresentTheme.alternateColor),
-                       Padding(
-                         padding:  EdgeInsets.only(left : 2.w),
-                         child: Text('Total Interest'),
-                       ),
-
-                     ],
-                   ),
-                   Align(
-                      alignment: Alignment.centerRight,
-                       child: Text('${textFormat.format(interestValue)}',style: DefaultValues.kH3(context),)),
-                   SizedBox(height: 0.6.h,width: double.infinity,),
-                   Container(height: 0.3.h,width: double.infinity,color: Colors.black12,),
-                   SizedBox(height: 0.2.h,width: double.infinity,),
-                   Align(
-                     alignment: Alignment.centerRight,
-                     child: Text('${textFormat.format(totalInvestment+interestValue)}',
-                            style: DefaultValues.kH2(context),
+                       ],
                      ),
-                   ),
-                 ],
-               ),
-             )
-           ],
-         ),
+                     Align(
+                        alignment: Alignment.centerRight,
+                         child: Text('${DefaultValues.textFormat.format(totalInvestment)}',style: DefaultValues.kH3(context),)),
+                     Row(
+                       children: [
+                         Container(height: 1.5.h, width: 3.w ,color: kPresentTheme.alternateColor),
+                         Padding(
+                           padding:  EdgeInsets.only(left : 2.w),
+                           child: Text('Total Interest'),
+                         ),
 
-         Padding(
-           padding: EdgeInsets.only(left:2.w, right: 2.w),
-           child: LabeledInput(
-              initialValue: investedAmount,
-             label: 'Initial Investment',
-             icon: Icon(Icons.bar_chart),
-             getValue: (value){
-
-               investedAmount = double.parse(value.toString());
-             },
-
-             validator: (){
-                   setState(() {
-                     isEditing = true;
-                   });
-                },
-             onCompleteEditing: (){
-               setState(() {
-                 isEditing = false;
-
-               });
-             },
-
-
+                       ],
+                     ),
+                     Align(
+                        alignment: Alignment.centerRight,
+                         child: Text('${DefaultValues.textFormat.format(interestValue)}',style: DefaultValues.kH3(context),)),
+                     SizedBox(height: 0.6.h,width: double.infinity,),
+                     Container(height: 0.3.h,width: double.infinity,color: Colors.black12,),
+                     SizedBox(height: 0.2.h,width: double.infinity,),
+                     Align(
+                       alignment: Alignment.centerRight,
+                       child: Text('${DefaultValues.textFormat.format(totalInvestment+interestValue)}',
+                              style: DefaultValues.kH2(context),
+                       ),
+                     ),
+                   ],
+                 ),
+               )
+             ],
            ),
-         ),
-          Padding(
-            padding: EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledInput(
-              initialValue: annualInvestment,
-             // controller: editingController,
-             label: 'Annual Investment',
-             icon:Icon(Icons.show_chart, color: Colors.amber,),
 
-              getValue: (value){
-                  annualInvestment = double.parse(value.toString());
-              },
-              validator: (){
-                setState(() {
-                  isEditing = true;
-                });
-              },
-              onCompleteEditing: (){
-                setState(() {
-                  isEditing = false;
+           Padding(
+             padding: EdgeInsets.only(left:2.w, right: 2.w),
+             child: LabeledInput(
+               controller: currentInvestmentController,
 
-                });
-              },
+                initialValue: investedAmount,
+               label: 'Initial Investment',
+               icon: Icon(Icons.bar_chart),
+               // getValue: (value){
+               //
+               //   investedAmount = double.parse(value.toString());
+               // },
 
+               validator: (){
+                     setState(() {
+                       whichTextController = 1;
+                       isEditing = true;
+                        dummy = currentInvestmentController;
+                       annualInvestment = double.parse(annualInvestmentController.text);
+                       annualInvestmentController.text = DefaultValues.textFormat.format(double.parse( annualInvestmentController.text));
+
+                     });
+                  },
+               onCompleteEditing: (){
+                 setState(() {
+                   isEditing = false;
+
+                   investedAmount = double.parse(currentInvestmentController.text);
+                   currentInvestmentController.text = DefaultValues.textFormat.format(double.parse( currentInvestmentController.text));
+
+                 });
+               },
+
+
+             ),
+           ),
+            Padding(
+              padding: EdgeInsets.only(left:2.w, right: 2.w),
+              child: LabeledInput(
+                controller: annualInvestmentController,
+                initialValue: annualInvestment,
+               // controller: editingController,
+               label: 'Annual Investment',
+               icon:Icon(Icons.show_chart, color: Colors.amber,),
+
+                // getValue: (value){
+                //     annualInvestment = double.parse(value.toString());
+                // },
+                validator: (){
+                  setState(() {
+                    whichTextController = 2;
+                    dummy = annualInvestmentController;
+                    isEditing = true;
+                    investedAmount = double.parse(currentInvestmentController.text);
+                    currentInvestmentController.text = DefaultValues.textFormat.format(double.parse( currentInvestmentController.text));
+                  });
+                },
+                onCompleteEditing: (){
+
+                  setState(() {
+                    annualInvestment = double.parse(annualInvestmentController.text);
+
+                    annualInvestmentController.text = DefaultValues.textFormat.format(double.parse( annualInvestmentController.text));
+                    isEditing = false;
+
+                  });
+                },
+
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledSlider(
-              activeColor: kPresentTheme.accentColor,
-              implementWarning: true,
-              threshold: 60,
-              onChanged: (value){
-                setState(() {
-                  expectedRoi = value;
-                });
+            Padding(
+              padding: EdgeInsets.only(left:2.w, right: 2.w),
+              child: LabeledSlider(
+                activeColor: kPresentTheme.accentColor,
+                implementWarning: true,
+                threshold: 60,
+                onChanged: (value){
+                  setState(() {
+                    expectedRoi = value;
+                  });
 
-              },
+                },
 
-              validator: (){
-                setState(() {
-                  isEditing = true;
-                });
-              },
-              onEditingComplete: (){
-                setState(() {
-                  isEditing = false;
-                });
-              },
-              min: 1,
-              max:30,
-              labelText: 'Expected return per year',
-              sliderValue: expectedRoi,
-              suffix: '%      ',
+                validator: (){
+                  setState(() {
+                    isEditing = true;
+                  });
+                },
+                onEditingComplete: (){
+                  setState(() {
+                    isEditing = false;
+                  });
+                },
+                min: 1,
+                max:30,
+                labelText: 'Expected return per year',
+                sliderValue: expectedRoi,
+                suffix: '%      ',
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left:2.w, right: 2.w),
-            child: LabeledSlider(
-              activeColor: kPresentTheme.accentColor,
-              onChanged: (value){
-                setState(() {
-                  investmentDuration = value.round();
-                });
+            Padding(
+              padding: EdgeInsets.only(left:2.w, right: 2.w),
+              child: LabeledSlider(
+                activeColor: kPresentTheme.accentColor,
+                onChanged: (value){
+                  setState(() {
+                    investmentDuration = value.round();
+                  });
 
-              },
+                },
 
-              validator: (){
-                setState(() {
-                  isEditing = true;
-                });
-              },
-              onEditingComplete: (){
-                setState(() {
-                  isEditing = false;
-                });
-              },
-              min: 1,
-              max: 30,
-              divisions: 30,
-              labelText: 'Time Period',
-              sliderValue: investmentDuration.toDouble(),
-              textPrecision: 0,
-              textEditable: false,
-              suffix: 'Years',
+                validator: (){
+                  setState(() {
+                    isEditing = true;
+                  });
+                },
+                onEditingComplete: (){
+                  setState(() {
+                    isEditing = false;
+                  });
+                },
+                min: 1,
+                max: 30,
+                divisions: 30,
+                labelText: 'Time Period',
+                sliderValue: investmentDuration.toDouble(),
+                textPrecision: 0,
+                textEditable: false,
+                suffix: 'Years',
+              ),
             ),
-          ),
 
 
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:dhanrashi_mvp/components/theme_class.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 //const String circularProgressIndicator = 'images/gifs/rolling.gif';
@@ -80,6 +81,8 @@ final kFormErrorTextBorder = OutlineInputBorder(
 
 
 class DefaultValues {
+
+  static final textFormat = NumberFormat.simpleCurrency(locale:'en-in');
 
   static double adaptForSmallDevice(BuildContext context) {
     final size = MediaQuery.of(context).size;
