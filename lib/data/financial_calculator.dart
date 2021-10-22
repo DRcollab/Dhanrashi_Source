@@ -55,6 +55,10 @@ class Calculator {
   // based on that populate the investment and goals
 
   List getInvestmentDetail(List<Investment> investment, int lI, int gI) {
+
+
+
+
     longestInvestmentDuration = lI;
 
    longestGoalDuration = gI;

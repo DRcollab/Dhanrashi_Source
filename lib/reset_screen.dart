@@ -60,9 +60,10 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
 
       await fireAuth.sendPasswordResetEmail(email: emailController.text).whenComplete(() {
         Utility.showMessageAndAsk(
+            type: 2,
             context:context,
             msg:'An Email has been sent to your registered email ${emailController.text} with a link to reset password',
-            takeAction: (){
+            takeAction1: (){
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => LoginScreen()),

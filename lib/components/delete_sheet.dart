@@ -32,7 +32,7 @@ import 'labelled_input.dart';
 
 
 
-class GoalSheet extends StatefulWidget {
+class DeleteSheet extends StatefulWidget {
 
   String prefix = '';
 
@@ -50,7 +50,7 @@ class GoalSheet extends StatefulWidget {
   late Function()? onTap;
   late Function() onEditCommit;
 
-  GoalSheet({
+  DeleteSheet({
 
     this.titleMessage='',
     required this.goalAmount,
@@ -72,14 +72,14 @@ class GoalSheet extends StatefulWidget {
   });
 
   @override
-  _GoalSheetState createState() => _GoalSheetState();
+  _DeleteSheetState createState() => _DeleteSheetState();
 }
 
-class _GoalSheetState extends State<GoalSheet> {
+class _DeleteSheetState extends State<DeleteSheet> {
 
   //var seriesPieData =  <charts.Series<Task, String>>[];
   bool isSavePressed = false;
-   bool isTimedOut = false;
+  bool isTimedOut = false;
   List<Task> pieData = [];
   bool isEditing = false;
   bool statusOfStoring = false;
@@ -100,11 +100,11 @@ class _GoalSheetState extends State<GoalSheet> {
 
 
 
-  double fv(double r, int nper, double pmt, double pv, int type){
-
-    double fv = (pv * pow(1 + r, nper ) + pmt * (1 + r * type)*(pow(1+r, nper) -1 )/r);
-    return fv;
-  }
+  // double fv(double r, int nper, double pmt, double pv, int type){
+  //
+  //   double fv = (pv * pow(1 + r, nper ) + pmt * (1 + r * type)*(pow(1+r, nper) -1 )/r);
+  //   return fv;
+  // }
 
 
 
@@ -134,19 +134,19 @@ class _GoalSheetState extends State<GoalSheet> {
   }
 
 
-  double calculateInterset( ){
-
-    double interest;
-    // double roi = expectedRoi /100;
-    futureValue = fv(inflation/100,goalDuration, 0, goalAmount, 0);
-    double goalPortion = goalAmount;
-
-    double _inflation = futureValue - goalPortion;
-
-
-    return double.parse(_inflation.toStringAsFixed(1)) ;
-
-  }
+  // double calculateInterset( ){
+  //
+  //   double interest;
+  //   // double roi = expectedRoi /100;
+  //   futureValue = fv(inflation/100,goalDuration, 0, goalAmount, 0);
+  //   double goalPortion = goalAmount;
+  //
+  //   double _inflation = futureValue - goalPortion;
+  //
+  //
+  //   return double.parse(_inflation.toStringAsFixed(1)) ;
+  //
+  // }
 
 
 
@@ -161,6 +161,66 @@ class _GoalSheetState extends State<GoalSheet> {
     var docID = goalDB.goalDocumentID;
     print(' i am in update ${docID}');
 
+    fireStore.collection('pjdhan_goal').doc(docID).update({
+      'email': goalDB.email,
+      'Uuid': goalDB.user,
+      'Updated_id': 'system',
+      'goal_name': goalDB.goal.name,
+      'goal_description': goalDB.goal.description,
+      'goal_duration': goalDB.goal.duration,
+      'goal_amount': goalDB.goal.goalAmount,
+      'insert_dts': Timestamp.fromDate(currentPhoneDate),
+      'update_dts': Timestamp.fromDate(currentPhoneDate),
+      'status': 'Active',
+    }).whenComplete((){
+      setState(() {
+        statusOfStoring = true;
+        widget.onUpdate!(goalDB.goal);
+
+      });
+    }).catchError((onError){
+      Utility.showErrorMessage(context, e.toString());
+    });
+
+
+  }
+
+
+  Future _save(Goal goal) async {
+
+    DateTime currentPhoneDate = DateTime.now();
+
+    await fireStore.collection('pjdhan_goal').add({
+      'email': widget.currentUser.email,
+      'Uuid': widget.currentUser.uid,
+      'Updated_id': 'system',
+      'goal_name': goal.name,
+      'goal_description': goal.description,
+      'goal_duration': goal.duration,
+      'goal_amount': goal.goalAmount,
+      'inflation': goal.inflation,
+      'insert_dts': Timestamp.fromDate(currentPhoneDate),
+      'update_dts': Timestamp.fromDate(currentPhoneDate),
+      'status': 'Active',
+    }).whenComplete((){
+      setState(() {
+        statusOfStoring = true;
+        Global.goalCount++;
+        widget.onAdd!(Global.goalCount);
+      });
+    }).catchError((onError){
+      Utility.showErrorMessage(context, e.toString());
+    });
+
+  }
+
+
+
+  void _updateGoalSolo( GoalDB goalDB, String docStatus ) async {
+    DateTime currentPhoneDate = DateTime.now();
+
+    var docID= goalDB.goalDocumentID;
+    try {
       fireStore.collection('pjdhan_goal').doc(docID).update({
         'email': goalDB.email,
         'Uuid': goalDB.user,
@@ -171,56 +231,21 @@ class _GoalSheetState extends State<GoalSheet> {
         'goal_amount': goalDB.goal.goalAmount,
         'insert_dts': Timestamp.fromDate(currentPhoneDate),
         'update_dts': Timestamp.fromDate(currentPhoneDate),
-        'status': widget.type!='Delete' ?'Active':'InActive',
-      }).whenComplete((){
-        setState(() {
-              statusOfStoring = true;
-              widget.onUpdate!(goalDB.goal);
-
-            });
-      }).catchError((onError){
-          Utility.showErrorMessage(context, onError.toString());
-        });
-
+        'status': docStatus
+      })
+          .then((value)=>print("Goal updated"));
+    }
+    catch (e) {
+      print( 'Exception while updating $docID $e');
+    }
 
   }
-
-
-  Future _save(Goal goal) async {
-
-    DateTime currentPhoneDate = DateTime.now();
-
-      await fireStore.collection('pjdhan_goal').add({
-        'email': widget.currentUser.email,
-        'Uuid': widget.currentUser.uid,
-        'Updated_id': 'system',
-        'goal_name': goal.name,
-        'goal_description': goal.description,
-        'goal_duration': goal.duration,
-        'goal_amount': goal.goalAmount,
-        'inflation': goal.inflation,
-        'insert_dts': Timestamp.fromDate(currentPhoneDate),
-        'update_dts': Timestamp.fromDate(currentPhoneDate),
-        'status': 'Active',
-      }).whenComplete((){
-        setState(() {
-                statusOfStoring = true;
-                Global.goalCount++;
-                widget.onAdd!(Global.goalCount);
-              });
-      }).catchError((onError){
-            Utility.showErrorMessage(context, e.toString());
-          });
-
-  }
-
-
 
 
   @override
   Widget build(BuildContext context) {
 
-    inflationEffect = calculateInterset();
+   // inflationEffect = calculateInterset();
     // totalInvestment = investedAmount + annualInvestment*investmentDuration;
 
     pieData = [
@@ -274,111 +299,17 @@ class _GoalSheetState extends State<GoalSheet> {
                     children: [
                       Image.asset(widget.imageSource, height: 8.h, width: 8.w,),
                       Expanded(child: Center(
-                          child: (widget.type!='Delete') ? Band(
-                            controller:this.titleEditingController,
-                            onCommit : widget.onEditCommit,
-                            onTap: widget.onTap,
-                            text:widget.titleMessage,
-                            textStyle: DefaultValues.kH2(context),
-                          ):Card(child:Text(widget.titleMessage,style:DefaultValues.kH2(context) ,)),
+                        child: Text(widget.titleMessage, style: DefaultValues.kH2(context),)
                       ),
                       ),
-                      CommandButton(
-                        enabled: !this.isEditing,
-                        buttonColor: (widget.type!='Delete') ?kPresentTheme.alternateColor : Colors.red,
-                        //icon: Icons.save,
-                        textColor: kPresentTheme.highLightColor,
-                        textSize: 12.sp,
-                        buttonText: widget.type,
-                        onPressed:()  {
-
-
-
-                          var goal =  Goal(
-
-                            name:goalIcons.containsKey(this.titleEditingController.text.trim())
-                                ?this.titleEditingController.text
-                                :widget.prefix+this.titleEditingController.text,
-                            description: 'No description',
-                            goalAmount: goalAmount,
-                            duration: goalDuration,
-                            inflation: inflation/100,
-                          );
-
-                          print('.... printing inv:;;;;;;;;');
-                        //  print(inv);
-
-                          setState(() {
-
-                            if(widget.type == 'Save') {
-
-                             this.isSavePressed = true;
-
-                             Future.any(
-                                 [
-                                    _save(goal),
-                                    Utility.timeoutAfter(sec: 10, onTimeout: (){
-                                                // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
-                                      setState(() {
-                                        isTimedOut = true;
-
-                                      });
-
-                                    }),
-                                 ]
-                             );
-
-                            }
-                            else{
-
-                            var  goalDB = GoalDB(
-                                email: widget.currentUser.email,
-                                user: widget.currentUser.uid,
-                                goalDocumentID: widget.uniquId!,
-                                goal:goal,
-
-                              );
-                            this.isSavePressed = true;
-
-                            Future.any(
-                                [
-                                  _update(goalDB),
-                                  Utility.timeoutAfter(sec: 10, onTimeout: (){
-                                    // Utility.showErrorMessage(context, Utility.messages['timed_out']!);
-                                    setState(() {
-                                      isTimedOut = true;
-
-                                    });
-
-
-                                  }),
-                                ]
-                            );
-
-
-                            }
-
-                          });
-
-
-
-
-                          //
-                          // print('duration: ${investmentDuration}');
-                          // print('amount: ${investedAmount}');
-                          // print('ROI :${expectedRoi}');
-                          //
-
-
-                        }, borderRadius: BorderRadius.circular(10),),
+                      //
                     ],
                   ),
                 ),
               ),
             ),
 
-           widget.type =='Delete'? Utility.showBanner(context, 'You are about to delete this goal. This action is irreversible.', Colors.red.shade50, Colors.red)
-            :SizedBox(width:0, height: 0,),
+
             Row(
               children: [
 
@@ -392,7 +323,7 @@ class _GoalSheetState extends State<GoalSheet> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     SizedBox(height: 3.h,),// * DefaultValues.adaptForSmallDevice(context),),
+                      SizedBox(height: 3.h,),// * DefaultValues.adaptForSmallDevice(context),),
                       Row(
                         children: [
                           Container(
@@ -407,10 +338,10 @@ class _GoalSheetState extends State<GoalSheet> {
                         ],
                       ),
                       Align(
-                        alignment: Alignment.centerRight,
+                          alignment: Alignment.centerRight,
                           child: Text(
-                              (goalAmount+inflationEffect)<DefaultValues.threshold ? '${DefaultValues.textFormatWithDecimal.format(goalAmount)}'
-                              :'${DefaultValues.textShortFormat.format(goalAmount)}'
+                            (goalAmount+inflationEffect)<DefaultValues.threshold ? '${DefaultValues.textFormatWithDecimal.format(goalAmount)}'
+                                :'${DefaultValues.textShortFormat.format(goalAmount)}'
                             ,style: DefaultValues.kH3(context),)),
                       Row(
                         children: [
@@ -426,7 +357,7 @@ class _GoalSheetState extends State<GoalSheet> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             (goalAmount+inflationEffect)<DefaultValues.threshold ? '${DefaultValues.textFormatWithDecimal.format(inflationEffect)}'
-                            :'${DefaultValues.textShortFormat.format(inflationEffect)}',
+                                :'${DefaultValues.textShortFormat.format(inflationEffect)}',
                             style: DefaultValues.kH3(context),)),
                       SizedBox(height: 0.6.h,width: double.infinity,),
                       Container(height: 0.2.h,width: double.infinity,color: Colors.black12,),
@@ -435,7 +366,7 @@ class _GoalSheetState extends State<GoalSheet> {
                         alignment: Alignment.centerRight,
                         child: Text(
                           (goalAmount+inflationEffect)<DefaultValues.threshold ?'${DefaultValues.textFormat.format(goalAmount+inflationEffect)}'
-                          :'${DefaultValues.textShortFormat.format(goalAmount+inflationEffect)}',
+                              :'${DefaultValues.textShortFormat.format(goalAmount+inflationEffect)}',
                           style: DefaultValues.kH2(context),
                         ),
                       ),
@@ -447,66 +378,14 @@ class _GoalSheetState extends State<GoalSheet> {
 
             Padding(
               padding: EdgeInsets.only(left:2.w, right: 2.w),
-              child:  LabeledInput(
-                mute: (widget.type=='Delete'), // Checks if this widget is used for deletion or not. In case it is for delete then LabeledInput will
-                // stay muted;
-                controller: goalController,
-                initialValue: goalAmount,
-                label:'Goal Value',
-                icon: Icon(Icons.bubble_chart),
-                // activeColor: kPresentTheme.accentColor,
-                // onChanged: (value){
-                //
-                //   setState(() {
-                //     goalAmount = value;
-                //   });
-                //
-                // },
-                // getValue: (value){
-                //   goalAmount = double.parse(value.toString());
-                //     },
-                validator: (){
-                  setState(() {
-                    isEditing = true;
-                    dummy = goalController;
-
-                  });
-                },
-                onCompleteEditing: (){
-                  setState(() {
-                    isEditing = false;
-                    goalAmount = (double.parse(goalController.text));
-                    goalController.text = DefaultValues.textFormat.format(double.parse(goalController.text));
-                  });
-                },
-
-
-              ),
+              child: Card(
+                child: Text( DefaultValues.textFormatWithDecimal.format(goalAmount), style: DefaultValues.kH2(context),),
+              )
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left:8.0, right: 8.0),
-            //   child: LabeledSlider(
-            //     onChanged: (value){
-            //
-            //       setState(() {
-            //         annualInvestment = value;
-            //       });
-            //
-            //     },
-            //
-            //     validator: (value){
-            //
-            //     },
-            //     sliderValue: annualInvestment,
-            //     min: 0,
-            //     max: 100,
-            //     labelText: 'Annual Investment (in Lakhs)',
-            //     suffix: 'Lakhs',
-            //   ),
-            // ),
+
             Padding(
               padding:  EdgeInsets.only(left:2.w, right: 2.w),
-              child: (widget.type!='Delete') ?LabeledSlider(
+              child: LabeledSlider(
                 activeColor: kPresentTheme.accentColor,
                 onChanged: (value){
                   setState(() {
@@ -530,16 +409,11 @@ class _GoalSheetState extends State<GoalSheet> {
                 labelText: 'Inflation',
                 sliderValue: inflation,
                 suffix: '%      ',
-              ): LabeledInput(
-                  controller: goalController,
-                  mute: true,
-                  label: 'Inflation',
-                  initialValue: inflation,
               ),
             ),
             Padding(
               padding:  EdgeInsets.only(left:2.w, right: 2.w),
-              child:(widget.type!='Delete') ? LabeledSlider(
+              child: LabeledSlider(
                 activeColor: kPresentTheme.accentColor,
                 onChanged: (value){
                   setState(() {
@@ -564,11 +438,6 @@ class _GoalSheetState extends State<GoalSheet> {
                 textPrecision: 0,
                 textEditable: false,
                 suffix: 'Years',
-              ):LabeledInput(
-                controller: goalController,
-                mute: true,
-                label: 'Duration',
-                initialValue: widget.goalDuration.toDouble(),
               ),
             ),
 

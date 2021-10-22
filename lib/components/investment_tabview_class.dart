@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import '../chart_viewer.dart';
+import '../empty_page_inputs.dart';
 import '../investmentinput.dart';
 import 'buttons.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart' as donut;
@@ -51,16 +52,19 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   bool moveKB = false;
    late List<donut.Task> pieData;
   late List<donut.Task> futurePieData;
-
+  double totalInvest = 0;
   String prefix = '';
   double totalCorpus = 0;
+  late List<Investment> investments = [];
+
+  List dataSet = List.empty(growable: true);
   //double futureValue
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    totalInvest = widget.totalInvest;
     //
     investments = List.empty(growable: true);
     if(widget.investmentDBs.length>0){
@@ -75,7 +79,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   }
 
 
-  _edit(int index){
+  _edit(int index , String type){
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -107,16 +111,39 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               imageSource: investmentIcons.containsKey(this.investments[index].name)
                   ?investmentIcons[this.investments[index].name]
                   :investmentIcons[this.investments[index].name.substring(0,1)],
-              type: 'Update',
+              type: type,
               onUpdate: (newInv){
-                print('new inv amount');
+
                 setState(() {
+                  print('after delete index is $index and length is ${investments.length}');
 
-                  investments[index] = newInv!;
-                  widget.investmentDBs[index].investment = investments[index];
+                  if(type!='Delete'){
+                    investments[index] = newInv!;
+                    widget.investmentDBs[index].investment = investments[index];
+                  }else{
+                    investments.removeAt(index);
+                    widget.investmentDBs.removeAt(index);
+                  }
 
+                  totalInvest = 0;
+                  if(investments.isNotEmpty) {
+                    investments.forEach((element) {
+                      totalInvest = element.currentInvestmentAmount + element
+                          .annualInvestmentAmount * element.duration +
+                          totalInvest;
+                    });
+
+                    int lngstInv = Calculator().getLongestInvestmentDuration(
+                        investments);
+                    dataSet.clear();
+                    dataSet = Calculator().getInvestmentDetail(
+                        investments, lngstInv, widget.longestGoalDuration);
+                  } else{
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+                  }
                 });
-                print('${investments[index].annualInvestmentAmount}, ${investments[index].currentInvestmentAmount}');
+
               },
             ),
           ),
@@ -134,7 +161,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
             currentUser: widget.currentUser,
             data: [dataSet[index]],
             pieData: [
-                      donut.Task('Total Investment', widget.totalInvest, kPresentTheme.accentColor),
+                      donut.Task('Total Investment', totalInvest, kPresentTheme.accentColor),
                       donut.Task('This Investment', investments[index].currentInvestmentAmount +
                           investments[index].annualInvestmentAmount* investments[index].duration,
                           kPresentTheme.alternateColor),
@@ -149,22 +176,10 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
     ),
     );
 
-    
-    
   }
-  
-  
-  late List<Investment> investments = [];
-
-  List dataSet = List.empty(growable: true);
-
-  @override
+    @override
   Widget build(BuildContext context) {
 
-
-
-
-  print(dataSet);
     return Column(
       children: [
         Flexible(
@@ -174,11 +189,11 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               child: fetched ? Stack(
                 children: [
 
-                  DynamicGraph(
+                 investments.isNotEmpty ? DynamicGraph(
                     chartType: ChartType.bar,
                     resultSet: dataSet,
                     gallopYears: widget.longestInvestmentDuration~/5,
-                  ),
+                  ): SizedBox(),
                   GestureDetector(
                     onTap: (){
                       Navigator.push(context,
@@ -188,10 +203,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                                 dataSet: dataSet,
                               )));
                               // ChartView(
-                              //
 
-                              //
-                              // )));
                     },
                     child: Container(
                       color: Color(0x00000000),
@@ -207,7 +219,10 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
        Flexible(
          flex:1,
          child: ListTile(
-           title:  Text('Total Investment Amount: ${DefaultValues.textFormat.format(widget.totalInvest)}',style: DefaultValues.kNormal3(context)),
+           title:  Text('Total Investment Amount: ${
+              totalInvest<DefaultValues.threshold ? DefaultValues.textFormat.format(totalInvest)
+               :DefaultValues.textShortFormat.format(totalInvest)}',
+               style: DefaultValues.kNormal3(context)),
            trailing: RoundButton(
                icon:Icons.add,
                onPress:(){
@@ -222,6 +237,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
           height: 50.h,//* DefaultValues.adaptByValue(context,0.50) ,
           child: ListView.builder(
             itemBuilder: (context, index){
+              print('index - $index');
+              print(investments.length);
+
              // double futureValue = Calculator.fv(r, nper, pmt, pv, type)
               double futureValue = Calculator.fv(investments[index].investmentRoi,
                   investments[index].duration, 
@@ -229,12 +247,21 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                   investments[index].currentInvestmentAmount, 0);
 
               totalCorpus = futureValue + totalCorpus;
+
               print('Value:::::::: ${investments[index].name}');
+              print(index);
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(
                     onPressed:(){
-                      _showThisData(index, futureValue);
+                      if('#@:%&^*!'.contains(investments[index].name.substring(0,1))){
+                        prefix=investments[index].name.substring(0,1);
+
+                      }else{
+                        prefix='';
+                      }
+                      _edit(index,'Update');
+                      //_showThisData(index, futureValue);
                     },
                     hasExtraText: true,
                     type: 'investment',
@@ -268,15 +295,10 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                         :DefaultValues.textShortFormat.format(futureValue)
                     }' ,
                     trailing: IconButton(
-                      icon: Icon(Icons.edit) ,
+                      icon: Icon(Icons.delete, size: 16.sp,) ,
                       onPressed: (){
-                        if('#@:%&^*!'.contains(investments[index].name.substring(0,1))){
-                          prefix=investments[index].name.substring(0,1);
 
-                        }else{
-                          prefix='';
-                        }
-                        _edit(index);
+                        _edit(index,'Delete');
                       },
 
 

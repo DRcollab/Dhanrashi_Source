@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
@@ -110,7 +111,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
 
         children: [
           Padding(
-            padding: const EdgeInsets.only(top:8,left: 18,right: 18, bottom: 8.0),
+            padding: EdgeInsets.only(top:1.h,left: 4.w,right: 4.w, bottom: 1.h),
             child: Column(
               children: [
                 Container(
@@ -119,14 +120,14 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
 
                   ),
                   child: Image.asset('images/info.png',
-                    height: 200,
-                    width: 200,),
+                    height: 20.h,
+                    width: 100.w,),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 18, left: 8, right: 8,bottom: 8),
+                  padding:  EdgeInsets.only(top: 4.h, left: 1.w, right: 1.w,bottom: 1.h),
                   child: Text("Hey ! ${widget.currentUser!.email}  \nThanks for choosing us",
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                     color: kPresentTheme.accentColor,
                   )
@@ -134,10 +135,10 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                  padding: EdgeInsets.only(top: 1.h),
                   child: Text("Looks like we dont know much of you.",
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                         color: kPresentTheme.accentColor,
                       )
@@ -147,10 +148,10 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2,horizontal: 28),
+            padding: EdgeInsets.symmetric(vertical: 1.h,horizontal: 6.w),
             child: Text("Knowing you more, will help us to help you more. How about getting some information about you ?",
               style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 16.sp,
                 color: kPresentTheme.accentColor,
               ),
             ),
@@ -164,9 +165,9 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(top:1.h, left:2.w, bottom: 1.h,right: 2.w),
                     child:  CommandButton(
-                      textSize: 18,
+                      textSize: 14.sp,
                       textColor: Colors.black,
                       borderRadius: BorderRadius.circular(20),
                       buttonColor: kPresentTheme.alternateColor,
@@ -182,9 +183,9 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.only(top:1.h, left:2.w, bottom: 1.h,right: 2.w),
                     child:  CommandButton(
-                      textSize: 18,
+                      textSize: 14.sp,
                       buttonColor: kPresentTheme.accentColor,
                       textColor: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -226,6 +227,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
               padding: const EdgeInsets.all(8.0),
               child: LinkText(
                   linkText: "Click here to know our Privacy Policy",
+                  displaySize: 14.sp,
                   type: LinkTextType.DARK,
                   onPressed: (){}),
             ),

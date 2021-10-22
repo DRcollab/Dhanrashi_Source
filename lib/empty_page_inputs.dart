@@ -1,5 +1,6 @@
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
@@ -38,7 +39,7 @@ class EmptyPage extends StatelessWidget {
             Container(child: Image.asset('images/empty.png'),),
             Padding(
               padding: const EdgeInsets.all(28),
-              child: Text('It seems that  you have not entered any goal and investments for us to analyse.',
+              child: Text(Utility.messages['empty']!,
                           style:DefaultValues.kNormal1(context),
 
               ),

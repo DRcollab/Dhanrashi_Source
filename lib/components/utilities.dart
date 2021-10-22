@@ -1,6 +1,7 @@
 
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,6 +43,7 @@ class Utility{
     'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
     ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
     'success_update_profile':'Your profile has been succesfully updated.' ,
+    'empty':'It seems that  you have not entered any goal and/or investments for us to analyse.',
   };
 
 
@@ -66,6 +68,8 @@ class Utility{
     }
   }
 
+
+
   static String getPeriod(double val){
     if(val>0){
       if(val<1){
@@ -81,6 +85,18 @@ class Utility{
 
 
   }
+
+  static showBanner(BuildContext context,String msg, Color color, Color textColor){
+    return Container(
+      color: color,
+      child: Padding(
+        padding: EdgeInsets.all(8.sp),
+        child: Text(msg,style: DefaultValues.kNormal3(context).copyWith(color:Colors.red),),
+      ),
+    );
+
+  }
+
 
   static showErrorMessage(BuildContext context, String e){
     showModalBottomSheet(
@@ -105,7 +121,19 @@ class Utility{
     return Future.delayed(Duration(seconds: sec), onTimeout);
   }
 
-  static showMessageAndAsk({required BuildContext context, required String msg, required Function() takeAction}){
+  static showMessageAndAsk({
+
+    required BuildContext context,
+    required String msg,
+    required Function() takeAction1,
+     Function()? takeAction2,
+    type = 0,
+    String buttonText1 = '',
+    String buttonText2 = '',
+
+
+  }
+    ){
 
     showModalBottomSheet(
      isDismissible: true,
@@ -118,7 +146,7 @@ class Utility{
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              color: Colors.green,
+              color: (type==0) ?Colors.amber:(type==1) ?Colors.red:Colors.green,
               child: Padding(
                 padding:  EdgeInsets.symmetric(vertical:1.h),
                 child: Center(
@@ -135,20 +163,31 @@ class Utility{
 
 
             Padding(
-              padding:  EdgeInsets.symmetric(vertical: 4.h,horizontal: 4.w),
+              padding:  EdgeInsets.symmetric(vertical: 2.h,horizontal: 4.w),
               child:Text(msg,
-              style: DefaultValues.kH3(context)),
+              style: DefaultValues.kH3(context).copyWith(
+                  color: (type == 0) ? Colors.red:Colors.black)),
             ),
             Padding(
-              padding:  EdgeInsets.symmetric(vertical:4.h),
+              padding:  EdgeInsets.only(top:6.h),
               child: CommandButton(
-                  onPressed: takeAction ,
-                  buttonText: 'Go Back to Login Screen',
+                  onPressed: takeAction1 ,
+                  buttonText: buttonText1,
                   textSize: 12.sp,
                   buttonColor: kPresentTheme.accentColor,
                   borderRadius: BorderRadius.circular(20),
                   textColor: Colors.white),
-            )
+            ),
+            (type == 0 || type == 1) ?Padding(
+              padding:  EdgeInsets.symmetric(vertical:0.h),
+              child: CommandButton(
+                  onPressed: takeAction2! ,
+                  buttonText: buttonText2,
+                  textSize: 12.sp,
+                  buttonColor: kPresentTheme.accentColor,
+                  borderRadius: BorderRadius.circular(20),
+                  textColor: Colors.white),
+            ):SizedBox(),
           ],
         ),
       ),

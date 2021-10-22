@@ -133,6 +133,9 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
    double invValueatlastYear = double.parse( allInvestmentAnnualAmt[0][noOfYear]);
    double goalValueatlastYear = double.parse( allInvestmentAnnualAmt[1][noOfYear]);
+    print('from inside chart :');
+    print(invValueatlastYear);
+    print(goalValueatlastYear);
 
     inv_ratio = 7/5;
     goal_ratio = (goalValueatlastYear/invValueatlastYear)*inv_ratio;

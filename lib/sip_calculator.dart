@@ -8,6 +8,7 @@ import 'components/dounut_charts.dart';
 import 'components/labeled_slider.dart';
 import 'package:sizer/sizer.dart';
 
+import 'components/labelled_input.dart';
 import 'components/menu_drawer_class.dart';
 import 'data/financial_calculator.dart';
 
@@ -36,6 +37,16 @@ class _SIPCalculatorState extends State<SIPCalculator> {
   final  _sipKey = GlobalKey<ScaffoldState>();
   double goalAmount = 0;
   double sipAmount = 0;
+  TextEditingController titleEditingController = TextEditingController();
+  TextEditingController currentInvestmentController = TextEditingController();
+  TextEditingController annualInvestmentController = TextEditingController();
+  TextEditingController dummy = TextEditingController();
+
+  bool text1Active = false;
+  bool text2Active = false;
+  late var investAccess;
+
+  int whichTextController = 0;
 
   @override
   initState(){
@@ -64,7 +75,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
   @override
   Widget build(BuildContext context) {
-
+    //
     // if(selectedValue == 0){
     //   investedAmount = valueSlider1;
     //   annualInvestment = valueSlider2;
@@ -78,12 +89,12 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
 
 
-    interestValue = calculateInterset();
-    totalInvestment = investedAmount + annualInvestment*investmentDuration;
-
-    goalAmount = totalInvestment+interestValue;
-   annualInvestment = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0);
-   sipAmount = annualInvestment * 100000/12;
+    // interestValue = calculateInterset();
+    // totalInvestment = investedAmount + annualInvestment*investmentDuration;
+    //
+    // goalAmount = totalInvestment+interestValue;
+    // annualInvestment = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0);
+    // sipAmount = annualInvestment * 100000/12;
 
     pieData = [
 
@@ -179,7 +190,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
                                     ],
                                   ),
-                                  Text('${totalInvestment.toStringAsFixed(2)} Lakh',style: DefaultValues.kH3(context),),
+                                  Text('${DefaultValues.textFormatWithDecimal.format(totalInvestment)} Lakh',style: DefaultValues.kH3(context),),
                                   Row(
                                     children: [
                                       Container(height: 1.h, width: 2.w ,color: kPresentTheme.alternateColor),
@@ -190,14 +201,14 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
                                     ],
                                   ),
-                                  Text('${interestValue} Lakh',style: DefaultValues.kH3(context),),
+                                  Text('${DefaultValues.textFormatWithDecimal.format(interestValue)} Lakh',style: DefaultValues.kH3(context),),
                                   SizedBox(height: 0.5.h,width: double.infinity,),
                                   Container(height: 0.2.h,width: double.infinity,color: Colors.black12,),
                                   SizedBox(height: 0.5.h,width: double.infinity,),
                                   Text(
-                                    selectedValue == 0 ?'Your corpus value after ${investmentDuration} years is'
-                                    :'Your SIP amount per month is',
-                                    style: DefaultValues.kH3(context),
+                                    selectedValue == 0 ?'Your corpus ${investmentDuration} years is'
+                                    :'Your monthly SIP',
+                                    style: DefaultValues.kH4(context),
                                   ),
                                   Text(
                                     selectedValue == 0 ?'Rs.${(totalInvestment+interestValue).toStringAsFixed(2)} Lakh'
@@ -259,67 +270,91 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                   ],
                 ),
 
+        LabeledInput(
+          // Checks if this widget is used for deletion or not. In case it is for delete then LabeledInput will
+          // stay muted;
+          controller: currentInvestmentController,
+          initialValue: investedAmount,
+          label: selectedValue == 0 ? 'Initial Investment':'Goal Amount',
+          icon: Icon(Icons.bar_chart),
+          // getValue: (value){
+          //
+          //   investedAmount = double.parse(value.toString());
+          // },
 
-                Padding(
-                  padding:  EdgeInsets.only(left:2.w, right: 2.w),
-                  child: LabeledSlider(
-                    activeColor: kPresentTheme.accentColor,
-                    onChanged: (value){
+          validator: (){
+            setState(() {
+              whichTextController = 1;
+              isEditing = true;
+              text1Active = true;
+              dummy = currentInvestmentController;
+              if(text2Active) {
+                annualInvestment =
+                    double.parse(annualInvestmentController.text);
+                annualInvestmentController.text =
+                    DefaultValues.textFormat.format(double.parse(
+                        annualInvestmentController.text));
+                text2Active = false;
+              }
+            });
+          },
+          onCompleteEditing: (){
+            setState(() {
+              isEditing = false;
+              text1Active = false;
+              text2Active = false;
+              investedAmount = double.parse(currentInvestmentController.text);
 
-                      setState(() {
-                        investedAmount = value;
-                       // valueSlider1 = value;
-                      });
+              currentInvestmentController.text = DefaultValues.textFormat.format(double.parse( currentInvestmentController.text));
 
-                    },
+            });
+          },
 
-                    validator: (){
-                      setState(() {
-                        isEditing = true;
-                      });
-                    },
-                    onEditingComplete: (){
-                      setState(() {
-                        isEditing = false;
-                      });
-                    },
-                    sliderValue: investedAmount,
-                    min: 1,
-                    max: 100,
-                    labelText: selectedValue == 0 ? 'Initial Investment':'Goal Amount',
-                    suffix: 'Lakhs',
-                  ),
+//selectedValue == 0 ? 'Annual Investment':'Initial Investment',
+        ),
+                LabeledInput(
+
+                  controller: annualInvestmentController,
+                  initialValue: annualInvestment,
+                  // controller: editingController,
+                  label: selectedValue == 0 ? 'Annual Investment':'Initial Investment',
+                  icon:Icon(Icons.show_chart, color: Colors.amber,),
+
+                  // getValue: (value){
+                  //     annualInvestment = double.parse(value.toString());
+                  // },
+                  validator: (){
+                    setState(() {
+                      whichTextController = 2;
+                      dummy = annualInvestmentController;
+                      isEditing = true;
+                      text2Active = true;
+                      if(text1Active) {
+                        investedAmount =
+                            double.parse(currentInvestmentController.text);
+                        currentInvestmentController.text =
+                            DefaultValues.textFormat.format(double.parse(
+                                currentInvestmentController.text));
+                        text1Active = false;
+                      }
+                    });
+                  },
+                  onCompleteEditing: (){
+
+                    setState(() {
+                      annualInvestment = double.parse(annualInvestmentController.text);
+
+                      annualInvestmentController.text = DefaultValues.textFormat.format(double.parse( annualInvestmentController.text));
+                      isEditing = false;
+                      text2Active = false;
+                      text1Active = false;
+
+                    });
+                  },
+
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left:2.w, right: 2.w),
-                  child: LabeledSlider(
-                    activeColor: kPresentTheme.accentColor,
-                    onChanged: (value){
 
-                      setState(() {
-                       annualInvestment = value;
-                       // valueSlider2 = value;
-                      });
 
-                    },
-
-                    validator: (){
-                      setState(() {
-                        isEditing = true;
-                      });
-                    },
-                    onEditingComplete: (){
-                      setState(() {
-                        isEditing = false;
-                      });
-                    },
-                    sliderValue: annualInvestment,
-                    min: 0,
-                    max: 100,
-                    labelText: selectedValue == 0 ? 'Annual Investment':'Initial Investment',
-                    suffix: 'Lakhs',
-                  ),
-                ),
                 Padding(
                   padding: EdgeInsets.only(left:2.w, right: 2.w),
                   child: LabeledSlider(

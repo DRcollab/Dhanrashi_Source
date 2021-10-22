@@ -27,6 +27,7 @@ class LabeledInput extends StatefulWidget {
   late final Function()? onFocusLost;
   late Icon? icon;
   var controller = TextEditingController();
+  bool mute = false;
 
  LabeledInput({
     this.hintText = '',
@@ -44,7 +45,7 @@ class LabeledInput extends StatefulWidget {
     this.onFocusLost,
    this.icon,
    this.initialValue = 0,
-
+    this.mute = false,
    required this.controller,
   });
 
@@ -60,6 +61,7 @@ class _LabeledInputState extends State<LabeledInput> {
 
 
   var numberFormat;
+
   double variableMax = 0;
   double variableMin = 0;
   late Color activeColor;
@@ -74,29 +76,7 @@ class _LabeledInputState extends State<LabeledInput> {
 
     numberFormat = NumberFormat.decimalPattern();
     widget.controller.text =DefaultValues.textFormat.format(widget.initialValue);
-    // if(widget.initialValue>0){
-    //   if(widget.initialValue<1){
-    //     controller.text = (widget.initialValue*100).toString();
-    //     textLabel = 'Thousand';
-    //   }else{
-    //     controller.text = widget.initialValue.toString();
-    //     textLabel = 'Lakh';
-    //   }
-    // }else{
-    //   controller.text = widget.initialValue.toString();
-    //   textLabel = '';
-    // }
 
-    _currency = NumberFormat.compactSimpleCurrency(locale: 'en-in').currencySymbol;
-
-
-    // activeColor = widget.activeColor;
-    // controller = TextEditingController(
-    //   text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
-    // );
-    // variableMax = widget.max;
-    // variableMin = widget.min;
-    // //
      super.initState();
   }
 
@@ -111,8 +91,6 @@ class _LabeledInputState extends State<LabeledInput> {
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Card(
       child: Column(
@@ -131,11 +109,10 @@ class _LabeledInputState extends State<LabeledInput> {
               children: [
                 Container(
                   width:60.w,
-                  height: 6.h,
-                  child: TextField(
-
+                  height:!widget.mute ? 6.h:3.h,
+                  child: !widget.mute ?TextField(
                     focusNode: numericFocusNode,
-                    autofocus: this.autofocus,
+                    autofocus: false,
                     textAlign: TextAlign.end,
                     enableInteractiveSelection: false,
                     enabled: widget.enabled,
@@ -146,22 +123,7 @@ class _LabeledInputState extends State<LabeledInput> {
                     controller: widget.controller,
                     onSubmitted: (_){
                       FocusScope.of(context).unfocus();
-                      // if(!FocusScope.of(context).hasFocus){
-                      //   String value='';
-                      //   setState(() {
-                      //     autofocus = false;
-                      //
-                      //     widget.onCompleteEditing!();
-                      //     value = widget.controller.text;
-                      //
-                      //     widget.controller.text =DefaultValues.textFormat.format(double.parse( widget.controller.text));
-                      //
-                      //     print(value);
-                      //
-                      //
-                      //     //widget.getValue!(value);
-                      //   });
-                      // }
+
 
                     }
                     ,
@@ -219,7 +181,7 @@ class _LabeledInputState extends State<LabeledInput> {
                       widget.validator!();
                     }
                     ,
-                  ),
+                  ):Text( DefaultValues.textFormat.format(widget.initialValue), style: DefaultValues.kInputTextStyle(context),),
                 ),
                 // Padding(
 

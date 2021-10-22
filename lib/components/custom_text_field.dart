@@ -157,7 +157,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
   }
   @override
   void dispose() {
-    // widget.editingController.dispose();
+
     super.dispose();
   }
 
@@ -173,25 +173,24 @@ class _EditableTextFieldState extends State<EditableTextField> {
         style: widget.style,
         controller: widget.editingController,
         onFieldSubmitted: (value) {
+          FocusScope.of(context).unfocus();
           setState(() {
             widget.initialText = value;
-            print(' here is the value: $value');
-
           });
 
         },
         onEditingComplete:(){
+          FocusScope.of(context).unfocus();
           setState(() {
-
             widget.isEditing = false;
           });
         } ,
-        onChanged: (value){
-          setState(() {
-            widget.initialText = value;
-
-          });
-        },
+        // onChanged: (value){
+        //   setState(() {
+        //     widget.initialText = value;
+        //
+        //   });
+       // },
         onTap: widget.onTap,
       );
     }else{
@@ -248,23 +247,19 @@ class _NumberInputFieldState extends State<NumberInputField> {
   bool autofocus = false;
   FocusNode numericFocusNode = FocusNode();
 
-
-
-
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     numericFocusNode.addListener(() {
       if(!numericFocusNode.hasFocus){
         setState(() {
           widget.onFocusLost!();
-          print('done');
+
         });
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {

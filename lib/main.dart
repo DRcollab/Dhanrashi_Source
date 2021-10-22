@@ -87,6 +87,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
     return Sizer(
         builder: (context, orientation, deviceType){
           return VanishKeyBoard(
+            onTap: (){},
             child: MaterialApp(
               home:  sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile),
 

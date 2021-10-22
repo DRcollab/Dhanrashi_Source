@@ -165,7 +165,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
         'investRoI': investDB.investment.investmentRoi,
         'investment_duration': investDB.investment.duration,
         'update_dts': Timestamp.fromDate(currentPhoneDate),
-        'status': 'Active',
+        'status':  widget.type!='Delete' ?'Active':'InActive',
       }).whenComplete(() {
           setState(() {
             statusOfStoring = true;
@@ -175,7 +175,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
           });
 
         }).catchError((onError){
-          Utility.showErrorMessage(context, onError.toString());
+          Utility.showErrorMessage(context, onError.toString() + 'Hello : ');
 
         });
 
@@ -240,26 +240,25 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
     return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,timedOut: isTimedOut,) : VanishKeyBoard(
       onTap: (){
-        print('clicked');
+
         setState(() {
           isEditing = false;
           switch(whichTextController){
             case 1 :
               investedAmount = double.parse(dummy.text);
               text1Active = false; // determines whether textBox1 in the context recieved a tap and now it is released.
+              dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
               break;
             case 2:
               annualInvestment = double.parse(dummy.text);
               text2Active = false;// determines whether textBox2 in the context recieved a tap and now it is released.
+              dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
               break;
           }
 
-          dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
-
-
         });
 
-        print('clicked');
+
       },
       child: Container(
         color: Color(0x00000000),
@@ -294,7 +293,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                        height: 3.h ,
                        width: 6.w ,) ,
                      Expanded(child: Center(
-                         child:Band(
+                         child:(widget.type!='Delete') ?Band(
                            onCommit: (){
                              widget.onEditCommit();
                             textBoxLostFocus = true;
@@ -302,10 +301,11 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                            onTap: widget.onTap,
                            controller: titleEditingController,
                            text: widget.titleMessage,
-                           textStyle: DefaultValues.kH2(context),) ,),),
+                           textStyle: DefaultValues.kH2(context),)
+                            :Card(child:Text(widget.titleMessage,style:DefaultValues.kH2(context) ,)),),),
                      CommandButton(
                        enabled: !this.isEditing,
-                       buttonColor: kPresentTheme.alternateColor,
+                       buttonColor:(widget.type!='Delete') ?kPresentTheme.alternateColor : Colors.red,
                        //icon: Icons.save,
                        textColor: kPresentTheme.highLightColor,
                        buttonText: widget.type,
@@ -377,7 +377,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                ),
              ),
            ),
-
+            widget.type =='Delete'? Utility.showBanner(context, 'You are about to delete this investment. This action is irreversible.', Colors.red.shade50, Colors.red)
+                :SizedBox(width:0, height: 0,),
 
            Row(
              children: [
@@ -449,6 +450,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
            Padding(
              padding: EdgeInsets.only(left:2.w, right: 2.w),
              child: LabeledInput(
+               mute: (widget.type=='Delete'), // Checks if this widget is used for deletion or not. In case it is for delete then LabeledInput will
+               // stay muted;
                controller: currentInvestmentController,
                 initialValue: investedAmount,
                label: 'Initial Investment',
@@ -492,6 +495,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
             Padding(
               padding: EdgeInsets.only(left:2.w, right: 2.w),
               child: LabeledInput(
+                mute: (widget.type=='Delete'), // Checks if this widget is used for deletion or not. In case it is for delete then LabeledInput will
+                // stay muted;
                 controller: annualInvestmentController,
                 initialValue: annualInvestment,
                // controller: editingController,
@@ -534,7 +539,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
             ),
             Padding(
               padding: EdgeInsets.only(left:2.w, right: 2.w),
-              child: LabeledSlider(
+              child:(widget.type!='Delete') ? LabeledSlider(
                 activeColor: kPresentTheme.accentColor,
                 implementWarning: true,
                 threshold: 60,
@@ -560,11 +565,16 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                 labelText: 'Expected return per year',
                 sliderValue: expectedRoi,
                 suffix: '%      ',
+              ):LabeledInput(
+                controller: TextEditingController(),
+                mute: true,
+                label: 'Expected return per year',
+                initialValue:investmentDuration.toDouble(),
               ),
             ),
             Padding(
               padding: EdgeInsets.only(left:2.w, right: 2.w),
-              child: LabeledSlider(
+              child:(widget.type!='Delete') ? LabeledSlider(
                 activeColor: kPresentTheme.accentColor,
                 onChanged: (value){
                   setState(() {
@@ -591,6 +601,11 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                 textPrecision: 0,
                 textEditable: false,
                 suffix: 'Years',
+              ):LabeledInput(
+                controller: TextEditingController(),
+                mute: true,
+                label: 'Time Period',
+                initialValue:investmentDuration.toDouble(),
               ),
             ),
 

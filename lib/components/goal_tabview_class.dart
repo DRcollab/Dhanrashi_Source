@@ -1,12 +1,16 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../chart_viewer.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
+import '../empty_page_inputs.dart';
 import 'shingle.dart';
 import 'maps.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
@@ -37,16 +41,19 @@ class GoalsTabView extends StatefulWidget {
 
 class _GoalsTabViewState extends State<GoalsTabView> {
 
+  bool isComplete = false;
   bool fetched = false;
   bool moveKB = false;
   String prefix = '';
+  double totalGoal = 0;
+  late FirebaseFirestore fireStore;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    totalGoal = widget.totalAmount;
     goals = List.empty(growable: true);
-    if(widget.goalDBs.length>0){
+    if(widget.goalDBs.isNotEmpty){
       widget.goalDBs.forEach((element) {
 
         goals.add(element.goal);
@@ -60,12 +67,18 @@ class _GoalsTabViewState extends State<GoalsTabView> {
       fetched = false;
     }
     //
-
-
+    future:Firebase.initializeApp().whenComplete(() {
+      fireStore =  FirebaseFirestore.instance;
+     // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
+    });
   }
 
 
-  _edit(int index){
+
+
+
+
+  _edit(int index, String type){
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -96,14 +109,33 @@ class _GoalsTabViewState extends State<GoalsTabView> {
               imageSource: goalIcons.containsKey(this.goals[index].name)
                   ?goalIcons[this.goals[index].name]
                   :goalIcons[this.goals[index].name.substring(0,1)],
-              type: 'Update',
+              type: type,
               onUpdate: (newGoal){
-                print('new inv amount');
+
                 setState(() {
-                  goals[index] = newGoal!;
-                  widget.goalDBs[index].goal = goals[index];
+                  if(type!='Delete') {
+                    goals[index] = newGoal!;
+                    widget.goalDBs[index].goal = goals[index];
+                  }else{
+                    goals.removeAt(index);
+                    widget.goalDBs.removeAt(index);
+                  }
+                  totalGoal = 0;
+                  if(goals.isNotEmpty) {
+                    goals.forEach((element) {
+                      totalGoal = element.goalAmount + totalGoal;
+                    });
+                    int lngstGol = Calculator().getLongestGoalDuration(goals);
+                    dataSet.clear();
+                    dataSet = Calculator().getGoalDetail(
+                      goals, widget.longestGoalDuration, lngstGol,);
+                  }
+                  else{
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+                  }
                 });
-                print('${goals[index].goalAmount}, ${goals[index].duration}');
+
               },
             ),
           ),
@@ -135,11 +167,11 @@ class _GoalsTabViewState extends State<GoalsTabView> {
               child: fetched ? Stack(
 
                 children: [
-                  DynamicGraph(
+                 goals.isNotEmpty ?DynamicGraph(
                     chartType: ChartType.bar,
                     resultSet: dataSet,
                     gallopYears: (widget.longestGoalDuration~/5),
-                  ),
+                  ):SizedBox(),
                   GestureDetector(
                     onTap: (){
                       Navigator.push(context,
@@ -165,7 +197,11 @@ class _GoalsTabViewState extends State<GoalsTabView> {
           flex:1,
           child: ListTile(
            // leading: FaIcon(FontAwesomeIcons.list),
-            title: Text('Total Goal Amount: ${widget.totalAmount.toStringAsFixed(2)}', style: DefaultValues.kNormal3(context),),
+            title: Text('Total Goal Amount: ${
+                totalGoal<DefaultValues.threshold? DefaultValues.textFormatWithDecimal.format(totalGoal)
+                :DefaultValues.textShortFormat.format(totalGoal)}'
+
+              , style: DefaultValues.kNormal3(context),),
             trailing: RoundButton(
               icon: Icons.add,
                 onPress:(){
@@ -192,7 +228,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                       }else{
                         prefix='';
                       }
-                      _edit(index);
+                      _edit(index, 'Update');
                     },
                     type: 'goal',
                     maxHeight: 11.h,
@@ -211,9 +247,22 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     value:'${goals[index].duration.toString()} Years',
                     icon1:Icons.watch_later_outlined,
                     trailing: IconButton(
-                        icon: Icon(Icons.edit) ,
+                        icon: Icon(Icons.delete, size:16.sp) ,
                       onPressed: (){
-
+                        _edit(index, 'Delete');
+                          // Utility.showMessageAndAsk(
+                          //     context: context,
+                          //     buttonText1: 'I know',
+                          //     buttonText2: 'Cancel',
+                          //     msg:'Beware! You are about to delete this goal. This action is irreversible',
+                          //     takeAction1: (){
+                          //       GoalDB goalDB = widget.goalDBs[index];
+                          //       _delete(goalDB);
+                          //
+                          //
+                          //     },
+                          //     takeAction2: (){},
+                          // );
                       },
 
 
