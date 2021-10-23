@@ -208,13 +208,13 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             children : [
 
               Image.asset('images/confirmed.png',
-                height: 25.h,
-                width: 100.w,
+                height: 20.h,
+                width: 80.w,
 
               ),
               Padding(
                 padding:  EdgeInsets.only(left:2.w, bottom: 0),
-                child: Text(" Confirm your entries", style:DefaultValues.kH1(context),),
+                child: Text(" Confirm Profile of:", style:DefaultValues.kH1(context),),
               ),
               Padding(
                 padding: EdgeInsets.only(left:4.w, top:0,right: 4.w,bottom: 0.h),
@@ -256,18 +256,19 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
                     children: [
                       ListTile(
+                        visualDensity: VisualDensity.standard,
+                        leading: Container(width:0.25),//Icon(Icons.face_rounded, color: kPresentTheme.alternateColor,),
+                        title: Text('First Name'),
 
-                        leading: Icon(Icons.face_rounded, color: kPresentTheme.alternateColor,),
-                        title: Text('Name'),
-
-                        subtitle: Text(widget.collector.fName.text),
+                        subtitle: Text(widget.collector.fName.text, style: DefaultValues.kH3(context),),
 
                       ),
                       ListTile(
-                        leading: Icon(Icons.face_rounded,color: kPresentTheme.alternateColor),
+                        leading: SizedBox(width:0.5.w),//Icon(Icons.face_rounded,color: kPresentTheme.alternateColor),
+                        visualDensity: VisualDensity.standard,
                         title: Text("Last Name"),
 
-                        subtitle: Text(widget.collector.lName.text),
+                        subtitle: Text(widget.collector.lName.text,style: DefaultValues.kH3(context)),
 
 
 
@@ -275,20 +276,24 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                       ),
 
                       ListTile(
-
-                        leading: Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
+                        dense: false,
+                        visualDensity: VisualDensity.standard,
+                        leading: SizedBox(width:0.5.w),//Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
                         title: Text("Date of Birth"),
 
-                        subtitle: Text('${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year}\nAge:${ageAsString} years'),
+                        subtitle: Text('${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year} (Age:${ageAsString} years)',
+                            style: DefaultValues.kH3(context),
+                        ),
 
 
                       ),
                       ListTile(
 
-                        leading: Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor),
+                        leading: SizedBox(width:0.5.w),//Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor),
+                        visualDensity: VisualDensity.standard,
                         title: Text("Annual Income"),
 
-                        subtitle: Text(widget.collector.annualIncome.toString()),
+                        subtitle: Text(widget.collector.annualIncome.toString(),style: DefaultValues.kH3(context)),
 
 
                       ),
@@ -305,7 +310,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               textSize: 12.sp,
               //icon:Icons.save,
               borderRadius: BorderRadius.circular(20),
-              buttonText: !widget.isItForUpdate ? "Add User Details" : 'Update User Profile',
+              buttonText: !widget.isItForUpdate ? "Confirm" : 'Confirm',
               buttonColor: kPresentTheme.accentColor,
 
               onPressed:() {
@@ -362,7 +367,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   textSize: 12.sp,
                   //icon:Icons.save,
                   borderRadius: BorderRadius.circular(20),
-                  buttonText:  'OOps I changed my mind ',
+                  buttonText:  'Cancel ',
                   buttonColor: kPresentTheme.accentColor,
 
                   onPressed:(){

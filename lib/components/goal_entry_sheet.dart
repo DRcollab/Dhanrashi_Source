@@ -175,6 +175,9 @@ class _GoalSheetState extends State<GoalSheet> {
       }).whenComplete((){
         setState(() {
               statusOfStoring = true;
+              if(widget.type=='Delete'){
+                Global.goalCount--;
+              }
               widget.onUpdate!(goalDB.goal);
 
             });
@@ -234,7 +237,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
     return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToAdd: 'Goal', whatToDo: widget.type,timedOut: isTimedOut,) : VanishKeyBoard(
       onTap: (){
-        print('clicked');
+
         setState(() {
 
           isEditing = false;
@@ -245,7 +248,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
         });
 
-        print('clicked');
+
       },
       child: Container(
         color: Color(0x00000000),
@@ -305,7 +308,7 @@ class _GoalSheetState extends State<GoalSheet> {
                             inflation: inflation/100,
                           );
 
-                          print('.... printing inv:;;;;;;;;');
+
                         //  print(inv);
 
                           setState(() {
@@ -454,17 +457,7 @@ class _GoalSheetState extends State<GoalSheet> {
                 initialValue: goalAmount,
                 label:'Goal Value',
                 icon: Icon(Icons.bubble_chart),
-                // activeColor: kPresentTheme.accentColor,
-                // onChanged: (value){
-                //
-                //   setState(() {
-                //     goalAmount = value;
-                //   });
-                //
-                // },
-                // getValue: (value){
-                //   goalAmount = double.parse(value.toString());
-                //     },
+
                 validator: (){
                   setState(() {
                     isEditing = true;
@@ -483,27 +476,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left:8.0, right: 8.0),
-            //   child: LabeledSlider(
-            //     onChanged: (value){
-            //
-            //       setState(() {
-            //         annualInvestment = value;
-            //       });
-            //
-            //     },
-            //
-            //     validator: (value){
-            //
-            //     },
-            //     sliderValue: annualInvestment,
-            //     min: 0,
-            //     max: 100,
-            //     labelText: 'Annual Investment (in Lakhs)',
-            //     suffix: 'Lakhs',
-            //   ),
-            // ),
+
             Padding(
               padding:  EdgeInsets.only(left:2.w, right: 2.w),
               child: (widget.type!='Delete') ?LabeledSlider(

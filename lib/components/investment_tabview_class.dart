@@ -283,7 +283,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                     :DefaultValues.textShortFormat.format(investments[index].currentInvestmentAmount)  }',
 
                     text:'Annual: ${
-                        futureValue<DefaultValues.threshold ? DefaultValues.textFormat.format(  investments[index].annualInvestmentAmount)
+                        futureValue<DefaultValues.threshold ? DefaultValues.textFormatWithDecimal.format(  investments[index].annualInvestmentAmount)
                             :DefaultValues.textShortFormat.format(investments[index].annualInvestmentAmount)
                     } ',
                     value:' ${investments[index].duration.toString()} Yrs' ,

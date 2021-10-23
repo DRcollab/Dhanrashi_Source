@@ -72,11 +72,11 @@ class _DashboardState extends State<Dashboard> {
 
 
 
-      Global.goalCount = goals.length;
-      Global.investmentCount = investments.length;
+      // Global.goalCount = goals.length;
+      // Global.investmentCount = investments.length;
 
     }).onError((error, stackTrace){
-      print( ' THer it is :   ${error.toString()}');
+
     }
 
     );
@@ -93,7 +93,7 @@ class _DashboardState extends State<Dashboard> {
         // setState(() {
         //   isGoalEmpty = snapshot.docs.isEmpty;
         // });
-
+        Global.goalCount = 0;
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
       }
@@ -152,6 +152,7 @@ class _DashboardState extends State<Dashboard> {
         .then((QuerySnapshot snapshot){
       if(snapshot.docs.isEmpty){
         /// On checking if firebase store is empty the user will be redirected to an Empty page promting to add investment and goal;
+        Global.investmentCount = 0;
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
 

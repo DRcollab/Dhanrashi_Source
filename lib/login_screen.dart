@@ -347,12 +347,8 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                               try{
                                 _login(_userText.text, _passWord.text);
                               }catch(e){
-                                Utility.showErrorMessage(context, e.toString());
+                                Utility.showErrorMessage(context,  e.toString());
                               }
-
-
-
-
 
                             } // end of outside
                           }
@@ -368,7 +364,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                             child: LinkText(
                                 type: LinkTextType.DARK,
 
-                                linkText: "Trouble logging in ? Click here to resolve",
+                                linkText: "Trouble logging in ? Click here",
                                 displaySize: 12.sp, //*  DefaultValues.adaptForSmallDevice(context),
 
                                 onPressed: () {
@@ -390,7 +386,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Not have a login id ?",
+                            "",
                             style:DefaultValues.kNormal2(context),
                           ),
                         ),
@@ -398,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                           padding:  EdgeInsets.all(1.h),
                           child: CommandButton(
                             textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
-                            buttonText: "Click Here to Sign Up",
+                            buttonText: "New User? Sign Up",
                             borderRadius: BorderRadius.circular(20),
                             buttonColor: kPresentTheme.alternateColor,
                             textColor: kPresentTheme.accentColor,

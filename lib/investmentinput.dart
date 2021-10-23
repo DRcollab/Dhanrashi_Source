@@ -102,12 +102,13 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                       style:DefaultValues.kH1(context),
 
                     ),
-                    trailing: CircleAvatar(
+                    trailing: investmentCount>0 ? CircleAvatar(
                       backgroundColor: kPresentTheme.accentColor,
                       radius: 20,
-                      child: Text(investmentCount.toString(), style: DefaultValues.kH3(context),),
+                      child:Text(investmentCount.toString(), style: DefaultValues.kH3(context),),
 
-                    ),
+
+                    ):SizedBox(),
                     subtitle: Text("Choose one of  these",
                       style:DefaultValues.kNormal2(context),
                   ),
@@ -172,9 +173,6 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                         onAdd: (value){
                                           setState(() {
                                            investmentCount = value;
-                                           print('Investment count');
-                                           print(value);
-
                                           });
                                         },
                             ),

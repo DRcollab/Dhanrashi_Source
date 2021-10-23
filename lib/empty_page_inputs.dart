@@ -6,6 +6,7 @@ import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
+import 'data/global.dart';
 import 'goal_input.dart';
 
 class EmptyPage extends StatelessWidget {
@@ -13,10 +14,39 @@ class EmptyPage extends StatelessWidget {
  var currentUser;
  String message = '';
  Color messageColor;
-  EmptyPage({required this.currentUser, this.message = '', this.messageColor = Colors.green }) ;
+ int investmentCount = 0;
+ int goalCount = 0;
+ String messageIndex = 'empty'; // Used to show message from Utility.message[]
+  EmptyPage({
+    required this.currentUser,
+    this.message = '',
+    this.messageColor = Colors.green,
+    this.investmentCount = 0,
+    this.goalCount = 0,
+
+  }) ;
 
   @override
   Widget build(BuildContext context) {
+
+
+    print('Investment Count ${Global.investmentCount}');
+    print('Goal Count ${Global.goalCount}');
+
+
+    if(Global.investmentCount == 0){
+      if(Global.goalCount == 0) {
+        messageIndex = 'empty';
+      }else{
+        messageIndex = 'empty_inv';
+      }
+
+    }else{
+      messageIndex = 'empty_goal';
+    }
+
+    print(messageIndex);
+
     return CustomScaffold(
         currentUser: this.currentUser,
         child:Column(
@@ -39,7 +69,7 @@ class EmptyPage extends StatelessWidget {
             Container(child: Image.asset('images/empty.png'),),
             Padding(
               padding: const EdgeInsets.all(28),
-              child: Text(Utility.messages['empty']!,
+              child: Text( Utility.messages[messageIndex]!,
                           style:DefaultValues.kNormal1(context),
 
               ),
@@ -47,7 +77,7 @@ class EmptyPage extends StatelessWidget {
             //CommandButton(),
             Padding(
               padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-              child: CommandButton(
+              child: Global.investmentCount == 0 ? CommandButton(
                   onPressed: (){
 
                     Navigator.push(context,
@@ -60,12 +90,12 @@ class EmptyPage extends StatelessWidget {
                   buttonText: 'Add Investments',
 
 
-              ),
+              ): SizedBox(),
             ),
 
             Padding(
               padding: const EdgeInsets.only(left:18.0, right: 18.0),
-              child: CommandButton(
+              child:Global.goalCount == 0 ? CommandButton(
                   onPressed: (){
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
@@ -74,7 +104,7 @@ class EmptyPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   textColor: kPresentTheme.lightWeightColor,
                   buttonText: 'Add Goals',
-              ),
+              ):SizedBox(),
             )
           ],
         )

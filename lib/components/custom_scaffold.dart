@@ -20,7 +20,7 @@ class CustomScaffold extends StatelessWidget {
   Widget? bottomNavigationBar;
   var currentUser;
   //final Widget svg = Svg
-
+  bool allowToSeeBottom = false;
   CustomScaffold({
     required this.child,
     this.title = '',
@@ -28,6 +28,7 @@ class CustomScaffold extends StatelessWidget {
     this.foot = const SizedBox(height: 0,width: 0,),
     this.bottomNavigationBar = const  SizedBox(height: 0, width: 0,),
     this.currentUser,
+    this.allowToSeeBottom = false,
   });
 
   final  _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -44,7 +45,7 @@ class CustomScaffold extends StatelessWidget {
 
           backgroundColor: kPresentTheme.themeColor,
           key: _scaffoldKey,
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: this.allowToSeeBottom,
 
          // backgroundColor: kPresentTheme.scaffoldColors[0],
 

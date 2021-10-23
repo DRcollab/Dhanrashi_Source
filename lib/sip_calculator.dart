@@ -37,10 +37,13 @@ class _SIPCalculatorState extends State<SIPCalculator> {
   final  _sipKey = GlobalKey<ScaffoldState>();
   double goalAmount = 0;
   double sipAmount = 0;
-  TextEditingController titleEditingController = TextEditingController();
-  TextEditingController currentInvestmentController = TextEditingController();
-  TextEditingController annualInvestmentController = TextEditingController();
+
+  TextEditingController labelInput1Controller = TextEditingController();
+  TextEditingController labelInput2Controller = TextEditingController();
   TextEditingController dummy = TextEditingController();
+
+  double labelInput1 = 0;
+  double labelInput2 = 0;
 
   bool text1Active = false;
   bool text2Active = false;
@@ -76,15 +79,27 @@ class _SIPCalculatorState extends State<SIPCalculator> {
   @override
   Widget build(BuildContext context) {
     //
-    // if(selectedValue == 0){
-    //   investedAmount = valueSlider1;
-    //   annualInvestment = valueSlider2;
-    // }else{
-    //   investedAmount = valueSlider2;
-    //   goalAmount = valueSlider1;
-    //   annualInvestment = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0);
-    //    sipAmount = annualInvestment * 100000/12;
-    // }
+    double corpusValue = 0;
+    if(selectedValue == 0){
+      totalInvestment = 0;
+      investedAmount = labelInput1;
+      annualInvestment = labelInput2;
+      interestValue = calculateInterset();
+      totalInvestment = investedAmount + annualInvestment*investmentDuration;
+      corpusValue = totalInvestment + interestValue;
+
+      print(totalInvestment);
+      print(interestValue);
+      print(annualInvestment);
+
+    }else{
+      goalAmount = labelInput1;
+      investedAmount = labelInput2;
+      //investedAmount = valueSlider2;
+     // goalAmount = valueSlider1;
+    sipAmount = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0)/12;
+      //sipAmount = annualInvestment * 100000/12;
+    }
 
 
 
@@ -172,7 +187,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                               child: DonutChart(pieData: pieData,arcWidth: 15,),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding:  EdgeInsets.all(6.sp),
                             child: Container(height: 22.h,width: 44.w,
 
                               child: Column(
@@ -185,12 +200,17 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                           height: 1.h, width: 2.w ,color: kPresentTheme.accentColor),
                                       Padding(
                                         padding:  EdgeInsets.only(left : 2.w),
-                                        child: Text('Total Investment'),
+                                        child:selectedValue == 0 ? Text('Total Investment'):Text('Goal Amount'),
                                       ),
 
                                     ],
                                   ),
-                                  Text('${DefaultValues.textFormatWithDecimal.format(totalInvestment)} Lakh',style: DefaultValues.kH3(context),),
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                         selectedValue == 0 ?'${DefaultValues.textFormat.format(totalInvestment)}'
+                                                            :'${DefaultValues.textFormat.format(goalAmount)}'
+                                        ,style: DefaultValues.kH3(context),)),
                                   Row(
                                     children: [
                                       Container(height: 1.h, width: 2.w ,color: kPresentTheme.alternateColor),
@@ -201,20 +221,26 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
                                     ],
                                   ),
-                                  Text('${DefaultValues.textFormatWithDecimal.format(interestValue)} Lakh',style: DefaultValues.kH3(context),),
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        '${DefaultValues.textFormat.format(interestValue)} ',style: DefaultValues.kH3(context),)),
                                   SizedBox(height: 0.5.h,width: double.infinity,),
                                   Container(height: 0.2.h,width: double.infinity,color: Colors.black12,),
                                   SizedBox(height: 0.5.h,width: double.infinity,),
                                   Text(
-                                    selectedValue == 0 ?'Your corpus ${investmentDuration} years is'
+                                    selectedValue == 0 ?'Corpus after ${investmentDuration} years is'
                                     :'Your monthly SIP',
                                     style: DefaultValues.kH4(context),
                                   ),
-                                  Text(
-                                    selectedValue == 0 ?'Rs.${(totalInvestment+interestValue).toStringAsFixed(2)} Lakh'
-                                    :'Rs.${sipAmount.toStringAsFixed(2)}',
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      selectedValue == 0 ?'${DefaultValues.textFormat.format(totalInvestment+interestValue)}'
+                                      :'${DefaultValues.textFormat.format( sipAmount)}',
 
-                                    style: DefaultValues.kH1(context),)
+                                      style: DefaultValues.kH2(context),),
+                                  )
                                 ],
                               ),
                             ),
@@ -273,8 +299,8 @@ class _SIPCalculatorState extends State<SIPCalculator> {
         LabeledInput(
           // Checks if this widget is used for deletion or not. In case it is for delete then LabeledInput will
           // stay muted;
-          controller: currentInvestmentController,
-          initialValue: investedAmount,
+          controller: labelInput1Controller,
+          initialValue: labelInput1,
           label: selectedValue == 0 ? 'Initial Investment':'Goal Amount',
           icon: Icon(Icons.bar_chart),
           // getValue: (value){
@@ -287,13 +313,13 @@ class _SIPCalculatorState extends State<SIPCalculator> {
               whichTextController = 1;
               isEditing = true;
               text1Active = true;
-              dummy = currentInvestmentController;
+              dummy = labelInput1Controller;
               if(text2Active) {
-                annualInvestment =
-                    double.parse(annualInvestmentController.text);
-                annualInvestmentController.text =
+                labelInput2 =
+                    double.parse(labelInput2Controller.text);
+                labelInput2Controller.text =
                     DefaultValues.textFormat.format(double.parse(
-                        annualInvestmentController.text));
+                        labelInput2Controller.text));
                 text2Active = false;
               }
             });
@@ -303,9 +329,9 @@ class _SIPCalculatorState extends State<SIPCalculator> {
               isEditing = false;
               text1Active = false;
               text2Active = false;
-              investedAmount = double.parse(currentInvestmentController.text);
+              labelInput1 = double.parse(labelInput1Controller.text);
 
-              currentInvestmentController.text = DefaultValues.textFormat.format(double.parse( currentInvestmentController.text));
+              labelInput1Controller.text = DefaultValues.textFormat.format(double.parse( labelInput1Controller.text));
 
             });
           },
@@ -314,8 +340,8 @@ class _SIPCalculatorState extends State<SIPCalculator> {
         ),
                 LabeledInput(
 
-                  controller: annualInvestmentController,
-                  initialValue: annualInvestment,
+                  controller: labelInput2Controller,
+                  initialValue: labelInput2,
                   // controller: editingController,
                   label: selectedValue == 0 ? 'Annual Investment':'Initial Investment',
                   icon:Icon(Icons.show_chart, color: Colors.amber,),
@@ -326,15 +352,15 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                   validator: (){
                     setState(() {
                       whichTextController = 2;
-                      dummy = annualInvestmentController;
+                      dummy = labelInput2Controller;
                       isEditing = true;
                       text2Active = true;
                       if(text1Active) {
                         investedAmount =
-                            double.parse(currentInvestmentController.text);
-                        currentInvestmentController.text =
+                            double.parse(labelInput1Controller.text);
+                        labelInput1Controller.text =
                             DefaultValues.textFormat.format(double.parse(
-                                currentInvestmentController.text));
+                                labelInput1Controller.text));
                         text1Active = false;
                       }
                     });
@@ -342,9 +368,9 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                   onCompleteEditing: (){
 
                     setState(() {
-                      annualInvestment = double.parse(annualInvestmentController.text);
+                      labelInput2 = double.parse(labelInput2Controller.text);
 
-                      annualInvestmentController.text = DefaultValues.textFormat.format(double.parse( annualInvestmentController.text));
+                      labelInput2Controller.text = DefaultValues.textFormat.format(double.parse( labelInput2Controller.text));
                       isEditing = false;
                       text2Active = false;
                       text1Active = false;

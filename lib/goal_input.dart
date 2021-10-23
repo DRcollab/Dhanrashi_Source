@@ -96,11 +96,11 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                       style:DefaultValues.kH1(context),
 
                     ),
-                    trailing: CircleAvatar(
+                    trailing: goalCount>0 ?CircleAvatar(
                       backgroundColor: kPresentTheme.accentColor,
                       radius: 20,
                       child: Text(goalCount.toString(), style: DefaultValues.kH3(context),),
-                    ),
+                    ):SizedBox(),
                     subtitle: Text("Choose one of  these",
                       style:DefaultValues.kNormal2(context),
                     ),

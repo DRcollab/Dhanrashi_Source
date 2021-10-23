@@ -43,7 +43,10 @@ class Utility{
     'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
     ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
     'success_update_profile':'Your profile has been succesfully updated.' ,
-    'empty':'It seems that  you have not entered any goal and/or investments for us to analyse.',
+    'empty':'It seems that  you have not entered any goal or investment.\n\n Let\' start by adding your first Goal and Investment',
+    'empty_goal':'It seems that  you have not entered any goal.\n\nLet\' start by adding your first Goal',
+    'empty_inv':'It seems that  you have not entered any investment.\n\nLet\' start by adding your first Investment ',
+
   };
 
 
@@ -52,7 +55,7 @@ class Utility{
     int index1 = source.indexOf('[');
     int index2 = source.indexOf(']');
 
-    return source.substring(index2);
+    return source;//substring(index2);
 
   }
 

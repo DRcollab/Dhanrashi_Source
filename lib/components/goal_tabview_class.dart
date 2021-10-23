@@ -74,10 +74,6 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   }
 
 
-
-
-
-
   _edit(int index, String type){
     showModalBottomSheet(
         isScrollControlled: true,
@@ -98,6 +94,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                   moveKB = true;
                 });
               },
+
               uniquId: widget.goalDBs[index].goalDocumentID,
               currentUser: this.widget.currentUser,
               titleMessage: '#@:%&^*!'.contains(goals[index].name.substring(0,1))

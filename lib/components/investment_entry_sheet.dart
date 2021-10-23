@@ -169,6 +169,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
       }).whenComplete(() {
           setState(() {
             statusOfStoring = true;
+            if(widget.type == 'Delete') {
+              Global.investmentCount--;
+            }
             widget.onUpdate!(investDB.investment);
 
 
@@ -541,8 +544,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
               padding: EdgeInsets.only(left:2.w, right: 2.w),
               child:(widget.type!='Delete') ? LabeledSlider(
                 activeColor: kPresentTheme.accentColor,
-                implementWarning: true,
-                threshold: 60,
+                // implementWarning: true,
+                // threshold: 20,
                 onChanged: (value){
                   setState(() {
                     expectedRoi = value;
@@ -562,7 +565,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                 },
                 min: 1,
                 max:30,
+                divisions: 30,
                 labelText: 'Expected return per year',
+                textPrecision: 2,
                 sliderValue: expectedRoi,
                 suffix: '%      ',
               ):LabeledInput(

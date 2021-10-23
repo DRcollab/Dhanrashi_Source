@@ -3,6 +3,7 @@
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
+import 'package:dhanrashi_mvp/profile_view.dart';
 import 'models/profile_collector.dart';
 import 'package:sizer/sizer.dart';
 import 'components/buttons.dart';
@@ -82,9 +83,9 @@ class _ProfilerPageState extends State<ProfilerPage> {
 ///  Holds the different screen header display .
   final List<String> headers = [
     "Great, Let's start with your name",
-    'Pick your date of birth',
+    'Choose your date of birth',
     //'Your age factors how  you choose your investments.',
-    'Your information will be safe with us',
+    '',
     ''
   ];
 
@@ -280,6 +281,12 @@ class _ProfilerPageState extends State<ProfilerPage> {
             }
 
           }
+          else{
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) =>
+                    ProfileView(currentUser: widget.currentUser,)));
+          }
         },
         );
       },
@@ -298,6 +305,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
     return CustomScaffold(
       currentUser: widget.currentUser,
+      allowToSeeBottom: true,
       child: Container(
        // color: Colors.red,
         child: Column(
@@ -435,7 +443,7 @@ class _NamePickerState extends State<NamePicker> {
                               },
                                   validator: (value){
                                     if(value.toString().isEmpty){
-                                       return 'Name must not be empty';
+                                       return 'First Name should not be empty';
 
                                     }
                                     else{
@@ -459,7 +467,7 @@ class _NamePickerState extends State<NamePicker> {
                                 textInputAction: TextInputAction.done,
                                 validator: (value){
                                   if(value.toString().isEmpty){
-                                    return 'lastname cannot be empty';
+                                    return 'last name should not be empty';
 
                                   }
                                   else {
@@ -604,7 +612,7 @@ class _IncomePickerState extends State<IncomePicker> {
     return Padding(
       padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
       child: InputCard(
-        titleText: "Your income range",
+        titleText: "Your Annual Income",
         children: [
           RadioListTile(
               value: 0,

@@ -154,6 +154,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
                 value: widget.sliderValue,//double.parse(widget.sliderValue.toStringAsFixed(2) ),
                 divisions: widget.divisions,
                 onChanged:   (changeValue) {
+                  print('Diisi: ${widget.divisions}');
                   setState(() {
                     print('Perpetual : ${widget.perpetualActive}');
                     print('variable max : ${changeValue}');
@@ -189,7 +190,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
                     print(this.controller.text);
                     print( double.parse(this.controller.text).roundToDouble() );
                     this.controller.clear();
-                    widget.sliderValue = double.parse( changeValue.toStringAsFixed(2));
+                    widget.sliderValue = double.parse( changeValue.toStringAsFixed(1));
                     widget.onChanged!(widget.sliderValue);
                     controller = TextEditingController(
                       text: widget.sliderValue.toStringAsFixed(widget.textPrecision),

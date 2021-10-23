@@ -71,6 +71,7 @@ class ProfileView extends StatelessWidget {
                     textColor: kPresentTheme.lightWeightColor,
                     onPressed: (){
                       print('DOC IDENTITY: ${currentUser.docId} ');
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               ProfilerPage(currentUser: this.currentUser,isItForUpdate: true,)));
