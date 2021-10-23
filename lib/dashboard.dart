@@ -225,13 +225,13 @@ class _DashboardState extends State<Dashboard> {
                       bottomRightRadius: 15,
                       horizontalPadding: 10,
                       verticalPadding: 7,
-
+                      color: kPresentTheme.alternateColor,
                       //tabPosition: TabPosition,
                       paintingStyle: PaintingStyle.fill,
                       strokeWidth: 10,
                     ),
                     indicatorColor: kPresentTheme.accentColor,
-                    labelColor: Colors.white,
+                    labelColor: Colors.black,
                     unselectedLabelColor: Colors.black,
                     labelStyle: DefaultValues.kH4(context),
 

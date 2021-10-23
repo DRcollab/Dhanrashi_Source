@@ -98,6 +98,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
       //investedAmount = valueSlider2;
      // goalAmount = valueSlider1;
     sipAmount = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0)/12;
+   interestValue =  goalAmount - (sipAmount*12*investmentDuration+investedAmount);
       //sipAmount = annualInvestment * 100000/12;
     }
 

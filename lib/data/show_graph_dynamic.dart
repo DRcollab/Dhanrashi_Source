@@ -138,7 +138,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
     print(goalValueatlastYear);
 
     inv_ratio = 7/5;
-    goal_ratio = (goalValueatlastYear/invValueatlastYear)*inv_ratio;
+    goal_ratio = (goalValueatlastYear/invValueatlastYear);
 
  // print('invValueatlastYear: $invValueatlastYear');
 
@@ -275,11 +275,11 @@ class _DynamicGraphState extends State<DynamicGraph> {
               //
               // ],
               defaultRenderer: new charts.ArcRendererConfig(
-                arcWidth: (20 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
+                arcWidth: (15 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
                  startAngle: 1 * pi,
-                 arcLength: inv_ratio * pi,
+                 arcLength: 2 * pi,
                 arcRendererDecorators: viewLabel ? [
-
+//inv_ratio
                 new charts.ArcLabelDecorator(
                     labelPosition: charts.ArcLabelPosition.auto
                 )
@@ -293,12 +293,12 @@ class _DynamicGraphState extends State<DynamicGraph> {
           ),
           Padding(
               padding:  EdgeInsets.symmetric(
-                vertical: 4.5.h,
+                vertical: 2.5.h,
                 horizontal: 2.w,
               ),
               child: Container(
-                width:18.8.h,
-                height: 18.8.h,
+                width:22.8.h,
+                height: 22.8.h,
                  child:charts.PieChart<String>(
                    List.from(_pieChartDataGoal),
                    animate: true,
@@ -317,11 +317,11 @@ class _DynamicGraphState extends State<DynamicGraph> {
                    //
                    // ],
                    defaultRenderer: new charts.ArcRendererConfig(
-                     arcWidth: (20 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
+                     arcWidth: (15 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
                      startAngle: 1 * pi,
-                     arcLength: goal_ratio * pi,
+                     arcLength: 2 * goal_ratio * pi,
                      arcRendererDecorators: viewLabel ? [
-
+//goal_ratio
                      new charts.ArcLabelDecorator(
                          labelPosition: charts.ArcLabelPosition.auto
                      )
