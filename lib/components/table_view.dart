@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class TableView extends StatefulWidget {
 
@@ -48,10 +49,7 @@ class _TableViewState extends State<TableView> {
     for(int i = 0; i<columnCount;i++){
     //  print(widget.arrayList[i][0]);
      dataColumns.add( DataColumn(
-          label: SizedBox(
-
-            child: Text(widget.arrayList[i][0], style: DefaultValues.kH4(context),),
-          )
+          label: Text(widget.arrayList[i][0], style: DefaultValues.kH4(context),)
       ));
     }
 
@@ -102,10 +100,12 @@ class _TableViewState extends State<TableView> {
       scrollDirection: Axis.vertical,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Center(
+        child: Padding(
+          padding: EdgeInsets.only(top: DefaultValues.screenHeight(context)<600 ?3.h:0),
           child: DataTable(
 
             headingRowColor: MaterialStateColor.resolveWith((states) => kPresentTheme.alternateColor),
+            headingRowHeight: 6.h,
             columns: dataColumns,
 
             rows: dataRows,

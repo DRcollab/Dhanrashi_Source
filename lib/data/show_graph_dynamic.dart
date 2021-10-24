@@ -130,30 +130,33 @@ class _DynamicGraphState extends State<DynamicGraph> {
   void _makeDataForGauge(){
    List allInvestmentAnnualAmt = widget.resultSet;
    int noOfYear = allInvestmentAnnualAmt.shape[1] - 1;
-
+    double outerChart;
+    double innerChart;
    double invValueatlastYear = double.parse( allInvestmentAnnualAmt[0][noOfYear]);
    double goalValueatlastYear = double.parse( allInvestmentAnnualAmt[1][noOfYear]);
     print('from inside chart :');
     print(invValueatlastYear);
     print(goalValueatlastYear);
 
+   List<Task>   pieData;
     inv_ratio = 7/5;
     goal_ratio = (goalValueatlastYear/invValueatlastYear);
 
- // print('invValueatlastYear: $invValueatlastYear');
+    if(invValueatlastYear > goalValueatlastYear){
+      pieData = [
 
-    List<Task>   pieData = [
+        Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
+        Task('Goal', goalValueatlastYear ,kPresentTheme.alternateColor),
+      ];
+    }else{
+      pieData = [
 
-      Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
-      Task('Interest Earned', goalValueatlastYear ,kPresentTheme.alternateColor),
-    ];
+        Task('Goal', goalValueatlastYear ,kPresentTheme.alternateColor),
+        Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
 
+      ];
+    }
 
-
-    //var goalValueatlastYear = allInvestmentAnnualAmt[1][noOfYear];
-
-   // print('--------=============');
-   // print(invValueatlastYear);
 
     _pieChartData = List.empty(growable: true);
     _pieChartData.add(
@@ -172,7 +175,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
    _pieChartDataGoal = List.empty(growable: true);
    _pieChartDataGoal.add(
      new charts.Series(
-       id: 'inv',
+       id: 'goal',
        data: [pieData[1]],
        domainFn: (Task yearWiseAmount, _) => yearWiseAmount.task,
        measureFn: (Task yearWiseAmount, _) =>
@@ -236,19 +239,43 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
         );
 
-      // return new charts.BarChart(_barChartData,
-      //     animate: true,
-      //     defaultRenderer: new charts.BarRendererConfig(
-      //         // By default, bar renderer will draw rounded bars with a constant
-      //         // radius of 100.
-      //         // To not have any rounded corners, use [NoCornerStrategy]
-      //         // To change the radius of the bars, use [ConstCornerStrategy]
-      //         cornerStrategy: const charts.ConstCornerStrategy(30)),
-      //     barGroupingType: charts.BarGroupingType.stacked,
-      //     vertical: false);
+
     }
     else{
       // Gauge style charts
+      int invIndex=0;
+      int goalIndex=0;
+      for (int i = 0; i<_pieChartData[0].data.length;i++){
+
+        print(_pieChartData[0].data[i].task);
+        if(_pieChartData[0].data[i].task == 'Investment'){
+          invIndex = i;
+        }
+        else{
+          goalIndex = i;
+        }
+      }
+
+      for (int i = 0; i<_pieChartDataGoal[0].data.length;i++){
+
+        if(_pieChartDataGoal[0].data[i].task == 'Goal'){
+          goalIndex = i;
+        }else{
+          invIndex = i;
+        }
+
+      }
+
+      print(goalIndex);
+      print(invIndex);
+
+      double totalInvestmentCorpus = _pieChartData[0].data[0].task == 'Investment'
+          ? _pieChartData[0].data[0].value
+          : _pieChartDataGoal[0].data[goalIndex].value;
+
+      double totalGoal = _pieChartDataGoal[0].data[goalIndex].task == 'Goal'
+                    ?_pieChartDataGoal[0].data[0].value
+                    :_pieChartData[0].data[0].value;
       bool viewLabel = false;
       return Stack(
         alignment: Alignment.topCenter,
@@ -259,9 +286,10 @@ class _DynamicGraphState extends State<DynamicGraph> {
             height:28.h,
             child: charts.PieChart<String>(
               List.from(_pieChartData),
-              animate: true,
 
-              animationDuration: Duration(milliseconds: 200),
+              animate: false,
+
+            //  animationDuration: Duration(milliseconds: 200),
               // behaviors: [
               //
               //   charts.DatumLegend(
@@ -301,9 +329,9 @@ class _DynamicGraphState extends State<DynamicGraph> {
                 height: 22.8.h,
                  child:charts.PieChart<String>(
                    List.from(_pieChartDataGoal),
-                   animate: true,
+                   animate: false,
 
-                   animationDuration: Duration(milliseconds: 200),
+                 //  animationDuration: Duration(milliseconds: 200),
                    // behaviors: [
                    //
                    //   charts.DatumLegend(
@@ -338,29 +366,53 @@ class _DynamicGraphState extends State<DynamicGraph> {
           Padding(
             padding: EdgeInsets.only(left:1.w,top:25.h),
             child: Card(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
                 children: [
-                  Container(
-                    height: 10,width: 20,
-                    color: DefaultValues.graphColors[0],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.only(left:8.w, top:8.0, bottom: 8.0),
+                        child: Container(
+                          height: 10,width: 20,
+                          color: DefaultValues.graphColors[0],
 
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
+                        child: Text('Investments',style: DefaultValues.kH4(context),),
+                      ),
+                        Padding(
+                          padding: EdgeInsets.only(left:25.w,right:6.w),
+                          child: Text(DefaultValues.textFormat.format(totalInvestmentCorpus),
+                            style: DefaultValues.kH4(context),
+                          ),
+                        ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                    child: Text('Investments',style: DefaultValues.kH4(context),),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                    child: Container(
-                      height: 10,width: 20,
-                      color: DefaultValues.graphColors[1],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                    child: Text('Goals',style: DefaultValues.kH4(context)),
-                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left:8.w, top:8.0, bottom: 8.0),
+                        child: Container(
+                          height: 10,width: 20,
+                          color: DefaultValues.graphColors[1],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
+                        child: Text('Goals',style: DefaultValues.kH4(context)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left:37.w, right:6.w),
+                        child: Text( DefaultValues.textFormat.format(totalGoal),
+                          style: DefaultValues.kH4(context),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

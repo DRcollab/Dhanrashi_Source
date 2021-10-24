@@ -92,7 +92,7 @@ class DefaultValues {
   static double adaptForSmallDevice(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.
-    print('Adapted Width :${size.width} and adapted height:${size.height}' );
+
     if (size.height < 600) {
       return 0.6;
     }
@@ -103,7 +103,7 @@ class DefaultValues {
   static double reduceWidthAsPerScreen(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.
-    print('Adapted Width :${size.width} and adapted height:${size.height}' );
+
     if (size.width < 300) {
       return 0.8;
     }
@@ -122,6 +122,15 @@ class DefaultValues {
     return 1.0;
   }
 
+  static screenHeight(BuildContext context){
+    print(MediaQuery.of(context).size.height);
+    return MediaQuery.of(context).size.height;
+
+  }
+
+  static screenWidth(BuildContext context){
+    return MediaQuery.of(context).size.width;
+  }
   static double adaptByValue(BuildContext context, double value) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.

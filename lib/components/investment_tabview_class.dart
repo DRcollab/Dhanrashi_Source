@@ -75,6 +75,15 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
       fetched = true;
     }
 
+    investments.forEach((element) {
+      double futureValue = Calculator.fv(element.investmentRoi,
+          element.duration,
+          element.annualInvestmentAmount,
+          element.currentInvestmentAmount, 0);
+
+      totalCorpus = futureValue + totalCorpus;
+
+    });
 
   }
 
@@ -219,10 +228,10 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
        Flexible(
          flex:1,
          child: ListTile(
-           title:  Text('Total Investment Amount: ${
-              totalInvest<DefaultValues.threshold ? DefaultValues.textFormat.format(totalInvest)
-               :DefaultValues.textShortFormat.format(totalInvest)}',
-               style: DefaultValues.kNormal3(context)),
+           title:  Text('Total Corpus: ${
+              totalInvest<DefaultValues.threshold ? DefaultValues.textFormat.format(totalCorpus)
+               :DefaultValues.textShortFormat.format(totalCorpus)}',
+               style: DefaultValues.kH3(context)),
            trailing: RoundButton(
                icon:Icons.add,
                onPress:(){
@@ -246,7 +255,10 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                   investments[index].annualInvestmentAmount, 
                   investments[index].currentInvestmentAmount, 0);
 
-              totalCorpus = futureValue + totalCorpus;
+                totalCorpus = futureValue + totalCorpus;
+
+
+
 
               print('Value:::::::: ${investments[index].name}');
               print(index);

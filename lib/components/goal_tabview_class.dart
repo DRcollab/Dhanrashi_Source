@@ -194,11 +194,11 @@ class _GoalsTabViewState extends State<GoalsTabView> {
           flex:1,
           child: ListTile(
            // leading: FaIcon(FontAwesomeIcons.list),
-            title: Text('Total Goal Amount: ${
+            title: Text('Total Goal: ${
                 totalGoal<DefaultValues.threshold? DefaultValues.textFormatWithDecimal.format(totalGoal)
                 :DefaultValues.textShortFormat.format(totalGoal)}'
 
-              , style: DefaultValues.kNormal3(context),),
+              , style: DefaultValues.kH3(context),),
             trailing: RoundButton(
               icon: Icons.add,
                 onPress:(){

@@ -21,6 +21,8 @@ class CustomScaffold extends StatelessWidget {
   var currentUser;
   //final Widget svg = Svg
   bool allowToSeeBottom = false;
+
+
   CustomScaffold({
     required this.child,
     this.title = '',
@@ -29,80 +31,84 @@ class CustomScaffold extends StatelessWidget {
     this.bottomNavigationBar = const  SizedBox(height: 0, width: 0,),
     this.currentUser,
     this.allowToSeeBottom = false,
+
   });
 
   final  _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-       statusBarColor: kPresentTheme.themeColor,//Color(0xffb5c210),
-        systemNavigationBarIconBrightness: Brightness.dark,
-       // systemNavigationBarColor: Colors.black,
-      ) ,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: AnnotatedRegion(
+        value: SystemUiOverlayStyle(
+         statusBarColor: kPresentTheme.themeColor,//Color(0xffb5c210),
+          systemNavigationBarIconBrightness: Brightness.dark,
+         // systemNavigationBarColor: Colors.black,
+        ) ,
 
-      child: Scaffold(
+        child: Scaffold(
 
-          backgroundColor: kPresentTheme.themeColor,
-          key: _scaffoldKey,
-          resizeToAvoidBottomInset: this.allowToSeeBottom,
+            backgroundColor: kPresentTheme.themeColor,
+            key: _scaffoldKey,
+            resizeToAvoidBottomInset: this.allowToSeeBottom,
 
-         // backgroundColor: kPresentTheme.scaffoldColors[0],
+           // backgroundColor: kPresentTheme.scaffoldColors[0],
 
-          body: SafeArea(
-              child: StreamBuilder<Object>(
-                stream: Connectivity().onConnectivityChanged,
-                builder: (context,
-                   AsyncSnapshot snapshot) {
+            body: SafeArea(
+                child: StreamBuilder<Object>(
+                  stream: Connectivity().onConnectivityChanged,
+                  builder: (context,
+                     AsyncSnapshot snapshot) {
 
-                  if( snapshot.hasData &&
-                  snapshot.data != ConnectivityResult.none){
-                    Global.internetAvailable = true;
-                  }else{
-                    Global.internetAvailable = false;
+                    if( snapshot.hasData &&
+                    snapshot.data != ConnectivityResult.none){
+                      Global.internetAvailable = true;
+                    }else{
+                      Global.internetAvailable = false;
+                    }
+                    return Stack(
+                          children: [
+                          this.child,
+                          Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                Padding(
+                                      padding: EdgeInsets.only(left:2.w),
+                                      child: GestureDetector(
+                                          onTap: () {
+
+                                          _scaffoldKey.currentState!.openDrawer();
+                                          },
+
+                                      child: Icon(Icons.menu),
+                                      //CircleAvatar(radius: 20,backgroundColor: Colors.amber,
+
+
+                                      ),
+                                ),
+                                Text(this.title, style: DefaultValues.kH3(context),),
+                                Padding(
+                                padding: EdgeInsets.only( right:2.w),
+                                child: Icon(Icons.help),
+                                ),
+                                ],
+                          ),
+                          //),
+                          Padding(
+                          padding: EdgeInsets.only(top: 10.h),
+                          child: this.foot,
+                          ),
+                          ],
+                    );
+
+
                   }
-                  return Stack(
-                        children: [
-                        this.child,
-                        Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                              Padding(
-                                    padding: EdgeInsets.only(left:2.w),
-                                    child: GestureDetector(
-                                        onTap: () {
-
-                                        _scaffoldKey.currentState!.openDrawer();
-                                        },
-
-                                    child: Icon(Icons.menu),
-                                    //CircleAvatar(radius: 20,backgroundColor: Colors.amber,
-
-
-                                    ),
-                              ),
-                              Text(this.title),
-                              Padding(
-                              padding: EdgeInsets.only( right:2.w),
-                              child: Icon(Icons.account_circle_sharp),
-                              ),
-                              ],
-                        ),
-                        //),
-                        Padding(
-                        padding: EdgeInsets.only(top: 10.h),
-                        child: this.foot,
-                        ),
-                        ],
-                  );
-
-
-                }
-              ),
+                ),
+            ),
+            drawer: MenuDrawer(currentUser: this.currentUser, ),
+            bottomNavigationBar:bottomNavigationBar,
           ),
-          drawer: MenuDrawer(currentUser: this.currentUser, ),
-          bottomNavigationBar:bottomNavigationBar,
-        ),
+      ),
     );
   }
 

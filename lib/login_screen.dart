@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:core';
+import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   late final _passWord;
   late final  _loginKey;// = GlobalKey<FormState>(); // Used for user email validation
   late final _passwordKey;// = GlobalKey<FormState>(); // Used fot password validation
-
+  late AutovalidateMode _autovalidateMode;
   var _user = UserHandeler(userTable, userProfileTable);
 
   bool clickedLogin = false;
@@ -71,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
   late Profile profile;
   late SharedPreferences prefs;
 
+  int whichTextBoxClickedOn = -1;
   /// Goto Logger class definition to see how login is happening
   ///
   @override
@@ -93,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
     _passwordKey = GlobalKey<FormState>();
     _userText = TextEditingController();
     _passWord = TextEditingController();
-    profile = Profile.create(); // Custom
+    profile = Profile.create();
+    _autovalidateMode = AutovalidateMode.disabled;
     super.initState();
     future: initPrefs();
     future: Firebase.initializeApp().whenComplete(() {
@@ -230,209 +233,234 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
     return Sizer(
 
       builder: (context,orientation, deviceType) {
-        return CustomScaffold(
+        return VanishKeyBoard(
+          onTap: () {
+           switch(whichTextBoxClickedOn){
+             case 0:
+               _loginKey.currentState!.validate();
+               break;
+             case 1:
+               _passwordKey.currentState!.validate();
+               break;
 
-          child: ListView(
-            children: [
-              Padding(
+           }
+          },
+          child: CustomScaffold(
 
-                padding: DefaultValues.kAdaptedTopPadding(context, 10.h),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.monetization_on),
-                        Text('Dhanrashi', style:DefaultValues.kH1(context),),
-                      ],
-                    ),
-                    Padding(
-                      padding:  EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
-                      child: InputCard(
+            child: ListView(
+              children: [
+                Padding(
 
-                        titleText: 'Login Page',
+                  padding: DefaultValues.kAdaptedTopPadding(context, 10.h),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          //Logger(),
-                      Column(
-                      children: [
+                          Icon(Icons.monetization_on),
+                          Text('Dhanrashi', style:DefaultValues.kH1(context),),
+                        ],
+                      ),
                       Padding(
-                      padding:DefaultValues.kTextFieldPadding(context),
-                        child: Form(
-                          key: _loginKey,
-                          child: CustomTextField(
-                            controller: _userText,
+                        padding:  EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
+                        child: InputCard(
 
-                            hintText: "enter email",
-                            passWord: false,
-                            icon: Icons.email,
-                            //  textInputAction: TextInputAction.next,
-                            validator: (value) {
-                              if(eMailValid( value.toString() ))
+                          titleText: 'Login Page',
+                          children: [
+                            //Logger(),
+                        Column(
+                        children: [
+                        Padding(
+                        padding:DefaultValues.kTextFieldPadding(context),
+                          child: Form(
+                            key: _loginKey,
+                            child: CustomTextField(
+                              autovalidateMode: this._autovalidateMode,
+                              controller: _userText,
+
+                              hintText: "enter email",
+                              passWord: false,
+                              icon: Icons.email,
+                              //  textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if(eMailValid( value.toString() ))
+                                  return null;
+                                else
+                                  return validEmailMessage;
+                              },
+                              onSubmit: (){
+                                _loginKey.currentState!.validate();
+                              },
+                              validate: (){
+                                setState(() {
+                                  if(_errorText != ''){
+                                    _errorText = '';
+                                  }
+
+                                  if(whichTextBoxClickedOn==1){
+                                    _passwordKey.currentState!.validate();
+                                  }
+                                  whichTextBoxClickedOn = 0;
+
+
+
+                                });
+                              },
+
+                            ),
+                          )
+                      ),
+                      Padding(
+                        padding:DefaultValues.kTextFieldPadding(context),
+                        child: Form(
+                          key: _passwordKey,
+
+                          child: CustomTextField(
+                            onSubmit: (){},
+                            // textInputAction: TextInputAction.done,
+                            validator: (value){
+                              if(passWordValid(value.toString()))
                                 return null;
                               else
-                                return validEmailMessage;
+                                return validPasswordMessage;
                             },
-                            onSubmit: (){
-                              _loginKey.currentState!.validate();
-                            },
+
                             validate: (){
                               setState(() {
                                 if(_errorText != ''){
                                   _errorText = '';
                                 }
+                                if(whichTextBoxClickedOn==0){
+                                  _loginKey.currentState!.validate();
+                                }
+                                whichTextBoxClickedOn = 1;
 
 
                               });
                             },
 
+                            controller: _passWord,
+                            hintText: 'Enter Password',
+                            passWord: true,
+                            hidePassword: _hidePassword,
+                            icon: Icons.password_sharp,
+                            showPassword: (){
+                              setState(() {
+                                _hidePassword = !_hidePassword;
+                              });
+                            },
+                            // key: _passKey,
+
                           ),
-                        )
-                    ),
-                    Padding(
-                      padding:DefaultValues.kTextFieldPadding(context),
-                      child: Form(
-                        key: _passwordKey,
-
-                        child: CustomTextField(
-                          onSubmit: (){},
-                          // textInputAction: TextInputAction.done,
-                          validator: (value){
-                            if(passWordValid(value.toString()))
-                              return null;
-                            else
-                              return validPasswordMessage;
-                          },
-
-                          validate: (){
-                            setState(() {
-                              if(_errorText != ''){
-                                _errorText = '';
-                              }
-
-                            });
-                          },
-
-                          controller: _passWord,
-                          hintText: 'Enter Password',
-                          passWord: true,
-                          hidePassword: _hidePassword,
-                          icon: Icons.password_sharp,
-                          showPassword: (){
-                            setState(() {
-                              _hidePassword = !_hidePassword;
-                            });
-                          },
-                          // key: _passKey,
-
                         ),
                       ),
-                    ),
-                    ErrorText( errorText: _errorText,),
-                    !clickedLogin ? CommandButton(
-                      buttonText: 'Login',
-                      textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
-                      buttonColor: kPresentTheme.accentColor,
-                      textColor: kPresentTheme.lightWeightColor,
-                      borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
-                      onPressed: () {
+                      ErrorText( errorText: _errorText,),
+                      !clickedLogin ? CommandButton(
+                        buttonText: 'Login',
+                        textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
+                        buttonColor: kPresentTheme.accentColor,
+                        textColor: kPresentTheme.lightWeightColor,
+                        borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
+                        onPressed: () {
 
 //
-                        setState(() {
-                          if(_loginKey.currentState!.validate()) {
-                            if(_passwordKey.currentState!.validate()){
-                              clickedLogin = true;
-                              // Async function to enable login
+                          setState(() {
+                            if(_loginKey.currentState!.validate()) {
+                              if(_passwordKey.currentState!.validate()){
+                                clickedLogin = true;
+                                // Async function to enable login
 
-                              try{
-                                _login(_userText.text, _passWord.text);
-                              }catch(e){
-                                Utility.showErrorMessage(context,  e.toString());
-                              }
-
-                            } // end of outside
-                          }
-                        });
-                        //circularProgressIndicator
-                      },
-                    ):Image.asset(kPresentTheme.progressIndicator, scale: 3,
-                    ),
-                  ],
-                ),
-                          Padding(
-                            padding:DefaultValues.kTextFieldPadding(context),
-                            child: LinkText(
-                                type: LinkTextType.DARK,
-
-                                linkText: "Trouble logging in ? Click here",
-                                displaySize: 12.sp, //*  DefaultValues.adaptForSmallDevice(context),
-
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ResetScreen(),
-                                      )
-                                  );
+                                try{
+                                  _login(_userText.text, _passWord.text);
+                                }catch(e){
+                                  Utility.showErrorMessage(context,  e.toString());
                                 }
 
+                              } // end of outside
+                            }
+                          });
+                          //circularProgressIndicator
+                        },
+                      ):Image.asset(kPresentTheme.progressIndicator, scale: 3,
+                      ),
+                    ],
+                  ),
+                            Padding(
+                              padding:DefaultValues.kTextFieldPadding(context),
+                              child: LinkText(
+                                  type: LinkTextType.DARK,
+
+                                  linkText: "Trouble logging in ? Click here",
+                                  displaySize: 12.sp, //*  DefaultValues.adaptForSmallDevice(context),
+
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ResetScreen(),
+                                        )
+                                    );
+                                  }
+
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "",
+                              style:DefaultValues.kNormal2(context),
                             ),
                           ),
+                          Padding(
+                            padding:  EdgeInsets.all(1.h),
+                            child: CommandButton(
+                              textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
+                              buttonText: "New User? Sign Up",
+                              borderRadius: BorderRadius.circular(20),
+                              buttonColor: kPresentTheme.alternateColor,
+                              textColor: kPresentTheme.accentColor,
+
+                              //type: LinkTextType.DARK,
+                              onPressed: () {
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignUpPage(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+
                         ],
                       ),
-                    ),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "",
-                            style:DefaultValues.kNormal2(context),
-                          ),
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.all(1.h),
-                          child: CommandButton(
-                            textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
-                            buttonText: "New User? Sign Up",
-                            borderRadius: BorderRadius.circular(20),
-                            buttonColor: kPresentTheme.alternateColor,
-                            textColor: kPresentTheme.accentColor,
-
-                            //type: LinkTextType.DARK,
-                            onPressed: () {
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SignUpPage(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
-                label: 'SIP Calculator',
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
+                  label: 'SIP Calculator',
 
-              ),
-              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
-                  label: 'Inflation Data'
-              ),
-              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
-                  label: 'Settings'
-              ),
-            ],
+                ),
+                BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
+                    label: 'Inflation Data'
+                ),
+                BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
+                    label: 'Settings'
+                ),
+              ],
+            ),
           ),
         );
       }

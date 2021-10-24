@@ -149,6 +149,10 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
    // print(fireStore.toString());
   }
 
+
+
+
+
   Future _update(InvestDB investDB) async {
 
     DateTime currentPhoneDate = DateTime.now();
@@ -243,19 +247,35 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
     return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,timedOut: isTimedOut,) : VanishKeyBoard(
       onTap: (){
-
+        String text = '';
         setState(() {
           isEditing = false;
+
           switch(whichTextController){
             case 1 :
-              investedAmount = double.parse(dummy.text);
+              if (dummy.text.contains('₹')){
+                text = dummy.text.substring(1).replaceAll(',','').trim();
+                investedAmount = double.parse(dummy.text);
+              }else{
+                investedAmount = double.parse(dummy.text);
+              }
+
               text1Active = false; // determines whether textBox1 in the context recieved a tap and now it is released.
-              dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
+              dummy.text =DefaultValues.textFormat.format(investedAmount);
               break;
             case 2:
-              annualInvestment = double.parse(dummy.text);
+              if (dummy.text.contains('₹')){
+                text = dummy.text.substring(1).replaceAll(',','').trim();
+                annualInvestment = double.parse(dummy.text);
+              }else{
+                annualInvestment = double.parse(dummy.text);
+              }
+
               text2Active = false;// determines whether textBox2 in the context recieved a tap and now it is released.
               dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
+              break;
+            default:
+              print((currentInvestmentController.text.substring(0,1)));
               break;
           }
 
@@ -459,10 +479,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                 initialValue: investedAmount,
                label: 'Initial Investment',
                icon: Icon(Icons.bar_chart),
-               // getValue: (value){
-               //
-               //   investedAmount = double.parse(value.toString());
-               // },
+
 
                validator: (){
                      setState(() {
@@ -481,12 +498,20 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      });
                   },
                onCompleteEditing: (){
+                 String text;
                  setState(() {
+                   print((currentInvestmentController.text.substring(0,1)));
                    isEditing = false;
                     text1Active = false;
                     text2Active = false;
-                   investedAmount = double.parse(currentInvestmentController.text);
+                   if (currentInvestmentController.text.contains('₹')){
+                     text = currentInvestmentController.text.substring(1).replaceAll(',','').trim();
+                     investedAmount = double.parse(text);
+                   }else{
+                     investedAmount = double.parse(currentInvestmentController.text);
+                   }
 
+                   // dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
                    currentInvestmentController.text = DefaultValues.textFormat.format(double.parse( currentInvestmentController.text));
 
                  });
@@ -526,10 +551,16 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                   });
                 },
                 onCompleteEditing: (){
-
+                  String text ='';
                   setState(() {
-                    annualInvestment = double.parse(annualInvestmentController.text);
-
+                    if (annualInvestmentController.text.contains('₹')){
+                     text = annualInvestmentController.text.substring(1).replaceAll(',','').trim();
+                     annualInvestment = double.parse(text);
+                    }
+                    else {
+                      annualInvestment =
+                          double.parse(annualInvestmentController.text);
+                    }
                     annualInvestmentController.text = DefaultValues.textFormat.format(double.parse( annualInvestmentController.text));
                     isEditing = false;
                     text2Active = false;

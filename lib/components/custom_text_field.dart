@@ -25,7 +25,7 @@ class CustomTextField extends StatefulWidget {
   String label;
   TextInputAction? textInputAction;
   Function() onSubmit;
-
+  AutovalidateMode autovalidateMode;
 
   CustomTextField({
     this.hintText='',
@@ -42,6 +42,7 @@ class CustomTextField extends StatefulWidget {
     this.textInputAction = TextInputAction.next,
     this.errorText='',
     required this.onSubmit,
+    this.autovalidateMode = AutovalidateMode.disabled,
 
   });
 
@@ -63,6 +64,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
 
       child: TextFormField(
+        autovalidateMode:widget.autovalidateMode,
+
         controller: this.widget.controller,
         onFieldSubmitted: (_){
           FocusScope.of(context).nextFocus();
@@ -159,6 +162,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
   void dispose() {
 
     super.dispose();
+
   }
 
 
@@ -185,12 +189,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
             widget.isEditing = false;
           });
         } ,
-        // onChanged: (value){
-        //   setState(() {
-        //     widget.initialText = value;
-        //
-        //   });
-       // },
+
         onTap: widget.onTap,
       );
     }else{
