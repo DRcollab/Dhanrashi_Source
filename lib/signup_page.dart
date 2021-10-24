@@ -1,5 +1,6 @@
 
 
+import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
 import 'package:dhanrashi_mvp/data/database.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/data/user_handler.dart';
@@ -67,6 +68,8 @@ import 'package:sizer/sizer.dart';
   var _passKey = GlobalKey<FormState>();
   var _passKey2 = GlobalKey<FormState>();
 
+    int whichTextBoxClickedOn = -1;
+
   var _user = UserHandeler(userTable, userProfileTable);
 
   late FirebaseAuth fireAuth;
@@ -107,216 +110,263 @@ import 'package:sizer/sizer.dart';
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      child: ListView(
-        children: [
-          Padding(
-            padding: DefaultValues.kAdaptedTopPadding(context, 8.h),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.monetization_on),
-                    Text('Dhanrashi', style:DefaultValues.kH1(context),),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
-                  child: InputCard(
+    return VanishKeyBoard(
+      onTap: () {
+
+        switch (whichTextBoxClickedOn) {
+          case 0:
+            _emailKey.currentState!.validate();
+            break;
+          case 1:
+            _passKey.currentState!.validate();
+            break;
+          case 2:
+            _passKey2.currentState!.validate();
+            break;
+        }
+
+      },
+      child: CustomScaffold(
+        child: ListView(
+          children: [
+            Padding(
+              padding: DefaultValues.kAdaptedTopPadding(context, 8.h),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    titleText: "Sign Up Page",
                     children: [
-                      Padding(
-                        padding:EdgeInsets.symmetric(vertical: 0.h, horizontal: 6.w),// DefaultValues.kTextFieldPadding(context),
-                        child: Form(
-                          key: _emailKey,
-                          child: CustomTextField(
-                            onSubmit: (){
-                              _emailKey.currentState!.validate();
-                            },
-                            controller: _userEmail,
+                      Icon(Icons.monetization_on),
+                      Text('Dhanrashi', style:DefaultValues.kH1(context),),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
+                    child: InputCard(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      titleText: "Sign Up Page",
+                      children: [
+                        Padding(
+                          padding:EdgeInsets.symmetric(vertical: 0.h, horizontal: 6.w),// DefaultValues.kTextFieldPadding(context),
+                          child: Form(
+                            key: _emailKey,
+                            child: CustomTextField(
+                              onSubmit: (){
+                                _emailKey.currentState!.validate();
+                              },
+                              controller: _userEmail,
 
-                            validate: (){
-                              setState(() {
-                                _errorText = "";
-                              });
-                            },
+                              validate: (){
+                                setState(() {
+
+                                  if(whichTextBoxClickedOn==1){
+                                    _passKey.currentState!.validate();
+                                  }else{
+                                    if(whichTextBoxClickedOn==2){
+                                      _passKey2.currentState!.validate();
+                                    }
+                                  }
+
+                                  whichTextBoxClickedOn = 0;
+                                  _errorText = "";
+                                });
+                              },
 
 
-                            validator: (value) {
-                              if (eMailValid(value.toString()))
-                                return null;
-                              else
-                                return validEmailMessage;
-                            },
+                              validator: (value) {
+                                if (eMailValid(value.toString()))
+                                  return null;
+                                else
+                                  return validEmailMessage;
+                              },
 
-                            icon: Icons.email,
-                            hintText: 'Enter email to register',
+                              icon: Icons.email,
+                              hintText: 'Enter email to register',
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 6.w),
-                        child: Form(
-                          key: _passKey,
-                          child: CustomTextField(
-                            showPassword: (){
-                              setState(() {
-                                _hidePassword = !_hidePassword;
-                              });
-                            },
-                            onSubmit: (){
-                              _passKey.currentState!.validate();
-                            },
-                            controller: _userPassword,
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 6.w),
+                          child: Form(
+                            key: _passKey,
+                            child: CustomTextField(
+                              showPassword: (){
+                                setState(() {
 
-                            validate: (){
-                              setState(() {
-                                _errorText = "";
-                              });
-                            },
+                                  _hidePassword = !_hidePassword;
+                                });
+                              },
+                              onSubmit: (){
+                                _passKey.currentState!.validate();
+                              },
+                              controller: _userPassword,
 
-                            validator: (value){
-                              if(passWordValid(value.toString()))
-                                return null;
-                              else
-                                return validPasswordMessage;
-                            },
-                            icon: Icons.password_rounded,
-                            hidePassword: _hidePassword,
-                            hintText: 'Enter Password ',
-                            passWord: true,
+                              validate: (){
+                                setState(() {
+                                  if(whichTextBoxClickedOn==0){
+                                    _emailKey.currentState!.validate();
+                                  }else{
+                                    if(whichTextBoxClickedOn==2){
+                                      _passKey2.currentState!.validate();
+                                    }
+                                  }
+
+                                  whichTextBoxClickedOn = 1;
+
+                                  _errorText = "";
+                                });
+                              },
+
+                              validator: (value){
+                                if(passWordValid(value.toString()))
+                                  return null;
+                                else
+                                  return validPasswordMessage;
+                              },
+                              icon: Icons.password_rounded,
+                              hidePassword: _hidePassword,
+                              hintText: 'Enter Password ',
+                              passWord: true,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 6.w),
-                        child: Form(
-                          key: _passKey2,
-                          child: CustomTextField(
-                            showPassword: (){
-                              setState(() {
-                                _hidePassword2 = !_hidePassword2;
-                              });
-                            },
-                            onSubmit: (){
-                              _passKey2.currentState!.validate();
-                            },
-                            controller: _userPassword2,
-                            hidePassword: _hidePassword2,
-                            validate: (){
-                              setState(() {
-                                _errorText = "";
-                              });
-                            },
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 6.w),
+                          child: Form(
+                            key: _passKey2,
+                            child: CustomTextField(
+                              showPassword: (){
+                                setState(() {
+                                  _hidePassword2 = !_hidePassword2;
+                                });
+                              },
+                              onSubmit: (){
+                                _passKey2.currentState!.validate();
+                              },
+                              controller: _userPassword2,
+                              hidePassword: _hidePassword2,
+                              validate: (){
+                                setState(() {
+
+                                  if(whichTextBoxClickedOn==0){
+                                    _emailKey.currentState!.validate();
+                                  }else{
+                                    if(whichTextBoxClickedOn==1){
+                                      _passKey.currentState!.validate();
+                                    }
+                                  }
+                                  whichTextBoxClickedOn = 2;
+                                  _errorText = "";
+                                });
+                              },
 
 
-                            validator: (value){
-                              if(_userPassword.text == _userPassword2.text){
-                                return null;
+                              validator: (value){
+                                if(_userPassword.text == _userPassword2.text){
+                                  return null;
+
+                                }
+                                else
+                                  return 'password and confirm password must be same';
+                              },
+                              icon: Icons.password_sharp,
+                              hintText: 'Re-Enter Password',
+                              passWord: true,
+                            ),
+                          ),
+                        ),
+                        ErrorText(errorText: _errorText,), //from custom_text
+                        buttonClicked ?  Image.asset(kPresentTheme.progressIndicator, scale: 3,
+                        ):CommandButton(
+                          textColor: kPresentTheme.lightWeightColor,
+                          buttonColor: kPresentTheme.accentColor,
+                          buttonText: 'Sign Up',
+                          textSize: 12.sp,
+                          borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
+                          onPressed: () {
+
+
+                            setState(() {
+
+                              if(_emailKey.currentState!.validate()){
+                               if(_passKey.currentState!.validate()){
+                                 if(_passKey2.currentState!.validate()){
+
+                                   /// creates an user in the firebase.
+                                   this.buttonClicked = true;
+                                      _createUser(_userEmail.text, _userPassword.text);
+                                 }
+
+                               }
 
                               }
                               else
-                                return 'password and confirm password must be same';
-                            },
-                            icon: Icons.password_sharp,
-                            hintText: 'Re-Enter Password',
-                            passWord: true,
+                                Utility.showErrorMessage(context, 'Something went wrong please restart the app.');
+                            /// custom method defined in utilities.dart;
+                            });
+                          },
+                        ),
+
+                        Padding(
+                          padding: DefaultValues.kTextFieldPadding(context),
+                          child: LinkText(
+                            onPressed: (){},
+                            linkText: 'By signing up you are agreeing to our terms and condition.',
+                            displaySize: 12.sp,
+
                           ),
-                        ),
-                      ),
-                      ErrorText(errorText: _errorText,), //from custom_text
-                      buttonClicked ?  Image.asset(kPresentTheme.progressIndicator, scale: 3,
-                      ):CommandButton(
-                        textColor: kPresentTheme.lightWeightColor,
-                        buttonColor: kPresentTheme.accentColor,
-                        buttonText: 'Sign Up',
-                        textSize: 12.sp,
-                        borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
-                        onPressed: () {
-
-
-                          setState(() {
-
-                            if(_emailKey.currentState!.validate()){
-                             if(_passKey.currentState!.validate()){
-                               if(_passKey2.currentState!.validate()){
-
-                                 /// creates an user in the firebase.
-                                 this.buttonClicked = true;
-                                    _createUser(_userEmail.text, _userPassword.text);
-                               }
-
-                             }
-
-                            }
-                            else
-                              Utility.showErrorMessage(context, 'Something went wrong please restart the app.');
-                          /// custom method defined in utilities.dart;
-                          });
-                        },
-                      ),
-
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
                       Padding(
-                        padding: DefaultValues.kTextFieldPadding(context),
-                        child: LinkText(
-                          onPressed: (){},
-                          linkText: 'By signing up you are agreeing to our terms and condition.',
-                          displaySize: 12.sp,
-
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Already have a login id ?",
+                          style:DefaultValues.kNormal2(context),
                         ),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CommandButton(
+                          buttonText: "Click Here to Login",
+                          buttonColor: kPresentTheme.alternateColor,
+                          textColor: kPresentTheme.accentColor,
+                          textSize: 12.sp,
+                          borderRadius: BorderRadius.circular(20),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LoginScreen()),
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
-                ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Already have a login id ?",
-                        style:DefaultValues.kNormal2(context),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CommandButton(
-                        buttonText: "Click Here to Login",
-                        buttonColor: kPresentTheme.alternateColor,
-                        textColor: kPresentTheme.accentColor,
-                        textSize: 12.sp,
-                        borderRadius: BorderRadius.circular(20),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
-            label: 'SIP Calculator',
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
+              label: 'SIP Calculator',
 
-          ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
-              label: 'Inflation Data'
-          ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
-              label: 'Settings'
-          ),
-        ],
+            ),
+            BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
+                label: 'Inflation Data'
+            ),
+            BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
+                label: 'Settings'
+            ),
+          ],
+        ),
       ),
     );
   }

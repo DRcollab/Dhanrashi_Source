@@ -171,31 +171,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     },
                   ),
 
-                  // ListTile(
-                  //   enabled: widget.currentUser!=null,
-                  //   leading: FaIcon(FontAwesomeIcons.wrench, size: 24.sp,color:kPresentTheme.accentColor),
-                  //   title: Text('Settings', style: DefaultValues.kNormal2(context)),
-                  //   onTap: (){
-                  //     showModalBottomSheet(
-                  //         isScrollControlled: true,
-                  //         context: context,
-                  //         builder: (context) => SingleChildScrollView(
-                  //           child: Container(
-                  //             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                  //             child: SettingSheet(
-                  //
-                  //               // titleMessage: name,
-                  //               // investedAmount: 10,
-                  //               // investmentDuration: 10,
-                  //               // expectedRoi: 12,
-                  //               // imageSource: 'images/products.png',
-                  //
-                  //             ),
-                  //           ),
-                  //         ));
-                  //
-                  //   },
-                  // ),
 
                   Container(height: 2,width: double.infinity,color: Colors.black12,),
                   SizedBox(height: 10,width: double.infinity,),
@@ -239,9 +214,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     print(widget.currentUser.email);
                   });
 
-                 // if(fireAuth.currentUser == null){
-                 //
-                 // }
 
                 },
               )

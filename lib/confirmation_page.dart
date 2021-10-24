@@ -34,8 +34,7 @@ class ConfirmationPage extends StatefulWidget {
 
   Collector collector; // defined in profile_collector.dart
   var currentUser;
-  UserData currentUserProfile = UserData.create();
-  bool isItForUpdate = false;
+   bool isItForUpdate = false;
 
   ConfirmationPage({
     required this.collector,
@@ -216,6 +215,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 padding:  EdgeInsets.only(left:2.w, bottom: 0),
                 child: Text(" Confirm Profile of:", style:DefaultValues.kH1(context),),
               ),
+              Text('Image ${widget.collector.profileImage}'),
               Padding(
                 padding: EdgeInsets.only(left:4.w, top:0,right: 4.w,bottom: 0.h),
                 child: Row(

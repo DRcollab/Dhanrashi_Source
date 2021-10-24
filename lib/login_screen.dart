@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
             Timestamp dob = f.get('DOB');
             String incomeRange = f.get('income');
             String image = f.get('image_source');
-
+            print(' This is the image : $image}');
             /// Updating profile of user in a profile class object
             /// This profile object will be sent to all widget and screens
 
@@ -164,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
               docId: docID,
               uid:userID,
               email: email,
-              profileImage: image,
+              profileImage: '${DefaultValues.directoryOfPhoto}/$image',
             );
 
             /// Populating shared preference prefs which will be used to determine whether user is logged
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
             prefs.remove('doc_id');
             prefs.setString('doc_id', docID);
             prefs.remove('image');
-            prefs.setString('image', image);
+            prefs.setString('image', '${DefaultValues.directoryOfPhoto}/$image');
 
             /// If user details is FOUND for the user then redirected to the Dashboard...
 

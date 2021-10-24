@@ -82,13 +82,13 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
 
    // print( DefaultValues.textShortFormat.format(10000000000));
 
-    print('Session: $sessionActive');
+
 
     return Sizer(
         builder: (context, orientation, deviceType){
           return VanishKeyBoard(
             onTap: (){
-              print('Clicked babu');
+
             },
             child: MaterialApp(
               home:  sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile),

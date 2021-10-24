@@ -124,8 +124,6 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               onUpdate: (newInv){
 
                 setState(() {
-                  print('after delete index is $index and length is ${investments.length}');
-
                   if(type!='Delete'){
                     investments[index] = newInv!;
                     widget.investmentDBs[index].investment = investments[index];
@@ -246,8 +244,6 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
           height: 50.h,//* DefaultValues.adaptByValue(context,0.50) ,
           child: ListView.builder(
             itemBuilder: (context, index){
-              print('index - $index');
-              print(investments.length);
 
              // double futureValue = Calculator.fv(r, nper, pmt, pv, type)
               double futureValue = Calculator.fv(investments[index].investmentRoi,
@@ -260,8 +256,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
 
 
-              print('Value:::::::: ${investments[index].name}');
-              print(index);
+
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Shingle(

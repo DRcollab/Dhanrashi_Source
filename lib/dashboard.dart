@@ -102,7 +102,6 @@ class _DashboardState extends State<Dashboard> {
         String email=f.get('email');
         String userID=f.get('Uuid');
         String docID=f.id;
-        print('docid : $docID');
         String goalName=f.get('goal_name');
         String goalDescription=f.get('goal_description');
         double amount=f.get('goal_amount');
@@ -133,11 +132,11 @@ class _DashboardState extends State<Dashboard> {
        });
 
       });
-     //  print('is Goal Empty : $isGoalEmpty');
-      //return  goals;
+
+
     }
     ).catchError((onError){
-      print(' errror occured during fetching data');
+
       throw onError;
 
     });
@@ -162,7 +161,6 @@ class _DashboardState extends State<Dashboard> {
         String email=f.get('email');
         String userID=f.get('Uuid');
         String docID= f.id;
-        print('docid inv: $docID');
         String investmentName=f.get('investment_name');
         double currInvestAmt=f.get('currInvestAmt');
         double annualInvestAmt=f.get('annualInvestAmt');
@@ -192,7 +190,7 @@ class _DashboardState extends State<Dashboard> {
           Global.investmentCount++;
        });
 
-      //  print('is Inv empty : $isInvestmentEmpty');
+
       });
      // return listInvest;
     }

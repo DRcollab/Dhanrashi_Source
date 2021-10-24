@@ -30,11 +30,7 @@ class EmptyPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-    print('Investment Count ${Global.investmentCount}');
-    print('Goal Count ${Global.goalCount}');
-
-
-    if(Global.investmentCount == 0){
+     if(Global.investmentCount == 0){
       if(Global.goalCount == 0) {
         messageIndex = 'empty';
       }else{
@@ -45,7 +41,7 @@ class EmptyPage extends StatelessWidget {
       messageIndex = 'empty_goal';
     }
 
-    print(messageIndex);
+
 
     return CustomScaffold(
         currentUser: this.currentUser,

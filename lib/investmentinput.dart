@@ -8,6 +8,7 @@ import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
+import 'package:dhanrashi_mvp/sip_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/constants.dart';
@@ -115,11 +116,12 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                 ),
 
                 ),
+
               ],
             ),
           ),
 
-
+          Container(height: 15,width:double.infinity),
           Expanded(
             flex:5,
             child: Container(
@@ -139,7 +141,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                           title: 'Mutual\nFund',
                           title2: 'Fund',
                           subText: 'Equity and debt funds',
-                          color: color,
+                          color: kPresentTheme.accentColor,
                           titleColor: Colors.white60,
                           onPressed: (){
                             name = 'Mutual Fund';
@@ -189,7 +191,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
                           title: 'Insurance',
                           subText: 'Life, health and term',
-                          color: alternateColor,
+                          color: kPresentTheme.alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
                             name = 'Insurance';
@@ -571,6 +573,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
       // ) ,
       bottomNavigationBar: BottomNavigationBar(
       // type: BottomNavigationBarType.,
+
         currentIndex: _currentTabIndex,
         onTap: (index){
             setState(() {
@@ -600,6 +603,14 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                  );
                  break;
                case 2:
+
+
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                     builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
+                   ),
+                 );
                  break;
              }
 
@@ -618,7 +629,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
             label: 'Dashboard',
 
           ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
+          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
               label: 'SIP Calculator'
           ),
 

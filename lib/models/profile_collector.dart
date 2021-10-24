@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:dhanrashi_mvp/components/constants.dart';
 
 class Collector{
 
@@ -8,7 +8,7 @@ class Collector{
   String _annualIncome = '' ;
   var  _fName = TextEditingController() ;
   var _lName = TextEditingController();
-  String profileImage = 'images/profiles/profile_image0.png';
+  late String profileImage = 'profile_image0.png';
 
   /// Constructor of  the class
 
@@ -18,7 +18,7 @@ class Collector{
     _annualIncome = '';
     _fName = TextEditingController();
     _lName = TextEditingController();
-    profileImage = 'images/profiles/profile_image0.png';
+    this.profileImage = 'profile_image0.png';
 
 
   }
@@ -37,6 +37,7 @@ class Collector{
 
     _lName = txt;
   }
+
 
   /// setter of DOB
   set dateOfBirth(DateTime dt){
@@ -78,6 +79,8 @@ class Collector{
     return _annualIncome;
 
   }
+
+
 
   String dateAsString(){
 

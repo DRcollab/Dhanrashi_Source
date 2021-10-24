@@ -85,7 +85,7 @@ class DefaultValues {
   static final textFormat = NumberFormat.simpleCurrency(locale:'en-in', decimalDigits: 0);
   static final textFormatWithDecimal = NumberFormat.simpleCurrency(locale:'en-in', decimalDigits: 1);
   static final textShortFormat = NumberFormat.compactSimpleCurrency(locale:'en-in');
-
+  static final String directoryOfPhoto = 'images/profiles';
   static final threshold = 9999999999;
 
  // static final textFormat1 =

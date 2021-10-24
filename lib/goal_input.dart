@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
+import 'package:dhanrashi_mvp/sip_calculator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,7 @@ import 'components/constants.dart';
 import 'components/goal_entry_sheet.dart';
 import 'dashboard.dart';
 
+import 'inv_grid.dart';
 import 'investmentinput.dart';
 
 import 'package:sizer/sizer.dart';
@@ -111,7 +113,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
             ),
           ),
 
-
+          Container(height: 15,width:double.infinity),
           Expanded(
             flex:5,
             child: Container(
@@ -580,6 +582,14 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
 
               break;
             case 2:
+
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
+                ),
+              );
               break;
           }
         },
@@ -594,7 +604,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
+            icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
             label: 'SIP Calculator',
           )
         ],

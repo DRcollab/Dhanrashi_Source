@@ -150,7 +150,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
         lName: profileCollector.lName,
         lnameKey: _lnameKey,
         nameKey: _nameKey,
-        profilePhotoSource: profileCollector.profileImage,
+        profilePhoto: profileCollector.profileImage,
 
 
       ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
@@ -213,6 +213,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
             }
             break;
           case 1:
+           // showDatePicker(context: context, initialDate: initialDate, firstDate: firstDate, lastDate: lastDate)
             if(_dateKeyValidation){
               index++;
               errorText = '';
@@ -355,8 +356,7 @@ class NamePicker extends StatefulWidget {
 
   var fName = TextEditingController();
   var lName = TextEditingController();
-  String profilePhotoSource = 'images/profiles/profile_image0.png';
-
+  String profilePhoto = 'profile_image0.png';
   var nameKey = GlobalKey<FormState>();
   var lnameKey = GlobalKey<FormState>();
 
@@ -365,7 +365,7 @@ class NamePicker extends StatefulWidget {
     required this.lName,
     required this.nameKey,
     required this.lnameKey,
-    required this.profilePhotoSource,
+    required this.profilePhoto,
   });
 
 
@@ -383,7 +383,7 @@ class NamePicker extends StatefulWidget {
 
 class _NamePickerState extends State<NamePicker> {
 
-
+  String profilePhotoSource = '';
   var jSon;
 
 
@@ -391,7 +391,7 @@ class _NamePickerState extends State<NamePicker> {
   initState(){
     super.initState();
     jSon =  JsonHandler(fileName: 'settings.json');
-
+    profilePhotoSource = widget.profilePhoto;
 
   }
 
@@ -399,7 +399,7 @@ class _NamePickerState extends State<NamePicker> {
   @override
   Widget build(BuildContext context) {
 
-
+    print('ininput card this is the image : ${widget.profilePhoto}');
     return  Padding(
         padding: EdgeInsets.only(top:4.h,left: 4.w,right: 4.w,bottom: 2.h),
         child: InputCard(
@@ -416,7 +416,7 @@ class _NamePickerState extends State<NamePicker> {
                               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                               child: PhotoSheet(getChoice: (value){
                                       setState(() {
-                                        widget.profilePhotoSource = 'images/profiles/profile_image$value.png';
+                                        widget.profilePhoto = 'profile_image$value.png';
                                       });
 
 
@@ -427,7 +427,7 @@ class _NamePickerState extends State<NamePicker> {
                     ,
                     child: CircleAvatar(
                         radius: 11.w,
-                        backgroundImage:AssetImage(widget.profilePhotoSource),
+                        backgroundImage:AssetImage('${DefaultValues.directoryOfPhoto}/${widget.profilePhoto}'),
                     ),
                   ),
 
@@ -525,13 +525,17 @@ class _DOBPickerState extends State<DOBPicker> {
     return Padding(
       padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
       child: GradientCard(
+
         child: Column(
           children: [
             // Padding(
             //   padding: EdgeInsets.only(left:8,top:16,bottom: 0,right:8),
             //   child: Text("Your Date of Birth", style: kTitleTextStyle),
             // ),
-           CalendarDatePicker(
+
+           CalendarDatePicker
+             (
+
             //DateTimeFormField(
               initialDate: widget.datePicker.toString()=='1900-01-01 00:00:00.000'? DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day)
                :DateTime.parse(widget.datePicker),
