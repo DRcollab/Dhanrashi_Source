@@ -130,7 +130,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     enabled: widget.currentUser!=null,
                     leading: FaIcon(FontAwesomeIcons.userFriends,size: 24.sp,color:kPresentTheme.accentColor, ),
                     title: Text('Update profile' ,style:DefaultValues.kNormal2(context), ),
-                    subtitle: DefaultValues.screenHeight(context)>600 ? Text('Change your name , date of birth and income'):null,
+                  //  subtitle: DefaultValues.screenHeight(context)>600 ? Text('Change your name , date of birth and income'):null,
                     onTap: (){
 
                       Navigator.pop(context);
@@ -158,7 +158,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     enabled: widget.currentUser!=null,
                     leading: FaIcon(FontAwesomeIcons.plus,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Add Investments', style: DefaultValues.kNormal2(context)),
-                    subtitle: DefaultValues.screenHeight(context)>600 ?Text('Add your investments by choosing from a list'):null,
+                    //subtitle: DefaultValues.screenHeight(context)>600 ?Text('Add your investments by choosing from a list'):null,
                     onTap: (){
                       Navigator.pop(context);
                       Navigator.push(context,
@@ -169,7 +169,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.plusCircle, size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Add Goals', style: DefaultValues.kNormal2(context)),
-                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('Add your goals by choosing from a list'):null,
+                   // subtitle:DefaultValues.screenHeight(context)>600 ? Text('Add your goals by choosing from a list'):null,
                     enabled: widget.currentUser!=null,
                     onTap: (){
                       Navigator.pop(context);
@@ -191,6 +191,18 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               SIPCalculator(),),);
+                    }
+                    ,
+                  ),
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.idBadge, size: 24.sp,color:kPresentTheme.accentColor),
+                    title: Text('About', style: DefaultValues.kNormal2(context)),
+                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('Credits , where it is due'):null,
+                    onTap: (){
+                      Navigator.pop(context);
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>
+                            SIPCalculator(),),);
                     }
                     ,
                   ),

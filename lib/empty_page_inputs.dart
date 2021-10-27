@@ -9,6 +9,10 @@ import 'components/constants.dart';
 import 'data/global.dart';
 import 'goal_input.dart';
 
+//<a href="https://storyset.com/work">Work illustrations by Storyset</a>
+//<a href="https://storyset.com/work">Work illustrations by Storyset</a>
+
+
 class EmptyPage extends StatelessWidget {
 
  var currentUser;
@@ -62,11 +66,13 @@ class EmptyPage extends StatelessWidget {
                 title:Text(message, style: DefaultValues.kH3(context),),
               ),
            ):SizedBox(),
-            Container(child: Image.asset('images/empty.png'),),
+            Container(child: Image.asset('images/gifs/empty.gif',scale: 0.1,),
+                  height: 250,width: 250,
+            ),
             Padding(
               padding: const EdgeInsets.all(28),
               child: Text( Utility.messages[messageIndex]!,
-                          style:DefaultValues.kNormal1(context),
+                          style:DefaultValues.kH2(context),
 
               ),
             ),

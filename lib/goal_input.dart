@@ -17,6 +17,7 @@ import 'investmentinput.dart';
 import 'package:sizer/sizer.dart';
 
 
+//<a href="https://storyset.com/work">Work illustrations by Storyset</a>
 
 
 
@@ -82,9 +83,9 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top:0.0),
+                  padding: EdgeInsets.only(left:10.w),
                   child: Image.asset('images/goals.png',
-                                  height: 19.h,
+                                  height: 21.h,
                                   width: 100.w,
                                   alignment: Alignment.topLeft),
                 ),
