@@ -4,6 +4,7 @@ import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/profile_view.dart';
+import 'components/date_picker.dart';
 import 'models/profile_collector.dart';
 import 'package:sizer/sizer.dart';
 import 'components/buttons.dart';
@@ -119,6 +120,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
  profileCollector.fName.text = widget.currentUser.firstName;
  profileCollector.lName.text = widget.currentUser.lastName;
  profileCollector.dateOfBirth = widget.currentUser.DOB;
+ profileCollector.profileImage = widget.currentUser.profileImage.substring(DefaultValues.directoryOfPhoto.length+1);
  if(widget.currentUser.incomeRange!='') {
    profileCollector.annualIncome =
    this.incomeRangeList[this.incomeRangeList.indexOf(
@@ -143,6 +145,8 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
   super.initState();
 
+
+
      CardChoice = [
 
       NamePicker(
@@ -150,8 +154,10 @@ class _ProfilerPageState extends State<ProfilerPage> {
         lName: profileCollector.lName,
         lnameKey: _lnameKey,
         nameKey: _nameKey,
-        profilePhoto: profileCollector.profileImage,
-
+        profilePhoto: widget.currentUser.profileImage,
+        changedPhoto: (path){
+          profileCollector.profileImage = path;
+        },
 
       ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
 
@@ -284,9 +290,13 @@ class _ProfilerPageState extends State<ProfilerPage> {
           }
           else{
             Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) =>
-                    ProfileView(currentUser: widget.currentUser,)));
+            if(widget.isItForUpdate) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>
+                      ProfileView(currentUser: widget.currentUser,)));
+            }else{
+
+            }
           }
         },
         );
@@ -356,9 +366,10 @@ class NamePicker extends StatefulWidget {
 
   var fName = TextEditingController();
   var lName = TextEditingController();
-  String profilePhoto = 'profile_image0.png';
+  String profilePhoto = '${DefaultValues.directoryOfPhoto}/profile_image0.png';
   var nameKey = GlobalKey<FormState>();
   var lnameKey = GlobalKey<FormState>();
+  Function(String path) changedPhoto;
 
   NamePicker( {
     required this.fName,
@@ -366,6 +377,7 @@ class NamePicker extends StatefulWidget {
     required this.nameKey,
     required this.lnameKey,
     required this.profilePhoto,
+    required this.changedPhoto,
   });
 
 
@@ -383,15 +395,24 @@ class NamePicker extends StatefulWidget {
 
 class _NamePickerState extends State<NamePicker> {
 
-  String profilePhotoSource = '';
-  var jSon;
 
+  var jSon;
+  late String profileImage;
 
   @override
   initState(){
     super.initState();
+    if(widget.profilePhoto.contains('question')){
+      profileImage = 'profile_image0.png';
+      widget.changedPhoto(profileImage);
+    }
+    else {
+      profileImage = widget.profilePhoto.substring(
+        DefaultValues.directoryOfPhoto.length + 1,);
+    }
+    print(profileImage);
     jSon =  JsonHandler(fileName: 'settings.json');
-    profilePhotoSource = widget.profilePhoto;
+    // profilePhotoSource = widget.profilePhoto;
 
   }
 
@@ -406,6 +427,7 @@ class _NamePickerState extends State<NamePicker> {
               titleText: "",
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+
                   GestureDetector(
                     onTap: (){
                       showModalBottomSheet(
@@ -416,7 +438,8 @@ class _NamePickerState extends State<NamePicker> {
                               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                               child: PhotoSheet(getChoice: (value){
                                       setState(() {
-                                        widget.profilePhoto = 'profile_image$value.png';
+                                        profileImage = 'profile_image$value.png';
+                                        widget.changedPhoto(profileImage);
                                       });
 
 
@@ -425,9 +448,19 @@ class _NamePickerState extends State<NamePicker> {
                           ));
                     }
                     ,
-                    child: CircleAvatar(
-                        radius: 11.w,
-                        backgroundImage:AssetImage('${DefaultValues.directoryOfPhoto}/${widget.profilePhoto}'),
+
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+
+                            radius: 11.w,
+                            backgroundImage:AssetImage('${DefaultValues.directoryOfPhoto}/${profileImage}'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top:48.0, left:48),
+                          child: IconButton(icon:Icon(Icons.edit),onPressed: (){},),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -533,16 +566,18 @@ class _DOBPickerState extends State<DOBPicker> {
             //   child: Text("Your Date of Birth", style: kTitleTextStyle),
             // ),
 
-           CalendarDatePicker
+           Calendar
              (
 
             //DateTimeFormField(
               initialDate: widget.datePicker.toString()=='1900-01-01 00:00:00.000'? DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day)
                :DateTime.parse(widget.datePicker),
-
-              firstDate: DateTime(1900),
-              lastDate: DateTime(2222),
-
+              textColor: Colors.black,
+              selectTextColor: Colors.white,
+              selectColor: kPresentTheme.accentColor,
+              firstDate: DateTime(1950),
+              lastDate: DateTime.now(),
+              cellColor: kPresentTheme.influenceColors[0],
               onDateChanged: (valueChanged){
                 setState(() {
                   widget.onDateChanged(valueChanged);

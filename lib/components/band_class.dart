@@ -56,38 +56,28 @@ bool isEditing = false;
 
         child: Row(
          // crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
                     this.widget.headingChild!=null ? Padding(
                     padding: EdgeInsets.only(left: 1.w,top:0,right: 0, bottom: 0),
                     child:  this.widget.headingChild,
                   ):SizedBox(width:0, height:0),
-                  Expanded(
-                    child: Padding(
-                      padding:  EdgeInsets.only(left: 10.w,top:0,right: 0, bottom: 0),
-                      child: Container(
-                        child: Column(
+                  Padding(
+                    padding:  EdgeInsets.only(left: 10.w,top:0,right: 0, bottom: 0),
+                    child: Column(
 
-                          children: [
+                      children: [
 
-                            widget.title!='' ?Padding(
-                              padding: const EdgeInsets.only(left: 0,top:0,right: 0, bottom: 0),
-                              child: Text(this.widget.title),
-                            ):SizedBox(width: 0,height: 0,),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 0,top:0,right: 0, bottom: 0),
-                              child: EditableTextField(
-                                onTap: widget.onTap,
-                                editingController: this.widget.controller,
-                                isEditing: this.isEditing,
-                                initialText: this.widget.controller.text,
-                                style: widget.textStyle,),
-                            ),
-                            widget.subText!='' ?Text(this.widget.subText):SizedBox(width: 0,height: 0,),
+                       // widget.title!='' ?Text(this.widget.title):SizedBox(width: 0,height: 0,),
+                        EditableTextField(
+                          onTap: widget.onTap,
+                          editingController: this.widget.controller,
+                          isEditing: this.isEditing,
+                          initialText: this.widget.controller.text,
+                          style: widget.textStyle,),
+                          widget.subText!='' ?Text(this.widget.subText):SizedBox(width: 0,height: 0,),
 
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
                   ),
                   IconButton(

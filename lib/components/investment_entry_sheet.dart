@@ -245,7 +245,11 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     ];
 
 
-    return isSavePressed ? WorkDone(isComplete: statusOfStoring,whatToDo:widget.type ,timedOut: isTimedOut,) : VanishKeyBoard(
+    return isSavePressed ? WorkDone(
+      isComplete: statusOfStoring,
+      whatToAdd: 'Investment "${widget.titleMessage}"',
+      whatToDo:widget.type ,
+      timedOut: isTimedOut,) : VanishKeyBoard(
       onTap: (){
         String text = '';
         setState(() {
@@ -315,17 +319,16 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      Image.asset(widget.imageSource,
                        height: 3.h ,
                        width: 6.w ,) ,
-                     Expanded(child: Center(
-                         child:(widget.type!='Delete') ?Band(
-                           onCommit: (){
-                             widget.onEditCommit();
-                            textBoxLostFocus = true;
-                           },
-                           onTap: widget.onTap,
-                           controller: titleEditingController,
-                           text: widget.titleMessage,
-                           textStyle: DefaultValues.kH2(context),)
-                            :Card(child:Text(widget.titleMessage,style:DefaultValues.kH2(context) ,)),),),
+                     Expanded(child: (widget.type!='Delete') ?Band(
+                       onCommit: (){
+                         widget.onEditCommit();
+                        textBoxLostFocus = true;
+                       },
+                       onTap: widget.onTap,
+                       controller: titleEditingController,
+                       text: widget.titleMessage,
+                       textStyle: DefaultValues.kH2(context),)
+                        :Card(child:Text(widget.titleMessage,style:DefaultValues.kH2(context) ,)),),
                      CommandButton(
                        enabled: !this.isEditing,
                        buttonColor:(widget.type!='Delete') ?kPresentTheme.alternateColor : Colors.red,

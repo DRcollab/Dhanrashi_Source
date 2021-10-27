@@ -42,6 +42,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
   @override
   void initState()  {
     // TODO: implement initState
+    print(widget.currentUser.profileImage);
     super.initState();
     future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance );
 
@@ -54,6 +55,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
 
+    print('menu page:${widget.currentUser.profileImage}');
    // if()
     if(widget.currentUser != null){
       isUserLoggedIn = true;
@@ -130,6 +132,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     title: Text('Update profile' ,style:DefaultValues.kNormal2(context), ),
                     subtitle: DefaultValues.screenHeight(context)>600 ? Text('Change your name , date of birth and income'):null,
                     onTap: (){
+
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               ProfileView(currentUser: widget.currentUser,)));
@@ -143,6 +147,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     subtitle:DefaultValues.screenHeight(context)>600 ? Text('It is your homepage where we find the analysis of your portfolio and can manage it'):null,
                     enabled: widget.currentUser!=null,
                     onTap: (){
+                      Navigator.pop(context);
+
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               Dashboard(currentUser: widget.currentUser,)));
@@ -154,6 +160,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     title: Text('Add Investments', style: DefaultValues.kNormal2(context)),
                     subtitle: DefaultValues.screenHeight(context)>600 ?Text('Add your investments by choosing from a list'):null,
                     onTap: (){
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               InvestmentInputScreen(currentUser: widget.currentUser,)));
@@ -165,6 +172,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     subtitle:DefaultValues.screenHeight(context)>600 ? Text('Add your goals by choosing from a list'):null,
                     enabled: widget.currentUser!=null,
                     onTap: (){
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               GoalsInputScreen(currentUser: widget.currentUser,)));
@@ -179,6 +187,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     title: Text('SIP Calculator', style: DefaultValues.kNormal2(context)),
                     subtitle:DefaultValues.screenHeight(context)>600 ? Text('Dhanrashi SIP calculator. find how to plan on your investments'):null,
                     onTap: (){
+                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               SIPCalculator(),),);

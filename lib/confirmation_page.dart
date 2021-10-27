@@ -66,6 +66,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     // TODO: implement initState
     profile = Profile.create();
     Collector profileCollector = widget.collector;
+    print('init statet confirmation page page:${widget.currentUser.profileImage}');
     isSubmitted = false;
     isComplete = false;
     isTimedOut = false;
@@ -84,7 +85,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     profile.docId = docID;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
+    print('profile _update:${widget.currentUser.profileImage}');
       fireStore.collection('pjdhan_users').doc(docID).update({
         'email': profile.email,
         'Uid': profile.uid,
@@ -110,8 +111,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
           prefs.setString('income', profile.incomeRange);
           prefs.setString('doc_id', profile.docId??'');
-          prefs.setString('image', profile.profileImage);
-
+          prefs.setString('image','${DefaultValues.directoryOfPhoto}/${profile.profileImage}');
+          profile.profileImage = '${DefaultValues.directoryOfPhoto}/${profile.profileImage}';
         });
 
         Fluttertoast.showToast(
@@ -165,7 +166,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
           prefs.setString('income', profile.incomeRange);
           prefs.setString('doc_id', profile.docId??'');
-          prefs.setString('image', profile.profileImage);
+         // prefs.setString('image', profile.profileImage);
+          prefs.setString('image','${DefaultValues.directoryOfPhoto}/${profile.profileImage}');
+          profile.profileImage = '${DefaultValues.directoryOfPhoto}/${profile.profileImage}';
         });
 
 
@@ -190,7 +193,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   @override
   Widget build(BuildContext context) {
 
-
+    print('confirmation page:${widget.currentUser.profileImage}');
     double age = (widget.collector.dateOfBirth.difference(DateTime.now()).inDays/365);
 
     String ageAsString = age.ceil().toString();
@@ -215,7 +218,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 padding:  EdgeInsets.only(left:2.w, bottom: 0),
                 child: Text(" Confirm Profile of:", style:DefaultValues.kH1(context),),
               ),
-              Text('Image ${widget.collector.profileImage}'),
+
               Padding(
                 padding: EdgeInsets.only(left:4.w, top:0,right: 4.w,bottom: 0.h),
                 child: Row(
@@ -256,19 +259,20 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
                     children: [
                       ListTile(
+                        contentPadding: EdgeInsets.only(left:10.w),
                         visualDensity: VisualDensity.standard,
-                        leading: Container(width:0.25),//Icon(Icons.face_rounded, color: kPresentTheme.alternateColor,),
+
                         title: Text('First Name'),
 
-                        subtitle: Text(widget.collector.fName.text, style: DefaultValues.kH3(context),),
+                        subtitle: Text(widget.collector.fName.text, style: DefaultValues.kH2(context),),
 
                       ),
                       ListTile(
-                        leading: SizedBox(width:0.5.w),//Icon(Icons.face_rounded,color: kPresentTheme.alternateColor),
+                        contentPadding: EdgeInsets.only(left:10.w),
                         visualDensity: VisualDensity.standard,
                         title: Text("Last Name"),
 
-                        subtitle: Text(widget.collector.lName.text,style: DefaultValues.kH3(context)),
+                        subtitle: Text(widget.collector.lName.text,style: DefaultValues.kH2(context)),
 
 
 
@@ -278,22 +282,22 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                       ListTile(
                         dense: false,
                         visualDensity: VisualDensity.standard,
-                        leading: SizedBox(width:0.5.w),//Icon(Icons.drive_file_rename_outline,color: kPresentTheme.alternateColor),
+                        contentPadding: EdgeInsets.only(left:10.w),
                         title: Text("Date of Birth"),
 
                         subtitle: Text('${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year} (Age:${ageAsString} years)',
-                            style: DefaultValues.kH3(context),
+                            style: DefaultValues.kH2(context),
                         ),
 
 
                       ),
                       ListTile(
 
-                        leading: SizedBox(width:0.5.w),//Icon(Icons.drive_file_rename_outline, color: kPresentTheme.alternateColor),
+                        contentPadding: EdgeInsets.only(left:10.w),
                         visualDensity: VisualDensity.standard,
                         title: Text("Annual Income"),
 
-                        subtitle: Text(widget.collector.annualIncome.toString(),style: DefaultValues.kH3(context)),
+                        subtitle: Text(widget.collector.annualIncome.toString(),style: DefaultValues.kH2(context)),
 
 
                       ),

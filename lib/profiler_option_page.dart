@@ -197,7 +197,7 @@ class _ProfilerOptionPageState extends State<ProfilerOptionPage> {
                               lastName: 'N/A',
                               DOB:DateTime.now(),
                               incomeRange: 'N/A',
-                              profileImage: 'images/profiles/profile_image0.png',
+                              profileImage: 'question.png',
                               uid:this.widget.currentUser.uid,
                               email: this.widget.currentUser.email,
                             );

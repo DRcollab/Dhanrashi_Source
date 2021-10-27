@@ -23,13 +23,15 @@ class ProfileView extends StatelessWidget {
    DateTime now = DateTime.now();
    Duration duration = Duration();
 
+   print('confirmation  at Build page:${this.currentUser.profileImage}');
 
   double age = (currentUser.DOB.difference(now).inDays/365);
-  print('Doc Id from PROFILE PAGE ${this.currentUser.docId}');
+
 
   String ageAsString = age.ceil().toString();
 
     return CustomScaffold(
+        currentUser: this.currentUser,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -70,8 +72,8 @@ class ProfileView extends StatelessWidget {
                     buttonText: 'Update',
                     textColor: kPresentTheme.lightWeightColor,
                     onPressed: (){
-                      print('DOC IDENTITY: ${currentUser.docId} ');
-                      Navigator.pop(context);
+                     print('DOC IDENTITY: ${currentUser.profileImage} ');
+                     Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               ProfilerPage(currentUser: this.currentUser,isItForUpdate: true,)));

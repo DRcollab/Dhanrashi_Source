@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
               email: email,
               profileImage: '${DefaultValues.directoryOfPhoto}/$image',
             );
-
+            print(profile.profileImage);
             /// Populating shared preference prefs which will be used to determine whether user is logged
 
             prefs.remove('f_name');

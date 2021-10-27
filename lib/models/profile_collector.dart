@@ -8,7 +8,7 @@ class Collector{
   String _annualIncome = '' ;
   var  _fName = TextEditingController() ;
   var _lName = TextEditingController();
-  late String profileImage = 'profile_image0.png';
+  late String profileImage = '${DefaultValues.directoryOfPhoto}/profile_image0.png';
 
   /// Constructor of  the class
 
