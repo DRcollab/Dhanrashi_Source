@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/custom_text_field.dart';
-
+import 'package:sizer/sizer.dart';
 
 class Tile extends StatelessWidget {
   //const Chip({Key? key}) : super(key: key);
 
   String title;
+  String title2;
  // Widget prominent;
   String imageSource;
   final void Function() onPressed;
@@ -17,11 +18,13 @@ class Tile extends StatelessWidget {
    Color titleColor;
   Color color;
 
-  Tile({this.title="Title",
+  Tile({
+    this.title="Title",
+    this.title2 = '',
     //this.prominent,
     this.subText='',
     required this.onPressed,
-    this.padding=8.0,
+    this.padding = 2.0,
     this.imageSource = '',
     this.height=100,
     this.width=100,
@@ -32,8 +35,12 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('-----------');
+    print(this.title);
+    print(this.title.indexOf(' '));
+
     return  Padding(
-      padding:  EdgeInsets.all(this.padding),
+      padding:  EdgeInsets.all(this.padding.w),
       child: GestureDetector(
             onTap: this.onPressed,
             child: Card(
@@ -48,25 +55,38 @@ class Tile extends StatelessWidget {
                       Column(
 
                       children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Image.asset(this.imageSource,height: 50, width: 50,)),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: DefaultValues.kDefaultPaddingAllSame(context),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Image.asset(this.imageSource,
+                                          height: 8.h, //* DefaultValues.adaptForSmallDevice(context),
+                                          width: 8.w, //* DefaultValues.adaptForSmallDevice(context),
+                                  )),
+                                    ),
+                              Padding(
+                                padding:  EdgeInsets.only(
+                                  left: 1.w,
+                                  top: 1.h,
+                                ) ,
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    this.title,
+                                    style: TextStyle(fontSize: 15.sp,
+                                        color: titleColor, fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 18.0, top:8.0),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                  this.title,
-                                  style: TextStyle(fontSize: 20,color: titleColor, fontWeight: FontWeight.bold),
-                        ),
-                      ),
 
-                    ),
+                              ),
+                            ],
+                          ),
+
+
                             Padding(
-                              padding: const EdgeInsets.only(left: 18.0, ),
+                              padding: DefaultValues.kAdaptedLeftPadding(context, 18),
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(this.subText, style: TextStyle(color: titleColor),)),
@@ -81,7 +101,9 @@ class Tile extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 18.0, bottom: 18.0),
                               child: Align(
                                 alignment: Alignment.bottomRight,
-                                child: Icon(Icons.style, size: 20,)),
+                                child: Icon(Icons.style,
+                                  size: 2.w //* DefaultValues.adaptFontsForSmallDevice(context),
+                                )),
                           ),
                         ],
                       ),

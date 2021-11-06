@@ -53,7 +53,7 @@ class DRGoalAccess {
         'goal_description': goals.description,
         'goal_duration': goals.duration,
         'goal_amount': goals.goalAmount,
-        'inflation': 8.9,
+        'inflation': goals.inflation,
         'insert_dts': Timestamp.fromDate(currentPhoneDate),
         'update_dts': Timestamp.fromDate(currentPhoneDate),
         'status': 'Active',
@@ -67,8 +67,10 @@ class DRGoalAccess {
 
   Future<dynamic> updateGoalSolo(GoalDB goalDB, String docStatus) async {
     DateTime currentPhoneDate = DateTime.now();
+    print(' i am in update');
 
     var docID = goalDB.goalDocumentID;
+    print(' i am in update ${docID}');
     try {
       _firestore.collection('pjdhan_goal').doc(docID).update({
         'email': goalDB.email,

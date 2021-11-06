@@ -26,24 +26,30 @@ dependencies:
 
 
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   charts_flutter: ^0.11.0
   flutter_svg: ^0.22.0
   flutter_rounded_date_picker: ^2.0.2
-  matrix2d: ^1.0.0
-  stacked: ^2.2.5
   intl: ^0.17.0
   tab_indicator_styler: ^2.0.0-null-safety
   font_awesome_flutter: ^9.1.0
   path_provider: ^2.0.2
-  provider: ^5.0.0
-  cloud_firestore: ^1.0.0 #^2.5.1 # new
-  firebase_auth: ^1.0.0 #^3.1.0
-  #firebase_core: ^1.5.0 # new
+  provider: ^6.0.1
+  matrix2d: ^1.0.0
+  cloud_firestore: ^2.5.3 # new
+  firebase_auth: ^3.1.2
+  firebase_core: ^1.7.0 # new
   google_fonts: ^2.0.0
   fluttertoast: ^8.0.8
+  loading_gifs: ^0.3.0
+  sizer: ^2.0.15
+  connectivity: ^3.0.6
+  shared_preferences: ^2.0.8
+
+
 
 
 
@@ -102,6 +108,10 @@ flutter:
     - images/empty.png
     - images/settings.png
     - images/no_connection.png
+    - images/check.png
+    - images/check_1.gif
+    - images/check_sign.gif
+    - images/connection_lost.png
     - images/profiles/profile1.png
     - images/profiles/profile2.png
     - images/profiles/profile3.png
@@ -116,6 +126,14 @@ flutter:
     - images/profiles/profile_image4.png
     - images/profiles/profile_image5.png
     - images/profiles/profile_image0.png
+    - images/profiles/question.png
+    - audio/done.wav
+    - images/gifs/dual_ring.gif
+    - images/gifs/elipses.gif
+    - images/gifs/rolling.gif
+    - images/gifs/chunk.gif
+    - images/gifs/empty.gif
+    - images/empty-bro.png
 
 
 

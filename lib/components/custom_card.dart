@@ -89,8 +89,10 @@ class InputCard extends StatelessWidget {
               ),
             ), // Title Bar of the custom card
             Container(
+
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+               mainAxisAlignment: MainAxisAlignment.center,
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: this.children,
               ),
             )
@@ -156,42 +158,39 @@ class _ReportCardState extends State<ReportCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        color: widget.baseColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: widget.borderRadius,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              // color: Colors.amber,
+    return Card(
+      color: widget.baseColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: widget.borderRadius,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            // color: Colors.amber,
 
-              decoration: BoxDecoration(
-                  borderRadius: widget.borderRadius, color: titleColor),
-              child: Padding(
-                padding: requiredTitleBar
-                    ? EdgeInsets.symmetric(vertical: 10.0)
-                    : EdgeInsets.zero,
-                child: Center(
-                  child: Text(
-                    titleText,
-                    style:DefaultValues.kH2(context),
-                  ),
+            decoration: BoxDecoration(
+                borderRadius: widget.borderRadius, color: titleColor),
+            child: Padding(
+              padding: requiredTitleBar
+                  ? EdgeInsets.symmetric(vertical: 10.0)
+                  : EdgeInsets.zero,
+              child: Center(
+                child: Text(
+                  titleText,
+                  style:DefaultValues.kH2(context),
                 ),
               ),
-            ), // Title Bar of the custom card
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: widget.children,
-              ),
-            )
-          ],
-        ),
+            ),
+          ), // Title Bar of the custom card
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: widget.children,
+            ),
+          )
+        ],
       ),
     );
     ;

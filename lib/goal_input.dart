@@ -1,25 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
+import 'package:dhanrashi_mvp/sip_calculator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/constants.dart';
-//import 'components/tile_class.dart';
+
 import 'components/goal_entry_sheet.dart';
 import 'dashboard.dart';
-import 'models/investment.dart';
-import 'components/investment_entry_sheet.dart';
-import 'models/user_data_class.dart';
+
+import 'inv_grid.dart';
 import 'investmentinput.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+import 'package:sizer/sizer.dart';
 
 
+//<a href="https://storyset.com/work">Work illustrations by Storyset</a>
 
 
 
 class GoalsInputScreen extends StatefulWidget {
-  //const InvestmentInputScreen({Key? key}) : super(key: key);
+
 
   var currentUser;
 
@@ -39,7 +42,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
   Color titleColor = Colors.black;
 
   //var investment = Investment();
-
+  int goalCount = 0;
   String name = '';
 
   double currentInvestmentAmount = 0;
@@ -51,19 +54,22 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
   double investmentDuration = 0;
   int _currentTabIndex = 0;
   late FirebaseFirestore fireStore;
+  bool moveKB = false;
 
   @override
   void initState() {
     // TODO: implement initState
+    goalCount = Global.goalCount;
+    print('000000wwwwww');
+    print(Global.goalCount);
+
     super.initState();
-    future:Firebase.initializeApp().whenComplete(() =>fireStore =  FirebaseFirestore.instance );
+   // future:Firebase.initializeApp().whenComplete(() =>fireStore =  FirebaseFirestore.instance );
     
   }
 
 
-  _save() async {
 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,32 +83,42 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top:0.0),
-                  child: Image.asset('images/goals.png', height: 400, width: 400,alignment: Alignment.topLeft),
+                  padding: EdgeInsets.only(left:10.w),
+                  child: Image.asset('images/goals.png',
+                                  height: 21.h,
+                                  width: 100.w,
+                                  alignment: Alignment.topLeft),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 18.0,top: 140.0),
-                  child: Text("Goals",
-                    style:DefaultValues.kH1(context),
+                  padding:  EdgeInsets.only(
+                                left: 5.w,
+                                top: 18.h,
+                        ),
+                  child: ListTile(
+                    title: Text("Goals",
+                      style:DefaultValues.kH1(context),
 
+                    ),
+                    trailing: goalCount>0 ?CircleAvatar(
+                      backgroundColor: kPresentTheme.accentColor,
+                      radius: 20,
+                      child: Text(goalCount.toString(), style: DefaultValues.kH3(context),),
+                    ):SizedBox(),
+                    subtitle: Text("Choose one of  these",
+                      style:DefaultValues.kNormal2(context),
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0,top: 170.0),
-                  child: Text("Choose one of  these",
-                    style:DefaultValues.kNormal2(context),
 
-                  ),
-                ),
               ],
             ),
           ),
 
-
+          Container(height: 15,width:double.infinity),
           Expanded(
             flex:5,
             child: Container(
-              height: 500,
+
               child:ListView(
                 shrinkWrap: false,
                 children: [
@@ -115,7 +131,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/car.png',
                           //height: 120,
                           //width: 150,
-                            title: 'Buy car',
+                            title: 'Own\na car',
                           subText: 'dream car',
                           color: color,
                           titleColor: Colors.white60,
@@ -127,15 +143,34 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                    :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '#',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
                                       goalDuration: 10,
                                       inflation: 4.5,
                                       imageSource: 'images/car.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                          print('Goal count');
+                                          print(value);
 
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -149,8 +184,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/house.png',
                           //height: 20,
                           //width: 150,
-                          title: 'My Dream ',
-                          subText: 'House',
+                          title: 'My Dream\nHouse',
+                          subText: 'Owning a house',
                           color: alternateColor,
                           titleColor: titleColor,
                           onPressed: (){
@@ -161,15 +196,31 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '@',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 5,
                                       goalDuration: 20,
                                       inflation: 6,
                                       imageSource: 'images/house.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -187,7 +238,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/education.png',
                           // height: 120,
                           // width: 150,
-                          title: 'Children',
+                          title: 'Children\nEducation',
                           subText: 'Education',
                           color: alternateColor,
                           titleColor: titleColor,
@@ -199,15 +250,31 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: ':',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
                                       goalDuration: 10,
                                       inflation: 6,
                                       imageSource: 'images/education.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -220,7 +287,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/pension.png',
                           //  height: 120,
                           //  width: 150,
-                          title: 'Retirement',
+                          title: 'Decent\nRetirement',
                           subText: 'a peaceful life',
                           color: color,
                           titleColor: Colors.white60,
@@ -232,15 +299,31 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '%',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
                                       goalDuration: 5,
                                       inflation: 15,
                                       imageSource: 'images/pension.png',
-
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -258,7 +341,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/tour.png',
                           // height: 120,
                           // width: 150,
-                          title: 'Domestic',
+                          title: 'To see\nMy Country',
                           subText: 'tours and travel',
                           color:color,
                           titleColor: Colors.white60,
@@ -270,14 +353,31 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '&',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
                                       goalDuration: 20,
                                       inflation: 12,
                                       imageSource: 'images/tour.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -290,7 +390,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/destination.png',
                           //  height: 120,
                           //  width: 150,
-                          title: 'Foreign',
+                          title: 'To see \nthe World',
                           subText: 'Tour',
                           color: alternateColor,
                           titleColor: titleColor,
@@ -302,14 +402,31 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '^',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
                                       goalDuration: 5,
                                       inflation: 5,
                                       imageSource: 'images/destination.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
 
                                     ),
                                   ),
@@ -329,7 +446,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           imageSource: 'images/healthcare.png',
                           //    height: 120,
                           //   width: 150,
-                          title: 'Parents Health',
+                          title: 'Parents \nHealth',
                           subText: ' ',
                           color:alternateColor,
                           titleColor: titleColor,
@@ -341,14 +458,31 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '*',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
                                       goalDuration: 10,
                                       inflation: 10,
                                       imageSource: 'images/healthcare.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ));
@@ -373,14 +507,31 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                 context: context,
                                 builder: (context) => SingleChildScrollView(
                                   child: Container(
-                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                        :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                     child: GoalSheet(
+                                      prefix: '!',
+                                      onEditCommit: (){
+                                        setState(() {
+                                          moveKB = false;
+                                        });
+                                      },
+                                      onTap: (){
+                                        setState(() {
+                                          moveKB = true;
+                                        });
+                                      },
                                       currentUser: widget.currentUser,
                                       titleMessage: name,
                                       goalAmount: 10,
                                       goalDuration: 10,
                                       inflation: 12,
                                       imageSource: 'images/products.png',
+                                      onAdd: (value){
+                                        setState(() {
+                                          goalCount = value;
+                                        });
+                                      },
 
                                     ),
                                   ),
@@ -432,21 +583,29 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
 
               break;
             case 2:
+
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
+                ),
+              );
               break;
           }
         },
 
         items: [
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartLine),
+              icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
             label: 'Investment',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.chartPie),
+            icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,size: 15.sp,),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calculator),
+            icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
             label: 'SIP Calculator',
           )
         ],

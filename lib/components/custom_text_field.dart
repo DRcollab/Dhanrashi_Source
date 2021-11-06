@@ -5,6 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sizer/sizer.dart';
+
+
 
 class CustomTextField extends StatefulWidget {
 
@@ -13,7 +16,7 @@ class CustomTextField extends StatefulWidget {
   bool hidePassword = true;
   //var key;
   final String? Function(String?) validator;
-  TextEditingController controller;
+  TextEditingController? controller;
   late IconData icon;
   final Function()? validate;
    Function()? showPassword;
@@ -21,14 +24,15 @@ class CustomTextField extends StatefulWidget {
   double radius;
   String label;
   TextInputAction? textInputAction;
-  bool autofocus;
+  Function() onSubmit;
+  AutovalidateMode autovalidateMode;
 
   CustomTextField({
     this.hintText='',
     this.passWord=false,
     this.hidePassword = true,
     //this.key,
-    required this.controller,
+    this.controller,
     required this.validator,
     this.icon = Icons.add_chart_outlined,
     this.showPassword,
@@ -37,7 +41,8 @@ class CustomTextField extends StatefulWidget {
     this.label='',
     this.textInputAction = TextInputAction.next,
     this.errorText='',
-    this.autofocus = true,
+    required this.onSubmit,
+    this.autovalidateMode = AutovalidateMode.disabled,
 
   });
 
@@ -46,22 +51,33 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 50.0 - 50.0 * DefaultValues.adaptForSmallDevice(context),
+      height: 10.h, //- 50.0 * DefaultValues.adaptForSmallDevice(context),
       alignment: Alignment.bottomCenter,
       // color: Colors.amber,
 
 
       child: TextFormField(
+        autovalidateMode:widget.autovalidateMode,
+
         controller: this.widget.controller,
-        autofocus: widget.autofocus,
+        onFieldSubmitted: (_){
+          FocusScope.of(context).nextFocus();
+          widget.onSubmit();
+
+        },
         obscureText: widget.passWord && this.widget.hidePassword,
         textInputAction: this.widget.textInputAction,
         style: DefaultValues.kH3(context),
         validator: this.widget.validator,
         decoration: InputDecoration(
+                  isDense : true,
                   contentPadding: DefaultValues.kDefaultPaddingAllSame(context),
                   enabledBorder: kFormTextBorder,
                   errorBorder: kFormTextBorder,
@@ -74,8 +90,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   fillColor: kPresentTheme.accentColor,
 
                   border: OutlineInputBorder(
-                          gapPadding: 2.0,
+
+                          gapPadding: 1.h,
                          borderRadius: BorderRadius.circular(25.0),
+
                           borderSide: BorderSide(
                                color: Color(0xFF004752),
                                     )
@@ -87,8 +105,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   //labelStyle:
         ),
 
-      onEditingComplete: widget.validate,
-       onTap: widget.validate,
+      onEditingComplete: (){
+          if(widget.validate!=null)
+          widget.validate!();
+
+
+      },
+       onTap: () {
+         if(widget.validate!=null)
+          widget.validate!();
+
+       }
       ),
     );
   }
@@ -106,14 +133,16 @@ class EditableTextField extends StatefulWidget {
   bool isEditing = false;
   TextEditingController editingController;
   String initialText = "Initial Text";
-  TextStyle style;
-
+  late TextStyle style;
+  late Function()? onTap;
 
   EditableTextField({
     this.isEditing=false,
     this.initialText = 'Initial Text',
-    this.style = const TextStyle(fontSize: 10),
-    required this.editingController });
+    required this.style,
+    required this.editingController,
+    this.onTap,
+  });
 
 
   @override
@@ -127,12 +156,13 @@ class _EditableTextFieldState extends State<EditableTextField> {
   @override
   void initState() {
     super.initState();
-  //  widget._editingController = TextEditingController(text: widget.initialText);
+   widget.editingController = TextEditingController(text: widget.initialText);
   }
   @override
   void dispose() {
-    widget.editingController.dispose();
+
     super.dispose();
+
   }
 
 
@@ -140,35 +170,31 @@ class _EditableTextFieldState extends State<EditableTextField> {
   @override
   Widget build(BuildContext context) {
 
-    print('88888888');
-    print(widget.isEditing);
+
     if(widget.isEditing) {
-      return TextField(
+      return TextFormField(
+        textInputAction: TextInputAction.done,
+        style: widget.style,
         controller: widget.editingController,
-        onSubmitted: (value) {
+        onFieldSubmitted: (value) {
+          FocusScope.of(context).unfocus();
           setState(() {
             widget.initialText = value;
-            //widget.isEditing = false;
           });
 
         },
         onEditingComplete:(){
+          FocusScope.of(context).unfocus();
           setState(() {
-
             widget.isEditing = false;
           });
         } ,
-        onChanged: (value){
-          setState(() {
-            widget.initialText = value;
 
-          });
-        },
+        onTap: widget.onTap,
       );
     }else{
-      print(":::::::::::${widget.initialText}");
-      print(Text(widget.initialText));
-      return Text(widget.initialText);
+
+      return Text(widget.initialText,style: widget.style,);
 
     }
   }
@@ -185,16 +211,19 @@ class NumberInputField extends StatefulWidget {
   TextEditingController controller;
 
   final Function()? getValue;
+  Function()? onCompleteEditing;
   String errorText;
   double radius;
   String label;
   String suffix ='';
   bool enabled;
+  final Function()? validator;
+  final Function()? onFocusLost;
 
   NumberInputField({
     this.hintText = '',
     this.passWord=false,
-
+    this.onCompleteEditing,
     required this.controller,
     //required this.validator,
     this.getValue,
@@ -203,7 +232,8 @@ class NumberInputField extends StatefulWidget {
     this.errorText='',
     this.suffix='',
     this.enabled = true,
-
+    this.validator,
+    this.onFocusLost,
   });
 
 
@@ -212,6 +242,24 @@ class NumberInputField extends StatefulWidget {
 }
 
 class _NumberInputFieldState extends State<NumberInputField> {
+
+  bool autofocus = false;
+  FocusNode numericFocusNode = FocusNode();
+
+  @override
+  void initState() {
+
+    super.initState();
+    numericFocusNode.addListener(() {
+      if(!numericFocusNode.hasFocus){
+        setState(() {
+          widget.onFocusLost!();
+
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -220,27 +268,30 @@ class _NumberInputFieldState extends State<NumberInputField> {
             Expanded(
               flex:2,
               child: Padding(
-                padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
+                padding:  EdgeInsets.only(left: 0.0, right: 2.w, top:2.h, bottom: 0.0),
                 child: Text(widget.label),
               ),
             ),
             Flexible(child: Padding(
-              padding: const EdgeInsets.only(left: 0.0, right: 8.0, top:8.0, bottom: 0.0),
+              padding:  EdgeInsets.only(left: 0.0, right: 2.w, top:2.h, bottom: 0.0),
               child: Container(
-                height: 60,width: 120,
+                height: 6.h,
+                width: 52.w,
                 child: TextField(
+                     focusNode: numericFocusNode,
+                    autofocus: this.autofocus,
                     textAlign: TextAlign.end,
                     enableInteractiveSelection: false,
                     enabled: widget.enabled,
                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[.0-9]')),],
                     controller: widget.controller,
-
-                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_)=> FocusScope.of(context).unfocus(),
+                    textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
-                    style: kInputTextStyle,
+                    style:DefaultValues.kInputTextStyle(context),
                     //validator: widget.validator,
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
+                        contentPadding: EdgeInsets.all(2.w),
                         disabledBorder: InputBorder.none,
 
                         errorBorder: OutlineInputBorder(
@@ -274,9 +325,16 @@ class _NumberInputFieldState extends State<NumberInputField> {
                       //labelStyle:
                     ),
 
-                  onEditingComplete: widget.getValue,
+                  onEditingComplete: (){
+                      setState(() {
+                        autofocus = false;
+                        widget.getValue!();
+                        widget.onCompleteEditing!();
+                      });
 
-                  // onTap: widget.validate,
+                      },
+
+                  onTap: widget.validator,
 
             ),
               ),),

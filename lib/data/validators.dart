@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-String validEmailMessage= 'email must  look like a12b@ijk.xyz or similar';
+String validEmailMessage= 'Please enter a valid email';
 
 String validPasswordMessage = 'length of the password must be atleast 6 ';
 

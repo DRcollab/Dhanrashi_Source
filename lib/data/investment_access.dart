@@ -18,33 +18,33 @@ class DRInvestAccess{
 
   }
 
-  Future storeInvestment(
-      List<InvestDB> listInvestments,) async {
-    DateTime currentPhoneDate = DateTime.now();
-   // print(listInvestments[0].name);
-    for (var i = 0; i < listInvestments.length; i++){
-      try {
-        print('i am here');
-        await _firestore.collection('pjdhan_investment').add({
-          'email': listInvestments[i].email,
-          'Uuid': listInvestments[i].userId,
-          'Updated_id': 'system',
-          'investment_name': listInvestments[i].investment.name,
-          'currInvestAmt': listInvestments[i].investment.currentInvestmentAmount,
-          'annualInvestAmt': listInvestments[i].investment.annualInvestmentAmount,
-          'investRoI': listInvestments[i].investment.investmentRoi,
-          'investment_duration': listInvestments[i].investment.duration,
-          'insert_dts': Timestamp.fromDate(currentPhoneDate),
-          'update_dts': Timestamp.fromDate(currentPhoneDate),
-          'status': 'Active',
-        })
-            .then((value)=>print("Investment added"));
-      }
-      catch (e) {
-        print('Exception while inserting Investment $e');
-      }
-    }
-  }
+  // Future storeInvestment(
+  //     List<InvestDB> listInvestments,) async {
+  //   DateTime currentPhoneDate = DateTime.now();
+  //  // print(listInvestments[0].name);
+  //   for (var i = 0; i < listInvestments.length; i++){
+  //     try {
+  //       print('i am here');
+  //       await _firestore.collection('pjdhan_investment').add({
+  //         'email': listInvestments[i].email,
+  //         'Uuid': listInvestments[i].userId,
+  //         'Updated_id': 'system',
+  //         'investment_name': listInvestments[i].investment.name,
+  //         'currInvestAmt': listInvestments[i].investment.currentInvestmentAmount,
+  //         'annualInvestAmt': listInvestments[i].investment.annualInvestmentAmount,
+  //         'investRoI': listInvestments[i].investment.investmentRoi,
+  //         'investment_duration': listInvestments[i].investment.duration,
+  //         'insert_dts': Timestamp.fromDate(currentPhoneDate),
+  //         'update_dts': Timestamp.fromDate(currentPhoneDate),
+  //         'status': 'Active',
+  //       })
+  //           .then((value)=>print("Investment added"));
+  //     }
+  //     catch (e) {
+  //       print('Exception while inserting Investment $e');
+  //     }
+  //   }
+  // }
 
   Future storeInvestmentSolo(
      Investment investment,) async {
@@ -66,29 +66,29 @@ class DRInvestAccess{
           'update_dts': Timestamp.fromDate(currentPhoneDate),
           'status': 'Active',
         })
-            .then((value)=>print("Investment added"));
+            .then((value){
+              return true;
+            });
       }
       catch (e) {
         throw e;
       }
   }
 
-  Future<dynamic> updateInvestment(
-      List<InvestDB> listInvestment,
-      String documentStatus,) async {
+  Future<dynamic> updateInvestmentSolo( InvestDB investDB, String documentStatus,) async {
     DateTime currentPhoneDate = DateTime.now();
-    for (var j = 0; j< listInvestment.length; j++) {
-      var docID= listInvestment[j].investmentId;
+
+      var docID= investDB.investmentId;
       try {
-        _firestore.collection('pjdhan_investment').doc(listInvestment[j].investmentId).update({
-          'email': listInvestment[j].email,
-          'Uuid': listInvestment[j].userId,
+        _firestore.collection('pjdhan_investment').doc(investDB.investmentId).update({
+          'email': investDB.email,
+          'Uuid': investDB.userId,
           'Updated_id': 'system',
-          'investment_name': listInvestment[j].investment.name,
-          'currInvestAmt': listInvestment[j].investment.currentInvestmentAmount,
-          'annualInvestAmt': listInvestment[j].investment.annualInvestmentAmount,
-          'investRoI': listInvestment[j].investment.investmentRoi,
-          'investment_duration': listInvestment[j].investment.duration,
+          'investment_name': investDB.investment.name,
+          'currInvestAmt': investDB.investment.currentInvestmentAmount,
+          'annualInvestAmt': investDB.investment.annualInvestmentAmount,
+          'investRoI': investDB.investment.investmentRoi,
+          'investment_duration': investDB.investment.duration,
           'update_dts': Timestamp.fromDate(currentPhoneDate),
           'status': documentStatus,
         })
@@ -97,39 +97,11 @@ class DRInvestAccess{
       catch (e) {
         print( 'Exception while updating $docID $e');
       }
-    }
+
   }
-  Future fetchInvestment() async{
-    List<InvestDB> listInvest=[];
-    _firestore.collection('pjdhan_investment').where('Uuid', isEqualTo: _currentUser.uid)
-        .get()
-        .then((QuerySnapshot snapshot){
-      snapshot.docs.forEach((f) {
-        String email=f.get('email');
-        String userID=f.get('Uuid');
-        String docID=_firestore.collection('pjdhan_investment').doc().id;
-        String investmentName=f.get('investment_name');
-        double currInvestAmt=f.get('currInvestAmt');
-        double annualInvestAmt=f.get('annualInvestAmt');
-        double investRoI=f.get('investRoI');
-        int duration=f.get('investment_duration');
-        listInvest.add(
-            InvestDB(
-                email:email,
-                investmentDocumentID: docID,
-                userID: userID,
-                investment: Investment(
-                  name: investmentName,
-                  currentInvestmentAmount: currInvestAmt,
-                  annualInvestmentAmount: annualInvestAmt,
-                  investmentRoi: investRoI,
-                  duration: duration,
-        ) ));
-      });
-      return listInvest;
-    }
-    );
-  }
+
+
+
 }
 
 

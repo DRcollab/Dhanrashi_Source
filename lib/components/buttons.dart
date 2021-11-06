@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:sizer/sizer.dart';
 
 enum LinkTextType {
   DARK,
@@ -32,8 +33,10 @@ class CommandButton extends StatelessWidget {
   double inducedHeight = 20;
   Color textColor;
   BorderRadius borderRadius = BorderRadius.circular(20.0);
+  bool enabled;
 
   CommandButton({
+    this.enabled = true,
     this.buttonText = '',
     required this.onPressed,
     //required this.icon,
@@ -47,6 +50,7 @@ class CommandButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+
         style: ElevatedButton.styleFrom(
               primary: this.buttonColor,
                 textStyle: TextStyle(
@@ -59,13 +63,16 @@ class CommandButton extends StatelessWidget {
                   ),
               ),// Elevated Button Stylefrom
 
-        onPressed: this.onPressed,
+        onPressed: this.enabled ? this.onPressed : null,
+
         child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding:  EdgeInsets.fromLTRB(2.w,1.h,2.w,1.h // * DefaultValues.adaptForSmallDevice(context)
+            ),
             child: Text(
               buttonText,
               style: TextStyle(
               color: this.textColor,
+
           ),
         ),
       ),
@@ -203,7 +210,7 @@ class NavigationButtonSet extends StatelessWidget {
     this.leftButtonColor = this.rightButtonColor = kPresentTheme.alternateColor; // Defined color from present theme.
 
     return Container(
-      height: 50,
+      height: 5.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,

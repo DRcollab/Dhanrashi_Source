@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +26,12 @@ class DonutChart extends StatelessWidget {
 
 
 
-  List<charts.Series<Task, String>>seriesPieData  = [];
+ late List<charts.Series<Task, String>>seriesPieData = [];
 
 
   generateData(){
+
+    seriesPieData  = [];
 
 
     seriesPieData.add(
@@ -51,6 +55,14 @@ class DonutChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    generateData();
+    print('From inside Pie Chart : ${seriesPieData[0].data[0].task}');
+    print('From inside Pie Chart : ${seriesPieData[0].data[1].task}');
+
+    if(seriesPieData.length>1){
+      print('length > 1');
+      print('From inside Pie Chart : ${seriesPieData[1].data[0].task}');
+      print('From inside Pie Chart : ${seriesPieData[1].data[1].task}');
+    }
 
     return charts.PieChart<String>(
       List.from(seriesPieData),
@@ -66,16 +78,20 @@ class DonutChart extends StatelessWidget {
       //    // cellPadding: EdgeInsets.only(right: 4.0,bottom: 4.0),
       //    // entryTextStyle:
       //
-      //   )
+      //   ),
+      //
       // ],
       defaultRenderer: new charts.ArcRendererConfig(
-          arcWidth: this.arcWidth,
+          arcWidth: (this.arcWidth * DefaultValues.adaptByValue(context, 0.8)).ceil(),
+         // startAngle: 4 / 5 * pi,
+         // arcLength: 7 / 5 * pi,
           arcRendererDecorators: viewLabel ? [
 
             new charts.ArcLabelDecorator(
               labelPosition: charts.ArcLabelPosition.auto
             )
           ] : [],
+
 
 
       )

@@ -3,7 +3,10 @@
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
-
+import 'package:dhanrashi_mvp/profile_view.dart';
+import 'components/date_picker.dart';
+import 'models/profile_collector.dart';
+import 'package:sizer/sizer.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
@@ -14,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'components/constants.dart';
 import 'components/custom_text_field.dart';
 import 'components/buttons.dart';
+import 'models/profile.dart';
 import 'models/user_data_class.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'confirmation_page.dart';
@@ -21,108 +25,19 @@ import 'components/band_class.dart';  // confirmation page contains band class o
 import 'package:dhanrashi_mvp/data/database.dart';
 import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 /// Used to collect data from different screen of the profiler page and compile the data
-class Collector{
 
-
-  DateTime _dateOfBirth = DateTime.now();
-  double _annualIncome = 0.0 ;
-  var  _fName = TextEditingController() ;
-  var _lName = TextEditingController();
-
-/// Constructor of  the class
-
-  Collector(){
-
-      _dateOfBirth = DateTime.now();
-     _annualIncome = 0;
-     _fName = TextEditingController();
-     _lName = TextEditingController();
-
-
-
-  }
-
-
-
-  /// setter of first Name
-
-  set fName(TextEditingController txt){
-
-      _fName = txt;
-  }
-
-  /// setter of Lastname
-  set lName(TextEditingController txt){
-
-    _lName = txt;
-  }
-
-  /// setter of DOB
-  set dateOfBirth(DateTime dt){
-
-     _dateOfBirth = dt;
-  }
-
-
-  /// setter of Annual Income
-  set annualIncome(double income){
-
-    _annualIncome = income;
-
-  }
-
-
-  /// getter of firstname
- TextEditingController get fName{
-
-    return _fName;
-  }
-
-  /// getter of Lastname
-  TextEditingController get lName{
-
-   return _lName;
-  }
-
-
-/// getter of DOB
- DateTime get dateOfBirth{
-
-    return _dateOfBirth;
-  }
-
-/// getter of Income
- double get annualIncome{
-
-    return _annualIncome;
-
-  }
-
-  String dateAsString(){
-
-      return '${_dateOfBirth.day}/${_dateOfBirth.month}/${_dateOfBirth.year}';
-  }
-
-  }
 
   /// instance of Collector to be used in collecting user data.
 
 
 
 /// Not for here
-double scaleSmallDevice(BuildContext context) {
-  final size = MediaQuery.of(context).size;
-  // For tiny devices.
-  if (size.height < 600) {
-    return 0.6;
-  }
-  // For normal devices.
-  return 1.0;
-}
+
 
 
 /// Start of Profiler Page
@@ -131,14 +46,14 @@ class ProfilerPage extends StatefulWidget {
 
 /// Used to store if user wants to give details or not.
   var readyToGiveDetails = false;
-
+  bool isItForUpdate = false;
 
 /// used as named attribute to get the user data from the login page.
   //UserData currentUser = UserData('','','','','');
   var currentUser;
 
 /// Constructor for Profile Page
-  ProfilerPage({required this.currentUser});
+  ProfilerPage({required this.currentUser, this.isItForUpdate = false});
 
 
   @override
@@ -154,28 +69,24 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
   int index = 0; /// Used to iterate to different su screen
 
-
-  var _userHandler = UserHandeler(userTable, userProfileTable); /// used  to  handle user activity like saving and retrieving data
-
-
   bool viewNavigationButton = true; /// used to hold comdition to show save button or navigator button
 
-  static var profileCollector = Collector();
-
-  static var _nameKey = GlobalKey<FormState>(); // Used for user email validation
-  static var _lnameKey = GlobalKey<FormState>(); // Used fot password validation
+   var profileCollector = Collector();
+   late final List<Widget> CardChoice;
+  var _nameKey;  // Used for user email validation
+  var _lnameKey; // Used fot password validation
   static bool  _dateKeyValidation  = false;
   static bool _incomeValidation = false;
   String errorText = ''; // Used to display message on date validation
-
+  late FirebaseFirestore fireStore;
   String profileImageSource = '';
 
 ///  Holds the different screen header display .
   final List<String> headers = [
     "Great, Let's start with your name",
-    'Pick your date of birth',
+    'Choose your date of birth',
     //'Your age factors how  you choose your investments.',
-    'Declaration of your Income will help us recommend you financial product',
+    '',
     ''
   ];
 
@@ -187,52 +98,95 @@ class _ProfilerPageState extends State<ProfilerPage> {
     '',
   ];
 
+  List <String> incomeRangeList  = [
+
+    "Below 1 Lakh",
+    "1 Lakh to 5 lakh",
+    "5 Lakh to 10 Lakh",
+    "Above 10 Lakh",
+    "N/A",
+
+  ];
   /// LIST ENDS HERE
 
 @override
   void initState() {
 
-    super.initState();
+
+  index = 0;
+ _nameKey = GlobalKey<FormState>();
+ _lnameKey = GlobalKey<FormState>();
+
+ profileCollector.fName.text = widget.currentUser.firstName;
+ profileCollector.lName.text = widget.currentUser.lastName;
+ profileCollector.dateOfBirth = widget.currentUser.DOB;
+ profileCollector.profileImage = widget.currentUser.profileImage.substring(DefaultValues.directoryOfPhoto.length+1);
+ if(widget.currentUser.incomeRange!='') {
+   profileCollector.annualIncome =
+   this.incomeRangeList[this.incomeRangeList.indexOf(
+       widget.currentUser.incomeRange)];
+ }
+
+
+
+ if(widget.currentUser.DOB.year.toString()!='1900'){
+
+   _dateKeyValidation =true;
+ }else{
+   _dateKeyValidation = false;
+ }
+
+ if(widget.currentUser.incomeRange!=''){
+   _incomeValidation = true;
+ }
+ else{
+   _incomeValidation = false;
+ }
+
+  super.initState();
+
+
+
+     CardChoice = [
+
+      NamePicker(
+        fName: profileCollector.fName,
+        lName: profileCollector.lName,
+        lnameKey: _lnameKey,
+        nameKey: _nameKey,
+        profilePhoto: widget.currentUser.profileImage,
+        changedPhoto: (path){
+          profileCollector.profileImage = path;
+        },
+
+      ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
+
+      DOBPicker(
+        onDateChanged: (valueChanged) {
+
+          profileCollector.dateOfBirth = valueChanged;//'${valueChanged.day}/${valueChanged.month}/${valueChanged.year}';
+
+          _dateKeyValidation = true;
+        },
+        datePicker: widget.currentUser.DOB.toString(),
+      ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
+
+      IncomePicker(
+        incomePicker: this.incomeRangeList.indexOf(widget.currentUser.incomeRange),
+          validate:(value){
+
+            profileCollector.annualIncome = incomeRangeList[value!.round()];
+           // profileCollector.annualIncome = incomeOptions[value!.round()];
+            _incomeValidation = true;
+
+          }
+      ), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
+      ///
+      // ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
+    ];
+
+
   }
-
-
-
-  final List<Widget> CardChoice = [
-
-
-
-    NamePicker(
-      fName: profileCollector._fName,
-      lName: profileCollector.lName,
-      lnameKey: _lnameKey,
-      nameKey: _nameKey,
-
-
-        ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
-
-    DOBPicker(
-      onDateChanged: (valueChanged) {
-
-        //var newFormat = DateFoermat("dd-mm-yyyy");
-
-        profileCollector.dateOfBirth = valueChanged;//'${valueChanged.day}/${valueChanged.month}/${valueChanged.year}';
-
-        _dateKeyValidation = true;
-      },
-    ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
-
-    IncomePicker(
-      validate:(value){
-
-        List <double> incomeRangeList  = [1,5,10,20,0, ];
-
-        profileCollector.annualIncome = incomeRangeList[value!.round()];
-        _incomeValidation = true;
-      }
-    ), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
-    ///
-   // ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
-  ];
 
 
 
@@ -240,11 +194,12 @@ class _ProfilerPageState extends State<ProfilerPage> {
   @override
   Widget build(BuildContext context) {
 
+    print('call me index : $index');
 
     /// toggles the view of save button and navigation button
     ///
     Widget navButton = NavigationButtonSet(   ///
-      spaceBetween: 20,
+      spaceBetween: 2.w,
       leftButtonText: "Back",
       rightButtonText: "Next",
 
@@ -252,7 +207,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
       rightButtonPressed: () {
         // responds when right navigation button pressed
 
-        print(index);
+
 
         switch (index){
           case 0:
@@ -264,6 +219,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
             }
             break;
           case 1:
+           // showDatePicker(context: context, initialDate: initialDate, firstDate: firstDate, lastDate: lastDate)
             if(_dateKeyValidation){
               index++;
               errorText = '';
@@ -275,7 +231,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
             break;
           case 2:
             if(_incomeValidation){
-              index++;
+             index++;
               errorText = '';
             }
             else{
@@ -298,22 +254,49 @@ class _ProfilerPageState extends State<ProfilerPage> {
           else{
 
            // viewNavigationButton = false;
-            print('name ${profileCollector.fName.text}');
 
+            Navigator.pop(context);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ConfirmationPage(
                   currentUser: widget.currentUser,
-                  collector: profileCollector,)));
+                  collector: profileCollector,
+                  isItForUpdate: widget.isItForUpdate,
+                )));
           }
 
       },
       leftButtonPressed: () {
         // Responds when left navigation button pressed
+
         setState(() {
-          if (index>=0) {
+          if (index>0) {
 
             index--;
             viewNavigationButton = true;
+            this.errorText='';
+            if(widget.currentUser.DOB.year.toString()=='1900'){
+              _dateKeyValidation = false;
+            }
+            else{
+              _dateKeyValidation = true;
+            }
+
+            if(widget.currentUser.incomeRange == ''){
+              _incomeValidation = false;
+            }else{
+              _incomeValidation = true;
+            }
+
+          }
+          else{
+            Navigator.pop(context);
+            if(widget.isItForUpdate) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>
+                      ProfileView(currentUser: widget.currentUser,)));
+            }else{
+
+            }
           }
         },
         );
@@ -329,28 +312,26 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
 
     //Widget comButt =  /// Command Button
-
+    print('call me index : $index');
 
     return CustomScaffold(
       currentUser: widget.currentUser,
+      allowToSeeBottom: true,
       child: Container(
        // color: Colors.red,
         child: Column(
          mainAxisAlignment: MainAxisAlignment.center,
          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            //Image.asset('images/profile_image.png',height: 200,width: 200,),
+
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                //padding: const EdgeInsets.only(left:18, top:28),
-                child: Text(
 
-                  headers[index],
-                  style: TextStyle(
-                    color: kPresentTheme.accentColor,
-                    fontSize: 24.0 * scaleSmallDevice(context),
-                    fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding:  EdgeInsets.symmetric(vertical:2.h, horizontal: 4.w),
+                  child: Text( headers[index],
+                    style: DefaultValues.kH2(context),
                   ),
                 ),
               ),
@@ -385,12 +366,19 @@ class NamePicker extends StatefulWidget {
 
   var fName = TextEditingController();
   var lName = TextEditingController();
-
-
+  String profilePhoto = '${DefaultValues.directoryOfPhoto}/profile_image0.png';
   var nameKey = GlobalKey<FormState>();
   var lnameKey = GlobalKey<FormState>();
+  Function(String path) changedPhoto;
 
-  NamePicker( {required this.fName, required this.lName, required this.nameKey, required this.lnameKey, });
+  NamePicker( {
+    required this.fName,
+    required this.lName,
+    required this.nameKey,
+    required this.lnameKey,
+    required this.profilePhoto,
+    required this.changedPhoto,
+  });
 
 
   setVariants(nameKey, lnameKey){
@@ -407,21 +395,24 @@ class NamePicker extends StatefulWidget {
 
 class _NamePickerState extends State<NamePicker> {
 
-  String _profilePhotoSource = 'images/profiles/profile_image0.png';
-  var jSon;
 
+  var jSon;
+  late String profileImage;
 
   @override
   initState(){
     super.initState();
+    if(widget.profilePhoto.contains('question')){
+      profileImage = 'profile_image0.png';
+      widget.changedPhoto(profileImage);
+    }
+    else {
+      profileImage = widget.profilePhoto.substring(
+        DefaultValues.directoryOfPhoto.length + 1,);
+    }
+    print(profileImage);
     jSon =  JsonHandler(fileName: 'settings.json');
-    //jSon.readFile();
-    // if(jSon.readSuccessful){
-    //  _profilePhotoSource = jSon.fileContent['profile'];
-    // //  print('profile pict is :: $_profilePhotoSource');
-    // }
-    print('profile pict is :: $_profilePhotoSource');
-
+    // profilePhotoSource = widget.profilePhoto;
 
   }
 
@@ -429,16 +420,14 @@ class _NamePickerState extends State<NamePicker> {
   @override
   Widget build(BuildContext context) {
 
-
-   //   print('profile image is @@@@@ $_profilePhotoSource');
-
-
+    print('ininput card this is the image : ${widget.profilePhoto}');
     return  Padding(
-        padding: EdgeInsets.only(top:28,left: 18,right: 18,bottom: 8),
+        padding: EdgeInsets.only(top:4.h,left: 4.w,right: 4.w,bottom: 2.h),
         child: InputCard(
               titleText: "",
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+
                   GestureDetector(
                     onTap: (){
                       showModalBottomSheet(
@@ -449,33 +438,45 @@ class _NamePickerState extends State<NamePicker> {
                               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                               child: PhotoSheet(getChoice: (value){
                                       setState(() {
-                                        this._profilePhotoSource = 'images/profiles/profile_image$value.png';
+                                        profileImage = 'profile_image$value.png';
+                                        widget.changedPhoto(profileImage);
                                       });
-                                   //  var settings = JsonHandler(fileName: 'settings.json');
-                                   //  settings.createFile({'profile':this._profilePhotoSource});
 
-                                      print(this._profilePhotoSource);
+
                               },)
                             ),
                           ));
                     }
                     ,
-                    child: CircleAvatar(
-                        radius: 40,
-                        backgroundImage:AssetImage(this._profilePhotoSource),
+
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+
+                            radius: 11.w,
+                            backgroundImage:AssetImage('${DefaultValues.directoryOfPhoto}/${profileImage}'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top:48.0, left:48),
+                          child: IconButton(icon:Icon(Icons.edit),onPressed: (){},),
+                        ),
+                      ],
                     ),
                   ),
 
 
-                  SizedBox(height: 30,),
+                  SizedBox(height: 4.h,),
                   Padding(
                       padding:DefaultValues.kTextFieldPadding(context),
                           child: Form(
                             key:widget.nameKey,
                             child: CustomTextField(
+                              onSubmit: (){
+                                widget.nameKey.currentState!.validate();
+                              },
                                   validator: (value){
                                     if(value.toString().isEmpty){
-                                       return 'Name must not be empty';
+                                       return 'First Name should not be empty';
 
                                     }
                                     else{
@@ -489,19 +490,17 @@ class _NamePickerState extends State<NamePicker> {
                           ),
                         ),
                   Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            18.0 *DefaultValues.adaptForSmallDevice(context),
-                            8.0 *DefaultValues.adaptForSmallDevice(context) ,
-                            18.0 *DefaultValues.adaptForSmallDevice(context) ,
-                            28.0 *DefaultValues.adaptForSmallDevice(context),
-                        ),
+                        padding: DefaultValues.kTextFieldPadding(context),
                             child: Form(
                               key: widget.lnameKey,
                               child: CustomTextField(
+                                onSubmit: (){
+                                  widget.lnameKey.currentState!.validate();
+                                },
                                 textInputAction: TextInputAction.done,
                                 validator: (value){
                                   if(value.toString().isEmpty){
-                                    return 'lastname cannot be empty';
+                                    return 'last name should not be empty';
 
                                   }
                                   else {
@@ -528,8 +527,16 @@ class DOBPicker extends StatefulWidget {
   String datePicker = '';
 
   bool dateValidated = false;
+
   void Function(DateTime) onDateChanged;
-  DOBPicker({this.datePicker= '', this.dateValidated = false, required this.onDateChanged});
+
+  DOBPicker({
+
+    this.datePicker= '',
+    this.dateValidated = false,
+    required this.onDateChanged,
+
+  });
 
   @override
   _DOBPickerState createState() => _DOBPickerState();
@@ -541,26 +548,41 @@ class _DOBPickerState extends State<DOBPicker> {
 
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 28, left:18, right: 18),
+      padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
       child: GradientCard(
+
         child: Column(
           children: [
             // Padding(
             //   padding: EdgeInsets.only(left:8,top:16,bottom: 0,right:8),
             //   child: Text("Your Date of Birth", style: kTitleTextStyle),
             // ),
-           CalendarDatePicker(
-            //DateTimeFormField(
-              initialDate:  DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day),
-              firstDate: DateTime(1900),
-              lastDate: DateTime(2222),
 
+           Calendar
+             (
+
+            //DateTimeFormField(
+              initialDate: widget.datePicker.toString()=='1900-01-01 00:00:00.000'? DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day)
+               :DateTime.parse(widget.datePicker),
+              textColor: Colors.black,
+              selectTextColor: Colors.white,
+              selectColor: kPresentTheme.accentColor,
+              firstDate: DateTime(1950),
+              lastDate: DateTime.now(),
+              cellColor: kPresentTheme.influenceColors[0],
               onDateChanged: (valueChanged){
                 setState(() {
                   widget.onDateChanged(valueChanged);
-                  this.errorText = 'Please select a date before continue';
+                  if(!widget.dateValidated)
+                    this.errorText = 'Please select a date before continue';
                 });
 
               }
@@ -581,11 +603,14 @@ class IncomePicker extends StatefulWidget {
  // const IncomePicker({Key? key}) : super(key: key);
 
 
-  String incomePicker = '';
+  int incomePicker = 0;
 
   Function(int?)? validate;
 
-  IncomePicker({incomePicker='', required this.validate});
+  IncomePicker({
+    this.incomePicker=0,
+    required this.validate,
+  });
 
   @override
   _IncomePickerState createState() => _IncomePickerState();
@@ -595,6 +620,28 @@ class _IncomePickerState extends State<IncomePicker> {
 
   int selectedValue = 0;
 
+  List<String> incomeOptions = [
+    'Below 1 Lakh',
+    '1 Lakh to 5 lakh',
+    '5 Lakh to 10 Lakh',
+    'Above 10 Lakh',
+    'N/A',
+
+  ];
+
+  @override
+  void initState() {
+
+
+    if(widget.incomePicker!=0){
+
+   //   this.selectedValue = this.incomeOptions.indexOf(widget.incomePicker);
+      widget.validate!(selectedValue);
+
+    }
+
+    super.initState();
+  }
 
 
 
@@ -602,14 +649,14 @@ class _IncomePickerState extends State<IncomePicker> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 28,left:18, right : 18),
+      padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
       child: InputCard(
-        titleText: "Your income range",
+        titleText: "Your Annual Income",
         children: [
           RadioListTile(
-              value: 1,
+              value: 0,
               groupValue: selectedValue,
-              title: Text("Below 1 Lakh ", style:DefaultValues.kNormal2(context),),
+              title: Text(this.incomeOptions[0], style:DefaultValues.kNormal2(context),),
 
               onChanged:  (value){
                 setState(() {
@@ -621,10 +668,9 @@ class _IncomePickerState extends State<IncomePicker> {
 
               }),
           RadioListTile(
-              value: 2,
+              value: 1,
               groupValue: selectedValue,
-              title: Text("Above 1 Lakh to 5 lakh", style:DefaultValues.kNormal2(context),),
-
+              title: Text('Above ${this.incomeOptions[1]}', style:DefaultValues.kNormal2(context),),
               onChanged: (value){
 
                 setState(() {
@@ -636,9 +682,23 @@ class _IncomePickerState extends State<IncomePicker> {
 
               }),
           RadioListTile(
+              value: 2,
+              groupValue: selectedValue,
+              title: Text('Above ${this.incomeOptions[2]}', style:DefaultValues.kNormal2(context),),
+
+              onChanged: (value){
+
+                setState(() {
+                  widget.validate!(int.parse(value.toString()));
+                  selectedValue = int.parse(value.toString());
+
+                });
+
+              }),
+          RadioListTile(
               value: 3,
               groupValue: selectedValue,
-              title: Text("Above 5 Lakh  to 10 Lakh", style:DefaultValues.kNormal2(context),),
+              title: Text(this.incomeOptions[3], style:DefaultValues.kNormal2(context),),
 
               onChanged: (value){
 
@@ -652,21 +712,7 @@ class _IncomePickerState extends State<IncomePicker> {
           RadioListTile(
               value: 4,
               groupValue: selectedValue,
-              title: Text("Above 10 Lakh ", style:DefaultValues.kNormal2(context),),
-
-              onChanged: (value){
-
-                setState(() {
-                  widget.validate!(int.parse(value.toString()));
-                  selectedValue = int.parse(value.toString());
-
-                });
-
-              }),
-          RadioListTile(
-              value: 5,
-              groupValue: selectedValue,
-              title: Text("Prefer not to disclose ", style:DefaultValues.kNormal2(context),),
+              title: Text('Prefer not to disclose', style:DefaultValues.kNormal2(context),),
 
               onChanged: (value){
 

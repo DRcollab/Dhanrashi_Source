@@ -17,54 +17,45 @@ class DRProfileAccess {
   }
 
 
-  Future fetchProfile() async {
-    List<GoalDB> listGoal = [];
+ Future fetchProfile() async {
+
+     Profile profile = Profile.create();
+
     try {
-      _firestore.collection('pjdhan_goal').where(
-          'Uuid', isEqualTo: _currentUser.uid)
+      _firestore.collection('pjdhan_users').where(
+          'Uid', isEqualTo: _currentUser.uid)
           .get()
           .then((QuerySnapshot snapshot) {
         snapshot.docs.forEach((f) {
           String email = f.get('email');
-          String userID = f.get('Uuid');
+          String userID = f.get('Uid');
           String docID = _firestore
-              .collection('pjdhan_goal')
+              .collection('pjdhan_users')
               .doc()
               .id;
-          String goalName = f.get('goal_name');
-          String goalDescription = f.get('goal_description');
-          double amount = f.get('goal_amount');
-          int duration = f.get('goal_duration');
-          //double inflation = f.get('inflation');
 
-          listGoal.add(
-              GoalDB(
-                email: email,
-                goalDocumentID: docID,
-                user: userID,
-                goal: Goal(
-                  name: goalName,
-                  description: goalDescription,
-                  goalAmount: amount,
-                  duration: duration,
-                  inflation: 4.5,
-                ),
-              )
+          String firstName = f.get('first_name');
+          String lastName = f.get('last_name');
+          Timestamp dob = f.get('DOB');
+          String incomeRange = f.get('income');
+          String image = f.get('image_source');
+
+           profile =   Profile(
+            firstName: firstName,
+            lastName: lastName,
+            DOB: dob.toDate(),
+            incomeRange: incomeRange,
+             docId: docID,
+             uid:userID,
+             email: email,
+             profileImage: image,
           );
         });
-        print('++++++++++++++++++++++++++++++');
-        print(listGoal.length);
-        if (listGoal.length > 0) {
-          return listGoal;
-        }
-        else {
-          return null;
-        }
-      }
-      );
-    } catch (e) {
+      });
+        return  profile;
+    }catch(e){
       throw e;
-    }
+      }
   }
 
 
@@ -103,7 +94,7 @@ class DRProfileAccess {
         'Uid': _currentUser.uid,
         'first_name': profile.firstName,
         'last_name': profile.lastName,
-
+        'image_source':profile.profileImage,
         'DOB': profile.DOB,
         'income': profile.incomeRange,
 

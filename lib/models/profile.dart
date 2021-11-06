@@ -1,4 +1,6 @@
 
+import 'package:flutter/cupertino.dart';
+
 class Profile {
 
   Profile(
@@ -8,12 +10,31 @@ class Profile {
         required this.lastName,
         required this.incomeRange,
         required this.DOB,
+        this.docId,
+        required this.uid,
+        required this.email,
+        required this.profileImage,
 
       });
 
-  final String  firstName;
-  final String lastName;
-  final String incomeRange;
-  final DateTime DOB;
+  Profile.create(){
+    this.firstName ='';
+    this.lastName = '';
+    this.incomeRange = '';
+    this.DOB = DateTime.parse('1900-01-01');
+    this.docId = '';
+    this.uid ='';
+    this.email = '';
+    this.profileImage = 'images/profiles/question.png';
+  }
+
+  late String  firstName;
+   late String lastName;
+   late String incomeRange;
+   late DateTime DOB;
+   late String? docId;
+   late String uid;
+   late String email;
+   late String profileImage;
 
 }

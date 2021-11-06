@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
@@ -13,6 +14,7 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import 'data/financial_calculator.dart';
 import 'data/goal_access.dart';
+import 'empty_page_inputs.dart';
 import 'investmentinput.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
@@ -27,10 +29,13 @@ import 'models/investment_db.dart';
 class Dashboard extends StatefulWidget {
 
   var currentUser;
+  String bannerMessage = '';
 
 
-
-  Dashboard({required this.currentUser});
+  Dashboard({
+    required this.currentUser,
+    this.bannerMessage= ''
+  });
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -46,45 +51,68 @@ class _DashboardState extends State<Dashboard> {
   double totalInvestValue = 0.0;
   int longestInvestmentDuration = 0;
   int longestGoalDuration = 0;
+  bool isGoalEmpty = false;
+  bool isInvestmentEmpty = false;
+
 
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
-    print(' ------------- &&&&&&& Hi ai am gerr ');
-    //future:Firebase.initializeApp().then((value) => null)
     future:Firebase.initializeApp().then((value) {
       fireStore =  FirebaseFirestore.instance;
-      fetchGoals();
-      fetchInvestment();
-     // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
+
+        Future.wait(
+            [
+              fetchGoals(),
+              fetchInvestment(),
+            ]
+        );
+
+
+
+      // Global.goalCount = goals.length;
+      // Global.investmentCount = investments.length;
+
     }).onError((error, stackTrace){
-      print( ' THer it is :   ${error.toString()}');
+
     }
 
     );
+
   }
 
   Future fetchGoals() async{
 
-    fireStore.collection('pjdhan_goal').where('Uuid', isEqualTo: widget.currentUser.uid)
+    Global.goalCount = 0;
+    fireStore.collection('pjdhan_goal').where('Uuid', isEqualTo: widget.currentUser.uid).where('status', isEqualTo:'Active')
         .get()
         .then((QuerySnapshot snapshot){
+      if( snapshot.docs.isEmpty){
+        // setState(() {
+        //   isGoalEmpty = snapshot.docs.isEmpty;
+        // });
+        Global.goalCount = 0;
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+      }
+
       snapshot.docs.forEach((f) {
         String email=f.get('email');
         String userID=f.get('Uuid');
-        String docID=fireStore.collection('pjdhan_goal').doc().id;
+        String docID=f.id;
         String goalName=f.get('goal_name');
         String goalDescription=f.get('goal_description');
         double amount=f.get('goal_amount');
+        double inflation = f.get('inflation');
         totalGoalValue = totalGoalValue+amount;
         int duration=f.get('goal_duration');
         if(duration > longestGoalDuration){
           longestGoalDuration = duration;
         }
         //double inflation = f.get('inflation');
-        setState(() {
+       setState(() {
 
           goals.add(
               GoalDB(
@@ -96,41 +124,55 @@ class _DashboardState extends State<Dashboard> {
                   description: goalDescription,
                   goalAmount: amount,
                   duration: duration,
-                  inflation: 4.5,
+                  inflation: inflation,
                 ),
               )
           );
-        });
+          Global.goalCount++;
+       });
 
       });
-      print('++++++++++++++++++++++++++++++');
-      print( goals.length);
-      //return  goals;
+
+
     }
-    );
+    ).catchError((onError){
+
+      throw onError;
+
+    });
   }
 
 
   Future fetchInvestment() async{
 
-    fireStore.collection('pjdhan_investment').where('Uuid', isEqualTo: widget.currentUser.uid)
+    Global.investmentCount = 0;
+    fireStore.collection('pjdhan_investment').where('Uuid', isEqualTo: widget.currentUser.uid).where('status',isEqualTo:'Active')
         .get()
         .then((QuerySnapshot snapshot){
+      if(snapshot.docs.isEmpty){
+        /// On checking if firebase store is empty the user will be redirected to an Empty page promting to add investment and goal;
+        Global.investmentCount = 0;
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
+
+      }
+
       snapshot.docs.forEach((f) {
         String email=f.get('email');
         String userID=f.get('Uuid');
-        String docID=fireStore.collection('pjdhan_investment').doc().id;
+        String docID= f.id;
         String investmentName=f.get('investment_name');
         double currInvestAmt=f.get('currInvestAmt');
-        totalInvestValue = totalInvestValue + currInvestAmt;
         double annualInvestAmt=f.get('annualInvestAmt');
         double investRoI=f.get('investRoI');
         int duration=f.get('investment_duration');
+        totalInvestValue = totalInvestValue + currInvestAmt+annualInvestAmt*duration;
         if(duration > longestInvestmentDuration){
           longestInvestmentDuration = duration;
         }
 
-        setState(() {
+       setState(() {
+
           investments.add(
               InvestDB(
                 email:email,
@@ -145,7 +187,8 @@ class _DashboardState extends State<Dashboard> {
                 ) ,
               )
           );
-        });
+          Global.investmentCount++;
+       });
 
 
       });
@@ -155,34 +198,11 @@ class _DashboardState extends State<Dashboard> {
   }
 
 
-  _fetch() async {
-
-    try {
-      goalAccess = DRGoalAccess(fireStore, widget.currentUser);
-
-        goalAccess.fetchGoals().then((value){
-          setState(() {
-            goals= value;
-          });
-        }).onError((error,stack){
-          print('000000+++++++++++++++++++00000000');
-          print('Got an error :${error.toString()}');
-        });
-
-
-      print('In DR fetch ');
-      print(goals);
-    }catch(e){
-     print(' Unseeeedull ${e.toString()}');
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
-    print('current user is :${widget.currentUser.uid}');
-    //fetchGoals();
-    print(goals);
+
+  print('DashBoard :${widget.currentUser.profileImage}');
 
     return DefaultTabController(
           length: 3,
@@ -190,7 +210,7 @@ class _DashboardState extends State<Dashboard> {
             currentUser: this.widget.currentUser,
               title: 'Dashboard',
               child: Padding(
-                padding: const EdgeInsets.only(top: 38.0),
+                padding: const EdgeInsets.only(top: 30.0),
                 child: Material(
 
                   child: TabBar(
@@ -203,14 +223,16 @@ class _DashboardState extends State<Dashboard> {
                       bottomRightRadius: 15,
                       horizontalPadding: 10,
                       verticalPadding: 7,
-
+                      color: kPresentTheme.alternateColor,
                       //tabPosition: TabPosition,
                       paintingStyle: PaintingStyle.fill,
                       strokeWidth: 10,
                     ),
                     indicatorColor: kPresentTheme.accentColor,
-                    labelColor: Colors.white,
+                    labelColor: Colors.black,
                     unselectedLabelColor: Colors.black,
+                    labelStyle: DefaultValues.kH4(context),
+
                     tabs: [
                       Tab(text:'Analytics'),
                       Tab(text:'Goals'),
@@ -221,12 +243,34 @@ class _DashboardState extends State<Dashboard> {
             ),
                 ),
               ),
-            body: TabBarView(
+            foot: TabBarView(
               children: [
                // AnalyticsTabView(),
-                AnalyticsTabView(goalDBs:goals, currentUser: widget.currentUser,investmentDBs: investments,longestGoalDuration: longestGoalDuration,longestInvestmentDuration: longestInvestmentDuration,),
-                GoalsTabView(goalDBs:goals, currentUser: widget.currentUser,totalAmount: totalGoalValue,),// 2nd view
-                InvestmentTabView(investmentDBs: investments,currentUser: widget.currentUser,totalInvest: totalInvestValue,),
+                AnalyticsTabView(
+                  goalDBs:goals,
+                  currentUser: widget.currentUser,
+                  investmentDBs: investments,
+                  longestGoalDuration: longestGoalDuration,
+                  longestInvestmentDuration: longestInvestmentDuration,
+                ),
+
+                GoalsTabView(
+                 // fireStore: this.fireStore,
+                  goalDBs:goals,
+                  currentUser: widget.currentUser,
+                  totalAmount: totalGoalValue,
+                  longestInvestmentDuration: longestInvestmentDuration,
+                  longestGoalDuration: longestGoalDuration,
+                ),// 2nd view
+                InvestmentTabView(
+                 // fireStore: this.fireStore,
+                  investmentDBs: investments,
+                  currentUser: widget.currentUser,
+                  totalInvest: totalInvestValue,
+                  longestInvestmentDuration: longestInvestmentDuration,
+                  longestGoalDuration: longestGoalDuration,
+
+                ),
 
               ]
             ),

@@ -1,8 +1,9 @@
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
-
+import 'package:sizer/sizer.dart';
 class LabeledSlider extends StatefulWidget {
 // const LabeledSlider({Key? key}) : super(key: key);
 
@@ -14,12 +15,18 @@ double max = 10; // maximum value of the slider movement
 //int divisions = 1;
 int textPrecision = 2;
 double collector = 0;
+int? divisions;
 String suffix = '';
-final String? Function(String?) validator;
-
+double threshold = 0;
+bool perpetualActive = false;
+final  Function() validator;
+Function()? onEditingComplete;
+bool implementWarning = false;
  Function(double)? onChanged;  // get the  changed value;
+ late Color activeColor;
 
 LabeledSlider({
+  this.onEditingComplete,
   this.sliderValue=5.0,
   this.labelText='',
   this.min=1,
@@ -31,6 +38,11 @@ LabeledSlider({
   this.textPrecision = 2,
   this.textEditable = true,
   this.onChanged,
+  this.perpetualActive = false,
+  this.implementWarning = false,
+  this.threshold = 0,
+  this.divisions,
+  required this.activeColor,
 }
     );
 
@@ -45,15 +57,28 @@ _LabeledSliderState createState() => _LabeledSliderState();
 class _LabeledSliderState extends State<LabeledSlider> {
 
   var controller = TextEditingController();
-
+  double variableMax = 0;
+  double variableMin = 0;
+  late Color activeColor;
+  String label = '';
   @override
   void initState() {
-    // TODO: implement initState
+
+    activeColor = widget.activeColor;
     controller = TextEditingController(
       text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
     );
+    variableMax = widget.max;
+    variableMin = widget.min;
         //
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
   }
 
   @override
@@ -65,8 +90,11 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,top: 0.0,right: 8.0,bottom: 0.0),
+            padding: DefaultValues.kDefaultHorizontalSymmetricPadding(context),
             child: NumberInputField(
+              onFocusLost: widget.onEditingComplete,
+              onCompleteEditing: widget.onEditingComplete,
+              validator: widget.validator,
               enabled: widget.textEditable,
               //validator: widget.validator,
               controller: this.controller,
@@ -75,8 +103,36 @@ class _LabeledSliderState extends State<LabeledSlider> {
               suffix: widget.suffix,
               getValue: (){
                 setState(() {
-                  widget.sliderValue = double.parse(double.parse( this.controller.text).roundToDouble().toStringAsFixed(2));
-                  widget.onChanged!(widget.sliderValue);
+                  print('divisions:${widget.divisions}');
+                  double val = double.parse(double.parse(this.controller.text).toStringAsFixed(2));
+                  if( val > widget.min) {
+
+                    if(val<1.0){
+                        if(val<0.1){
+                          variableMax = 0.1;
+                          variableMin = 0.001;
+                          widget.divisions = 50;
+                        }
+                        variableMax = 1;
+                        variableMin = 0.01;
+                        widget.divisions = 50;
+                    }
+
+                   widget.sliderValue = val;
+                  }else {
+                    widget.sliderValue = widget.min;
+                    this.controller.text = widget.min.toString();
+                  }
+
+                  print('Slider Value: ${widget.sliderValue} and ${widget.min}');
+                 widget.onChanged!(widget.sliderValue);
+                  // if(widget.perpetualActive){
+                  //   if(val>widget.max){
+                  //     variableMax = widget.max + widget.max;
+                  //     variableMin = widget.max;
+                  //   }
+                  // }
+                  print('divisions#:${widget.divisions}');
                   print(this.controller.text);
                   print( double.parse(this.controller.text).roundToDouble() );
                 });
@@ -86,22 +142,55 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
           ),
           Padding(
-            padding: const EdgeInsets.only(top:40.0),
+            padding: DefaultValues.kAdaptedTopPadding(context, 6.h),
             child: Slider(
-                min: widget.min,
-                max:widget.max,
+                min: variableMin,
+                max:variableMax,
+                label:label,
              //   divisions: (widget.max-widget.min+1).toInt()*2,
                 //divisions: widget.divisions,
-                activeColor: kPresentTheme.accentColor,
+                activeColor: activeColor,
                 inactiveColor: kPresentTheme.alternateColor,
                 value: widget.sliderValue,//double.parse(widget.sliderValue.toStringAsFixed(2) ),
-
+                divisions: widget.divisions,
                 onChanged:   (changeValue) {
+                  print('Diisi: ${widget.divisions}');
                   setState(() {
+                    print('Perpetual : ${widget.perpetualActive}');
+                    print('variable max : ${changeValue}');
+
+                    if(changeValue < widget.min){
+                      changeValue = widget.min;
+                    }
+
+                     // if(widget.perpetualActive) {
+                     //     if(changeValue>widget.sliderValue){
+                     //
+                     //       variableMax++;
+                     //       variableMin++;
+                     //     }
+                     //     else{
+                     //       variableMax>= changeValue ? variableMax-- : variableMax = changeValue;
+                     //       variableMin>=widget.min ? variableMin-- : variableMin = widget.min;
+                     //     }
+                     //   print("C:$changeValue");
+                     //
+                     // }
+
+                    if(widget.implementWarning){
+                      if(changeValue>widget.threshold){
+                        activeColor = Utility.warningColors[(changeValue%widget.threshold).toInt()];
+                        label='expecting so much return is not logical';
+                      }
+                      else{
+                        activeColor = widget.activeColor;
+                      }
+                    }
+
                     print(this.controller.text);
                     print( double.parse(this.controller.text).roundToDouble() );
                     this.controller.clear();
-                    widget.sliderValue = double.parse( changeValue.toStringAsFixed(2));
+                    widget.sliderValue = double.parse( changeValue.toStringAsFixed(1));
                     widget.onChanged!(widget.sliderValue);
                     controller = TextEditingController(
                       text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
