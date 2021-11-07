@@ -3,19 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-//const String circularProgressIndicator = 'images/gifs/rolling.gif';
-
-//var userLoggedIn = false; // used to determine whether
-
-//int kDefaultPadding = 8;
-
-//late final gCurrentUser;
-
-// const kTitleTextStyle = TextStyle(
-//       fontSize: 20.0,
-//       fontFamily: 'Fredoka',
-//       color: Colors.white38,
-//     );
 
 
 DhanrashiTheme kLimeTheme =  DhanrashiTheme(
@@ -48,18 +35,6 @@ DhanrashiTheme kPresentTheme = kLimeTheme;
 
 
 
-
-
-//
-
-//
-
-
-
-
-
-
-
 final kFormTextBorder = OutlineInputBorder(
 
 gapPadding: 2.0,
@@ -86,7 +61,8 @@ class DefaultValues {
   static final textFormatWithDecimal = NumberFormat.simpleCurrency(locale:'en-in', decimalDigits: 1);
   static final textShortFormat = NumberFormat.compactSimpleCurrency(locale:'en-in');
   static final String directoryOfPhoto = 'images/profiles';
-  static final threshold = 9999999999;
+  static final threshold = 9999999999;  // 1 less than 1000 Cr.
+
 
  // static final textFormat1 =
   static double adaptForSmallDevice(BuildContext context) {

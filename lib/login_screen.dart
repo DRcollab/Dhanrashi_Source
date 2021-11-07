@@ -1,39 +1,29 @@
 import 'dart:core';
-import 'dart:core';
 import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
-import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/reset_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:loading_gifs/loading_gifs.dart';
 import 'dashboard.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
 import 'package:sizer/sizer.dart';
-
-import 'components/on_error_screen.dart';
-import 'data/global.dart';
-import 'landing.dart';
 import 'models/profile.dart';
-import 'profiler.dart';
 import 'signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'components/custom_text_field.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'data/user_handler.dart';
 import 'data/database.dart';
 import 'components/custom_text.dart';
-import 'models/user_data_class.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 
@@ -152,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
             Timestamp dob = f.get('DOB');
             String incomeRange = f.get('income');
             String image = f.get('image_source');
-            print(' This is the image : $image}');
+
             /// Updating profile of user in a profile class object
             /// This profile object will be sent to all widget and screens
 
@@ -166,8 +156,8 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
               email: email,
               profileImage: '${DefaultValues.directoryOfPhoto}/$image',
             );
-            print(profile.profileImage);
-            /// Populating shared preference prefs which will be used to determine whether user is logged
+
+           /// Populating shared preference prefs which will be used to determine whether user is logged
 
             prefs.remove('f_name');
             prefs.setString('f_name', firstName);
@@ -181,6 +171,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
             prefs.setString('doc_id', docID);
             prefs.remove('image');
             prefs.setString('image', '${DefaultValues.directoryOfPhoto}/$image');
+
 
             /// If user details is FOUND for the user then redirected to the Dashboard...
 
@@ -216,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
       setState(() {
         clickedLogin = false;
       });
-      Utility.showErrorMessage(context, e.toString());
+      Utility.showErrorMessage(context,Utility.customise(e.toString()));
 
     }
 
@@ -246,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
            }
           },
           child: CustomScaffold(
-
+            rightButton: SizedBox(),
             child: ListView(
               children: [
                 Padding(

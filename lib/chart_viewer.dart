@@ -34,9 +34,13 @@ class _ChartViewerState extends State<ChartViewer> {
       length: 2,
       child: CustomScaffold(
         currentUser: widget.currentUser,
-
+        rightButton: IconButton(icon: Icon(Icons.close),
+          onPressed: (){
+              Navigator.pop(context);
+          },
+        ),
         child:Padding(
-          padding: EdgeInsets.only(top:25),
+          padding: EdgeInsets.only(top:4.h),
           child: Material(
             child: TabBar(
 

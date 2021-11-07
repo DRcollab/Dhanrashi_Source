@@ -32,6 +32,7 @@ class ProfileView extends StatelessWidget {
 
     return CustomScaffold(
         currentUser: this.currentUser,
+        rightButton: SizedBox(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

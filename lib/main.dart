@@ -1,4 +1,5 @@
 
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/login_screen.dart';
 import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,7 +59,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
     prefs = await SharedPreferences.getInstance();
           setState(() {
             sessionActive = prefs.getBool('session_active');
-            print('Session Insside:  $sessionActive');
+
             profile = Profile(
               firstName: prefs.getString('f_name') ??  '' ,
               lastName: prefs.getString('l_name') ??  '' ,

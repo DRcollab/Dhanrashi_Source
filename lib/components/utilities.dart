@@ -50,6 +50,20 @@ class Utility{
   };
 
 
+  static String customise(String str){
+
+      if(str.contains('identifier')){
+        return 'User with this email does not exist';
+      }else if(str.contains('password is invalid')){
+        return 'Invalid credentials';
+      }else{
+        return 'Something went wrong';
+      }
+
+
+
+  }
+
   static String cutStringToCharacter(String str1, String str2, String source){
 
     int index1 = source.indexOf('[');

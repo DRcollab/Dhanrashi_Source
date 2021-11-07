@@ -2,8 +2,10 @@
 
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/profile_view.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'components/date_picker.dart';
 import 'models/profile_collector.dart';
 import 'package:sizer/sizer.dart';
@@ -71,6 +73,18 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
   bool viewNavigationButton = true; /// used to hold comdition to show save button or navigator button
 
+  GlobalKey _profileImageSCKey = GlobalKey();
+  GlobalKey _fNameSCKey = GlobalKey();
+  GlobalKey _lNameSCKey = GlobalKey();
+  GlobalKey _datePickerKey = GlobalKey();
+  GlobalKey _incomeSCKey = GlobalKey();
+
+  GlobalKey _dpMonthReduceSCKey = GlobalKey();
+  GlobalKey _dpMonthIncrSCKey = GlobalKey();
+  GlobalKey _dpMonthSCKey = GlobalKey();
+  GlobalKey _dpYearrKey = GlobalKey();
+  GlobalKey _dpGridSCKey = GlobalKey();
+
    var profileCollector = Collector();
    late final List<Widget> CardChoice;
   var _nameKey;  // Used for user email validation
@@ -80,6 +94,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
   String errorText = ''; // Used to display message on date validation
   late FirebaseFirestore fireStore;
   String profileImageSource = '';
+  List<List<GlobalKey>> _showCaseKeys = [[]];
 
 ///  Holds the different screen header display .
   final List<String> headers = [
@@ -109,16 +124,34 @@ class _ProfilerPageState extends State<ProfilerPage> {
   ];
   /// LIST ENDS HERE
 
+  final _key1 = GlobalKey();
+
 @override
   void initState() {
 
+  GlobalKey _profileImageSCKey = GlobalKey();
+  GlobalKey _fNameSCKey = GlobalKey();
+  GlobalKey _lNameSCKey = GlobalKey();
+  GlobalKey _datePickerKey = GlobalKey();
+  GlobalKey _incomeSCKey = GlobalKey();
+
+  GlobalKey _dpMonthReduceSCKey = GlobalKey();
+  GlobalKey _dpMonthIncrSCKey = GlobalKey();
+  GlobalKey _dpMonthSCKey = GlobalKey();
+  GlobalKey _dpYearrKey = GlobalKey();
+  GlobalKey _dpGridSCKey = GlobalKey();
+  _showCaseKeys = [
+    [_profileImageSCKey,_fNameSCKey,_lNameSCKey],
+    [_datePickerKey,_dpMonthReduceSCKey,_dpMonthSCKey,_dpMonthIncrSCKey,_dpYearrKey,_dpGridSCKey],
+    [_incomeSCKey],
+  ];
 
   index = 0;
  _nameKey = GlobalKey<FormState>();
  _lnameKey = GlobalKey<FormState>();
 
- profileCollector.fName.text = widget.currentUser.firstName;
- profileCollector.lName.text = widget.currentUser.lastName;
+ profileCollector.fName.text = widget.currentUser.firstName!='N/A' ? widget.currentUser.firstName : '';
+ profileCollector.lName.text = widget.currentUser.lastName!='N/A' ? widget.currentUser.lastName : '';
  profileCollector.dateOfBirth = widget.currentUser.DOB;
  profileCollector.profileImage = widget.currentUser.profileImage.substring(DefaultValues.directoryOfPhoto.length+1);
  if(widget.currentUser.incomeRange!='') {
@@ -150,6 +183,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
      CardChoice = [
 
       NamePicker(
+        //key: _key1,
         fName: profileCollector.fName,
         lName: profileCollector.lName,
         lnameKey: _lnameKey,
@@ -158,7 +192,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
         changedPhoto: (path){
           profileCollector.profileImage = path;
         },
-
+        showCaseKeys: this._showCaseKeys[0],
       ), /// THIS IS THE SCREEN TO COLLECT NAME AND LASTNAME
 
       DOBPicker(
@@ -169,6 +203,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
           _dateKeyValidation = true;
         },
         datePicker: widget.currentUser.DOB.toString(),
+        showCaseKey: this._showCaseKeys[1],
       ), /// THIS SHOWS CALENDER DISPLAY AND COLLECT DOB
 
       IncomePicker(
@@ -179,7 +214,8 @@ class _ProfilerPageState extends State<ProfilerPage> {
            // profileCollector.annualIncome = incomeOptions[value!.round()];
             _incomeValidation = true;
 
-          }
+          },
+        showCaseKey: this._showCaseKeys[2],
       ), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE
       ///
       // ConfirmationPage(),/// THIS SHOWS THE ENTERED INFO FOR CONFIRMATION
@@ -314,43 +350,53 @@ class _ProfilerPageState extends State<ProfilerPage> {
     //Widget comButt =  /// Command Button
     print('call me index : $index');
 
-    return CustomScaffold(
-      currentUser: widget.currentUser,
-      allowToSeeBottom: true,
-      child: Container(
-       // color: Colors.red,
-        child: Column(
-         mainAxisAlignment: MainAxisAlignment.center,
-         crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+    return ShowCaseWidget(
 
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
+      builder: Builder(
+        builder: (context) {
+          return CustomScaffold(
+            helper: (){
+              ShowCaseWidget.of(context)!.startShowCase(_showCaseKeys[index]);
+            },
+            currentUser: widget.currentUser,
+            allowToSeeBottom: true,
+            child: Container(
+             // color: Colors.red,
+              child: Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
 
-                child: Padding(
-                  padding:  EdgeInsets.symmetric(vertical:2.h, horizontal: 4.w),
-                  child: Text( headers[index],
-                    style: DefaultValues.kH2(context),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+
+                      child: Padding(
+                        padding:  EdgeInsets.symmetric(vertical:2.h, horizontal: 4.w),
+                        child: Text( headers[index],
+                          style: DefaultValues.kH2(context),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            CardChoice[index],
-            Center(child: Text(this.errorText, style:         // Display error message on validation fail
-                                  TextStyle(
-                                    color:Colors.red,
+                  CardChoice[index],
+                  Center(child: Text(this.errorText, style:         // Display error message on validation fail
+                                        TextStyle(
+                                          color:Colors.red,
 
-                                  ),),
-            ),
-            Expanded(
-              flex: 2,
-              child: Center(
-                child:  navButton,
+                                        ),),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Center(
+                      child:  navButton,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          );
+        }
       ),
     );
   }
@@ -370,7 +416,8 @@ class NamePicker extends StatefulWidget {
   var nameKey = GlobalKey<FormState>();
   var lnameKey = GlobalKey<FormState>();
   Function(String path) changedPhoto;
-
+  List<GlobalKey?>? showCaseKeys;
+ // GlobalKey? key;
   NamePicker( {
     required this.fName,
     required this.lName,
@@ -378,6 +425,8 @@ class NamePicker extends StatefulWidget {
     required this.lnameKey,
     required this.profilePhoto,
     required this.changedPhoto,
+    this.showCaseKeys,
+   // required this.key,
   });
 
 
@@ -420,103 +469,117 @@ class _NamePickerState extends State<NamePicker> {
   @override
   Widget build(BuildContext context) {
 
-    print('ininput card this is the image : ${widget.profilePhoto}');
+
     return  Padding(
-        padding: EdgeInsets.only(top:4.h,left: 4.w,right: 4.w,bottom: 2.h),
-        child: InputCard(
-              titleText: "",
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              padding: EdgeInsets.only(top:4.h,left: 4.w,right: 4.w,bottom: 2.h),
+              child: InputCard(
+                    titleText: "",
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
 
-                  GestureDetector(
-                    onTap: (){
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => SingleChildScrollView(
-                            child: Container(
-                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                              child: PhotoSheet(getChoice: (value){
-                                      setState(() {
-                                        profileImage = 'profile_image$value.png';
-                                        widget.changedPhoto(profileImage);
-                                      });
-
-
-                              },)
-                            ),
-                          ));
-                    }
-                    ,
-
-                    child: Stack(
-                      children: [
-                        CircleAvatar(
-
-                            radius: 11.w,
-                            backgroundImage:AssetImage('${DefaultValues.directoryOfPhoto}/${profileImage}'),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top:48.0, left:48),
-                          child: IconButton(icon:Icon(Icons.edit),onPressed: (){},),
-                        ),
-                      ],
-                    ),
-                  ),
+                        GestureDetector(
+                          onTap: (){
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) => SingleChildScrollView(
+                                  child: Container(
+                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                    child: PhotoSheet(getChoice: (value){
+                                            setState(() {
+                                              profileImage = 'profile_image$value.png';
+                                              widget.changedPhoto(profileImage);
+                                            });
 
 
-                  SizedBox(height: 4.h,),
-                  Padding(
-                      padding:DefaultValues.kTextFieldPadding(context),
-                          child: Form(
-                            key:widget.nameKey,
-                            child: CustomTextField(
-                              onSubmit: (){
-                                widget.nameKey.currentState!.validate();
-                              },
-                                  validator: (value){
-                                    if(value.toString().isEmpty){
-                                       return 'First Name should not be empty';
-
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  },
-                                  icon: Icons.badge,
-                                  controller:  widget.fName,
-                                  hintText: 'First Name',
+                                    },)
                                   ),
+                                ));
+                          }
+                          ,
+
+                          child: Showcase(
+                            key: widget.showCaseKeys![0],
+                            description: 'Change your profile image here',
+                            shapeBorder: CircleBorder(),
+                            overlayPadding: EdgeInsets.all(4),
+                            contentPadding: EdgeInsets.all(8),
+                            child: CircleAvatar(
+
+                                radius: 11.w,
+                                backgroundImage:AssetImage('${DefaultValues.directoryOfPhoto}/${profileImage}'),
+                            ),
                           ),
                         ),
-                  Padding(
-                        padding: DefaultValues.kTextFieldPadding(context),
-                            child: Form(
-                              key: widget.lnameKey,
-                              child: CustomTextField(
-                                onSubmit: (){
-                                  widget.lnameKey.currentState!.validate();
-                                },
-                                textInputAction: TextInputAction.done,
-                                validator: (value){
-                                  if(value.toString().isEmpty){
-                                    return 'last name should not be empty';
 
-                                  }
-                                  else {
-                                    return null;
-                                  }
-                                },
-                                  icon: Icons.badge,
-                                  controller: widget.lName,
-                                  hintText: 'Last Name',
-                          ),
-                            ),
-                  ),
 
-        ],
-      ),
-    );
+                        SizedBox(height: 4.h,),
+                        Padding(
+                            padding:DefaultValues.kTextFieldPadding(context),
+                                child: Form(
+                                  key:widget.nameKey,
+                                  child: Showcase(
+                                    key:widget.showCaseKeys![1],
+                                    description:'Enter your first name',
+                                    shapeBorder: CircleBorder(),
+                                    overlayPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal:10),
+                                    contentPadding: EdgeInsets.all(10),
+                                    child: CustomTextField(
+                                      onSubmit: (){
+                                        widget.nameKey.currentState!.validate();
+                                      },
+                                          validator: (value){
+                                            if(value.toString().isEmpty){
+                                               return 'First Name should not be empty';
+
+                                            }
+                                            else{
+                                              return null;
+                                            }
+                                          },
+                                          icon: Icons.badge,
+                                          controller:  widget.fName,
+                                          hintText: 'First Name',
+                                          ),
+                                  ),
+                                ),
+                              ),
+                        Padding(
+                              padding: DefaultValues.kTextFieldPadding(context),
+                                  child: Showcase(
+                                    key:widget.showCaseKeys![2],
+                                    description:'Enter your lastname here',
+                                    shapeBorder: CircleBorder(),
+                                    overlayPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal:10),
+                                    contentPadding: EdgeInsets.all(8),
+                                    child: Form(
+                                      key: widget.lnameKey,
+                                      child: CustomTextField(
+                                        onSubmit: (){
+                                          widget.lnameKey.currentState!.validate();
+                                        },
+                                        textInputAction: TextInputAction.done,
+                                        validator: (value){
+                                          if(value.toString().isEmpty){
+                                            return 'last name should not be empty';
+
+                                          }
+                                          else {
+                                            return null;
+                                          }
+                                        },
+                                          icon: Icons.badge,
+                                          controller: widget.lName,
+                                          hintText: 'Last Name',
+                                ),
+                                    ),
+                                  ),
+                        ),
+
+              ],
+            ),
+          );
+
   }
 }
 
@@ -530,11 +593,14 @@ class DOBPicker extends StatefulWidget {
 
   void Function(DateTime) onDateChanged;
 
+  List<GlobalKey?>? showCaseKey;
+
   DOBPicker({
 
     this.datePicker= '',
     this.dateValidated = false,
     required this.onDateChanged,
+    this.showCaseKey,
 
   });
 
@@ -566,28 +632,33 @@ class _DOBPickerState extends State<DOBPicker> {
             //   child: Text("Your Date of Birth", style: kTitleTextStyle),
             // ),
 
-           Calendar
-             (
+           Showcase(
+             key:widget.showCaseKey![0],
+             description: 'Pick your date of birth',
+             child: Calendar
+               (
+               showCaseKeys: widget.showCaseKey!.sublist(1),
+              //DateTimeFormField(
+                initialDate: widget.datePicker.toString()=='1900-01-01 00:00:00.000'? DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day)
+                 :DateTime.parse(widget.datePicker),
+                textColor: Colors.black,
+                selectTextColor: Colors.white,
+                selectColor: kPresentTheme.accentColor,
+                firstDate: DateTime(1950),
+                lastDate: DateTime.now(),
+                backColor: kPresentTheme.influenceColors[0].withOpacity(0.4),
+               // cellColor: kPresentTheme.influenceColors[0],
+                onDateChanged: (valueChanged){
+                  setState(() {
+                    widget.onDateChanged(valueChanged);
+                    if(!widget.dateValidated)
+                      this.errorText = 'Please select a date before continue';
+                  });
 
-            //DateTimeFormField(
-              initialDate: widget.datePicker.toString()=='1900-01-01 00:00:00.000'? DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day)
-               :DateTime.parse(widget.datePicker),
-              textColor: Colors.black,
-              selectTextColor: Colors.white,
-              selectColor: kPresentTheme.accentColor,
-              firstDate: DateTime(1950),
-              lastDate: DateTime.now(),
-              cellColor: kPresentTheme.influenceColors[0],
-              onDateChanged: (valueChanged){
-                setState(() {
-                  widget.onDateChanged(valueChanged);
-                  if(!widget.dateValidated)
-                    this.errorText = 'Please select a date before continue';
-                });
+                }
 
-              }
-
-            ),
+              ),
+           ),
 
 
           ],
@@ -607,9 +678,12 @@ class IncomePicker extends StatefulWidget {
 
   Function(int?)? validate;
 
+ List<GlobalKey?>? showCaseKey;
+
   IncomePicker({
     this.incomePicker=0,
     required this.validate,
+    this.showCaseKey,
   });
 
   @override
@@ -650,83 +724,87 @@ class _IncomePickerState extends State<IncomePicker> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
-      child: InputCard(
-        titleText: "Your Annual Income",
-        children: [
-          RadioListTile(
-              value: 0,
-              groupValue: selectedValue,
-              title: Text(this.incomeOptions[0], style:DefaultValues.kNormal2(context),),
+      child: Showcase(
+        key:widget.showCaseKey![0],
+        description: 'Pick your Income range',
+        child: InputCard(
+          titleText: "Your Annual Income",
+          children: [
+            RadioListTile(
+                value: 0,
+                groupValue: selectedValue,
+                title: Text(this.incomeOptions[0], style:DefaultValues.kNormal2(context),),
 
-              onChanged:  (value){
-                setState(() {
-                  widget.validate!(int.parse(value.toString()));
-                  selectedValue = int.parse(value.toString());
+                onChanged:  (value){
+                  setState(() {
+                    widget.validate!(int.parse(value.toString()));
+                    selectedValue = int.parse(value.toString());
 
-                });
-
-
-              }),
-          RadioListTile(
-              value: 1,
-              groupValue: selectedValue,
-              title: Text('Above ${this.incomeOptions[1]}', style:DefaultValues.kNormal2(context),),
-              onChanged: (value){
-
-                setState(() {
-                  widget.validate!(int.parse(value.toString()));
-                  selectedValue = int.parse(value.toString());
-
-                });
+                  });
 
 
-              }),
-          RadioListTile(
-              value: 2,
-              groupValue: selectedValue,
-              title: Text('Above ${this.incomeOptions[2]}', style:DefaultValues.kNormal2(context),),
+                }),
+            RadioListTile(
+                value: 1,
+                groupValue: selectedValue,
+                title: Text('Above ${this.incomeOptions[1]}', style:DefaultValues.kNormal2(context),),
+                onChanged: (value){
 
-              onChanged: (value){
+                  setState(() {
+                    widget.validate!(int.parse(value.toString()));
+                    selectedValue = int.parse(value.toString());
 
-                setState(() {
-                  widget.validate!(int.parse(value.toString()));
-                  selectedValue = int.parse(value.toString());
-
-                });
-
-              }),
-          RadioListTile(
-              value: 3,
-              groupValue: selectedValue,
-              title: Text(this.incomeOptions[3], style:DefaultValues.kNormal2(context),),
-
-              onChanged: (value){
-
-                setState(() {
-                  widget.validate!(int.parse(value.toString()));
-                  selectedValue = int.parse(value.toString());
-
-                });
-
-              }),
-          RadioListTile(
-              value: 4,
-              groupValue: selectedValue,
-              title: Text('Prefer not to disclose', style:DefaultValues.kNormal2(context),),
-
-              onChanged: (value){
-
-                setState(() {
-                  widget.validate!(int.parse(value.toString()));
-                  selectedValue = int.parse(value.toString());
-
-                });
-
-              }),
+                  });
 
 
+                }),
+            RadioListTile(
+                value: 2,
+                groupValue: selectedValue,
+                title: Text('Above ${this.incomeOptions[2]}', style:DefaultValues.kNormal2(context),),
 
-        ],
+                onChanged: (value){
+
+                  setState(() {
+                    widget.validate!(int.parse(value.toString()));
+                    selectedValue = int.parse(value.toString());
+
+                  });
+
+                }),
+            RadioListTile(
+                value: 3,
+                groupValue: selectedValue,
+                title: Text(this.incomeOptions[3], style:DefaultValues.kNormal2(context),),
+
+                onChanged: (value){
+
+                  setState(() {
+                    widget.validate!(int.parse(value.toString()));
+                    selectedValue = int.parse(value.toString());
+
+                  });
+
+                }),
+            RadioListTile(
+                value: 4,
+                groupValue: selectedValue,
+                title: Text('Prefer not to disclose', style:DefaultValues.kNormal2(context),),
+
+                onChanged: (value){
+
+                  setState(() {
+                    widget.validate!(int.parse(value.toString()));
+                    selectedValue = int.parse(value.toString());
+
+                  });
+
+                }),
+
+
+
+          ],
+        ),
       ),
     );
   }

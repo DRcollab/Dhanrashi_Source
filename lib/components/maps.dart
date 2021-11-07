@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
   Map goalIcons = {
 
     'Own a car':'images/car.png',
+    'My Dream House':'images/house.png',
     'Building my own House':'images/house.png',
     'Children Education':'images/education.png',
     'Retirement':'images/pension.png',

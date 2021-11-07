@@ -6,6 +6,7 @@ import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
@@ -22,6 +23,7 @@ class AnalyticsTabView extends StatelessWidget {
   List dataSet = List.empty(growable: true);
   int longestGoalDuration;
   int longestInvestmentDuration;
+  List<GlobalKey?>? showCaseKey;
 
 //{required this.currentUser, required this.investmentDBs, required this.goalDBs}
   AnalyticsTabView({
@@ -29,7 +31,8 @@ class AnalyticsTabView extends StatelessWidget {
     required this.investmentDBs,
     required this.goalDBs,
     required this.longestInvestmentDuration,
-    required this.longestGoalDuration
+    required this.longestGoalDuration,
+    this.showCaseKey,
   });
 
 
@@ -79,7 +82,10 @@ class AnalyticsTabView extends StatelessWidget {
     return Column(
       children: [
         fetched?
-        DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,)
+        Showcase(
+            key:showCaseKey![1],
+            description: 'See your goal and investment relation',
+            child: DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,))
 
             :Text('Loading.......', style: DefaultValues.kH1(context),),
 
@@ -91,7 +97,10 @@ class AnalyticsTabView extends StatelessWidget {
           child: Container(
             width: 100.w,
             height: 41.h,
-            child: fetched ? DynamicGraph(resultSet: dataSet,chartType: ChartType.line,) :Image.asset(kPresentTheme.progressIndicator, scale: 3),
+            child: fetched ? Showcase(
+                key: showCaseKey![2],
+                description: 'See how your investment and goals are doing as time goes',
+                child: DynamicGraph(resultSet: dataSet,chartType: ChartType.line,)) :Image.asset(kPresentTheme.progressIndicator, scale: 3),
           ),
         ),
       ],

@@ -7,6 +7,7 @@ import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
+import 'package:dhanrashi_mvp/tnc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -127,6 +128,7 @@ import 'package:sizer/sizer.dart';
 
       },
       child: CustomScaffold(
+        rightButton: SizedBox(),
         child: ListView(
           children: [
             Padding(
@@ -311,8 +313,15 @@ import 'package:sizer/sizer.dart';
                         Padding(
                           padding: DefaultValues.kTextFieldPadding(context),
                           child: LinkText(
-                            onPressed: (){},
-                            linkText: 'By signing up you are agreeing to our terms and condition.',
+                            onPressed: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TnC(),
+                                  )
+                              );
+                            },
+                            linkText: 'By signing up you are agreeing to our terms and condition.Click Here to see it',
                             displaySize: 12.sp,
 
                           ),

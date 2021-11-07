@@ -9,6 +9,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:matrix2d/matrix2d.dart';
 import 'package:sizer/sizer.dart';
 
+import 'global.dart';
+
 enum ChartType { bar, line, pie , gauge}
 enum calculationType { Investment, Goal, InvVsGoal }
 
@@ -45,7 +47,6 @@ class _DynamicGraphState extends State<DynamicGraph> {
   void _makeDataforBar() {
     List allInvestmentAnnualAmt = widget.resultSet;
 
-    // print('Make Data: $allInvestmentAnnualAmt');
 
     int noStack = allInvestmentAnnualAmt.shape[0] -  2; //Number of goals - 1; hardcoded for now
     int noOfYear = allInvestmentAnnualAmt.shape[1] - 1; // hardcoded for now
@@ -123,7 +124,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
         ),
       );
     //  print(_lineChartData.toString());
-      print('I am here');
+
     }
   }
 
@@ -132,11 +133,14 @@ class _DynamicGraphState extends State<DynamicGraph> {
    int noOfYear = allInvestmentAnnualAmt.shape[1] - 1;
     double outerChart;
     double innerChart;
+    print(allInvestmentAnnualAmt[1][noOfYear]);
+  // print('Make Data: $allInvestmentAnnualAmt');
+
    double invValueatlastYear = double.parse( allInvestmentAnnualAmt[0][noOfYear]);
    double goalValueatlastYear = double.parse( allInvestmentAnnualAmt[1][noOfYear]);
-    print('from inside chart :');
-    print(invValueatlastYear);
-    print(goalValueatlastYear);
+    // print('from inside chart :');
+    // print(invValueatlastYear);
+    // print(goalValueatlastYear);
 
    List<Task>   pieData;
     inv_ratio = 7/5;
@@ -369,7 +373,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding:  EdgeInsets.only(left:8.w, top:8.0, bottom: 8.0),
@@ -381,7 +385,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                        child: Text('Investments',style: DefaultValues.kH4(context),),
+                        child: Text('Investment',style: DefaultValues.kH4(context),),
                       ),
                         Padding(
                           padding: EdgeInsets.only(left:25.w,right:6.w),
@@ -392,7 +396,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                     ],
                   ),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left:8.w, top:8.0, bottom: 8.0),
@@ -433,7 +437,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
   @override
   Widget build(BuildContext context) {
-    //print('DynamicGraph_Page: ${widget.resultSet}');
+
 
     if (widget.chartType == ChartType.bar) {
       _makeDataforBar();

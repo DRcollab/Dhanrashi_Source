@@ -12,6 +12,7 @@ import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 import 'models/profile_collector.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -60,6 +61,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   late FirebaseFirestore fireStore;
   late DRProfileAccess profileAccess;
 
+  GlobalKey _showCaseKey = GlobalKey();
 
   @override
   void initState() {
@@ -198,38 +200,48 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
     String ageAsString = age.ceil().toString();
 
-    return CustomScaffold(
-      currentUser: widget.currentUser,
-      child: isSubmitted ? Center(
-          child: Image.asset(kPresentTheme.progressIndicator, scale: 3),): Container(
+    return ShowCaseWidget(
+      builder : Builder(
+        builder: (context) {
+          return CustomScaffold(
+            helper: (){
+              ShowCaseWidget.of(context)!.startShowCase([_showCaseKey]);
+            },
+            currentUser: widget.currentUser,
+            child: isSubmitted ? Center(
+                child: Image.asset(kPresentTheme.progressIndicator, scale: 3),): Container(
 
-        child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              child: ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
 
-            children : [
+                  children : [
 
-              Image.asset('images/confirmed.png',
-                height: 20.h,
-                width: 80.w,
+                    Image.asset('images/confirmed.png',
+                      height: 25.h,
+                      width: 80.w,
 
-              ),
-              Padding(
-                padding:  EdgeInsets.only(left:2.w, bottom: 0),
-                child: Text(" Confirm Profile of:", style:DefaultValues.kH1(context),),
-              ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding:  EdgeInsets.only(left:2.w, bottom: 0),
+                          child: Text(" Confirm Profile", style:DefaultValues.kH1(context),),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left:6.w, top:0,right: 4.w,bottom: 0.h),
+                          child: Showcase(
+                              key: _showCaseKey,
+                              description:'change the entries from here',
+                              shapeBorder: CircleBorder(),
+                              overlayPadding: EdgeInsets.only (top:2,bottom:2,left:10,right: 10),
+                              contentPadding: EdgeInsets.all(10),
+                            child: CommandButton(
+                                onPressed: (){
 
-              Padding(
-                padding: EdgeInsets.only(left:4.w, top:0,right: 4.w,bottom: 0.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(widget.currentUser.email, style:DefaultValues.kNormal2(context),),
-                    CommandButton(
-                        onPressed: (){
 
-
-                                 var profile = Profile(
+                                  var profile = Profile(
                                     firstName: widget.collector.fName.text,
                                     lastName: widget.collector.lName.text,
                                     DOB: widget.collector.dateOfBirth,
@@ -240,151 +252,157 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                     profileImage: widget.collector.profileImage,
 
                                   );
-                                 Navigator.pop(context);
-                                 Navigator.push(context,
-                                     MaterialPageRoute(builder: (context) =>
-                                     ProfilerPage(currentUser: profile,isItForUpdate: false,)));
-                        },
-                        buttonColor: kPresentTheme.accentColor,
-                        borderRadius: BorderRadius.circular(15),
-                        buttonText: 'Edit',
-                        textColor: kPresentTheme.alternateColor)
-                  ],
-                ),
-              ),
-              Padding(
-                padding:  EdgeInsets.only(top: 2.h,left: 2.w, right: 2.w),
-                child: Card(
-                  child: Column(
-
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.only(left:10.w),
-                        visualDensity: VisualDensity.standard,
-
-                        title: Text('First Name'),
-
-                        subtitle: Text(widget.collector.fName.text, style: DefaultValues.kH2(context),),
-
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.only(left:10.w),
-                        visualDensity: VisualDensity.standard,
-                        title: Text("Last Name"),
-
-                        subtitle: Text(widget.collector.lName.text,style: DefaultValues.kH2(context)),
-
-
-
-
-                      ),
-
-                      ListTile(
-                        dense: false,
-                        visualDensity: VisualDensity.standard,
-                        contentPadding: EdgeInsets.only(left:10.w),
-                        title: Text("Date of Birth"),
-
-                        subtitle: Text('${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year} (Age:${ageAsString} years)',
-                            style: DefaultValues.kH2(context),
+                                  Navigator.pop(context);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          ProfilerPage(currentUser: profile,isItForUpdate: false,)));
+                                },
+                                buttonColor: kPresentTheme.accentColor,
+                                borderRadius: BorderRadius.circular(15),
+                                buttonText: 'Edit',
+                                textColor: kPresentTheme.alternateColor),
+                          ),
                         ),
+                      ],
+                    ),
 
 
+                    Padding(
+                      padding:  EdgeInsets.only(top: 2.h,left: 2.w, right: 2.w),
+                      child: Card(
+                        child: Column(
+
+                          children: [
+                            ListTile(
+                              contentPadding: EdgeInsets.only(left:10.w),
+                              visualDensity: VisualDensity.standard,
+
+                              title: Text('First Name'),
+
+                              subtitle: Text(widget.collector.fName.text, style: DefaultValues.kH2(context),),
+
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.only(left:10.w),
+                              visualDensity: VisualDensity.standard,
+                              title: Text("Last Name"),
+
+                              subtitle: Text(widget.collector.lName.text,style: DefaultValues.kH2(context)),
+
+
+
+
+                            ),
+
+                            ListTile(
+                              dense: false,
+                              visualDensity: VisualDensity.standard,
+                              contentPadding: EdgeInsets.only(left:10.w),
+                              title: Text("Date of Birth"),
+
+                              subtitle: Text('${widget.collector.dateOfBirth.day}/${widget.collector.dateOfBirth.month}/${widget.collector.dateOfBirth.year} (Age:${ageAsString} years)',
+                                  style: DefaultValues.kH2(context),
+                              ),
+
+
+                            ),
+                            ListTile(
+
+                              contentPadding: EdgeInsets.only(left:10.w),
+                              visualDensity: VisualDensity.standard,
+                              title: Text("Annual Income"),
+
+                              subtitle: Text(widget.collector.annualIncome.toString(),style: DefaultValues.kH2(context)),
+
+
+                            ),
+
+                          ],
+                        ),
                       ),
-                      ListTile(
+                    ),
 
-                        contentPadding: EdgeInsets.only(left:10.w),
-                        visualDensity: VisualDensity.standard,
-                        title: Text("Annual Income"),
+                Padding(
+                  padding:  EdgeInsets.only(left:20.w, right: 20.w, top: 1.h,),
+                  child:CommandButton(
+                    textColor: Colors.white,
+                    textSize: 12.sp,
+                    //icon:Icons.save,
+                    borderRadius: BorderRadius.circular(20),
+                    buttonText: !widget.isItForUpdate ? "Confirm" : 'Confirm',
+                    buttonColor: kPresentTheme.accentColor,
 
-                        subtitle: Text(widget.collector.annualIncome.toString(),style: DefaultValues.kH2(context)),
+                    onPressed:() {
 
 
-                      ),
+                      /// on pressing this button data will be saved in database ...
+                      setState(() {
+                        this.isSubmitted = true;
+                        this.profile = Profile(
+                          firstName: widget.collector.fName.text,
+                          lastName: widget.collector.lName.text,
+                          DOB:widget.collector.dateOfBirth,
+                          incomeRange: widget.collector.annualIncome.toString(),
+                          uid:widget.currentUser.uid,
+                          email: widget.currentUser.email,
+                          profileImage: widget.collector.profileImage,
 
-                    ],
+                        );
+
+                        if(!widget.isItForUpdate){
+                          Future.any(
+                              [
+                                _save(this.profile),
+                                Utility.timeoutAfter(sec: 10, onTimeout:(){
+                                  if(!isComplete){
+                                    Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                  }
+                                }),
+                              ]
+                          );
+                        } else{
+                          Future.any(
+                              [
+                                _update(this.profile),
+                                Utility.timeoutAfter(sec: 10, onTimeout:(){
+                                  if(!isComplete){
+                                    Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                  }
+                                }),
+                              ]
+                          );
+
+                        }
+                      });
+
+                    },
                   ),
                 ),
+
+                   widget.isItForUpdate ? Padding(
+                      padding:  EdgeInsets.only(left:20.w, right: 20.w, top: 0.h,),
+                      child: CommandButton(
+                        textColor: Colors.white,
+                        textSize: 12.sp,
+                        //icon:Icons.save,
+                        borderRadius: BorderRadius.circular(20),
+                        buttonText:  'Cancel ',
+                        buttonColor: kPresentTheme.accentColor,
+
+                        onPressed:(){
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ) : SizedBox(),
+
+                  ]
               ),
 
-          Padding(
-            padding:  EdgeInsets.only(left:20.w, right: 20.w, top: 1.h,),
-            child:CommandButton(
-              textColor: Colors.white,
-              textSize: 12.sp,
-              //icon:Icons.save,
-              borderRadius: BorderRadius.circular(20),
-              buttonText: !widget.isItForUpdate ? "Confirm" : 'Confirm',
-              buttonColor: kPresentTheme.accentColor,
-
-              onPressed:() {
 
 
-                /// on pressing this button data will be saved in database ...
-                setState(() {
-                  this.isSubmitted = true;
-                  this.profile = Profile(
-                    firstName: widget.collector.fName.text,
-                    lastName: widget.collector.lName.text,
-                    DOB:widget.collector.dateOfBirth,
-                    incomeRange: widget.collector.annualIncome.toString(),
-                    uid:widget.currentUser.uid,
-                    email: widget.currentUser.email,
-                    profileImage: widget.collector.profileImage,
-
-                  );
-
-                  if(!widget.isItForUpdate){
-                    Future.any(
-                        [
-                          _save(this.profile),
-                          Utility.timeoutAfter(sec: 10, onTimeout:(){
-                            if(!isComplete){
-                              Utility.showErrorMessage(context, Utility.messages['timed_out']!);
-                            }
-                          }),
-                        ]
-                    );
-                  } else{
-                    Future.any(
-                        [
-                          _update(this.profile),
-                          Utility.timeoutAfter(sec: 10, onTimeout:(){
-                            if(!isComplete){
-                              Utility.showErrorMessage(context, Utility.messages['timed_out']!);
-                            }
-                          }),
-                        ]
-                    );
-
-                  }
-                });
-
-              },
             ),
-          ),
-
-             widget.isItForUpdate ? Padding(
-                padding:  EdgeInsets.only(left:20.w, right: 20.w, top: 0.h,),
-                child: CommandButton(
-                  textColor: Colors.white,
-                  textSize: 12.sp,
-                  //icon:Icons.save,
-                  borderRadius: BorderRadius.circular(20),
-                  buttonText:  'Cancel ',
-                  buttonColor: kPresentTheme.accentColor,
-
-                  onPressed:(){
-                    Navigator.pop(context);
-                  },
-                ),
-              ) : SizedBox(),
-
-            ]
-        ),
-
-
-
+          );
+        }
       ),
     );
   }

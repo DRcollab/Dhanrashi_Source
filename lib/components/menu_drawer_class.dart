@@ -1,13 +1,16 @@
-/// This code is written by Shubhadeep
+/// This code is written by Shubhadee
 
 import 'package:dhanrashi_mvp/components/settings_sheet.dart';
 import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
+import 'package:dhanrashi_mvp/info_page.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/profile.dart';
 import 'package:dhanrashi_mvp/profile_view.dart';
+import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:dhanrashi_mvp/sip_calculator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,15 +40,35 @@ class _MenuDrawerState extends State<MenuDrawer> {
   var userParticular;
   bool isUserLoggedIn = false;
   bool userHasProfile = false;
+  bool profileEmpty = true;
 
 
   @override
   void initState()  {
     // TODO: implement initState
-    print(widget.currentUser.profileImage);
+   // print(widget.currentUser.profileImage);
     super.initState();
     future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance );
 
+    if(widget.currentUser != null){
+      isUserLoggedIn = true;
+      if(widget.currentUser.firstName != 'N/A' && widget.currentUser.firstName !=''){
+        userHasProfile = true;
+      }
+      else if(widget.currentUser.firstName == 'N/A') {
+        userHasProfile = false;
+        profileEmpty = false;
+      }else{
+        profileEmpty = true;
+        userHasProfile = false;
+      }
+
+    }
+    else{
+      isUserLoggedIn = false;
+      userHasProfile = false;
+      profileEmpty = false;
+    }
 
   }
 
@@ -55,17 +78,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
 
-    print('menu page:${widget.currentUser.profileImage}');
+    
    // if()
-    if(widget.currentUser != null){
-      isUserLoggedIn = true;
-      if(widget.currentUser.firstName != 'N/A'){
-        userHasProfile = true;
-      }
-      else{
-        userHasProfile = false;
-      }
-    }
+
+
 
     return Drawer(
 
@@ -127,16 +143,23 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                   ListTile(
                     //contentPadding: EdgeInsets.all(10),
-                    enabled: widget.currentUser!=null,
+                    enabled: (widget.currentUser!=null && widget.currentUser.firstName!=''),
                     leading: FaIcon(FontAwesomeIcons.userFriends,size: 24.sp,color:kPresentTheme.accentColor, ),
-                    title: Text('Update profile' ,style:DefaultValues.kNormal2(context), ),
+                    title:  userHasProfile ? Text('Update profile' ,style:DefaultValues.kNormal2(context), )
+                    : Text('Add profile' ,style:DefaultValues.kNormal2(context), ) ,
                   //  subtitle: DefaultValues.screenHeight(context)>600 ? Text('Change your name , date of birth and income'):null,
                     onTap: (){
-
-                      Navigator.pop(context);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>
-                              ProfileView(currentUser: widget.currentUser,)));
+                      if(widget.currentUser.firstName !='N/A') {
+                        Navigator.pop(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                ProfileView(currentUser: widget.currentUser,)));
+                      }else{
+                        Navigator.pop(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                ProfilerPage(currentUser: widget.currentUser,)));
+                      }
                     }
                     ,
 
@@ -144,7 +167,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Dashboard', style: DefaultValues.kNormal2(context)),
-                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('It is your homepage where we find the analysis of your portfolio and can manage it'):null,
+                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('See analysis of your portfolio and manage it here'):null,
                     enabled: widget.currentUser!=null,
                     onTap: (){
                       Navigator.pop(context);
@@ -202,7 +225,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       Navigator.pop(context);
                       Navigator.push(context,
                         MaterialPageRoute(builder: (context) =>
-                            SIPCalculator(),),);
+                            InfoPage(),),);
                     }
                     ,
                   ),

@@ -96,7 +96,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-
+      rightButton: SizedBox(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

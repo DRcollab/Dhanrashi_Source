@@ -117,7 +117,7 @@ class _GoalSheetState extends State<GoalSheet> {
     goalAmount = widget.goalAmount;
     inflation = widget.inflation;
     goalDuration = widget.goalDuration;
-
+    this.titleEditingController.text = widget.titleMessage;
 
     super.initState();
     // _audioCache = AudioCache(
@@ -156,10 +156,10 @@ class _GoalSheetState extends State<GoalSheet> {
 
 
     DateTime currentPhoneDate = DateTime.now();
-    print(' i am in update');
+
 
     var docID = goalDB.goalDocumentID;
-    print(' i am in update ${docID}');
+
 
       fireStore.collection('pjdhan_goal').doc(docID).update({
         'email': goalDB.email,
@@ -273,10 +273,10 @@ class _GoalSheetState extends State<GoalSheet> {
                 child: Container(
 
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(widget.imageSource, height: 8.h, width: 8.w,),
-                      Expanded(child: Center(
+                      Center(
                           child: (widget.type!='Delete') ? Band(
                             controller:this.titleEditingController,
                             onCommit : widget.onEditCommit,
@@ -284,7 +284,6 @@ class _GoalSheetState extends State<GoalSheet> {
                             text:widget.titleMessage,
                             textStyle: DefaultValues.kH2(context),
                           ):Card(child:Text(widget.titleMessage,style:DefaultValues.kH2(context) ,)),
-                      ),
                       ),
                       CommandButton(
                         enabled: !this.isEditing,

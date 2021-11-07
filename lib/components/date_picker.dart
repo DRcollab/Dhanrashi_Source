@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -15,6 +16,8 @@ class Calendar extends StatefulWidget {
   DateTime? lastDate;
   Color selectTextColor;
   Color textColor;
+  List<GlobalKey?>? showCaseKeys;
+
   Calendar({
     required this.initialDate,
     required this.onDateChanged,
@@ -26,7 +29,7 @@ class Calendar extends StatefulWidget {
     this.textColor = const Color(0x00000000),
     this.firstDate,
     this.lastDate,
-
+    this.showCaseKeys,
   });
 
 
@@ -108,6 +111,7 @@ class _CalendarState extends State<Calendar> {
                   arrayOfDates = determineDateList();
                   selectedGrid = showDays();
                   showingYearsGrid = false;
+                  selectedCell = arrayOfDates.indexOf(selectedDay);
                 });
 
               },
@@ -135,7 +139,7 @@ class _CalendarState extends State<Calendar> {
 
   Widget showDays(){
     showingDays = true;
-
+   // selectedCell = arrayOfDates.indexOf(selectedDay);
     return  GridView.builder(
         itemCount: arrayOfDates.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -146,6 +150,7 @@ class _CalendarState extends State<Calendar> {
           return GestureDetector(
             onTap: (){
               setState(() {
+
                 selectedCell = index;
                 selectedDay = int.parse(arrayOfDates[index]);
                 selectedGrid = showDays();
@@ -197,6 +202,7 @@ class _CalendarState extends State<Calendar> {
                   selectedMonth = months.indexOf(months[index])+1;
                   arrayOfDates = determineDateList();
                   selectedGrid = showDays();
+                  selectedCell = arrayOfDates.indexOf(selectedDay);
                 });
 
               },
@@ -249,21 +255,25 @@ class _CalendarState extends State<Calendar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                IconButton(
-                    onPressed: (){
-                      setState(() {
-                        if(selectedMonth>1)
-                          {
-                            selectedMonth--;
-                          }else{
-                          selectedMonth=12;
-                          selectedYear--;
-                        }
+                Showcase(
+                  key:widget.showCaseKeys![0],
+                  description: 'Reduce the month',
+                  child: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          if(selectedMonth>1)
+                            {
+                              selectedMonth--;
+                            }else{
+                            selectedMonth=12;
+                            selectedYear--;
+                          }
 
-                      });
+                        });
 
-                    },
-                    icon:const Icon(Icons.arrow_left,size: 28,)),
+                      },
+                      icon:const Icon(Icons.arrow_left,size: 28,)),
+                ),
                 GestureDetector(
                   onTap: (){
                     setState(() {
@@ -279,27 +289,35 @@ class _CalendarState extends State<Calendar> {
 
                     });
                   },
-                  child: Text(months[selectedMonth-1],
+                  child: Showcase(
+                    key: widget.showCaseKeys![1],
+                    description:'Click here to get the month list',
+                    child: Text(months[selectedMonth-1],
 
-                    style:  TextStyle(
-                      fontSize: 18.sp,fontWeight: FontWeight.bold,
+                      style:  TextStyle(
+                        fontSize: 18.sp,fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                IconButton(
-                    onPressed: (){
-                      setState(() {
-                        if(selectedMonth<12){
-                          selectedMonth++;
-                        }else{
-                          selectedMonth = 1;
-                          selectedYear++;
-                        }
+                Showcase(
+                  key: widget.showCaseKeys![2],
+                  description: 'Increase the month by 1',
+                  child: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          if(selectedMonth<12){
+                            selectedMonth++;
+                          }else{
+                            selectedMonth = 1;
+                            selectedYear++;
+                          }
 
-                      });
+                        });
 
-                    },
-                    icon:const Icon(Icons.arrow_right,size: 28,)),
+                      },
+                      icon:const Icon(Icons.arrow_right,size: 28,)),
+                ),
                 Container(width: 3,height: 30,color: Colors.black12,),
                 IconButton(
                     onPressed: (){
@@ -317,6 +335,7 @@ class _CalendarState extends State<Calendar> {
                         showingMonthsGrid = false;
                         showingDays = false;
                         showingYearsGrid = true;
+                        selectedCell = -1;
                       }else{
                         selectedGrid = showDays();
                         showingYearsGrid = false;
@@ -324,10 +343,14 @@ class _CalendarState extends State<Calendar> {
 
                     });
                   },
-                  child: Text(selectedYear.toString(), style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                  ),),
+                  child: Showcase(
+                    key:widget.showCaseKeys![3],
+                    description:'Click here to get the year list',
+                    child: Text(selectedYear.toString(), style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                    ),),
+                  ),
                 ),
                 IconButton(
                     onPressed: (){
@@ -355,9 +378,16 @@ class _CalendarState extends State<Calendar> {
         Padding(
           padding: const EdgeInsets.only(left:10.0,top: 10,right: 10,bottom: 10),
           child: Container(
-
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: widget.backColor,
+              //backgroundBlendMode: BlendMode.overlay,
+            ),
             height: 36.h,
-            child:selectedGrid,
+            child:Showcase(
+                key:widget.showCaseKeys![4],
+                description: 'Select from this grid by clicking on them',
+                child: selectedGrid),
           ),
         ),
 

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+import 'package:showcaseview/showcaseview.dart';
 import '../chart_viewer.dart';
 import '../empty_page_inputs.dart';
 import '../investmentinput.dart';
@@ -32,7 +33,7 @@ class InvestmentTabView extends StatefulWidget {
     this.totalInvest=0,
     this.longestGoalDuration = 0,
     this.longestInvestmentDuration = 0,
-
+    this.showCaseKey,
   });
 
   late FirebaseFirestore fireStore;
@@ -41,7 +42,7 @@ class InvestmentTabView extends StatefulWidget {
   late List<InvestDB> investmentDBs;
   late var currentUser;
   double totalInvest;
-
+  List<GlobalKey?>? showCaseKey;
   @override
   _InvestmentTabViewState createState() => _InvestmentTabViewState();
 }
@@ -191,36 +192,42 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
       children: [
         Flexible(
           flex:2,
-          child: Container(
+          child: Showcase(
+            key: widget.showCaseKey![0],
+            title: 'Chart view of your Investments',
+            description: 'Click here view tabular form',
 
-              child: fetched ? Stack(
-                children: [
+            child: Container(
 
-                 investments.isNotEmpty ? DynamicGraph(
-                    chartType: ChartType.bar,
-                    resultSet: dataSet,
-                    gallopYears: widget.longestInvestmentDuration~/5,
-                  ): SizedBox(),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>
-                              ChartViewer(
-                                currentUser : widget.currentUser,
-                                dataSet: dataSet,
-                              )));
-                              // ChartView(
+                child: fetched ? Stack(
+                  children: [
 
-                    },
-                    child: Container(
-                      color: Color(0x00000000),
-                      height: 20.h,
-                      width: 100.w,
+                   investments.isNotEmpty ? DynamicGraph(
+                      chartType: ChartType.bar,
+                      resultSet: dataSet,
+                      gallopYears: widget.longestInvestmentDuration~/5,
+                    ): SizedBox(),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                ChartViewer(
+                                  currentUser : widget.currentUser,
+                                  dataSet: dataSet,
+                                )));
+                                // ChartView(
+
+                      },
+                      child: Container(
+                        color: Color(0x00000000),
+                        height: 20.h,
+                        width: 100.w,
+                      ),
                     ),
-                  ),
 
-                ],
-              ) : Image.asset(kPresentTheme.progressIndicator, scale: 3),
+                  ],
+                ) : Image.asset(kPresentTheme.progressIndicator, scale: 3),
+            ),
           ),
         ),
        Flexible(
@@ -230,12 +237,16 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               totalInvest<DefaultValues.threshold ? DefaultValues.textFormat.format(totalCorpus)
                :DefaultValues.textShortFormat.format(totalCorpus)}',
                style: DefaultValues.kH3(context)),
-           trailing: RoundButton(
-               icon:Icons.add,
-               onPress:(){
-                 Navigator.push(context,
-                     MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,)));
-               }
+           trailing: Showcase(
+             key: widget.showCaseKey![1],
+             description:'Click here to add a new investment',
+             child: RoundButton(
+                 icon:Icons.add,
+                 onPress:(){
+                   Navigator.push(context,
+                       MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,)));
+                 }
+             ),
            ),
 
          ),
@@ -259,57 +270,66 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
-                child: Shingle(
-                    onPressed:(){
-                      if('#@:%&^*!'.contains(investments[index].name.substring(0,1))){
-                        prefix=investments[index].name.substring(0,1);
+                child: Showcase(
+                  key: index==0 ? widget.showCaseKey![2]:new GlobalKey(),
+                  description:'Click here to view and update the investment',
 
-                      }else{
-                        prefix='';
-                      }
-                      _edit(index,'Update');
-                      //_showThisData(index, futureValue);
-                    },
-                    hasExtraText: true,
-                    type: 'investment',
-                    maxHeight: 17.h,
-                    updateKey: widget.investmentDBs[index].investmentId,
-                    leadingImage: investmentIcons.containsKey(this.investments[index].name)
-                        ?investmentIcons[this.investments[index].name]
-                        :investmentIcons[this.investments[index].name.substring(0,1)],
-                    barColor:DefaultValues.graphColors[index%15],
-                    title:'#@:%&^*!'.contains(investments[index].name.substring(0,1))
-                          ?investments[index].name.substring(1)
-                          :investments[index].name,
-                    prefix: '#@:%&^*!'.contains(investments[index].name.substring(0,1))
-                            ?investments[index].name.substring(0,1)
-                            :'',
-                  //${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)}
-                    subtitle: 'Initial:${
-                       futureValue<DefaultValues.threshold ?DefaultValues.textFormatWithDecimal.format(investments[index].currentInvestmentAmount)
-                    :DefaultValues.textShortFormat.format(investments[index].currentInvestmentAmount)  }',
+                  child: Shingle(
+                      onPressed:(){
+                        if('#@:%&^*!'.contains(investments[index].name.substring(0,1))){
+                          prefix=investments[index].name.substring(0,1);
 
-                    text:'Annual: ${
-                        futureValue<DefaultValues.threshold ? DefaultValues.textFormatWithDecimal.format(  investments[index].annualInvestmentAmount)
-                            :DefaultValues.textShortFormat.format(investments[index].annualInvestmentAmount)
-                    } ',
-                    value:' ${investments[index].duration.toString()} Yrs' ,
-                    text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
-                    icon1: Icons.watch_later_outlined,
-                    icon2: FontAwesomeIcons.chartLine,
-                    highlight:'Corpus: ${
-                        futureValue<DefaultValues.threshold ? DefaultValues.textFormat.format(futureValue)
-                        :DefaultValues.textShortFormat.format(futureValue)
-                    }' ,
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete, size: 16.sp,) ,
-                      onPressed: (){
-
-                        _edit(index,'Delete');
+                        }else{
+                          prefix='';
+                        }
+                        _edit(index,'Update');
+                        //_showThisData(index, futureValue);
                       },
+                      hasExtraText: true,
+                      type: 'investment',
+                      maxHeight: 17.h,
+                      updateKey: widget.investmentDBs[index].investmentId,
+                      leadingImage: investmentIcons.containsKey(this.investments[index].name)
+                          ?investmentIcons[this.investments[index].name]
+                          :investmentIcons[this.investments[index].name.substring(0,1)],
+                      barColor:DefaultValues.graphColors[index%15],
+                      title:'#@:%&^*!'.contains(investments[index].name.substring(0,1))
+                            ?investments[index].name.substring(1)
+                            :investments[index].name,
+                      prefix: '#@:%&^*!'.contains(investments[index].name.substring(0,1))
+                              ?investments[index].name.substring(0,1)
+                              :'',
+                    //${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)}
+                      subtitle: 'Initial:${
+                         futureValue<DefaultValues.threshold ?DefaultValues.textFormatWithDecimal.format(investments[index].currentInvestmentAmount)
+                      :DefaultValues.textShortFormat.format(investments[index].currentInvestmentAmount)  }',
+
+                      text:'Annual: ${
+                          futureValue<DefaultValues.threshold ? DefaultValues.textFormatWithDecimal.format(  investments[index].annualInvestmentAmount)
+                              :DefaultValues.textShortFormat.format(investments[index].annualInvestmentAmount)
+                      } ',
+                      value:' ${investments[index].duration.toString()} Yrs' ,
+                      text2: '${(investments[index].investmentRoi*100).toStringAsFixed(2)}%',
+                      icon1: Icons.watch_later_outlined,
+                      icon2: FontAwesomeIcons.chartLine,
+                      highlight:'Corpus: ${
+                          futureValue<DefaultValues.threshold ? DefaultValues.textFormat.format(futureValue)
+                          :DefaultValues.textShortFormat.format(futureValue)
+                      }' ,
+                      trailing: Showcase(
+                        key: index==0 ? widget.showCaseKey![3]:new GlobalKey(),
+                        description: 'Click here to delete the investment',
+                        child: IconButton(
+                          icon: Icon(Icons.delete, size: 16.sp,) ,
+                          onPressed: (){
+
+                            _edit(index,'Delete');
+                          },
 
 
-                    ),
+                        ),
+                      ),
+                  ),
                 ),
               );
 

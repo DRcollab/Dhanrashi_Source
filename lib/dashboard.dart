@@ -2,20 +2,13 @@
 
 import 'package:dhanrashi_mvp/components/analytics_tabview.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
-import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
-import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
-import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
-import 'package:dhanrashi_mvp/models/user_data_class.dart';
+import 'package:showcaseview/showcaseview.dart';
+import 'package:sizer/sizer.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
-
-import 'data/financial_calculator.dart';
-import 'data/goal_access.dart';
 import 'empty_page_inputs.dart';
-import 'investmentinput.dart';
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
 import 'components/investment_tabview_class.dart';
@@ -27,6 +20,8 @@ import 'models/investment.dart';
 import 'models/investment_db.dart';
 
 class Dashboard extends StatefulWidget {
+
+
 
   var currentUser;
   String bannerMessage = '';
@@ -43,6 +38,22 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
+  GlobalKey _tabBarHelpKey = GlobalKey(); // Used to showcase tab help;
+  GlobalKey _analysisHelpKey1 = GlobalKey();
+  GlobalKey _analysisHelpKey2 = GlobalKey();
+
+  GlobalKey _chartViewGoalHelpKey = GlobalKey();
+  GlobalKey _shingleGoalHelpKey = GlobalKey();
+  GlobalKey _deleteGoalHelpKey = GlobalKey();
+  GlobalKey _addGoalHelpKey = GlobalKey();
+
+  GlobalKey _chartViewInvHelpKey = GlobalKey();
+  GlobalKey _shingleInvHelpKey = GlobalKey(); // Used to showcase tab help;
+  GlobalKey _deleteInvHelpKey = GlobalKey();
+  GlobalKey _addInvHelpKey = GlobalKey();
+
+  int selectedTabIndex = 0;
+
   late FirebaseFirestore fireStore;
   late var goalAccess;
   List<GoalDB> goals = [];
@@ -54,12 +65,32 @@ class _DashboardState extends State<Dashboard> {
   bool isGoalEmpty = false;
   bool isInvestmentEmpty = false;
 
+  List<List<GlobalKey>> _showCaseKeys = [[]];
 
 
   @override
   void initState() {
 
     super.initState();
+    _showCaseKeys = [
+      [_tabBarHelpKey,_analysisHelpKey1,_analysisHelpKey2],
+      [_chartViewGoalHelpKey,_addGoalHelpKey,_shingleGoalHelpKey,_deleteGoalHelpKey],
+      [_chartViewInvHelpKey,_addInvHelpKey,_shingleInvHelpKey,_deleteInvHelpKey],
+    ];
+
+    print(_tabBarHelpKey);
+
+    print(_analysisHelpKey1);
+    print(_analysisHelpKey2);
+    print(_deleteGoalHelpKey);
+
+    print(_chartViewInvHelpKey);
+    print(_addInvHelpKey);
+    print(_shingleInvHelpKey);
+    print(_deleteInvHelpKey);
+
+    print(_showCaseKeys[0]);
+
     future:Firebase.initializeApp().then((value) {
       fireStore =  FirebaseFirestore.instance;
 
@@ -70,17 +101,13 @@ class _DashboardState extends State<Dashboard> {
             ]
         );
 
-
-
-      // Global.goalCount = goals.length;
-      // Global.investmentCount = investments.length;
-
     }).onError((error, stackTrace){
 
     }
 
     );
 
+    print(_showCaseKeys[0]);
   }
 
   Future fetchGoals() async{
@@ -90,9 +117,6 @@ class _DashboardState extends State<Dashboard> {
         .get()
         .then((QuerySnapshot snapshot){
       if( snapshot.docs.isEmpty){
-        // setState(() {
-        //   isGoalEmpty = snapshot.docs.isEmpty;
-        // });
         Global.goalCount = 0;
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
@@ -111,8 +135,9 @@ class _DashboardState extends State<Dashboard> {
         if(duration > longestGoalDuration){
           longestGoalDuration = duration;
         }
+        print('Hello ');
         //double inflation = f.get('inflation');
-       setState(() {
+      setState(() {
 
           goals.add(
               GoalDB(
@@ -129,7 +154,8 @@ class _DashboardState extends State<Dashboard> {
               )
           );
           Global.goalCount++;
-       });
+
+      });
 
       });
 
@@ -202,81 +228,104 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
 
-  print('DashBoard :${widget.currentUser.profileImage}');
+          return DefaultTabController(
+                length: 3,
+                child: ShowCaseWidget(
+                  builder: Builder(
+                    builder: (context) {
+                      return CustomScaffold(
+                              helper: (){
 
-    return DefaultTabController(
-          length: 3,
-          child: CustomScaffold(
-            currentUser: this.widget.currentUser,
-              title: 'Dashboard',
-              child: Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: Material(
+                                ShowCaseWidget.of(context)!.startShowCase(_showCaseKeys[selectedTabIndex]);
+                                print(_showCaseKeys[selectedTabIndex]);
+                              },
+                              currentUser: this.widget.currentUser,
+                                title: 'Dashboard',
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 5.h),
+                                  child: Material(
 
-                  child: TabBar(
+                                    child: Showcase(
+                                      key: _tabBarHelpKey,
+                                      description: 'Select between these tabs to get respective view',
+                                      child: TabBar(
+                                        onTap: (index){
 
-                    indicator: RectangularIndicator(
-                      //height: 5,
-                      topLeftRadius: 15,
-                      topRightRadius: 15,
-                      bottomLeftRadius: 15,
-                      bottomRightRadius: 15,
-                      horizontalPadding: 10,
-                      verticalPadding: 7,
-                      color: kPresentTheme.alternateColor,
-                      //tabPosition: TabPosition,
-                      paintingStyle: PaintingStyle.fill,
-                      strokeWidth: 10,
-                    ),
-                    indicatorColor: kPresentTheme.accentColor,
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.black,
-                    labelStyle: DefaultValues.kH4(context),
+                                        setState(() {
 
-                    tabs: [
-                      Tab(text:'Analytics'),
-                      Tab(text:'Goals'),
-                      Tab(text: 'Investments',),
+                                          selectedTabIndex = index;
+                                        });
+                                        },
+                                        indicator: RectangularIndicator(
+                                          //height: 5,
+                                          topLeftRadius: 15,
+                                          topRightRadius: 15,
+                                          bottomLeftRadius: 15,
+                                          bottomRightRadius: 15,
+                                          horizontalPadding: 10,
+                                          verticalPadding: 7,
+                                          color: kPresentTheme.alternateColor,
+                                          //tabPosition: TabPosition,
+                                          paintingStyle: PaintingStyle.fill,
+                                          strokeWidth: 10,
+                                        ),
+                                        indicatorColor: kPresentTheme.accentColor,
+                                        labelColor: Colors.black,
+                                        unselectedLabelColor: Colors.black,
+                                        labelStyle: DefaultValues.kH4(context),
 
-                    ],
+                                        tabs: [
+                                          Tab(text:'Analytics', ),
+                                          Tab(text:'Goals',),
+                                          Tab(text: 'Investments',),
 
-            ),
+                                        ],
+
+                              ),
+                                    ),
+                                  ),
+                                ),
+                              foot: TabBarView(
+                                children: [
+                                 // AnalyticsTabView(),
+                                  AnalyticsTabView(
+                                    showCaseKey: _showCaseKeys[0],
+                                    goalDBs:goals,
+                                    currentUser: widget.currentUser,
+                                    investmentDBs: investments,
+                                    longestGoalDuration: longestGoalDuration,
+                                    longestInvestmentDuration: longestInvestmentDuration,
+                                  ),
+
+                                  GoalsTabView(
+                                   // fireStore: this.fireStore,
+                                    showCaseKey: _showCaseKeys[1],
+                                    goalDBs:goals,
+                                    currentUser: widget.currentUser,
+                                    totalAmount: totalGoalValue,
+                                    longestInvestmentDuration: longestInvestmentDuration,
+                                    longestGoalDuration: longestGoalDuration,
+                                  ),// 2nd view
+                                  InvestmentTabView(
+                                    showCaseKey: _showCaseKeys[2],
+                                    investmentDBs: investments,
+                                    currentUser: widget.currentUser,
+                                    totalInvest: totalInvestValue,
+                                    longestInvestmentDuration: longestInvestmentDuration,
+                                    longestGoalDuration: longestGoalDuration,
+
+                                  ),
+
+                                ]
+                              ),
+                            );
+                    }
+                  ),
                 ),
-              ),
-            foot: TabBarView(
-              children: [
-               // AnalyticsTabView(),
-                AnalyticsTabView(
-                  goalDBs:goals,
-                  currentUser: widget.currentUser,
-                  investmentDBs: investments,
-                  longestGoalDuration: longestGoalDuration,
-                  longestInvestmentDuration: longestInvestmentDuration,
-                ),
 
-                GoalsTabView(
-                 // fireStore: this.fireStore,
-                  goalDBs:goals,
-                  currentUser: widget.currentUser,
-                  totalAmount: totalGoalValue,
-                  longestInvestmentDuration: longestInvestmentDuration,
-                  longestGoalDuration: longestGoalDuration,
-                ),// 2nd view
-                InvestmentTabView(
-                 // fireStore: this.fireStore,
-                  investmentDBs: investments,
-                  currentUser: widget.currentUser,
-                  totalInvest: totalInvestValue,
-                  longestInvestmentDuration: longestInvestmentDuration,
-                  longestGoalDuration: longestGoalDuration,
 
-                ),
+          );
 
-              ]
-            ),
-          ),
-
-    );
 
   }
 }

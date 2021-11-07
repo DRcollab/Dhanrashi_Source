@@ -55,17 +55,18 @@ bool isEditing = false;
         color: kPresentTheme.themeColor,
 
         child: Row(
-         // crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+           // crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
                     this.widget.headingChild!=null ? Padding(
-                    padding: EdgeInsets.only(left: 1.w,top:0,right: 0, bottom: 0),
+                    padding: EdgeInsets.only(left: 0.w,top:0,right: 0, bottom: 0),
                     child:  this.widget.headingChild,
                   ):SizedBox(width:0, height:0),
                   Padding(
-                    padding:  EdgeInsets.only(left: 10.w,top:0,right: 0, bottom: 0),
+                    padding:  EdgeInsets.only(left: 0.w,top:0,right: 0, bottom: 0),
                     child: Column(
-
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
                        // widget.title!='' ?Text(this.widget.title):SizedBox(width: 0,height: 0,),

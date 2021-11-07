@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/models/user_data_class.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'components/constants.dart';
 import 'data/global.dart';
 import 'goal_input.dart';
@@ -30,6 +31,10 @@ class EmptyPage extends StatelessWidget {
 
   }) ;
 
+  GlobalKey _key1 = GlobalKey();
+  GlobalKey _key2 = GlobalKey();
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -47,69 +52,91 @@ class EmptyPage extends StatelessWidget {
 
 
 
-    return CustomScaffold(
-        currentUser: this.currentUser,
-        child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+    return ShowCaseWidget(
 
-           this.message !='' ? Container(
-             color: messageColor,
-             child: ListTile(
+      builder: Builder(
+        builder: (context) {
+          return CustomScaffold(
+              helper: (){
+                ShowCaseWidget.of(context)!.startShowCase([_key1,_key2]);
+              },
+              currentUser: this.currentUser,
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
 
-               leading: CircleAvatar(
-                 backgroundColor: Colors.amber,
-                 child: Image.asset('images/check.png',height: 20,width: 20,),
+                 this.message !='' ? Container(
+                   color: messageColor,
+                   child: ListTile(
 
-               ) ,
-                title:Text(message, style: DefaultValues.kH3(context),),
-              ),
-           ):SizedBox(),
-            Container(child: Image.asset('images/gifs/empty.gif',scale: 0.1,),
-                  height: 250,width: 250,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(28),
-              child: Text( Utility.messages[messageIndex]!,
-                          style:DefaultValues.kH2(context),
+                     leading: CircleAvatar(
+                       backgroundColor: Colors.amber,
+                       child: Image.asset('images/check.png',height: 20,width: 20,),
 
-              ),
-            ),
-            //CommandButton(),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-              child: Global.investmentCount == 0 ? CommandButton(
-                  onPressed: (){
+                     ) ,
+                      title:Text(message, style: DefaultValues.kH3(context),),
+                    ),
+                 ):SizedBox(),
+                  Container(child: Image.asset('images/gifs/empty.gif',scale: 0.1,),
+                        height: 250,width: 250,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(28),
+                    child: Text( Utility.messages[messageIndex]!,
+                                style:DefaultValues.kH2(context),
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
-                  },
+                    ),
+                  ),
+                  //CommandButton(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+                    child: Global.investmentCount == 0 ? Showcase(
+                      key: _key1,
+                      description: 'Click here to add Investments',
+                      shapeBorder: CircleBorder(),
+                      overlayPadding: EdgeInsets.all(8),
+                      child: CommandButton(
+                          onPressed: (){
 
-                  buttonColor: kPresentTheme.accentColor,
-                  borderRadius: BorderRadius.circular(20),
-                  textColor: kPresentTheme.lightWeightColor,
-                  buttonText: 'Add Investments',
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
+                          },
+
+                          buttonColor: kPresentTheme.accentColor,
+                          borderRadius: BorderRadius.circular(20),
+                          textColor: kPresentTheme.lightWeightColor,
+                          buttonText: 'Add Investments',
 
 
-              ): SizedBox(),
-            ),
+                      ),
+                    ): SizedBox(),
+                  ),
 
-            Padding(
-              padding: const EdgeInsets.only(left:18.0, right: 18.0),
-              child:Global.goalCount == 0 ? CommandButton(
-                  onPressed: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
-                  },
-                  buttonColor: kPresentTheme.accentColor,
-                  borderRadius: BorderRadius.circular(20),
-                  textColor: kPresentTheme.lightWeightColor,
-                  buttonText: 'Add Goals',
-              ):SizedBox(),
-            )
-          ],
-        )
+                  Padding(
+                    padding: const EdgeInsets.only(left:18.0, right: 18.0),
+                    child:Global.goalCount == 0 ? Showcase(
+                      key: _key2,
+                      description: 'Click here to add goals',
+                      shapeBorder: CircleBorder(),
+                      overlayPadding: EdgeInsets.all(8),
+                      child: CommandButton(
+                          onPressed: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
+                          },
+                          buttonColor: kPresentTheme.accentColor,
+                          borderRadius: BorderRadius.circular(20),
+                          textColor: kPresentTheme.lightWeightColor,
+                          buttonText: 'Add Goals',
+                      ),
+                    ):SizedBox(),
+                  )
+                ],
+              )
+          );
+        }
+      ),
     );
   }
 }

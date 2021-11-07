@@ -8,6 +8,7 @@ import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import '../chart_viewer.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import '../empty_page_inputs.dart';
@@ -26,6 +27,7 @@ class GoalsTabView extends StatefulWidget {
   int longestInvestmentDuration;
   var currentUser;
   double totalAmount;
+  List<GlobalKey?>? showCaseKey;
 
   GoalsTabView({
 
@@ -33,7 +35,10 @@ class GoalsTabView extends StatefulWidget {
     required this.currentUser,
     this.totalAmount=0,
     this.longestInvestmentDuration = 0,
-    this.longestGoalDuration=0});
+    this.longestGoalDuration=0,
+    this.showCaseKey,
+  });
+
 
   @override
   _GoalsTabViewState createState() => _GoalsTabViewState();
@@ -51,6 +56,11 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(widget.showCaseKey![0]);
+    print(widget.showCaseKey![1]);
+    print(widget.showCaseKey![2]);
+    print(widget.showCaseKey![3]);
+
     totalGoal = widget.totalAmount;
     goals = List.empty(growable: true);
     if(widget.goalDBs.isNotEmpty){
@@ -72,6 +82,9 @@ class _GoalsTabViewState extends State<GoalsTabView> {
      // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
     });
   }
+
+
+
 
 
   _edit(int index, String type){
@@ -159,36 +172,42 @@ class _GoalsTabViewState extends State<GoalsTabView> {
       children: [
         Flexible(
           flex:2,
-          child: Container(
+          child:Showcase(
+                  key:widget.showCaseKey![0],
+                  description: 'Click here to view the data in tabular form',
+                  title: 'Your investments in a chart',
+                  child: Container(
 
-              child: fetched ? Stack(
+                      child: fetched ? Stack(
 
-                children: [
-                 goals.isNotEmpty ?DynamicGraph(
-                    chartType: ChartType.bar,
-                    resultSet: dataSet,
-                    gallopYears: (widget.longestGoalDuration~/5),
-                  ):SizedBox(),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>
-                              ChartViewer(
-                                currentUser: widget.currentUser,
-                                dataSet: dataSet,
+                        children: [
+                         goals.isNotEmpty ?DynamicGraph(
+                            chartType: ChartType.bar,
+                            resultSet: dataSet,
+                            gallopYears: (widget.longestGoalDuration~/5),
+                          ):SizedBox(),
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      ChartViewer(
+                                        currentUser: widget.currentUser,
+                                        dataSet: dataSet,
 
-                              )));
-                    },
-                    child: Container(
-                      color: Color(0x00000000),
-                      height: 20.h,
-                      width: 100.w,
-                    ),
+                                      )));
+                            },
+                            child: Container(
+                              color: Color(0x00000000),
+                              height: 20.h,
+                              width: 100.w,
+                            ),
+                          ),
+                        ],
+                      ) : Image.asset(kPresentTheme.progressIndicator, scale: 3),
+                    //DonutChart(pieData: pieData)
                   ),
-                ],
-              ) : Image.asset(kPresentTheme.progressIndicator, scale: 3),
-            //DonutChart(pieData: pieData)
-          ),
+                ),
+
         ),
         Flexible(
           flex:1,
@@ -199,12 +218,16 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                 :DefaultValues.textShortFormat.format(totalGoal)}'
 
               , style: DefaultValues.kH3(context),),
-            trailing: RoundButton(
-              icon: Icons.add,
-                onPress:(){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,)));
-                }
+            trailing: Showcase(
+              key: widget.showCaseKey![1],
+              description: 'Click here to add a new goal',
+              child: RoundButton(
+                icon: Icons.add,
+                  onPress:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,)));
+                  }
+              ),
             ),
 
 
@@ -215,56 +238,68 @@ class _GoalsTabViewState extends State<GoalsTabView> {
          height: 50.h, //* DefaultValues.adaptByValue(context,0.50),
           child: ListView.builder(
               itemBuilder: (context, index){
+                print(index);
                 return Padding(
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
-                  child: Shingle(
-                    onPressed:(){
-                      if('#@:%&^*!'.contains(goals[index].name.substring(0,1))){
-                        prefix=goals[index].name.substring(0,1);
+                  child: Showcase(
+                    key:index==0 ? widget.showCaseKey![2]: new GlobalKey(),
+                    title: 'Summary of the Goal',
+                    description: 'Click this area to view and update the goal',
+                    child: Shingle(
+                      onPressed:(){
+                        if('#@:%&^*!'.contains(goals[index].name.substring(0,1))){
+                          prefix=goals[index].name.substring(0,1);
 
-                      }else{
-                        prefix='';
-                      }
-                      _edit(index, 'Update');
-                    },
-                    type: 'goal',
-                    maxHeight: 11.h,
-                    barColor: DefaultValues.graphColors[index%15],
-                    leadingImage: goalIcons.containsKey(this.goals[index].name)
-                        ?goalIcons[this.goals[index].name]
-                        :goalIcons[this.goals[index].name.substring(0,1)],
-                    title:  '#@:%&^*!'.contains(goals[index].name.substring(0,1))
-                        ?goals[index].name.substring(1)
-                        :goals[index].name,
-                    prefix: '#@:%&^*!'.contains(goals[index].name.substring(0,1))
-                        ?goals[index].name.substring(0,1)
-                        :'',
-                //Utility.changeToPeriodicDecimal(goals[index].goalAmount).toString()} ${Utility.getPeriod(goals[index].goalAmount)
-                    subtitle: 'Goal: ${DefaultValues.textFormat.format(goals[index].goalAmount)}',
-                    value:'${goals[index].duration.toString()} Years',
-                    icon1:Icons.watch_later_outlined,
-                    trailing: IconButton(
-                        icon: Icon(Icons.delete, size:16.sp) ,
-                      onPressed: (){
-                        _edit(index, 'Delete');
-                          // Utility.showMessageAndAsk(
-                          //     context: context,
-                          //     buttonText1: 'I know',
-                          //     buttonText2: 'Cancel',
-                          //     msg:'Beware! You are about to delete this goal. This action is irreversible',
-                          //     takeAction1: (){
-                          //       GoalDB goalDB = widget.goalDBs[index];
-                          //       _delete(goalDB);
-                          //
-                          //
-                          //     },
-                          //     takeAction2: (){},
-                          // );
+                        }else{
+                          prefix='';
+                        }
+                        _edit(index, 'Update');
                       },
+                      type: 'goal',
+                      maxHeight: 11.h,
+                      barColor: DefaultValues.graphColors[index%15],
+                      leadingImage: goalIcons.containsKey(this.goals[index].name)
+                          ?goalIcons[this.goals[index].name]
+                          :goalIcons[this.goals[index].name.substring(0,1)],
+                      title:  '#@:%&^*!'.contains(goals[index].name.substring(0,1))
+                          ?goals[index].name.substring(1)
+                          :goals[index].name,
+                      prefix: '#@:%&^*!'.contains(goals[index].name.substring(0,1))
+                          ?goals[index].name.substring(0,1)
+                          :'',
+                //Utility.changeToPeriodicDecimal(goals[index].goalAmount).toString()} ${Utility.getPeriod(goals[index].goalAmount)
+                      subtitle: 'Goal: ${DefaultValues.textFormat.format(goals[index].goalAmount)}',
+                      value:'${goals[index].duration.toString()} Years',
+                      icon1:Icons.watch_later_outlined,
+                      trailing: Showcase(
+                        key: index==0 ? widget.showCaseKey![3] : new GlobalKey(),
+                        //shapeBorder: Shape,
+                        contentPadding: EdgeInsets.all(10),
+                        description: 'Click here to delete',
+                        child: IconButton(
+                            icon: Icon(Icons.delete, size:16.sp) ,
+                          onPressed: (){
+                            _edit(index, 'Delete');
+                              // Utility.showMessageAndAsk(
+                              //     context: context,
+                              //     buttonText1: 'I know',
+                              //     buttonText2: 'Cancel',
+                              //     msg:'Beware! You are about to delete this goal. This action is irreversible',
+                              //     takeAction1: (){
+                              //       GoalDB goalDB = widget.goalDBs[index];
+                              //       _delete(goalDB);
+                              //
+                              //
+                              //     },
+                              //     takeAction2: (){},
+                              // );
+                          },
 
+
+                        ),
+                      ),
 
                     ),
-
                   ),
                 );
 
