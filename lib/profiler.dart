@@ -153,7 +153,12 @@ class _ProfilerPageState extends State<ProfilerPage> {
  profileCollector.fName.text = widget.currentUser.firstName!='N/A' ? widget.currentUser.firstName : '';
  profileCollector.lName.text = widget.currentUser.lastName!='N/A' ? widget.currentUser.lastName : '';
  profileCollector.dateOfBirth = widget.currentUser.DOB;
- profileCollector.profileImage = widget.currentUser.profileImage.substring(DefaultValues.directoryOfPhoto.length+1);
+ if(widget.currentUser.profileImage.contains('/')){
+   profileCollector.profileImage = widget.currentUser.profileImage.substring(DefaultValues.directoryOfPhoto.length+1);
+ }else{
+   profileCollector.profileImage = widget.currentUser.profileImage;
+ }
+
  if(widget.currentUser.incomeRange!='') {
    profileCollector.annualIncome =
    this.incomeRangeList[this.incomeRangeList.indexOf(
@@ -348,7 +353,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
 
     //Widget comButt =  /// Command Button
-    print('call me index : $index');
+
 
     return ShowCaseWidget(
 

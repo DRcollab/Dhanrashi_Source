@@ -23,7 +23,7 @@ class ProfileView extends StatelessWidget {
    DateTime now = DateTime.now();
    Duration duration = Duration();
 
-   print('confirmation  at Build page:${this.currentUser.profileImage}');
+
 
   double age = (currentUser.DOB.difference(now).inDays/365);
 

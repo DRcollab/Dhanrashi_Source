@@ -46,7 +46,7 @@ class Utility{
     'empty':'It seems that  you have not entered any goal or investment.\n\n Let\'s start by adding your first Goal and Investment',
     'empty_goal':'It seems that  you have not entered any goal.\n\nLet\'s start by adding your first Goal',
     'empty_inv':'It seems that  you have not entered any investment.\n\nLet\'s start by adding your first Investment ',
-
+    '':'',
   };
 
 

@@ -7,6 +7,7 @@ import 'package:dhanrashi_mvp/investmentinput.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'components/constants.dart';
+import 'dashboard.dart';
 import 'data/global.dart';
 import 'goal_input.dart';
 
@@ -47,7 +48,12 @@ class EmptyPage extends StatelessWidget {
       }
 
     }else{
-      messageIndex = 'empty_goal';
+       if(Global.goalCount == 0) {
+         messageIndex = 'empty_goal';
+       }else{
+         messageIndex = '';
+       }
+
     }
 
 
@@ -131,7 +137,21 @@ class EmptyPage extends StatelessWidget {
                           buttonText: 'Add Goals',
                       ),
                     ):SizedBox(),
-                  )
+                  ),
+
+                  messageIndex == ''? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: CommandButton(
+                        onPressed: (){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Dashboard(currentUser: currentUser,)));
+                        },
+                      buttonColor: kPresentTheme.accentColor,
+                      borderRadius: BorderRadius.circular(20),
+                      textColor: kPresentTheme.lightWeightColor,
+                      buttonText: 'Go back to dash board',
+                    ),
+                  ):SizedBox(),
                 ],
               )
           );
