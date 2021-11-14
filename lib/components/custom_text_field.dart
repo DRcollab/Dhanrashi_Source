@@ -166,31 +166,36 @@ class _EditableTextFieldState extends State<EditableTextField> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
 
 
     if(widget.isEditing) {
-      return TextFormField(
-        textInputAction: TextInputAction.done,
-        style: widget.style,
-        controller: widget.editingController,
-        onFieldSubmitted: (value) {
-          FocusScope.of(context).unfocus();
-          setState(() {
-            widget.initialText = value;
-          });
+      return Flexible(
+        child: Padding(
+          padding: const EdgeInsets.only( left:18.0),
+          child: TextFormField(
 
-        },
-        onEditingComplete:(){
-          FocusScope.of(context).unfocus();
-          setState(() {
-            widget.isEditing = false;
-          });
-        } ,
+            textInputAction: TextInputAction.done,
+            style: widget.style,
+            controller: widget.editingController,
+            onFieldSubmitted: (value) {
+              FocusScope.of(context).unfocus();
+              setState(() {
+                widget.initialText = value;
+              });
 
-        onTap: widget.onTap,
+            },
+            onEditingComplete:(){
+              FocusScope.of(context).unfocus();
+              setState(() {
+                widget.isEditing = false;
+              });
+            } ,
+
+            onTap: widget.onTap,
+          ),
+        ),
       );
     }else{
 

@@ -276,7 +276,7 @@ class _GoalSheetState extends State<GoalSheet> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(widget.imageSource, height: 8.h, width: 8.w,),
-                      Center(
+                      Expanded(
                           child: (widget.type!='Delete') ? Band(
                             controller:this.titleEditingController,
                             onCommit : widget.onEditCommit,

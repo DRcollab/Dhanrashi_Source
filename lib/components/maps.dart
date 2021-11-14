@@ -44,3 +44,25 @@ import 'package:flutter/material.dart';
 
 
   };
+
+  String prefixSymbols = '#@:%&^*!';
+
+  Map symbols = {
+    'Mutual Fund': '#',
+    'Insurance':'@',
+    'Debts and Bonds':':',
+    'Equity':'%',
+    'Real Estate':'&',
+    'Bank FD':'^',
+    'Gold':'*',
+    'Other':'!',
+    'Own a car':'#',
+    'My Dream House':'@',
+    'Building my own House':':',
+    'Children Education':'%',
+    'Retirement':'&',
+    'See my country':'^',
+    'Foreign tour':'*',
+    'Parents Health':'!',
+
+  };

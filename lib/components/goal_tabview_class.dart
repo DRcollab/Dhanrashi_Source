@@ -251,7 +251,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                           prefix=goals[index].name.substring(0,1);
 
                         }else{
-                          prefix='';
+                          prefix=symbols[goals[index].name.trim()];
                         }
                         _edit(index, 'Update');
                       },

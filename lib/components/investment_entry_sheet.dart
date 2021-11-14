@@ -129,7 +129,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
   @override
   void initState(){
-
+  //  titleEditingController = TextEditingController(text:widget.titleMessage);
     this.isSavePressed = false;
     this.statusOfStoring = false;
     this.isTimedOut = false;
@@ -244,6 +244,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
       Task('Interest Earned', interestValue ,kPresentTheme.alternateColor),
     ];
 
+    print(' Im not here ');
+    print(widget.prefix);
 
     return isSavePressed ? WorkDone(
       isComplete: statusOfStoring,
@@ -314,7 +316,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                  //   initialText:widget.titleMessage, style: DefaultValues.kH2(context),)
 
                  child: Row(
-                   mainAxisAlignment: MainAxisAlignment.start,
+                   mainAxisAlignment: MainAxisAlignment.center,
                    children: [
                      Image.asset(widget.imageSource,
                        height: 3.h ,
@@ -327,7 +329,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                        onTap: widget.onTap,
                        controller: titleEditingController,
                        text: widget.titleMessage,
-                       textStyle: DefaultValues.kH2(context),)
+                       textStyle: DefaultValues.kH2(context),
+                     )
+
                         :Card(child:Text(widget.titleMessage,style:DefaultValues.kH2(context) ,)),),
                      CommandButton(
                        enabled: !this.isEditing,
@@ -337,7 +341,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                        buttonText: widget.type,
                        textSize: 12.sp,
                        onPressed:()  {
-                          print('Prefix is ${widget.prefix}');
+                        print(' Im not here ');
+                        print(widget.prefix);
                          var inv =  Investment(
 
                                name: investmentIcons.containsKey(this.titleEditingController.text.trim())
@@ -349,6 +354,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                                investmentRoi: expectedRoi/100,
                              );
 
+                        print(' Im not here::::: ');
+                        print(inv.name);
 
 
                          setState(()  {

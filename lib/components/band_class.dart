@@ -51,53 +51,40 @@ bool isEditing = false;
   Widget build(BuildContext context) {
     return Padding(
       padding:  EdgeInsets.symmetric(vertical:1.h, horizontal:1.w),
-      child: Container(
-        color: kPresentTheme.themeColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+                    //   this.widget.headingChild!=null ? Padding(
+                    //   padding: EdgeInsets.only(left: 0.w,top:0,right: 0, bottom: 0),
+                    //   child:  this.widget.headingChild,
+                    // ):SizedBox(width:0, height:0),
+          EditableTextField(
+            onTap: widget.onTap,
+            editingController: this.widget.controller,
+            isEditing: this.isEditing,
+            initialText: this.widget.controller.text,
+            style: widget.textStyle,),
+          IconButton(
+            icon: this.isEditing ? Icon( this.widget.alternateIcon) : Icon( this.widget.buttonIcon),
+            onPressed: (){
+              setState(() {
+                this.isEditing = !this.isEditing;
+                this.widget.text = widget.controller.text;
+                widget.onCommit();
+              });
+                    //toggleBandState(this.isEditing);
+            },
+          ),
 
-        child: Row(
-           // crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-                    this.widget.headingChild!=null ? Padding(
-                    padding: EdgeInsets.only(left: 0.w,top:0,right: 0, bottom: 0),
-                    child:  this.widget.headingChild,
-                  ):SizedBox(width:0, height:0),
-                  Padding(
-                    padding:  EdgeInsets.only(left: 0.w,top:0,right: 0, bottom: 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                       // widget.title!='' ?Text(this.widget.title):SizedBox(width: 0,height: 0,),
-                        EditableTextField(
-                          onTap: widget.onTap,
-                          editingController: this.widget.controller,
-                          isEditing: this.isEditing,
-                          initialText: this.widget.controller.text,
-                          style: widget.textStyle,),
-                          widget.subText!='' ?Text(this.widget.subText):SizedBox(width: 0,height: 0,),
-
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: this.isEditing ? Icon( this.widget.alternateIcon) : Icon( this.widget.buttonIcon),
-                    onPressed: (){
-                      setState(() {
-                        this.isEditing = !this.isEditing;
-                        this.widget.text = widget.controller.text;
-                        widget.onCommit();
-                      });
-                      //toggleBandState(this.isEditing);
-                    },
-                  ),
-
-          ],
-        ),
-
+        ],
       ),
+
     );
 
   }
 }
+
+
+
+
+

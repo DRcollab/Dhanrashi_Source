@@ -66,6 +66,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
     // TODO: implement initState
     super.initState();
     totalInvest = widget.totalInvest;
+    totalCorpus = 0;
     //
     investments = List.empty(growable: true);
     if(widget.investmentDBs.length>0){
@@ -90,6 +91,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
 
   _edit(int index , String type){
+
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -134,12 +136,17 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                   }
 
                   totalInvest = 0;
+                  totalCorpus = 0;
                   if(investments.isNotEmpty) {
                     investments.forEach((element) {
-                      totalInvest = element.currentInvestmentAmount + element
-                          .annualInvestmentAmount * element.duration +
-                          totalInvest;
+                      totalInvest = element.currentInvestmentAmount + element.annualInvestmentAmount * element.duration +totalInvest;
+                      double futureValue = Calculator.fv(element.investmentRoi, element.duration,element.annualInvestmentAmount,
+                          element.currentInvestmentAmount, 0);
+
+                      totalCorpus = futureValue + totalCorpus;
                     });
+
+
 
                     int lngstInv = Calculator().getLongestInvestmentDuration(
                         investments);
@@ -262,7 +269,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                   investments[index].annualInvestmentAmount, 
                   investments[index].currentInvestmentAmount, 0);
 
-                totalCorpus = futureValue + totalCorpus;
+                  totalCorpus = futureValue + totalCorpus;
 
 
 
@@ -280,7 +287,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                           prefix=investments[index].name.substring(0,1);
 
                         }else{
-                          prefix='';
+                          prefix=symbols[investments[index].name.trim()];
                         }
                         _edit(index,'Update');
                         //_showThisData(index, futureValue);
