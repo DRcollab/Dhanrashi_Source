@@ -67,6 +67,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
     super.initState();
     totalInvest = widget.totalInvest;
     totalCorpus = 0;
+
     //
     investments = List.empty(growable: true);
     if(widget.investmentDBs.length>0){
@@ -83,7 +84,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
           element.annualInvestmentAmount,
           element.currentInvestmentAmount, 0);
 
-      totalCorpus = futureValue + totalCorpus;
+     totalCorpus = futureValue + totalCorpus;
 
     });
 
@@ -91,6 +92,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
 
   _edit(int index , String type){
+
 
     showModalBottomSheet(
         isScrollControlled: true,
@@ -104,6 +106,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               onEditCommit: (){
                 setState(() {
                   moveKB = false;
+
                 });
               },
               onTap: (){
@@ -137,6 +140,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
                   totalInvest = 0;
                   totalCorpus = 0;
+
                   if(investments.isNotEmpty) {
                     investments.forEach((element) {
                       totalInvest = element.currentInvestmentAmount + element.annualInvestmentAmount * element.duration +totalInvest;
@@ -263,13 +267,13 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
           child: ListView.builder(
             itemBuilder: (context, index){
 
-             // double futureValue = Calculator.fv(r, nper, pmt, pv, type)
+
               double futureValue = Calculator.fv(investments[index].investmentRoi,
                   investments[index].duration, 
                   investments[index].annualInvestmentAmount, 
                   investments[index].currentInvestmentAmount, 0);
 
-                  totalCorpus = futureValue + totalCorpus;
+
 
 
 
@@ -283,6 +287,8 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
                   child: Shingle(
                       onPressed:(){
+
+
                         if('#@:%&^*!'.contains(investments[index].name.substring(0,1))){
                           prefix=investments[index].name.substring(0,1);
 
@@ -290,7 +296,8 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                           prefix=symbols[investments[index].name.trim()];
                         }
                         _edit(index,'Update');
-                        //_showThisData(index, futureValue);
+
+
                       },
                       hasExtraText: true,
                       type: 'investment',

@@ -64,17 +64,27 @@ bool isEditing = false;
             isEditing: this.isEditing,
             initialText: this.widget.controller.text,
             style: widget.textStyle,),
-          IconButton(
-            icon: this.isEditing ? Icon( this.widget.alternateIcon) : Icon( this.widget.buttonIcon),
+
+      this.isEditing ? IconButton(
+            icon:  Icon( this.widget.alternateIcon),
             onPressed: (){
               setState(() {
-                this.isEditing = !this.isEditing;
+                this.isEditing = false;
                 this.widget.text = widget.controller.text;
-                widget.onCommit();
+
+                  widget.onCommit();
+
               });
                     //toggleBandState(this.isEditing);
             },
-          ),
+          ): IconButton(
+          onPressed: (){
+            setState(() {
+              this.isEditing = true;
+            });
+          },
+          icon: Icon( this.widget.buttonIcon),
+    ) ,
 
         ],
       ),

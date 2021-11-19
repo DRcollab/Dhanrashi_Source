@@ -81,15 +81,14 @@ class _DynamicGraphState extends State<DynamicGraph> {
           //colorFn: (_, __) => barColor,
         ),
       );
-      //print(_chartData.toString());
+
     }
   }
 
   void _makeDataforLine() {
     List allInvestmentAnnualAmt = widget.resultSet;
 
-    // print('Make Data for Line: $allInvestmentAnnualAmt');
-    // print(allInvestmentAnnualAmt.shape);
+
 
     int noStack = allInvestmentAnnualAmt.shape[0] -
         1; //Number of goals - 1; hardcoded for now
@@ -104,7 +103,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
         _allInvestmentAmount
             .add(YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j]),DefaultValues.graphColors[i%15]));
       }
-   //   print('allInvestmenamt: $_allInvestmentAmount');
+
 
       // var barColor = charts.MaterialPalette.teal.shadeDefault;
      // var barColor = charts.MaterialPalette.deepOrange.shadeDefault;
@@ -123,7 +122,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
         //  labelAccessorFn: (YearWiseAmount row,_) =>'${row.amount}',
         ),
       );
-    //  print(_lineChartData.toString());
+
 
     }
   }
@@ -133,14 +132,12 @@ class _DynamicGraphState extends State<DynamicGraph> {
    int noOfYear = allInvestmentAnnualAmt.shape[1] - 1;
     double outerChart;
     double innerChart;
-    print(allInvestmentAnnualAmt[1][noOfYear]);
-  // print('Make Data: $allInvestmentAnnualAmt');
+
+
 
    double invValueatlastYear = double.parse( allInvestmentAnnualAmt[0][noOfYear]);
    double goalValueatlastYear = double.parse( allInvestmentAnnualAmt[1][noOfYear]);
-    // print('from inside chart :');
-    // print(invValueatlastYear);
-    // print(goalValueatlastYear);
+
 
    List<Task>   pieData;
     inv_ratio = 7/5;
@@ -196,7 +193,6 @@ class _DynamicGraphState extends State<DynamicGraph> {
   }
 
   Widget getWidget() {
-   // print('get Widget');
 
     if (widget.chartType == ChartType.bar) {
       return new charts.BarChart(_barChartData,
@@ -251,7 +247,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
       int goalIndex=0;
       for (int i = 0; i<_pieChartData[0].data.length;i++){
 
-        print(_pieChartData[0].data[i].task);
+
         if(_pieChartData[0].data[i].task == 'Investment'){
           invIndex = i;
         }
@@ -270,8 +266,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
       }
 
-      print(goalIndex);
-      print(invIndex);
+
 
       double totalInvestmentCorpus = _pieChartData[0].data[0].task == 'Investment'
           ? _pieChartData[0].data[0].value

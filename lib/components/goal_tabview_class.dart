@@ -56,10 +56,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.showCaseKey![0]);
-    print(widget.showCaseKey![1]);
-    print(widget.showCaseKey![2]);
-    print(widget.showCaseKey![3]);
+
 
     totalGoal = widget.totalAmount;
     goals = List.empty(growable: true);
@@ -238,7 +235,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
          height: 50.h, //* DefaultValues.adaptByValue(context,0.50),
           child: ListView.builder(
               itemBuilder: (context, index){
-                print(index);
+
                 return Padding(
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Showcase(

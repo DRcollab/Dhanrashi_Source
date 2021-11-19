@@ -89,9 +89,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
       totalInvestment = investedAmount + annualInvestment*investmentDuration;
       corpusValue = totalInvestment + interestValue;
 
-      print(totalInvestment);
-      print(interestValue);
-      print(annualInvestment);
+
 
     }else{
       goalAmount = 0;
@@ -101,19 +99,12 @@ class _SIPCalculatorState extends State<SIPCalculator> {
       //investedAmount = valueSlider2;
      // goalAmount = valueSlider1;
     sipAmount = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 1)/12;
-   interestValue =  goalAmount - (sipAmount*12*investmentDuration+investedAmount);
+   interestValue =  goalAmount - (sipAmount*investmentDuration+investedAmount);
       //sipAmount = annualInvestment * 100000/12;
     }
 
 
 
-
-    // interestValue = calculateInterset();
-    // totalInvestment = investedAmount + annualInvestment*investmentDuration;
-    //
-    // goalAmount = totalInvestment+interestValue;
-    // annualInvestment = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 0);
-    // sipAmount = annualInvestment * 100000/12;
 
     pieData = [
 

@@ -78,18 +78,7 @@ class _DashboardState extends State<Dashboard> {
       [_chartViewInvHelpKey,_addInvHelpKey,_shingleInvHelpKey,_deleteInvHelpKey],
     ];
 
-    print(_tabBarHelpKey);
 
-    print(_analysisHelpKey1);
-    print(_analysisHelpKey2);
-    print(_deleteGoalHelpKey);
-
-    print(_chartViewInvHelpKey);
-    print(_addInvHelpKey);
-    print(_shingleInvHelpKey);
-    print(_deleteInvHelpKey);
-
-    print(_showCaseKeys[0]);
 
     future:Firebase.initializeApp().then((value) {
       fireStore =  FirebaseFirestore.instance;
@@ -107,7 +96,7 @@ class _DashboardState extends State<Dashboard> {
 
     );
 
-    print(_showCaseKeys[0]);
+
   }
 
   Future fetchGoals() async{
@@ -135,7 +124,7 @@ class _DashboardState extends State<Dashboard> {
         if(duration > longestGoalDuration){
           longestGoalDuration = duration;
         }
-        print('Hello ');
+
         //double inflation = f.get('inflation');
       setState(() {
 
@@ -237,7 +226,7 @@ class _DashboardState extends State<Dashboard> {
                               helper: (){
 
                                 ShowCaseWidget.of(context)!.startShowCase(_showCaseKeys[selectedTabIndex]);
-                                print(_showCaseKeys[selectedTabIndex]);
+
                               },
                               currentUser: this.widget.currentUser,
                                 title: 'Dashboard',

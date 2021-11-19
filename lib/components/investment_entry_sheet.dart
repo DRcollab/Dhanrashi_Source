@@ -146,7 +146,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
       investAccess = DRInvestAccess(fireStore, widget.currentUser);
     });
 
-   // print(fireStore.toString());
+
   }
 
 
@@ -235,7 +235,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     corpusValue = totalInvestment + interestValue;
       //
       if(corpusValue>DefaultValues.threshold){
-        print('corpusValue');
+
       }
 
      pieData = [
@@ -244,8 +244,8 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
       Task('Interest Earned', interestValue ,kPresentTheme.alternateColor),
     ];
 
-    print(' Im not here ');
-    print(widget.prefix);
+
+
 
     return isSavePressed ? WorkDone(
       isComplete: statusOfStoring,
@@ -281,7 +281,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
               dummy.text =DefaultValues.textFormat.format(double.parse(dummy.text));
               break;
             default:
-              print((currentInvestmentController.text.substring(0,1)));
+
               break;
           }
 
@@ -324,7 +324,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      Expanded(child: (widget.type!='Delete') ?Band(
                        onCommit: (){
                          widget.onEditCommit();
-                        textBoxLostFocus = true;
+                         textBoxLostFocus = true;
                        },
                        onTap: widget.onTap,
                        controller: titleEditingController,
@@ -341,8 +341,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                        buttonText: widget.type,
                        textSize: 12.sp,
                        onPressed:()  {
-                        print(' Im not here ');
-                        print(widget.prefix);
+
                          var inv =  Investment(
 
                                name: investmentIcons.containsKey(this.titleEditingController.text.trim())
@@ -354,8 +353,6 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                                investmentRoi: expectedRoi/100,
                              );
 
-                        print(' Im not here::::: ');
-                        print(inv.name);
 
 
                          setState(()  {
@@ -510,7 +507,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                onCompleteEditing: (){
                  String text;
                  setState(() {
-                   print((currentInvestmentController.text.substring(0,1)));
+
                    isEditing = false;
                     text1Active = false;
                     text2Active = false;

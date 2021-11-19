@@ -12,7 +12,7 @@ class Calculator {
   static double fv(double r, int nper, double pmt, double pv, int type) {
     double fv = (pv * pow(1 + r, nper) +
         pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
-    print('fv:$fv');
+
     return fv;
   }
 
