@@ -126,7 +126,7 @@ class _OptionButtonState extends State<OptionButton> {
               if(OptionGroup.group[widget.index]==kPresentTheme.accentColor){
 
                 OptionGroup.group[widget.index] = Colors.red;
-                print(OptionGroup.group);
+
               }
 
             }

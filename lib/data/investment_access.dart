@@ -18,38 +18,11 @@ class DRInvestAccess{
 
   }
 
-  // Future storeInvestment(
-  //     List<InvestDB> listInvestments,) async {
-  //   DateTime currentPhoneDate = DateTime.now();
-  //  // print(listInvestments[0].name);
-  //   for (var i = 0; i < listInvestments.length; i++){
-  //     try {
-  //       print('i am here');
-  //       await _firestore.collection('pjdhan_investment').add({
-  //         'email': listInvestments[i].email,
-  //         'Uuid': listInvestments[i].userId,
-  //         'Updated_id': 'system',
-  //         'investment_name': listInvestments[i].investment.name,
-  //         'currInvestAmt': listInvestments[i].investment.currentInvestmentAmount,
-  //         'annualInvestAmt': listInvestments[i].investment.annualInvestmentAmount,
-  //         'investRoI': listInvestments[i].investment.investmentRoi,
-  //         'investment_duration': listInvestments[i].investment.duration,
-  //         'insert_dts': Timestamp.fromDate(currentPhoneDate),
-  //         'update_dts': Timestamp.fromDate(currentPhoneDate),
-  //         'status': 'Active',
-  //       })
-  //           .then((value)=>print("Investment added"));
-  //     }
-  //     catch (e) {
-  //       print('Exception while inserting Investment $e');
-  //     }
-  //   }
-  // }
+
 
   Future storeInvestmentSolo(
      Investment investment,) async {
     DateTime currentPhoneDate = DateTime.now();
-   // print(listInvestments[0].name);
 
       try {
         print('i am here');

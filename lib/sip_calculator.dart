@@ -32,9 +32,9 @@ class _SIPCalculatorState extends State<SIPCalculator> {
   double interestValue = 0 ;
   double totalInvestment = 1;
   int selectedValue = 0;
-  int investmentDuration = 1;
+  int investmentDuration = 5;
   double annualInvestment = 1;
-  double expectedRoi=1;
+  double expectedRoi=12;
   final  _sipKey = GlobalKey<ScaffoldState>();
   double goalAmount = 1;
   double sipAmount = 1;
@@ -43,8 +43,8 @@ class _SIPCalculatorState extends State<SIPCalculator> {
   TextEditingController labelInput2Controller = TextEditingController();
   TextEditingController dummy = TextEditingController();
 
-  double labelInput1 = 1;
-  double labelInput2 = 1;
+  double labelInput1 = 0;
+  double labelInput2 = 1000;
 
   bool text1Active = false;
   bool text2Active = false;
@@ -66,8 +66,8 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
     double interest;
     // double roi = expectedRoi /100;
-    double futureValue = Calculator.fv(expectedRoi/100,investmentDuration, annualInvestment, investedAmount, 1);
-    double investedPortion = investedAmount + annualInvestment * investmentDuration;
+    double futureValue = Calculator.fv(expectedRoi/1200,investmentDuration*12, annualInvestment, investedAmount, 1);
+    double investedPortion = investedAmount + annualInvestment*12 * investmentDuration;
 
     interest = futureValue - investedPortion;
 
@@ -86,7 +86,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
       investedAmount = labelInput1;
       annualInvestment = labelInput2;
       interestValue = calculateInterset();
-      totalInvestment = investedAmount + annualInvestment*investmentDuration;
+      totalInvestment = investedAmount + annualInvestment* investmentDuration*12;
       corpusValue = totalInvestment + interestValue;
 
 
@@ -98,10 +98,12 @@ class _SIPCalculatorState extends State<SIPCalculator> {
       investedAmount = labelInput2;
       //investedAmount = valueSlider2;
      // goalAmount = valueSlider1;
-    sipAmount = Calculator.sipAmount(expectedRoi/100, investmentDuration, investedAmount, goalAmount, 1)/12;
-   interestValue =  goalAmount - (sipAmount*investmentDuration+investedAmount);
+    sipAmount = Calculator.sipAmount(expectedRoi/1200, investmentDuration*12, investedAmount, goalAmount, 1);
+   interestValue =  goalAmount - (sipAmount*investmentDuration*12+investedAmount);
       //sipAmount = annualInvestment * 100000/12;
     }
+
+
 
 
 
@@ -277,7 +279,9 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                       onChanged: (value){
                                         setState(() {
                                           selectedValue = int.parse( value.toString());
-
+                                          print(value);
+                                          labelInput1 = 0;
+                                          labelInput1Controller.text = labelInput1.toString();
                                         });
                                       }
                                   ),
@@ -292,7 +296,8 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                       onChanged: (value){
                                         setState(() {
                                           selectedValue = int.parse( value.toString());
-
+                                          labelInput1 = 500000;
+                                          labelInput1Controller.text = labelInput1.toString();
                                         });
 
                                       }
@@ -357,7 +362,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                     controller: labelInput2Controller,
                     initialValue: labelInput2,
                     // controller: editingController,
-                    label: selectedValue == 0 ? 'Annual Investment':'Initial Investment',
+                    label: selectedValue == 0 ? 'Monthly Investment':'Initial Investment',
                     icon:Icon(Icons.show_chart, color: Colors.amber,),
 
                     // getValue: (value){

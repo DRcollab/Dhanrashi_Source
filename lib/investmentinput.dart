@@ -192,10 +192,10 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                                 });
                                               },
                                                 titleMessage: name,
-                                                investedAmount: 10,
+                                                investedAmount: 100000,
                                                 investmentDuration: 10,
                                                 expectedRoi: 12,
-                                                annualInvestment: 1,
+                                                annualInvestment: 6000,
                                                 imageSource: 'images/mutual.png',
                                                 onAdd: (value){
                                                   setState(() {
@@ -242,9 +242,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 5,
+                                              investedAmount: 100000,
                                               investmentDuration: 20,
-                                              annualInvestment: 1,
+                                              annualInvestment: 10000,
                                               expectedRoi: 6,
                                               imageSource: 'images/insurance.png',
                                               onAdd: (value){
@@ -298,9 +298,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 10,
+                                              investedAmount: 100000,
                                               investmentDuration: 10,
-                                              annualInvestment: 1,
+                                              annualInvestment: 10000,
                                               expectedRoi: 6,
                                               imageSource: 'images/bonds.png',
                                               onAdd: (value){
@@ -348,9 +348,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 10,
+                                              investedAmount: 1000000,
                                               investmentDuration: 5,
-                                              annualInvestment: 1,
+                                              annualInvestment: 1000000,
                                               expectedRoi: 15,
                                               imageSource: 'images/stock.png',
                                               onAdd: (value){
@@ -403,9 +403,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 10,
+                                              investedAmount: 1000000,
                                               investmentDuration: 20,
-                                              annualInvestment: 1,
+                                              annualInvestment: 100000,
                                               expectedRoi: 12,
                                               imageSource: 'images/real-estate.png',
                                               onAdd: (value){
@@ -453,9 +453,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 10,
+                                              investedAmount: 600000,
                                               investmentDuration: 5,
-                                              annualInvestment: 1,
+                                              annualInvestment: 6000,
                                               expectedRoi: 5,
                                               imageSource: 'images/bank.png',
                                               onAdd: (value){
@@ -510,10 +510,10 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 10,
+                                              investedAmount: 100000,
                                               investmentDuration: 10,
                                               annualInvestment: 1,
-                                              expectedRoi: 10,
+                                              expectedRoi: 100000,
                                               imageSource: 'images/coin.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -560,9 +560,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 10,
+                                              investedAmount: 100000,
                                               investmentDuration: 10,
-                                              annualInvestment: 1,
+                                              annualInvestment: 10000,
                                               expectedRoi: 12,
                                               imageSource: 'images/products.png',
                                               onAdd: (value){
