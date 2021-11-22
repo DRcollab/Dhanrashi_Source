@@ -111,7 +111,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                           ),
                           trailing: goalCount>0 ?Showcase(
                             key: _showCaseKey1,
-                            description: 'Get the number of Investments saved',
+                            description: 'Get the number of Goals saved',
                             shapeBorder: CircleBorder(),
                             overlayPadding: EdgeInsets.all(20),
                             contentPadding: EdgeInsets.all(10),
@@ -137,7 +137,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                   flex:5,
                   child: Showcase(
                     key: _showCaseKey2,
-                    description: 'Click these tiles to enter your investments',
+                    description: 'Click these tiles to enter your goals',
                     child: Container(
 
                       child:ListView(
