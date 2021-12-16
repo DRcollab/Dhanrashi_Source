@@ -1,22 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dhanrashi_mvp/components/chart_tab_view.dart';
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/shingle.dart';
-import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/individual_view.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:loading_gifs/loading_gifs.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../chart_viewer.dart';
 import '../empty_page_inputs.dart';
 import '../investmentinput.dart';
-import 'buttons.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart' as donut;
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
@@ -32,13 +27,13 @@ class InvestmentTabView extends StatefulWidget {
     required this.currentUser,
     this.totalInvest=0,
     this.longestGoalDuration = 0,
-    this.longestInvestmentDuration = 0,
+    //this.longestInvestmentDuration = 0,
     this.showCaseKey,
   });
 
   late FirebaseFirestore fireStore;
   int longestGoalDuration;
-  int longestInvestmentDuration;
+ // int longestInvestmentDuration;
   late List<InvestDB> investmentDBs;
   late var currentUser;
   double totalInvest;
@@ -58,6 +53,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   double totalCorpus = 0;
   late List<Investment> investments = [];
 
+  int longestInvestmentDuration = 0;
+  int longestGoalDuration = 0;
+
   List dataSet = List.empty(growable: true);
   //double futureValue
 
@@ -74,9 +72,14 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
       widget.investmentDBs.forEach((element) {
         investments.add(element.investment);
       });
-      dataSet = Calculator().getInvestmentDetail(investments, widget.longestInvestmentDuration, widget.longestGoalDuration);
+      longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
+          investments);
+      //longestGoalDuration = Calculator().getLongestGoalDuration(goals);
+      dataSet = Calculator().getInvestmentDetail(investments, longestInvestmentDuration, widget.longestGoalDuration);
       fetched = true;
     }
+
+
 
     investments.forEach((element) {
       double futureValue = Calculator.fv(element.investmentRoi,
@@ -116,7 +119,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               },
               uniqueId: widget.investmentDBs[index].investmentId,
               currentUser: this.widget.currentUser,
-              titleMessage: '#@:%&^*!'.contains(investments[index].name.substring(0,1))
+              titleMessage: prefixSymbols.contains(investments[index].name.substring(0,1))
                   ?investments[index].name.substring(1)
                   :investments[index].name,
               investedAmount: investments[index].currentInvestmentAmount,
@@ -152,11 +155,13 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
 
 
-                    int lngstInv = Calculator().getLongestInvestmentDuration(
+                    longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
                         investments);
+
+
                     dataSet.clear();
                     dataSet = Calculator().getInvestmentDetail(
-                        investments, lngstInv, widget.longestGoalDuration);
+                        investments, longestInvestmentDuration, widget.longestGoalDuration);
                   } else{
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
@@ -216,7 +221,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                    investments.isNotEmpty ? DynamicGraph(
                       chartType: ChartType.bar,
                       resultSet: dataSet,
-                      gallopYears: widget.longestInvestmentDuration~/5,
+                      gallopYears: longestInvestmentDuration~/5,
                     ): SizedBox(),
                     GestureDetector(
                       onTap: (){
@@ -289,7 +294,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                       onPressed:(){
 
 
-                        if('#@:%&^*!'.contains(investments[index].name.substring(0,1))){
+                        if(prefixSymbols.contains(investments[index].name.substring(0,1))){
                           prefix=investments[index].name.substring(0,1);
 
                         }else{
@@ -307,10 +312,10 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                           ?investmentIcons[this.investments[index].name]
                           :investmentIcons[this.investments[index].name.substring(0,1)],
                       barColor:DefaultValues.graphColors[index%15],
-                      title:'#@:%&^*!'.contains(investments[index].name.substring(0,1))
+                      title:prefixSymbols.contains(investments[index].name.substring(0,1))
                             ?investments[index].name.substring(1)
                             :investments[index].name,
-                      prefix: '#@:%&^*!'.contains(investments[index].name.substring(0,1))
+                      prefix: prefixSymbols.contains(investments[index].name.substring(0,1))
                               ?investments[index].name.substring(0,1)
                               :'',
                     //${Utility.changeToPeriodicDecimal(investments[index].currentInvestmentAmount).toString()} ${Utility.getPeriod(investments[index].currentInvestmentAmount)}

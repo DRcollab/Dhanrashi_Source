@@ -32,6 +32,7 @@ class DynamicGraph extends StatefulWidget {
   _DynamicGraphState createState() => _DynamicGraphState();
 }
 
+
 class _DynamicGraphState extends State<DynamicGraph> {
   late List<YearWiseAmount> _allInvestmentAmount;
 

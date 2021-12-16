@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/models/goal.dart';
 //import 'package:finance/finance.dart';
 
 class Calculator {
+
   int longestInvestmentDuration = 0,
       longestGoalDuration = 0,
       longestDuration = 0;

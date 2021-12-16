@@ -293,14 +293,14 @@ class _DashboardState extends State<Dashboard> {
                                     currentUser: widget.currentUser,
                                     totalAmount: totalGoalValue,
                                     longestInvestmentDuration: longestInvestmentDuration,
-                                    longestGoalDuration: longestGoalDuration,
+                                    //longestGoalDuration: longestGoalDuration,
                                   ),// 2nd view
                                   InvestmentTabView(
                                     showCaseKey: _showCaseKeys[2],
                                     investmentDBs: investments,
                                     currentUser: widget.currentUser,
                                     totalInvest: totalInvestValue,
-                                    longestInvestmentDuration: longestInvestmentDuration,
+                                    //longestInvestmentDuration: longestInvestmentDuration,
                                     longestGoalDuration: longestGoalDuration,
 
                                   ),

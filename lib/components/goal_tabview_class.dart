@@ -23,7 +23,7 @@ class GoalsTabView extends StatefulWidget {
   //GoalsTabView({Key? key}) : super(key: key);
   //FirebaseFirestore fireStore;
   late List<GoalDB>  goalDBs;
-  int longestGoalDuration;
+ // int longestGoalDuration;
   int longestInvestmentDuration;
   var currentUser;
   double totalAmount;
@@ -35,7 +35,7 @@ class GoalsTabView extends StatefulWidget {
     required this.currentUser,
     this.totalAmount=0,
     this.longestInvestmentDuration = 0,
-    this.longestGoalDuration=0,
+   // this.longestGoalDuration=0,
     this.showCaseKey,
   });
 
@@ -51,6 +51,9 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   bool moveKB = false;
   String prefix = '';
   double totalGoal = 0;
+  int longestInvestmentDuration = 0;
+  int longestGoalDuration = 0;
+
   late FirebaseFirestore fireStore;
   @override
   void initState() {
@@ -66,9 +69,10 @@ class _GoalsTabViewState extends State<GoalsTabView> {
         goals.add(element.goal);
 
       });
-      fetched = true;
-      dataSet = Calculator().getGoalDetail(goals,widget.longestInvestmentDuration, widget.longestGoalDuration);
+      longestGoalDuration = Calculator().getLongestGoalDuration(goals);
 
+      dataSet = Calculator().getGoalDetail(goals,widget.longestInvestmentDuration, longestGoalDuration);
+      fetched = true;
     }else{
 
       fetched = false;
@@ -132,10 +136,11 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     goals.forEach((element) {
                       totalGoal = element.goalAmount + totalGoal;
                     });
-                    int lngstGol = Calculator().getLongestGoalDuration(goals);
+
+                    longestGoalDuration = Calculator().getLongestGoalDuration(goals);
                     dataSet.clear();
                     dataSet = Calculator().getGoalDetail(
-                      goals, widget.longestGoalDuration, lngstGol,);
+                      goals, widget.longestInvestmentDuration, longestGoalDuration,);
                   }
                   else{
                     Navigator.push(context,
@@ -181,7 +186,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                          goals.isNotEmpty ?DynamicGraph(
                             chartType: ChartType.bar,
                             resultSet: dataSet,
-                            gallopYears: (widget.longestGoalDuration~/5),
+                            gallopYears: (longestGoalDuration~/5),
                           ):SizedBox(),
                           GestureDetector(
                             onTap: (){

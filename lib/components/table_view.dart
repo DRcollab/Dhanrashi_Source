@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:dhanrashi_mvp/components/maps.dart';
 
 class TableView extends StatefulWidget {
 
@@ -28,7 +29,7 @@ class _TableViewState extends State<TableView> {
     // TODO: implement initState
 
 
-    print('ARRAy LIST : ${widget.arrayList.length}');
+
 
     if(widget.arrayList.length>1){
       columnCount = widget.arrayList.length-1;
@@ -36,8 +37,8 @@ class _TableViewState extends State<TableView> {
       columnCount = widget.arrayList.length;
     }
     numItems = widget.arrayList[0].length;
-    print(widget.arrayList);
-    print('NUM ITEMS : $numItems');
+
+
     super.initState();
 
     dataColumns.add(
@@ -49,9 +50,16 @@ class _TableViewState extends State<TableView> {
     for(int i = 0; i<columnCount;i++){
     //  print(widget.arrayList[i][0]);
      dataColumns.add( DataColumn(
-          label: Text(widget.arrayList[i][0], style: DefaultValues.kH4(context),)
+          label: prefixSymbols.contains(widget.arrayList[i][0].substring(0,1))
+              ? Text(widget.arrayList[i][0].substring(1),style:DefaultValues.kH4(context))
+              : Text(widget.arrayList[i][0], style:DefaultValues.kH4(context))
       ));
     }
+
+
+
+
+
 
 
 
