@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
@@ -24,7 +25,7 @@ class GoalsTabView extends StatefulWidget {
   //FirebaseFirestore fireStore;
   late List<GoalDB>  goalDBs;
  // int longestGoalDuration;
-  int longestInvestmentDuration;
+  //int longestInvestmentDuration;
   var currentUser;
   double totalAmount;
   List<GlobalKey?>? showCaseKey;
@@ -34,7 +35,7 @@ class GoalsTabView extends StatefulWidget {
     required this.goalDBs,
     required this.currentUser,
     this.totalAmount=0,
-    this.longestInvestmentDuration = 0,
+    //this.longestInvestmentDuration = 0,
    // this.longestGoalDuration=0,
     this.showCaseKey,
   });
@@ -51,8 +52,8 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   bool moveKB = false;
   String prefix = '';
   double totalGoal = 0;
-  int longestInvestmentDuration = 0;
-  int longestGoalDuration = 0;
+  // int longestInvestmentDuration = 0;
+  // int longestGoalDuration = 0;
 
   late FirebaseFirestore fireStore;
   @override
@@ -69,9 +70,9 @@ class _GoalsTabViewState extends State<GoalsTabView> {
         goals.add(element.goal);
 
       });
-      longestGoalDuration = Calculator().getLongestGoalDuration(goals);
+      //longestGoalDuration = Calculator().getLongestGoalDuration(goals);
 
-      dataSet = Calculator().getGoalDetail(goals,widget.longestInvestmentDuration, longestGoalDuration);
+      dataSet = Calculator().getGoalDetail(goals,Global.longestInvestmentDuration, Global.longestGoalDuration);
       fetched = true;
     }else{
 
@@ -137,10 +138,10 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                       totalGoal = element.goalAmount + totalGoal;
                     });
 
-                    longestGoalDuration = Calculator().getLongestGoalDuration(goals);
+                    Global.longestGoalDuration = Calculator().getLongestGoalDuration(goals);
                     dataSet.clear();
                     dataSet = Calculator().getGoalDetail(
-                      goals, widget.longestInvestmentDuration, longestGoalDuration,);
+                      goals, Global.longestInvestmentDuration, Global.longestGoalDuration,);
                   }
                   else{
                     Navigator.push(context,
@@ -186,7 +187,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                          goals.isNotEmpty ?DynamicGraph(
                             chartType: ChartType.bar,
                             resultSet: dataSet,
-                            gallopYears: (longestGoalDuration~/5),
+                            gallopYears: (Global.longestGoalDuration~/5),
                           ):SizedBox(),
                           GestureDetector(
                             onTap: (){

@@ -60,8 +60,8 @@ class _DashboardState extends State<Dashboard> {
   List<InvestDB> investments=[];
   double totalGoalValue = 0.0;
   double totalInvestValue = 0.0;
-  int longestInvestmentDuration = 0;
-  int longestGoalDuration = 0;
+  // int longestInvestmentDuration = 0;
+  // int longestGoalDuration = 0;
   bool isGoalEmpty = false;
   bool isInvestmentEmpty = false;
 
@@ -121,8 +121,8 @@ class _DashboardState extends State<Dashboard> {
         double inflation = f.get('inflation');
         totalGoalValue = totalGoalValue+amount;
         int duration=f.get('goal_duration');
-        if(duration > longestGoalDuration){
-          longestGoalDuration = duration;
+        if(duration >Global.longestGoalDuration){
+          Global.longestGoalDuration = duration;
         }
 
         //double inflation = f.get('inflation');
@@ -182,8 +182,8 @@ class _DashboardState extends State<Dashboard> {
         double investRoI=f.get('investRoI');
         int duration=f.get('investment_duration');
         totalInvestValue = totalInvestValue + currInvestAmt+annualInvestAmt*duration;
-        if(duration > longestInvestmentDuration){
-          longestInvestmentDuration = duration;
+        if(duration > Global.longestInvestmentDuration){
+          Global.longestInvestmentDuration = duration;
         }
 
        setState(() {
@@ -282,8 +282,8 @@ class _DashboardState extends State<Dashboard> {
                                     goalDBs:goals,
                                     currentUser: widget.currentUser,
                                     investmentDBs: investments,
-                                    longestGoalDuration: longestGoalDuration,
-                                    longestInvestmentDuration: longestInvestmentDuration,
+                                    // longestGoalDuration: longestGoalDuration,
+                                    // longestInvestmentDuration: longestInvestmentDuration,
                                   ),
 
                                   GoalsTabView(
@@ -292,7 +292,7 @@ class _DashboardState extends State<Dashboard> {
                                     goalDBs:goals,
                                     currentUser: widget.currentUser,
                                     totalAmount: totalGoalValue,
-                                    longestInvestmentDuration: longestInvestmentDuration,
+                                   // longestInvestmentDuration: longestInvestmentDuration,
                                     //longestGoalDuration: longestGoalDuration,
                                   ),// 2nd view
                                   InvestmentTabView(
@@ -301,7 +301,7 @@ class _DashboardState extends State<Dashboard> {
                                     currentUser: widget.currentUser,
                                     totalInvest: totalInvestValue,
                                     //longestInvestmentDuration: longestInvestmentDuration,
-                                    longestGoalDuration: longestGoalDuration,
+                                   // longestGoalDuration: longestGoalDuration,
 
                                   ),
 

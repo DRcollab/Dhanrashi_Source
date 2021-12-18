@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/shingle.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/individual_view.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
@@ -26,13 +27,13 @@ class InvestmentTabView extends StatefulWidget {
     required this.investmentDBs,
     required this.currentUser,
     this.totalInvest=0,
-    this.longestGoalDuration = 0,
+   // this.longestGoalDuration = 0,
     //this.longestInvestmentDuration = 0,
     this.showCaseKey,
   });
 
   late FirebaseFirestore fireStore;
-  int longestGoalDuration;
+  //int longestGoalDuration;
  // int longestInvestmentDuration;
   late List<InvestDB> investmentDBs;
   late var currentUser;
@@ -53,8 +54,8 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   double totalCorpus = 0;
   late List<Investment> investments = [];
 
-  int longestInvestmentDuration = 0;
-  int longestGoalDuration = 0;
+  // int longestInvestmentDuration = 0;
+  // int longestGoalDuration = 0;
 
   List dataSet = List.empty(growable: true);
   //double futureValue
@@ -72,10 +73,10 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
       widget.investmentDBs.forEach((element) {
         investments.add(element.investment);
       });
-      longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
-          investments);
+      // longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
+      //     investments);
       //longestGoalDuration = Calculator().getLongestGoalDuration(goals);
-      dataSet = Calculator().getInvestmentDetail(investments, longestInvestmentDuration, widget.longestGoalDuration);
+      dataSet = Calculator().getInvestmentDetail(investments, Global.longestInvestmentDuration, Global.longestGoalDuration);
       fetched = true;
     }
 
@@ -155,13 +156,13 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
 
 
-                    longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
+                   Global.longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
                         investments);
 
 
                     dataSet.clear();
                     dataSet = Calculator().getInvestmentDetail(
-                        investments, longestInvestmentDuration, widget.longestGoalDuration);
+                        investments, Global.longestInvestmentDuration, Global.longestGoalDuration);
                   } else{
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
@@ -221,7 +222,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                    investments.isNotEmpty ? DynamicGraph(
                       chartType: ChartType.bar,
                       resultSet: dataSet,
-                      gallopYears: longestInvestmentDuration~/5,
+                      gallopYears: Global.longestInvestmentDuration~/5,
                     ): SizedBox(),
                     GestureDetector(
                       onTap: (){

@@ -1,5 +1,6 @@
 
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
@@ -21,8 +22,8 @@ class AnalyticsTabView extends StatelessWidget {
   late var currentUser;
   late List<GoalDB>  goalDBs;
   List dataSet = List.empty(growable: true);
-  int longestGoalDuration;
-  int longestInvestmentDuration;
+  // int longestGoalDuration;
+  // int longestInvestmentDuration;
   List<GlobalKey?>? showCaseKey;
 
 //{required this.currentUser, required this.investmentDBs, required this.goalDBs}
@@ -30,8 +31,8 @@ class AnalyticsTabView extends StatelessWidget {
     required this.currentUser,
     required this.investmentDBs,
     required this.goalDBs,
-    required this.longestInvestmentDuration,
-    required this.longestGoalDuration,
+    // required this.longestInvestmentDuration,
+    // required this.longestGoalDuration,
     this.showCaseKey,
   });
 
@@ -74,7 +75,7 @@ class AnalyticsTabView extends StatelessWidget {
 
     fetched = true;
     dataSet = Calculator().getInvVsGoalDetail(
-        investments, goals, longestInvestmentDuration, longestGoalDuration);
+        investments, goals, Global.longestInvestmentDuration,Global.longestGoalDuration);
   }else{
     fetched = false;
   }
