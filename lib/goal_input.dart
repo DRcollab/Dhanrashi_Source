@@ -206,7 +206,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   //height: 20,
                                   //width: 150,
                                   title: 'My Dream\nHouse',
-                                  subText: 'Home, my sweet little home',
+                                  subText: 'My sweet little home',
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -363,7 +363,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   // height: 120,
                                   // width: 150,
                                   title: 'Domestic \nTours ',
-                                  subText: "To see me beautiful country",
+                                  subText: "To see my country",
                                   color:color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
