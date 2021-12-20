@@ -165,7 +165,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
                                   title: 'Mutual\nFund',
                                   title2: 'Fund',
-                                  subText: 'Equity and debt funds',
+                                  subText: 'Equity and debt funds\n',
                                   color: kPresentTheme.accentColor,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -192,10 +192,10 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                                 });
                                               },
                                                 titleMessage: name,
-                                                investedAmount: 100000,
+                                                investedAmount: 0,
                                                 investmentDuration: 10,
                                                 expectedRoi: 12,
-                                                annualInvestment: 6000,
+                                                annualInvestment: 0,
                                                 imageSource: 'images/mutual.png',
                                                 onAdd: (value){
                                                   setState(() {
@@ -212,118 +212,13 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
                               Expanded(
                                 child: Tile(
-                                  imageSource: 'images/insurance.png',
-
-                                  title: 'Insurance',
-                                  subText: 'Life, health and term',
-                                  color: kPresentTheme.alternateColor,
-                                  titleColor: titleColor,
-                                  onPressed: (){
-                                    name = 'Insurance';
-                                    print('click on $name');
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: InvestmentSheet(
-                                              prefix: '@',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              investedAmount: 100000,
-                                              investmentDuration: 20,
-                                              annualInvestment: 10000,
-                                              expectedRoi: 6,
-                                              imageSource: 'images/insurance.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  investmentCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                            ],
-                          ),// Row 1
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/bonds.png',
-                                 // height: 120,
-                                 // width: 150,
-                                  title: 'Debts &\n Bonds',
-                                  subText: 'Govt Bonds company debentures',
+                                  imageSource: 'images/stock.png',
+                                  //  height: 120,
+                                  //  width: 150,
+                                  title: 'Equity',
+                                  subText: 'Stock market investments\n',
                                   color: alternateColor,
                                   titleColor: titleColor,
-                                  onPressed: (){
-                                    name = 'Debts and Bonds';
-
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                            :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: InvestmentSheet(
-                                              prefix: ':',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              investedAmount: 100000,
-                                              investmentDuration: 10,
-                                              annualInvestment: 10000,
-                                              expectedRoi: 6,
-                                              imageSource: 'images/bonds.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  investmentCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/stock.png',
-                                //  height: 120,
-                                //  width: 150,
-                                  title: 'Stocks &\nDerivatives',
-                                  subText: 'Stock market investments',
-                                  color: color,
-                                  titleColor: Colors.white60,
                                   onPressed: (){
                                     name = 'Equity';
 
@@ -348,9 +243,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 1000000,
+                                              investedAmount: 0,
                                               investmentDuration: 5,
-                                              annualInvestment: 1000000,
+                                              annualInvestment: 0,
                                               expectedRoi: 15,
                                               imageSource: 'images/stock.png',
                                               onAdd: (value){
@@ -366,67 +261,17 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                               ),
 
                             ],
-                          ),
+                          ),// Row 1
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Expanded(
                                 child: Tile(
-                                  imageSource: 'images/real-estate.png',
-                                 // height: 120,
-                                 // width: 150,
-                                  title: 'Real\n Estate',
-                                  subText: 'Lands, houses, complexes etc.',
-                                  color:color,
-                                  titleColor: Colors.white60,
-                                  onPressed: (){
-                                    name = 'Real Estate';
-
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: InvestmentSheet(
-                                              prefix: '&',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              investedAmount: 1000000,
-                                              investmentDuration: 20,
-                                              annualInvestment: 100000,
-                                              expectedRoi: 12,
-                                              imageSource: 'images/real-estate.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  investmentCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                              Expanded(
-                                child: Tile(
                                   imageSource: 'images/bank.png',
-                                //  height: 120,
-                                //  width: 150,
+                                  //  height: 120,
+                                  //  width: 150,
                                   title: 'Fixed\nDeposits',
-                                  subText: 'Post Office or Bank \nterm deposits',
+                                  subText: 'Fixed deposits\n',
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -453,9 +298,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 600000,
+                                              investedAmount: 0,
                                               investmentDuration: 5,
-                                              annualInvestment: 6000,
+                                              annualInvestment: 0,
                                               expectedRoi: 5,
                                               imageSource: 'images/bank.png',
                                               onAdd: (value){
@@ -471,21 +316,71 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 ),
                               ),
 
+
+                              Expanded(
+                                child: Tile(
+                                  imageSource: 'images/real-estate.png',
+                                  // height: 120,
+                                  // width: 150,
+                                  title: 'Real\nEstate',
+                                  subText: 'Lands,houses,complexes\n',
+                                  color:color,
+                                  titleColor: Colors.white60,
+                                  onPressed: (){
+                                    name = 'Real Estate';
+
+                                    showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) => SingleChildScrollView(
+                                          child: Container(
+                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                            child: InvestmentSheet(
+                                              prefix: '&',
+                                              onEditCommit: (){
+                                                setState(() {
+                                                  moveKB = false;
+                                                });
+                                              },
+                                              onTap: (){
+                                                setState(() {
+                                                  moveKB = true;
+                                                });
+                                              },
+                                              currentUser: widget.currentUser,
+                                              titleMessage: name,
+                                              investedAmount: 0,
+                                              investmentDuration: 20,
+                                              annualInvestment: 0,
+                                              expectedRoi: 12,
+                                              imageSource: 'images/real-estate.png',
+                                              onAdd: (value){
+                                                setState(() {
+                                                  investmentCount = value;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              ),
+
                             ],
                           ),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Expanded(
                                 child: Tile(
                                   imageSource: 'images/coin.png',
-                              //    height: 120,
-                               //   width: 150,
-                                  title: 'Gold\n& Bullions',
-                                  subText: 'Jewellery ',
-                                  color:alternateColor,
-                                  titleColor: titleColor,
+                                  //    height: 120,
+                                  //   width: 150,
+                                  title: 'Gold',
+                                  subText: 'Physical and digital gold\n',
+                                  color:color,
+                                  titleColor: Colors.white60,
                                   onPressed: (){
                                     name = 'Gold';
 
@@ -510,10 +405,10 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 100000,
+                                              investedAmount: 0,
                                               investmentDuration: 10,
-                                              annualInvestment: 1,
-                                              expectedRoi: 100000,
+                                              annualInvestment: 0,
+                                              expectedRoi: 10,
                                               imageSource: 'images/coin.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -529,11 +424,117 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
                               Expanded(
                                 child: Tile(
+                                  imageSource: 'images/insurance.png',
+
+                                  title: 'Insurance',
+                                  subText: 'Life insurance \n',
+                                  color: kPresentTheme.alternateColor,
+                                  titleColor: titleColor,
+                                  onPressed: (){
+                                    name = 'Insurance';
+                                    print('click on $name');
+                                    showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) => SingleChildScrollView(
+                                          child: Container(
+                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                            child: InvestmentSheet(
+                                              prefix: '@',
+                                              onEditCommit: (){
+                                                setState(() {
+                                                  moveKB = false;
+                                                });
+                                              },
+                                              onTap: (){
+                                                setState(() {
+                                                  moveKB = true;
+                                                });
+                                              },
+                                              currentUser: widget.currentUser,
+                                              titleMessage: name,
+                                              investedAmount: 0,
+                                              investmentDuration: 20,
+                                              annualInvestment: 0,
+                                              expectedRoi: 6,
+                                              imageSource: 'images/insurance.png',
+                                              onAdd: (value){
+                                                setState(() {
+                                                  investmentCount = value;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              ),
+
+                            ],
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+
+                              Expanded(
+                                child: Tile(
+                                  imageSource: 'images/bonds.png',
+                                  // height: 120,
+                                  // width: 150,
+                                  title: 'Bonds',
+                                  subText: 'Govt, corporate bonds\n',
+                                  color: alternateColor,
+                                  titleColor: titleColor,
+                                  onPressed: (){
+                                    name = 'Bonds';
+
+                                    showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) => SingleChildScrollView(
+                                          child: Container(
+                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                            child: InvestmentSheet(
+                                              prefix: ':',
+                                              onEditCommit: (){
+                                                setState(() {
+                                                  moveKB = false;
+                                                });
+                                              },
+                                              onTap: (){
+                                                setState(() {
+                                                  moveKB = true;
+                                                });
+                                              },
+
+                                              currentUser: widget.currentUser,
+                                              titleMessage: name,
+                                              investedAmount: 0,
+                                              investmentDuration: 10,
+                                              annualInvestment: 0,
+                                              expectedRoi: 6,
+                                              imageSource: 'images/bonds.png',
+                                              onAdd: (value){
+                                                setState(() {
+                                                  investmentCount = value;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ));
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: Tile(
                                   imageSource: 'images/products.png',
                               //    height: 120,
                               //    width: 150,
                                   title: 'Others',
-                                  subText: 'Something not listed here',
+                                  subText: 'Any other asset class\n',
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -560,9 +561,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              investedAmount: 100000,
+                                              investedAmount: 0,
                                               investmentDuration: 10,
-                                              annualInvestment: 10000,
+                                              annualInvestment: 0,
                                               expectedRoi: 12,
                                               imageSource: 'images/products.png',
                                               onAdd: (value){

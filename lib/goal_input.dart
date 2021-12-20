@@ -152,8 +152,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/car.png',
                                   //height: 120,
                                   //width: 150,
-                                    title: 'My Dream\n Car',
-                                  subText: 'Buy my very own car',
+                                    title: 'My Dream\nCar',
+                                  subText: 'Buy my very own car\n',
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -206,7 +206,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   //height: 20,
                                   //width: 150,
                                   title: 'My Dream\nHouse',
-                                  subText: 'My sweet little home',
+                                  subText: 'My sweet home\n',
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -259,12 +259,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/education.png',
                                   // height: 120,
                                   // width: 150,
-                                  title: 'Children\nEducation',
-                                  subText: 'Education',
+                                  title: 'Child\nEducation',
+                                  subText: 'Education empowers life\n',
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
-                                    name = 'Children Education';
+                                    name = 'Child Education';
 
                                     showModalBottomSheet(
                                         isScrollControlled: true,
@@ -308,8 +308,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/pension.png',
                                   //  height: 120,
                                   //  width: 150,
-                                  title: 'Decent\nRetirement',
-                                  subText: 'A peaceful life',
+                                  title: 'Retirement',
+                                  subText: 'A blissful life\n',
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -360,14 +360,14 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                               Expanded(
                                 child: Tile(
                                   imageSource: 'images/tour.png',
-                                  // height: 120,
+                                  // height: 250,
                                   // width: 150,
-                                  title: 'Domestic \nTours ',
-                                  subText: "To see my country",
+                                  title: 'Travel',
+                                  subText: "Tours and travels\n",
                                   color:color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
-                                    name = 'See my country';
+                                    name = 'Travel';
 
                                     showModalBottomSheet(
                                         isScrollControlled: true,
@@ -409,14 +409,14 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                               Expanded(
                                 child: Tile(
                                   imageSource: 'images/destination.png',
-                                  //  height: 120,
+                                   // height: 120,
                                   //  width: 150,
-                                  title: 'Foreign \nTour',
-                                  subText: 'World is waiting',
+                                  title: 'Family \nEvents',
+                                  subText: 'Moments of Togetherness',
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
-                                    name = 'Foreign tour';
+                                    name = 'Family Events';
 
                                     showModalBottomSheet(
                                         isScrollControlled: true,
@@ -467,12 +467,12 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/healthcare.png',
                                   //    height: 120,
                                   //   width: 150,
-                                  title: 'Parents \nHealth',
-                                  subText: '',
+                                  title: 'Health',
+                                  subText: 'Health related expenses\n',
                                   color:alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
-                                    name = 'Parents Health';
+                                    name = 'Health';
 
                                     showModalBottomSheet(
                                         isScrollControlled: true,
@@ -517,7 +517,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   //    height: 120,
                                   //    width: 150,
                                   title: 'Others',
-                                  subText: 'Something not listed here',
+                                  subText: 'Anything not listed here\n',
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){

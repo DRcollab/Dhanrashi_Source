@@ -267,7 +267,19 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
       }
 
-
+      // double totalInvestmentCorpus = 0;
+      // double totalGoal = 0;
+      // double ratio = 0;
+      //
+      // if(_pieChartData[0].data[0].task == 'Investment'){
+      //  double totalInvestmentCorpus = _pieChartData[0].data[0].value;
+      //  double totalGoal = _pieChartData[0].data[0].value;
+      //   ratio = goal_ratio;
+      // }else if(_pieChartDataGoal[0].data[goalIndex].task == 'Goal'){
+      //   totalInvestmentCorpus = _pieChartDataGoal[0].data[goalIndex].value;
+      //   totalGoal = _pieChartDataGoal[0].data[0].value;
+      //   ratio = inv_ratio;
+      // }
 
       double totalInvestmentCorpus = _pieChartData[0].data[0].task == 'Investment'
           ? _pieChartData[0].data[0].value
@@ -276,6 +288,11 @@ class _DynamicGraphState extends State<DynamicGraph> {
       double totalGoal = _pieChartDataGoal[0].data[goalIndex].task == 'Goal'
                     ?_pieChartDataGoal[0].data[0].value
                     :_pieChartData[0].data[0].value;
+
+      double ratio = _pieChartData[0].data[0].task == 'Investment'
+            ? goal_ratio
+            : inv_ratio;
+
       bool viewLabel = false;
       return Stack(
         alignment: Alignment.topCenter,
@@ -347,7 +364,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                    defaultRenderer: new charts.ArcRendererConfig(
                      arcWidth: (15 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
                      startAngle: 1 * pi,
-                     arcLength: 2 * goal_ratio * pi,
+                     arcLength: 2 * ratio * pi,
                      arcRendererDecorators: viewLabel ? [
 //goal_ratio
                      new charts.ArcLabelDecorator(
