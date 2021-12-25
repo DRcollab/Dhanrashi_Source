@@ -8,7 +8,7 @@ class Global{
   static int longestInvestmentDuration = 0;
   static int longestGoalDuration=0;
   static int longestGoalCount = 0;
-
+  static double stockReturn = 0;
 
 }
 

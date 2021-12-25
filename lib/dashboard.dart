@@ -87,6 +87,7 @@ class _DashboardState extends State<Dashboard> {
             [
               fetchGoals(),
               fetchInvestment(),
+              fetchVariables(),
             ]
         );
 
@@ -97,6 +98,18 @@ class _DashboardState extends State<Dashboard> {
     );
 
 
+  }
+
+  Future fetchVariables() async{
+    fireStore.collection('pjdhan_variables').get().then((QuerySnapshot snapshot){
+      snapshot.docs.forEach((element) {
+        Global.stockReturn = element.get('stock_return');
+
+      });
+    }).catchError((onError){
+
+        throw onError;
+    });
   }
 
   Future fetchGoals() async{

@@ -114,6 +114,10 @@ class Utility{
 
   }
 
+  static showToolTip(BuildContext context, String msg, Widget child){
+    return Tooltip(message: msg, child: child,);
+  }
+
 
   static showErrorMessage(BuildContext context, String e){
     showModalBottomSheet(

@@ -24,7 +24,7 @@ Function()? onEditingComplete;
 bool implementWarning = false;
  Function(double)? onChanged;  // get the  changed value;
  late Color activeColor;
-
+ Widget? suggestiveIcon;
 LabeledSlider({
   this.onEditingComplete,
   this.sliderValue=5.0,
@@ -32,6 +32,7 @@ LabeledSlider({
   this.min=1,
   this.max=10,
   //required this.controller,
+  this.suggestiveIcon,
   required this.validator,
   this.collector = 0,
   this.suffix ='',
@@ -99,11 +100,12 @@ class _LabeledSliderState extends State<LabeledSlider> {
               //validator: widget.validator,
               controller: this.controller,
               label:widget.labelText,
+              suggestiveIcon: widget.suggestiveIcon != null ? widget.suggestiveIcon! : SizedBox(),
               hintText: '',
               suffix: widget.suffix,
               getValue: (){
                 setState(() {
-                  print('divisions:${widget.divisions}');
+
                   double val = double.parse(double.parse(this.controller.text).toStringAsFixed(2));
                   if( val > widget.min) {
 
@@ -124,7 +126,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
                     this.controller.text = widget.min.toString();
                   }
 
-                  print('Slider Value: ${widget.sliderValue} and ${widget.min}');
+
                  widget.onChanged!(widget.sliderValue);
                   // if(widget.perpetualActive){
                   //   if(val>widget.max){
@@ -132,9 +134,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
                   //     variableMin = widget.max;
                   //   }
                   // }
-                  print('divisions#:${widget.divisions}');
-                  print(this.controller.text);
-                  print( double.parse(this.controller.text).roundToDouble() );
+
                 });
 
               },
@@ -154,10 +154,9 @@ class _LabeledSliderState extends State<LabeledSlider> {
                 value: widget.sliderValue,//double.parse(widget.sliderValue.toStringAsFixed(2) ),
                 divisions: widget.divisions,
                 onChanged:   (changeValue) {
-                  print('Diisi: ${widget.divisions}');
+
                   setState(() {
-                    print('Perpetual : ${widget.perpetualActive}');
-                    print('variable max : ${changeValue}');
+
 
                     if(changeValue < widget.min){
                       changeValue = widget.min;

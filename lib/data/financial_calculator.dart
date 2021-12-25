@@ -88,7 +88,8 @@ class Calculator {
           // } else {
           //   futureValue = futureValue * (1 + newInv.investmentRoi);
         } else {
-          futureValue = futureValue;
+          //futureValue = futureValue;
+          futureValue = futureValue * (1 + newInv.investmentRoi);
         }
 
         investmentAnnualAmt.add(futureValue.toStringAsFixed(2));

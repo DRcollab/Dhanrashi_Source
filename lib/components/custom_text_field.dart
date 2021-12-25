@@ -224,6 +224,7 @@ class NumberInputField extends StatefulWidget {
   bool enabled;
   final Function()? validator;
   final Function()? onFocusLost;
+  Widget suggestiveIcon;
 
   NumberInputField({
     this.hintText = '',
@@ -239,6 +240,7 @@ class NumberInputField extends StatefulWidget {
     this.enabled = true,
     this.validator,
     this.onFocusLost,
+    required this.suggestiveIcon,
   });
 
 
@@ -276,6 +278,10 @@ class _NumberInputFieldState extends State<NumberInputField> {
                 padding:  EdgeInsets.only(left: 0.0, right: 2.w, top:2.h, bottom: 0.0),
                 child: Text(widget.label),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 48.0, top:18.0),
+              child: widget.suggestiveIcon,
             ),
             Flexible(child: Padding(
               padding:  EdgeInsets.only(left: 0.0, right: 2.w, top:2.h, bottom: 0.0),

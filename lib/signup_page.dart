@@ -129,6 +129,7 @@ import 'package:sizer/sizer.dart';
       },
       child: CustomScaffold(
         rightButton: SizedBox(),
+        leftButton: SizedBox(),
         child: ListView(
           children: [
             Padding(
@@ -361,21 +362,22 @@ import 'package:sizer/sizer.dart';
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
-              label: 'SIP Calculator',
-
-            ),
-            BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
-                label: 'Inflation Data'
-            ),
-            BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
-                label: 'Settings'
-            ),
-          ],
-        ),
+        bottomNavigationBar: SizedBox(),
+        // BottomNavigationBar(
+        //   items: [
+        //     BottomNavigationBarItem(
+        //       icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
+        //       label: 'SIP Calculator',
+        //
+        //     ),
+        //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
+        //         label: 'Inflation Data'
+        //     ),
+        //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
+        //         label: 'Settings'
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

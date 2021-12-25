@@ -517,8 +517,8 @@ class _NamePickerState extends State<NamePicker> {
                           ),
                         ),
 
-
-                        SizedBox(height: 4.h,),
+                        Text('Click the image to Edit'),
+                        SizedBox(height: 2.h,),
                         Padding(
                             padding:DefaultValues.kTextFieldPadding(context),
                                 child: Form(

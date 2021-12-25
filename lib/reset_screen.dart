@@ -97,6 +97,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
   Widget build(BuildContext context) {
     return CustomScaffold(
       rightButton: SizedBox(),
+      leftButton: SizedBox(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -220,21 +221,22 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calculator),
-            label: 'SIP Calculator',
-
-          ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
-              label: 'Inflation Data'
-          ),
-          BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
-              label: 'Settings'
-          ),
-        ],
-      ),
+      bottomNavigationBar: SizedBox(),
+      // BottomNavigationBar(
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: FaIcon(FontAwesomeIcons.calculator),
+      //       label: 'SIP Calculator',
+      //
+      //     ),
+      //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
+      //         label: 'Inflation Data'
+      //     ),
+      //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
+      //         label: 'Settings'
+      //     ),
+      //   ],
+      // ),
 
     );
   }

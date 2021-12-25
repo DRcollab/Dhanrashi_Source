@@ -605,6 +605,10 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                 max:30,
                 divisions: 30,
                 labelText: 'Expected return per year',
+                suggestiveIcon: Tooltip(
+                  message: 'Last year Nifty grew at ${Global.stockReturn}%',
+                  child:Icon(Icons.info),
+                ),
                 textPrecision: 2,
                 sliderValue: expectedRoi,
                 suffix: '%      ',

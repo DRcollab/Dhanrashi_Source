@@ -238,6 +238,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
           },
           child: CustomScaffold(
             rightButton: SizedBox(),
+            leftButton: SizedBox(),
             child: ListView(
               children: [
                 Padding(
@@ -250,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.monetization_on),
-                          Text('Dhanrashi', style:DefaultValues.kH1(context),),
+                          Text('Financial Wisdom', style:DefaultValues.kH1(context),),
                         ],
                       ),
                       Padding(
@@ -437,21 +438,22 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                 ),
               ],
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: [
-                BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
-                  label: 'SIP Calculator',
-
-                ),
-                BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
-                    label: 'Inflation Data'
-                ),
-                BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
-                    label: 'Settings'
-                ),
-              ],
-            ),
+            bottomNavigationBar: SizedBox(),
+            // BottomNavigationBar(
+            //   items: [
+            //     BottomNavigationBarItem(
+            //       icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
+            //       label: 'SIP Calculator',
+            //
+            //     ),
+            //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
+            //         label: 'Inflation Data'
+            //     ),
+            //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
+            //         label: 'Settings'
+            //     ),
+            //   ],
+            // ),
           ),
         );
       }
