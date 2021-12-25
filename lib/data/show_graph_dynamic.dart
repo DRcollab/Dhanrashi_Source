@@ -63,6 +63,14 @@ class _DynamicGraphState extends State<DynamicGraph> {
               .add(
               YearWiseAmount(j, double.parse(allInvestmentAnnualAmt[i][j]),DefaultValues.graphColors[i%15]));
         }
+        if (j == noOfYear) {
+          if (j % widget.gallopYears != 0) {
+            _allInvestmentAmount.add(YearWiseAmount(
+                j,
+                double.parse(allInvestmentAnnualAmt[i][j]),
+                DefaultValues.graphColors[i % 15]));
+          }
+        }
       }
 
       // var barColor = charts.MaterialPalette.teal.shadeDefault;
