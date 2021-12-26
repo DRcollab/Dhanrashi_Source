@@ -42,10 +42,11 @@ class Utility{
   static var messages = {
     'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
     ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
+
     'success_update_profile':'Your profile has been succesfully updated.' ,
-    'empty':'Let us start your financial plannning.\n\n Let\'s start by adding your first Goal and Investment',
-    'empty_goal':'Let us start your financial plannning.\n\nLet\'s start by adding your first Goal',
-    'empty_inv':'Let us start your financial plannning.\n\nLet\'s start by adding your first Investment ',
+    'empty':'Let us start your financial plannning by adding your first Goal and Investment',
+    'empty_goal':'You do not add  any GOAL.\n\nLet\'s add your first Goal',
+    'empty_inv':'You do not add any INVESTMENT.\n\nLet\'s add your first Investment ',
     '':'',
   };
 

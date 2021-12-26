@@ -73,7 +73,7 @@ class ProfileView extends StatelessWidget {
                     buttonText: 'Update',
                     textColor: kPresentTheme.lightWeightColor,
                     onPressed: (){
-                     print('DOC IDENTITY: ${currentUser.profileImage} ');
+
                      Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>

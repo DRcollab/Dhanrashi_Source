@@ -77,6 +77,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         style: DefaultValues.kH3(context),
         validator: this.widget.validator,
         decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                   isDense : true,
                   contentPadding: DefaultValues.kDefaultPaddingAllSame(context),
                   enabledBorder: kFormTextBorder,

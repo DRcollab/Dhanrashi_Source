@@ -35,9 +35,7 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('-----------');
-    print(this.title);
-    print(this.title.indexOf(' '));
+
 
     return  Padding(
       padding:  EdgeInsets.all(this.padding.w),
@@ -101,9 +99,8 @@ class Tile extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 18.0, bottom: 18.0),
                               child: Align(
                                 alignment: Alignment.bottomRight,
-                                child: Icon(Icons.style,
-                                  size: 2.w //* DefaultValues.adaptFontsForSmallDevice(context),
-                                )),
+                                child: SizedBox(),
+                              ),
                           ),
                         ],
                       ),

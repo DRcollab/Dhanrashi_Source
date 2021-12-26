@@ -99,14 +99,14 @@ class EmptyPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                     child: Global.investmentCount == 0 ? Showcase(
                       key: _key1,
-                      description: 'Click here to add Investments',
+                      description: 'Click here to add GOALS',
                       shapeBorder: CircleBorder(),
                       overlayPadding: EdgeInsets.all(8),
                       child: CommandButton(
                           onPressed: (){
 
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
+                                MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
                           },
 
                           buttonColor: kPresentTheme.accentColor,
@@ -123,13 +123,13 @@ class EmptyPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left:18.0, right: 18.0),
                     child:Global.goalCount == 0 ? Showcase(
                       key: _key2,
-                      description: 'Click here to add goals',
+                      description: 'Click here to add INVESTMENTS',
                       shapeBorder: CircleBorder(),
                       overlayPadding: EdgeInsets.all(8),
                       child: CommandButton(
                           onPressed: (){
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => GoalsInputScreen(currentUser: currentUser,)));
+                                MaterialPageRoute(builder: (context) => InvestmentInputScreen(currentUser: currentUser,)));
                           },
                           buttonColor: kPresentTheme.accentColor,
                           borderRadius: BorderRadius.circular(20),
