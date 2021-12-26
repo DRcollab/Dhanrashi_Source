@@ -5,7 +5,6 @@ import 'package:dhanrashi_mvp/models/goal.dart';
 //import 'package:finance/finance.dart';
 
 class Calculator {
-
   int longestInvestmentDuration = 0,
       longestGoalDuration = 0,
       longestDuration = 0;
@@ -88,8 +87,8 @@ class Calculator {
           // } else {
           //   futureValue = futureValue * (1 + newInv.investmentRoi);
         } else {
-          //futureValue = futureValue;
-          futureValue = futureValue * (1 + newInv.investmentRoi);
+          futureValue = futureValue;
+          //futureValue = futureValue * (1 + newInv.investmentRoi);
         }
 
         investmentAnnualAmt.add(futureValue.toStringAsFixed(2));
@@ -168,9 +167,11 @@ class Calculator {
       //for (int j = 0; j < newInv.investmentDuration; j++) {
       for (int j = 0; j < longestDuration; j++) {
         if (j + 1 == newGoal.duration) {
-          yearEndAmount = newGoal.goalAmount;
+          yearEndAmount =
+              newGoal.goalAmount * pow(1 + newGoal.inflation, newGoal.duration);
         } else if (j + 1 > newGoal.duration) {
-          yearEndAmount = yearEndAmount * (1 + newGoal.inflation);
+          //yearEndAmount = yearEndAmount * (1 + newGoal.inflation);
+          yearEndAmount = yearEndAmount;
         } else {
           yearEndAmount = 0;
         }
