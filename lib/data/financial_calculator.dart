@@ -245,8 +245,32 @@ class Calculator {
       investmenetVsGgoal.add(allGoalAnnualAmt[allGoalAnnualAmt.shape[0] - 1]);
     }
     //
-    // print(investmenetVsGgoal.shape);
-    // print(investmenetVsGgoal);
+    print(investmenetVsGgoal.shape);
+    print(investmenetVsGgoal);
+
+    int eachGoalYear;
+    String eachGoalName;
+
+    if (gol.isNotEmpty) {
+      gol.forEach((element) {
+        eachGoalYear = element.duration;
+        eachGoalName = element.name;
+        String eachInvTotal = investmenetVsGgoal[0][eachGoalYear];
+        String eachGoalTotal = investmenetVsGgoal[1][eachGoalYear];
+
+        print(
+            'element.duration: $eachGoalYear  and element.name: $eachGoalName');
+        print(eachInvTotal);
+        print(eachGoalTotal);
+        print(investmenetVsGgoal[2][eachGoalYear]);
+        if (double.parse(eachInvTotal) > double.parse(eachGoalTotal)) {
+          print('You are ahead of your goals at $eachGoalYear years');
+        } else {
+          print(
+              'You are behind your goals at $eachGoalYear years and need to invest more');
+        }
+      });
+    }
 
     return investmenetVsGgoal;
   }
