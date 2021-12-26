@@ -25,11 +25,13 @@ class Dashboard extends StatefulWidget {
 
   var currentUser;
   String bannerMessage = '';
+  int tabNumber = 0;
 
 
   Dashboard({
     required this.currentUser,
-    this.bannerMessage= ''
+    this.bannerMessage= '',
+    this.tabNumber = 0,
   });
 
   @override
@@ -232,6 +234,7 @@ class _DashboardState extends State<Dashboard> {
 
           return DefaultTabController(
                 length: 3,
+                initialIndex: widget.tabNumber,
                 child: ShowCaseWidget(
                   builder: Builder(
                     builder: (context) {

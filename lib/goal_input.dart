@@ -116,14 +116,24 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                             overlayPadding: EdgeInsets.all(20),
                             contentPadding: EdgeInsets.all(10),
 
-                            child: CircleAvatar(
-                              backgroundColor: kPresentTheme.accentColor,
-                              radius: 20,
-                              child: Text(goalCount.toString(), style: DefaultValues.kH3(context),),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Dashboard(currentUser: widget.currentUser,tabNumber: 1,),
+                                  ),
+                                );
+                              },
+                              child: CircleAvatar(
+                                backgroundColor: kPresentTheme.accentColor,
+                                radius: 20,
+                                child: Text(goalCount.toString(), style: DefaultValues.kH3(context),),
+                              ),
                             ),
                           ):SizedBox(),
-                          subtitle: Text("Choose one of  these",
-                            style:DefaultValues.kNormal2(context),
+                          subtitle: Text(Messages.goalChoiceHeader,
+                            style:DefaultValues.kNormal3(context),
                           ),
                         ),
                       ),

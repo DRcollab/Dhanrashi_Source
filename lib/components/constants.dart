@@ -249,9 +249,9 @@ class DefaultValues {
 
       Color(0xFF004752),
       Color(0xffb5c210),
-      Color(0xff005213),
-      Colors.amber,
       Colors.purple,
+      Colors.amber,
+      Color(0xff005213),
       Colors.orange,
       Colors.red,
       Colors.indigo,
@@ -275,4 +275,13 @@ class DefaultValues {
 
 }
 
+
+class Messages{
+
+  static String welcomeMessage = 'Welcome';
+  static String investmentChoiceHeader = 'Click on any one of the investments';
+  static String goalChoiceHeader = 'Click on any one of the goals';
+
+
+}
 

@@ -123,16 +123,26 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                             overlayPadding: EdgeInsets.all(20),
                             key: _showCaseKey1,
                             description: 'Get the number of Investments saved',
-                            child: CircleAvatar(
-                              backgroundColor: kPresentTheme.accentColor,
-                              radius: 20,
-                              child:Text(investmentCount.toString(), style: DefaultValues.kH3(context),),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Dashboard(currentUser: widget.currentUser,tabNumber: 2,),
+                                  ),
+                                );
+                              },
+                              child: CircleAvatar(
+                                backgroundColor: kPresentTheme.accentColor,
+                                radius: 20,
+                                child:Text(investmentCount.toString(), style: DefaultValues.kH3(context),),
 
 
+                              ),
                             ),
                           ):SizedBox(),
-                          subtitle: Text("Choose one of  these",
-                            style:DefaultValues.kNormal2(context),
+                          subtitle: Text(Messages.investmentChoiceHeader,
+                            style:DefaultValues.kNormal3(context),
                         ),
                       ),
 

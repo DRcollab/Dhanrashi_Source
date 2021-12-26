@@ -202,7 +202,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
 
                         ),
                       ),
-                      child: Text("Welcome",
+                      child: Text("",
                           style: TextStyle(
                             fontSize: 22.sp,
                             fontWeight: FontWeight.bold,
