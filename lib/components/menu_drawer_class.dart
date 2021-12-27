@@ -141,33 +141,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 children: [
 
 
-                  ListTile(
-                    //contentPadding: EdgeInsets.all(10),
-                    enabled: (widget.currentUser!=null && widget.currentUser.firstName!=''),
-                    leading: FaIcon(FontAwesomeIcons.userFriends,size: 24.sp,color:kPresentTheme.accentColor, ),
-                    title:  userHasProfile ? Text('Update profile' ,style:DefaultValues.kNormal2(context), )
-                    : Text('Add profile' ,style:DefaultValues.kNormal2(context), ) ,
-                  //  subtitle: DefaultValues.screenHeight(context)>600 ? Text('Change your name , date of birth and income'):null,
-                    onTap: (){
-                      if(widget.currentUser.firstName !='N/A') {
-                        Navigator.pop(context);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) =>
-                                ProfileView(currentUser: widget.currentUser,)));
-                      }else{
-                        Navigator.pop(context);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) =>
-                                ProfilerPage(currentUser: widget.currentUser,isItForUpdate: true)));
-                      }
-                    }
-                    ,
 
-                  ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 24.sp,color:kPresentTheme.accentColor),
                     title: Text('Dashboard', style: DefaultValues.kNormal2(context)),
-                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('See analysis of your portfolio and manage it here'):null,
+                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('Analyse your portfolio'):null,
                     enabled: widget.currentUser!=null,
                     onTap: (){
                       Navigator.pop(context);
@@ -203,7 +181,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
 
 
-                  Container(height: 2,width: double.infinity,color: Colors.black12,),
+                  // Container(height: 2,width: double.infinity,color: Colors.black12,),
                   SizedBox(height: 10,width: double.infinity,),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.calculator, size: 24.sp,color:kPresentTheme.accentColor),
@@ -216,6 +194,29 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               SIPCalculator(),),);
                     }
                     ,
+                  ),
+                  ListTile(
+                    //contentPadding: EdgeInsets.all(10),
+                    enabled: (widget.currentUser!=null && widget.currentUser.firstName!=''),
+                    leading: FaIcon(FontAwesomeIcons.userFriends,size: 24.sp,color:kPresentTheme.accentColor, ),
+                    title:  userHasProfile ? Text('Update profile' ,style:DefaultValues.kNormal2(context), )
+                        : Text('Add profile' ,style:DefaultValues.kNormal2(context), ) ,
+                    //  subtitle: DefaultValues.screenHeight(context)>600 ? Text('Change your name , date of birth and income'):null,
+                    onTap: (){
+                      if(widget.currentUser.firstName !='N/A') {
+                        Navigator.pop(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                ProfileView(currentUser: widget.currentUser,)));
+                      }else{
+                        Navigator.pop(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                ProfilerPage(currentUser: widget.currentUser,isItForUpdate: true)));
+                      }
+                    }
+                    ,
+
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.idBadge, size: 24.sp,color:kPresentTheme.accentColor),

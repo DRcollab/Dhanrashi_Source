@@ -5,6 +5,7 @@ import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+
 class Utility{
 
 
@@ -48,7 +49,14 @@ class Utility{
     'empty_goal':'You do not add  any GOAL.\n\nLet\'s add your first Goal',
     'empty_inv':'You do not add any INVESTMENT.\n\nLet\'s add your first Investment ',
     '':'',
+    'date_picker':'Select a date to continue',
+    'profile_pic_change':'Click the image to Edit',
+    'first_name_empty':'First Name should not be empty',
+    'last_name_empty':'Last Name should not be empty',
+
+
   };
+
 
 
   static String customise(String str){

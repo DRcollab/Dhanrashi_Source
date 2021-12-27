@@ -64,11 +64,9 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
   void initState() {
     // TODO: implement initState
     goalCount = Global.goalCount;
-    print('000000wwwwww');
-    print(Global.goalCount);
 
     super.initState();
-   // future:Firebase.initializeApp().whenComplete(() =>fireStore =  FirebaseFirestore.instance );
+
     
   }
 
@@ -190,9 +188,9 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              goalAmount: 10,
+                                              goalAmount: 0,
                                               goalDuration: 10,
-                                              inflation: 4.5,
+                                              inflation: Global.carInflation * 100,
                                               imageSource: 'images/car.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -243,9 +241,9 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               },
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
-                                              goalAmount: 5,
+                                              goalAmount: 0,
                                               goalDuration: 20,
-                                              inflation: 6,
+                                              inflation: Global.houseInflation * 100,
                                               imageSource: 'images/house.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -299,7 +297,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               titleMessage: name,
                                               goalAmount: 10,
                                               goalDuration: 10,
-                                              inflation: 6,
+                                              inflation: Global.educationInflation * 100,
                                               imageSource: 'images/education.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -348,7 +346,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               titleMessage: name,
                                               goalAmount: 10,
                                               goalDuration: 5,
-                                              inflation: 15,
+                                              inflation: Global.retailInflation * 100,
                                               imageSource: 'images/pension.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -402,7 +400,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               titleMessage: name,
                                               goalAmount: 10,
                                               goalDuration: 20,
-                                              inflation: 12,
+                                              inflation: Global.tourInflation*100,
                                               imageSource: 'images/tour.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -451,7 +449,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               titleMessage: name,
                                               goalAmount: 10,
                                               goalDuration: 5,
-                                              inflation: 5,
+                                              inflation: Global.retailInflation * 100,
                                               imageSource: 'images/destination.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -507,7 +505,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               titleMessage: name,
                                               goalAmount: 10,
                                               goalDuration: 10,
-                                              inflation: 10,
+                                              inflation: Global.healthInflation * 100,
                                               imageSource: 'images/healthcare.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -556,7 +554,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               titleMessage: name,
                                               goalAmount: 10,
                                               goalDuration: 10,
-                                              inflation: 12,
+                                              inflation: Global.retailInflation * 100,
                                               imageSource: 'images/products.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -585,6 +583,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
             ),
 
             bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               currentIndex: _currentTabIndex,
               onTap: (index){
                 setState(() {
@@ -593,7 +592,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
 
                 switch(index){
 
-                  case 0:
+                  case 1:
                     Navigator.pop(context);
 
                     Navigator.push(
@@ -603,7 +602,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                       ),
                     );
                     break;
-                  case 1:
+                  case 2:
                     Navigator.pop(context);
 
                     Navigator.push(
@@ -614,7 +613,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                     );
 
                     break;
-                  case 2:
+                  case 3:
 
 
                     Navigator.push(
@@ -629,9 +628,15 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
 
               items: [
                 BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
+                  label: 'Goal',
+                ),
+                BottomNavigationBarItem(
                     icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
                   label: 'Investment',
                 ),
+
+
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,size: 15.sp,),
                   label: 'Dashboard',
@@ -639,7 +644,9 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
                   label: 'SIP Calculator',
-                )
+                ),
+
+
               ],
             ),
           );

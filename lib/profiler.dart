@@ -18,16 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'components/constants.dart';
 import 'components/custom_text_field.dart';
-import 'components/buttons.dart';
-import 'models/profile.dart';
-import 'models/user_data_class.dart';
-import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'confirmation_page.dart';
-import 'components/band_class.dart';  // confirmation page contains band class objects
-import 'package:dhanrashi_mvp/data/database.dart';
-import 'package:dhanrashi_mvp/data/user_handler.dart';
-import 'package:dhanrashi_mvp/data/validators.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -266,7 +259,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
               errorText = '';
             }
             else{
-              this.errorText = 'Select a date before continue';
+              this.errorText = Utility.messages['date_picker']!;
             }
 
             break;
@@ -517,7 +510,7 @@ class _NamePickerState extends State<NamePicker> {
                           ),
                         ),
 
-                        Text('Click the image to Edit'),
+                        Text(Utility.messages['profile_pic_change']!),
                         SizedBox(height: 2.h,),
                         Padding(
                             padding:DefaultValues.kTextFieldPadding(context),
@@ -535,7 +528,7 @@ class _NamePickerState extends State<NamePicker> {
                                       },
                                           validator: (value){
                                             if(value.toString().isEmpty){
-                                               return 'First Name should not be empty';
+                                               return Utility.messages['first_name_empty']!;
 
                                             }
                                             else{
@@ -566,7 +559,7 @@ class _NamePickerState extends State<NamePicker> {
                                         textInputAction: TextInputAction.done,
                                         validator: (value){
                                           if(value.toString().isEmpty){
-                                            return 'last name should not be empty';
+                                            return Utility.messages['last_name_empty']!;
 
                                           }
                                           else {
@@ -649,7 +642,7 @@ class _DOBPickerState extends State<DOBPicker> {
                 textColor: Colors.black,
                 selectTextColor: Colors.white,
                 selectColor: kPresentTheme.accentColor,
-                firstDate: DateTime(1950),
+                firstDate: DateTime(kInitialYear),
                 lastDate: DateTime.now(),
                 backColor: kPresentTheme.influenceColors[0].withOpacity(0.4),
                // cellColor: kPresentTheme.influenceColors[0],

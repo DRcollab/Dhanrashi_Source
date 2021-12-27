@@ -51,11 +51,13 @@ class EmptyPage extends StatelessWidget {
        if(Global.goalCount == 0) {
          messageIndex = 'empty_goal';
        }else{
-         messageIndex = '';
+         messageIndex = 'empty';
        }
 
     }
 
+    print('Goals :${Global.goalCount}');
+     print('Invs :${Global.investmentCount}');
 
 
     return ShowCaseWidget(
@@ -112,7 +114,7 @@ class EmptyPage extends StatelessWidget {
                           buttonColor: kPresentTheme.accentColor,
                           borderRadius: BorderRadius.circular(20),
                           textColor: kPresentTheme.lightWeightColor,
-                          buttonText: 'Add Investments',
+                          buttonText: 'Add Goals',
 
 
                       ),
@@ -134,7 +136,7 @@ class EmptyPage extends StatelessWidget {
                           buttonColor: kPresentTheme.accentColor,
                           borderRadius: BorderRadius.circular(20),
                           textColor: kPresentTheme.lightWeightColor,
-                          buttonText: 'Add Goals',
+                          buttonText: 'Add Investments',
                       ),
                     ):SizedBox(),
                   ),

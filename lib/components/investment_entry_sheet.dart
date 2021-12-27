@@ -97,7 +97,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   late FirebaseFirestore fireStore;
   bool text1Active = false;
   bool text2Active = false;
-  late var investAccess;
+
   double totalInvestment = 0.0;
   int whichTextController = 0;
   TextEditingController titleEditingController = TextEditingController();
@@ -143,7 +143,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     super.initState();
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
-      investAccess = DRInvestAccess(fireStore, widget.currentUser);
+      // investAccess = DRInvestAccess(fireStore, widget.currentUser);
     });
 
 

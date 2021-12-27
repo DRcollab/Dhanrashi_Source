@@ -178,7 +178,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
           child:Showcase(
                   key:widget.showCaseKey![0],
                   description: 'Click here to view the data in tabular form',
-                  title: 'Your investments in a chart',
+                  title: 'Your goals in a chart',
                   child: Container(
 
                       child: fetched ? Stack(

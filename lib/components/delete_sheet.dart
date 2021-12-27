@@ -7,7 +7,6 @@ import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/components/work_done.dart';
-import 'package:dhanrashi_mvp/data/goal_access.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
@@ -95,7 +94,7 @@ class _DeleteSheetState extends State<DeleteSheet> {
   TextEditingController goalController = TextEditingController();
   TextEditingController dummy = TextEditingController();
   late FirebaseFirestore fireStore;
-  late var goalAccess;
+
 
 
 
@@ -127,7 +126,7 @@ class _DeleteSheetState extends State<DeleteSheet> {
 
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
-      goalAccess = DRGoalAccess(fireStore, widget.currentUser);
+
     });
 
 

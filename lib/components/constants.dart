@@ -38,7 +38,7 @@ DhanrashiTheme kLimeTheme =  DhanrashiTheme(
 
 DhanrashiTheme kPresentTheme = kLimeTheme;
 
-
+int kInitialYear = 1950;
 
 final kFormTextBorder = OutlineInputBorder(
 

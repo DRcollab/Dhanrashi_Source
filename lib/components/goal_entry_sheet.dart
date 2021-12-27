@@ -7,7 +7,6 @@ import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/components/work_done.dart';
-import 'package:dhanrashi_mvp/data/goal_access.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
@@ -86,7 +85,7 @@ class _GoalSheetState extends State<GoalSheet> {
   //String display = '';
   double sliderValue = 5;
   double futureValue = 0;
-  double goalAmount = 1;
+  double goalAmount = 0;
   double inflation = 1;
   int goalDuration = 1;
   double inflationEffect = 1.0;
@@ -95,7 +94,7 @@ class _GoalSheetState extends State<GoalSheet> {
   TextEditingController goalController = TextEditingController();
   TextEditingController dummy = TextEditingController();
   late FirebaseFirestore fireStore;
-  late var goalAccess;
+ // late var goalAccess;
 
 
 
@@ -127,7 +126,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
     future:Firebase.initializeApp().whenComplete(() {
       fireStore =  FirebaseFirestore.instance;
-      goalAccess = DRGoalAccess(fireStore, widget.currentUser);
+      //goalAccess = DRGoalAccess(fireStore, widget.currentUser);
     });
 
 
@@ -166,6 +165,7 @@ class _GoalSheetState extends State<GoalSheet> {
         'Uuid': goalDB.user,
         'Updated_id': 'system',
         'goal_name': goalDB.goal.name,
+        'inflation':goalDB.goal.inflation,
         'goal_description': goalDB.goal.description,
         'goal_duration': goalDB.goal.duration,
         'goal_amount': goalDB.goal.goalAmount,
@@ -455,6 +455,7 @@ class _GoalSheetState extends State<GoalSheet> {
                 controller: goalController,
                 initialValue: goalAmount,
                 label:'Goal Value',
+                hintText: 'Enter the target goal amount',
                 icon: Icon(Icons.bubble_chart),
 
                 validator: (){

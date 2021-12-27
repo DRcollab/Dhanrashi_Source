@@ -2,29 +2,28 @@
 
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
-import 'package:dhanrashi_mvp/components/work_done.dart';
+
 import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
+
 import 'package:dhanrashi_mvp/empty_page_inputs.dart';
-import 'package:dhanrashi_mvp/profile_view.dart';
+
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:loading_gifs/loading_gifs.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 import 'models/profile_collector.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'main.dart';
+
 import 'package:flutter/material.dart';
 import 'components/constants.dart';
-import 'components/band_class.dart';
+
 import 'models/profile.dart';
-import 'models/user_data_class.dart';
+
 import 'components/buttons.dart';
-import 'data/user_handler.dart';
-import 'data/database.dart';
+import 'data/data_access.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'components/utilities.dart';
@@ -68,7 +67,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     // TODO: implement initState
     profile = Profile.create();
     Collector profileCollector = widget.collector;
-    print('init statet confirmation page page:${widget.currentUser.profileImage}');
+
     isSubmitted = false;
     isComplete = false;
     isTimedOut = false;
@@ -195,7 +194,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   @override
   Widget build(BuildContext context) {
 
-    print('confirmation page:${widget.currentUser.profileImage}');
+
     double age = (widget.collector.dateOfBirth.difference(DateTime.now()).inDays/365);
 
     String ageAsString = age.ceil().toString();
@@ -353,6 +352,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           Future.any(
                               [
                                 _save(this.profile),
+                                fetchVariables(fireStore),
                                 Utility.timeoutAfter(sec: 10, onTimeout:(){
                                   if(!isComplete){
                                     Utility.showErrorMessage(context, Utility.messages['timed_out']!);

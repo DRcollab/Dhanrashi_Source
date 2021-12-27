@@ -2,30 +2,27 @@
 
 import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
 import 'package:dhanrashi_mvp/data/database.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
+
 import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 
 import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:dhanrashi_mvp/tnc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:loading_gifs/loading_gifs.dart';
+
 
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
-import 'dashboard.dart';
+
 import 'package:flutter/material.dart';
 import 'components/custom_text_field.dart';
 
 import 'components/custom_text.dart';
 import 'login_screen.dart';
 import 'models/profile.dart';
-import 'profiler.dart';
-import 'models/user_data_class.dart';
+import 'data/global.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'components/utilities.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
@@ -299,6 +296,9 @@ import 'package:sizer/sizer.dart';
                                    /// creates an user in the firebase.
                                    this.buttonClicked = true;
                                       _createUser(_userEmail.text, _userPassword.text);
+                                      Global.goalCount = 0;
+                                      Global.investmentCount = 0;
+
                                  }
 
                                }

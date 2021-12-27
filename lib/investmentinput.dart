@@ -53,7 +53,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
   double investmentDuration = 0;
 
-  int _currentTabIndex = 0 ;
+  int _currentTabIndex = 1 ;
 
   late bool moveKB = false;
 
@@ -204,7 +204,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                                 titleMessage: name,
                                                 investedAmount: 0,
                                                 investmentDuration: 10,
-                                                expectedRoi: 12,
+                                                expectedRoi: Global.mfReturn *100,
                                                 annualInvestment: 0,
                                                 imageSource: 'images/mutual.png',
                                                 onAdd: (value){
@@ -256,7 +256,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               investedAmount: 0,
                                               investmentDuration: 5,
                                               annualInvestment: 0,
-                                              expectedRoi: 15,
+                                              expectedRoi: Global.stockReturn * 100,
                                               imageSource: 'images/stock.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -311,7 +311,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               investedAmount: 0,
                                               investmentDuration: 5,
                                               annualInvestment: 0,
-                                              expectedRoi: 5,
+                                              expectedRoi: Global.fdReturn * 100,
                                               imageSource: 'images/bank.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -363,7 +363,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               investedAmount: 0,
                                               investmentDuration: 20,
                                               annualInvestment: 0,
-                                              expectedRoi: 12,
+                                              expectedRoi: Global.realEstateReturn * 100,
                                               imageSource: 'images/real-estate.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -418,7 +418,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               investedAmount: 0,
                                               investmentDuration: 10,
                                               annualInvestment: 0,
-                                              expectedRoi: 10,
+                                              expectedRoi: Global.goldReturn * 100,
                                               imageSource: 'images/coin.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -467,7 +467,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               investedAmount: 0,
                                               investmentDuration: 20,
                                               annualInvestment: 0,
-                                              expectedRoi: 6,
+                                              expectedRoi: Global.avgReturn * 100,
                                               imageSource: 'images/insurance.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -525,7 +525,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               investedAmount: 0,
                                               investmentDuration: 10,
                                               annualInvestment: 0,
-                                              expectedRoi: 6,
+                                              expectedRoi: Global.bondYield * 100,
                                               imageSource: 'images/bonds.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -574,7 +574,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               investedAmount: 0,
                                               investmentDuration: 10,
                                               annualInvestment: 0,
-                                              expectedRoi: 12,
+                                              expectedRoi: Global.avgReturn * 100,
                                               imageSource: 'images/products.png',
                                               onAdd: (value){
                                                 setState(() {
@@ -609,7 +609,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
             //     height: 10,
             // ) ,
             bottomNavigationBar: BottomNavigationBar(
-            // type: BottomNavigationBarType.,
+               type: BottomNavigationBarType.fixed,
 
               currentIndex: _currentTabIndex,
               onTap: (index){
@@ -629,7 +629,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                          ),
                        );
                        break;
-                     case 1:
+                     case 2:
                        Navigator.pop(context);
 
                        Navigator.push(
@@ -639,7 +639,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                          ),
                        );
                        break;
-                     case 2:
+                     case 3:
 
 
                        Navigator.push(
@@ -660,6 +660,10 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                   label: 'Goals',
 
 
+                ),
+                BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
+                  label: 'Investments',
                 ),
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.chartPie, color: kPresentTheme.accentColor,size: 15.sp,),
