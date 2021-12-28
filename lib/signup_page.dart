@@ -56,6 +56,7 @@ import 'package:sizer/sizer.dart';
     bool buttonClicked = false;
     bool _hidePassword = true;
     bool _hidePassword2 = true;
+    bool _agreedToTnc = false;
 
   final _userEmail = TextEditingController();
   final  _userPassword = TextEditingController();
@@ -279,6 +280,7 @@ import 'package:sizer/sizer.dart';
                         ErrorText(errorText: _errorText,), //from custom_text
                         buttonClicked ?  Image.asset(kPresentTheme.progressIndicator, scale: 3,
                         ):CommandButton(
+                          enabled: this._agreedToTnc,
                           textColor: kPresentTheme.lightWeightColor,
                           buttonColor: kPresentTheme.accentColor,
                           buttonText: 'Sign Up',
@@ -310,23 +312,40 @@ import 'package:sizer/sizer.dart';
                             });
                           },
                         ),
+                        Row(
+                          children : [
+                            Padding(
+                              padding: EdgeInsets.only(left:6.w),
+                              child: Checkbox(
+                                value: this._agreedToTnc,
+                                onChanged: (value){
+                                  setState(() {
+                                    this._agreedToTnc = value!;
+                                  });
 
-                        Padding(
-                          padding: DefaultValues.kTextFieldPadding(context),
-                          child: LinkText(
-                            onPressed: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => TnC(),
-                                  )
-                              );
-                            },
-                            linkText: 'By signing up you are agreeing to our terms and condition.Click Here to see it',
-                            displaySize: 12.sp,
+                                },
 
-                          ),
+                              ),
+                            ),
+                            Text('I agreed to ', style: TextStyle(fontSize: 18.0),),
+                            LinkText(
+                              onPressed: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TnC(),
+                                    )
+                                );
+                              },
+                              linkText: 'terms and condition ',
+                              displaySize: 12.sp,
+
+                            )
+
+                          ]
                         )
+
+
                       ],
                     ),
                   ),

@@ -34,14 +34,15 @@ class ProfileView extends StatelessWidget {
         currentUser: this.currentUser,
         rightButton: SizedBox(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+
           children: [
           // Image.asset('images/profile_image.png', height: 150,width: 250,alignment: Alignment.topCenter,),
             SizedBox(height: 15.h ),
-            ReportCard(
-              requiredTitleBar: false,
-              borderRadius: BorderRadius.circular(20),
-              baseColor: kPresentTheme.themeColor,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+             // requiredTitleBar: false,
+             // borderRadius: BorderRadius.circular(20),
+             // baseColor: kPresentTheme.themeColor,
               children: [
                 CircleAvatar(
                   radius: 40 * DefaultValues.adaptForSmallDevice(context),
@@ -80,25 +81,26 @@ class ProfileView extends StatelessWidget {
                               ProfilerPage(currentUser: this.currentUser,isItForUpdate: true,)));
                     },
                   ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left:36.w,
+                    right: 36.w, ),
+                  child: CommandButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    buttonColor: kPresentTheme.alternateColor,
+                    borderRadius: BorderRadius.circular(5),
+                    textColor: kPresentTheme.accentColor,
+                    buttonText: 'Cancel',
+
+
+                  ),
                 )
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left:36.w,
-                  right: 36.w, ),
-              child: CommandButton(
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  buttonColor: kPresentTheme.alternateColor,
-                  borderRadius: BorderRadius.circular(5),
-                  textColor: kPresentTheme.accentColor,
-                  buttonText: 'Cancel',
 
-
-              ),
-            )
           ],
         )
 

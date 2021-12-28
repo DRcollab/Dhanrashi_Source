@@ -176,6 +176,7 @@ class LinkText extends StatelessWidget {
         style: TextStyle(
           color: type == LinkTextType.DARK ? kPresentTheme.linkTextColor : Colors.white,
           fontSize: this.displaySize,
+          fontStyle: FontStyle.italic,
         ),
       ),
       onTap: onPressed,

@@ -454,7 +454,7 @@ class _GoalSheetState extends State<GoalSheet> {
                 // stay muted;
                 controller: goalController,
                 initialValue: goalAmount,
-                label:'Goal Value',
+                label:'Goal Value (targeted goal)',
                 hintText: 'Enter the target goal amount',
                 icon: Icon(Icons.bubble_chart),
 

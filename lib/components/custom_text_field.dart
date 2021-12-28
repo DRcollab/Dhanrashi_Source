@@ -351,7 +351,10 @@ class _NumberInputFieldState extends State<NumberInputField> {
             ),
               ),),
             ),
-            Text(widget.suffix),
+            Padding(
+              padding:  EdgeInsets.only(top: 2.h),
+              child: Text(widget.suffix),
+            ),
           ]
 
       ),
