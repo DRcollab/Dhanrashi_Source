@@ -149,20 +149,20 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
 
    List<Task>   pieData;
-    inv_ratio = 7/5;
+    inv_ratio = invValueatlastYear/goalValueatlastYear;
     goal_ratio = (goalValueatlastYear/invValueatlastYear);
 
     if(invValueatlastYear > goalValueatlastYear){
       pieData = [
 
         Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
-        Task('Goal', goalValueatlastYear ,kPresentTheme.alternateColor),
+       Task('Goal', goalValueatlastYear ,kPresentTheme.alternateColor),
       ];
     }else{
       pieData = [
 
         Task('Goal', goalValueatlastYear ,kPresentTheme.alternateColor),
-        Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
+       Task('Investment', invValueatlastYear, kPresentTheme.accentColor),
 
       ];
     }
@@ -300,6 +300,8 @@ class _DynamicGraphState extends State<DynamicGraph> {
       double ratio = _pieChartData[0].data[0].task == 'Investment'
             ? goal_ratio
             : inv_ratio;
+
+     
 
       bool viewLabel = false;
       return Stack(
