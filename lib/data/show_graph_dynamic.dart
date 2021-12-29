@@ -301,7 +301,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
             ? goal_ratio
             : inv_ratio;
 
-     
+
 
       bool viewLabel = false;
       return Stack(

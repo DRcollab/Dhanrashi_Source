@@ -15,11 +15,13 @@ class ChartViewer extends StatefulWidget {
  // late Widget chartChild;
   List dataSet;
   var currentUser;
+  ChartType type;
   ChartViewer(
   {
     required this.dataSet,
 
     this.currentUser,
+    this.type = ChartType.bar,
   }
       );
 
@@ -76,7 +78,7 @@ class _ChartViewerState extends State<ChartViewer> {
               currentUser: widget.currentUser,
               chartChild: DynamicGraph(
                 isVertical: false,
-                chartType: ChartType.bar,
+                chartType: widget.type,
                 resultSet: widget.dataSet,
                 gallopYears: 1,
               ),

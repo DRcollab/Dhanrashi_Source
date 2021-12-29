@@ -5,6 +5,8 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
+import 'package:dhanrashi_mvp/sip_calculator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -15,6 +17,7 @@ import 'components/investment_tabview_class.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'investmentinput.dart';
 import 'models/goal_db.dart';
 import 'models/investment.dart';
 import 'models/investment_db.dart';
@@ -56,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
   GlobalKey _addInvHelpKey = GlobalKey();
 
   int selectedTabIndex = 0;
-
+  int _currentTabIndex = 2;
   late FirebaseFirestore fireStore;
   late var goalAccess;
   List<GoalDB> goals = [];
@@ -325,6 +328,73 @@ class _DashboardState extends State<Dashboard> {
 
                                 ]
                               ),
+                        bottomNavigationBar: BottomNavigationBar(
+                          type: BottomNavigationBarType.fixed,
+                          currentIndex: _currentTabIndex,
+                          onTap: (index){
+                            setState(() {
+                              _currentTabIndex = index;
+                            });
+
+                            switch(index){
+
+                              case 1:
+                                Navigator.pop(context);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,),
+                                  ),
+                                );
+                                break;
+                              case 2:
+                                Navigator.pop(context);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Dashboard(currentUser: widget.currentUser,),
+                                  ),
+                                );
+
+                                break;
+                              case 3:
+
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
+                                  ),
+                                );
+                                break;
+                            }
+                          },
+
+                          items: [
+                            BottomNavigationBarItem(
+                              icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
+                              label: 'Goal',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
+                              label: 'Investment',
+                            ),
+
+
+                            BottomNavigationBarItem(
+                              icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,size: 15.sp,),
+                              label: 'Dashboard',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
+                              label: 'SIP Calculator',
+                            ),
+
+
+                          ],
+                        ),
                             );
                     }
                   ),

@@ -75,13 +75,13 @@ class _TableViewState extends State<TableView> {
       );
      for(int j = 0; j<columnCount; j++) {
 
-       print(widget.arrayList[j][0]);
+      double value = double.parse(widget.arrayList[j][i]) ;
 
 
        dataCells.add(
            DataCell(
                SizedBox(
-                 child: Text(widget.arrayList[j][i].toString()),
+                 child: Text(DefaultValues.textFormatWithDecimal.format(value)),
                )
            )
        );
@@ -125,36 +125,3 @@ class _TableViewState extends State<TableView> {
   }
 }
 
-
-
-// List<DataColumn>.generate(
-// widget.arrayList.length, (int index1) {
-// return  DataColumn(
-// label: SizedBox(
-//
-// child: Text(widget.arrayList[index1][0], style: DefaultValues.kH4(context),),
-// )
-// );
-// }
-// ),
-
-
-
-// List<DataRow>.generate(
-// numItems , (int index) {
-// index=1;
-// return  DataRow(
-// cells: List<DataCell>.generate(
-// widget.arrayList.length,(int index1) =>
-// DataCell(
-// SizedBox(
-// child: Text(widget.arrayList[index1][index].toString()),
-// )
-// )
-// )
-//
-// );
-// }
-//
-//
-// ),

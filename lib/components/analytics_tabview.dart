@@ -1,4 +1,5 @@
 
+import 'package:dhanrashi_mvp/components/recom_class.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
@@ -8,6 +9,7 @@ import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
+import '../chart_viewer.dart';
 import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
@@ -19,6 +21,7 @@ class AnalyticsTabView extends StatelessWidget {
   late List<InvestDB> investmentDBs;
   List<Investment> investments = [];
   List<Goal> goals = [];
+  List<int> goalPoints = [];
   late var currentUser;
   late List<GoalDB>  goalDBs;
   List dataSet = List.empty(growable: true);
@@ -68,14 +71,26 @@ class AnalyticsTabView extends StatelessWidget {
     fetched = false;
   }
 
+  if(goals.isNotEmpty){
+    goals.forEach((element) {
+      goalPoints.add(element.duration);
+    });
+  }
 
+  goalPoints.sort();
+
+  print(goalPoints);
 
   if(investments.isNotEmpty && goals.isNotEmpty) {
+
 
 
     fetched = true;
     dataSet = Calculator().getInvVsGoalDetail(
         investments, goals, Global.longestInvestmentDuration,Global.longestGoalDuration);
+
+
+
   }else{
     fetched = false;
   }
@@ -97,13 +112,39 @@ class AnalyticsTabView extends StatelessWidget {
           ),
           child: Container(
             width: 100.w,
-            height: 41.h,
+            height: 35.h,
             child: fetched ? Showcase(
                 key: showCaseKey![2],
                 description: 'See how your investment and goals are doing as time goes',
-                child: DynamicGraph(resultSet: dataSet,chartType: ChartType.line,)) :Image.asset(kPresentTheme.progressIndicator, scale: 3),
+                child: Stack(
+                  children: [
+                    DynamicGraph(resultSet: dataSet,chartType: ChartType.line,),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                ChartViewer(
+                                  currentUser: this.currentUser,
+                                  dataSet: dataSet,
+                                  type: ChartType.line,
+                                )));
+                      },
+                      child: Container(
+                        color: Color(0x00000000),
+                        width:100.w,
+                        height:35.h,
+                      ),
+                    )
+                  ],
+                ))
+
+                :Image.asset(kPresentTheme.progressIndicator, scale: 3),
           ),
         ),
+
+        Tooltip(
+          message: 'Hi',
+            child: RecomCard(dataSet: dataSet, goals: goals)),
       ],
     );
   }

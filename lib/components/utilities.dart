@@ -57,6 +57,10 @@ class Utility{
 
   };
 
+static var recom_message = ['You are ahead of your goals at',
+                            'You are behind your goals at',
+                            ];
+
 
 
   static String customise(String str){
