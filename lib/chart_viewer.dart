@@ -14,14 +14,17 @@ class ChartViewer extends StatefulWidget {
 
  // late Widget chartChild;
   List dataSet;
+  List? dataSetForTable;
   var currentUser;
   ChartType type;
+  bool useFirstColumnFromList = false;
   ChartViewer(
   {
     required this.dataSet,
-
+    this.dataSetForTable,
     this.currentUser,
     this.type = ChartType.bar,
+    this.useFirstColumnFromList = false,
   }
       );
 
@@ -30,6 +33,19 @@ class ChartViewer extends StatefulWidget {
 }
 
 class _ChartViewerState extends State<ChartViewer> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(widget.dataSetForTable == null){
+      widget.dataSetForTable = widget.dataSet;
+    }
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -84,7 +100,8 @@ class _ChartViewerState extends State<ChartViewer> {
               ),
             ),
             TableView(
-              arrayList: widget.dataSet,
+              arrayList: widget.dataSetForTable!,
+              useFirstColumnFromList: widget.useFirstColumnFromList,
             ),
 
           ],

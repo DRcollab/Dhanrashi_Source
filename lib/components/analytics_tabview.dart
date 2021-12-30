@@ -20,6 +20,7 @@ class AnalyticsTabView extends StatelessWidget {
  // AnalyticsTabView({Key? key}) : super(key: key);
   late List<InvestDB> investmentDBs;
   List<Investment> investments = [];
+  List recommList = List.empty(growable: true);
   List<Goal> goals = [];
   List<int> goalPoints = [];
   late var currentUser;
@@ -39,6 +40,59 @@ class AnalyticsTabView extends StatelessWidget {
     this.showCaseKey,
   });
 
+
+  _fetchRecommendations(){
+
+   // int eachGoalYear;
+
+
+    List temp1 = List.empty(growable: true);
+    List temp2 = List.empty(growable: true);
+    List temp3 = List.empty(growable: true);
+    List temp4 = List.empty(growable: true);
+
+    temp1.add('Year');
+    temp2.add('Investments');
+    temp3.add('Goals');
+    temp4.add('Better/(Worse)');
+
+    if (this.goalPoints.isNotEmpty) {
+      this.goalPoints.forEach((element) {
+        String eachInvTotal = this.dataSet[0][element];
+        String eachGoalTotal =  this.dataSet[1][element];
+        String year = this.dataSet[2][element].toString();
+        double diff = double.parse(eachInvTotal)- double.parse(eachGoalTotal);
+        temp1.add(year);
+        temp2.add(eachInvTotal);
+        temp3.add(eachGoalTotal);
+        temp4.add(diff.toString());
+        //eachGoalYear = element;
+       // eachGoalName = element;
+       //  if(goalPoints.contains(eachGoalYear)){
+       //    String eachInvTotal = this.dataSet[0][eachGoalYear];
+       //    String eachGoalTotal =  this.dataSet[1][eachGoalYear];
+       //    double diff = double.parse(eachInvTotal)- double.parse(eachGoalTotal);
+       //  }
+
+
+      //  recommList.add([eachInvTotal, eachGoalTotal,diff.toString()]);
+
+        // if (double.parse(eachInvTotal) > double.parse(eachGoalTotal)) {
+        //  // recomMessage = 'You are ahead of your goals at $eachGoalYear years';
+        //
+        // } else {
+        //
+        //  // recomMessage =   'You are behind your goals at $eachGoalYear years and need to invest more';
+        // }
+      });
+
+      recommList.add(temp1);
+      recommList.add(temp2);
+      recommList.add(temp3);
+      recommList.add(temp4);
+
+    }
+  }
 
 
 
@@ -73,13 +127,15 @@ class AnalyticsTabView extends StatelessWidget {
 
   if(goals.isNotEmpty){
     goals.forEach((element) {
-      goalPoints.add(element.duration);
+      if(!goalPoints.contains(element.duration))
+              goalPoints.add(element.duration);
     });
   }
 
   goalPoints.sort();
 
   print(goalPoints);
+
 
   if(investments.isNotEmpty && goals.isNotEmpty) {
 
@@ -89,13 +145,14 @@ class AnalyticsTabView extends StatelessWidget {
     dataSet = Calculator().getInvVsGoalDetail(
         investments, goals, Global.longestInvestmentDuration,Global.longestGoalDuration);
 
+        print(dataSet);
 
-
+      _fetchRecommendations();
   }else{
     fetched = false;
   }
 
-    return Column(
+    return ListView(
       children: [
         fetched?
         Showcase(
@@ -103,7 +160,7 @@ class AnalyticsTabView extends StatelessWidget {
             description: 'See your goal and investment relation',
             child: DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,))
 
-            :Text('Loading.......', style: DefaultValues.kH1(context),),
+            :Center(child: Text('Loading.......', style: DefaultValues.kH1(context),)),
 
 
         Padding(
@@ -126,7 +183,9 @@ class AnalyticsTabView extends StatelessWidget {
                                 ChartViewer(
                                   currentUser: this.currentUser,
                                   dataSet: dataSet,
+                                  dataSetForTable: recommList,
                                   type: ChartType.line,
+                                  useFirstColumnFromList: true,
                                 )));
                       },
                       child: Container(
@@ -142,9 +201,10 @@ class AnalyticsTabView extends StatelessWidget {
           ),
         ),
 
-        Tooltip(
+       fetched ? Tooltip(
           message: 'Hi',
-            child: RecomCard(dataSet: dataSet, goals: goals)),
+            child: RecomCard(dataSet: recommList, goals: goals),
+        ): SizedBox(),
       ],
     );
   }

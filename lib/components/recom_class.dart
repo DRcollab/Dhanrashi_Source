@@ -25,34 +25,48 @@ class _RecomCardState extends State<RecomCard> {
 
    String recomMessage = '';
 
+
   _fetchRecommendations(){
 
-    int eachGoalYear;
-    String eachGoalName;
+    // int eachGoalYear;
+    // String eachGoalName;
 
-
-    if (widget.goals.isNotEmpty) {
-      widget.goals.forEach((element) {
-        eachGoalYear = element.duration;
-        eachGoalName = element.name;
-        String eachInvTotal = widget.dataSet[0][eachGoalYear];
-        String eachGoalTotal = widget.dataSet[1][eachGoalYear];
-
-
-        if (double.parse(eachInvTotal) > double.parse(eachGoalTotal)) {
-          recomMessage = 'You are ahead of your goals at $eachGoalYear years';
-
-        } else {
-
-           recomMessage =   'You are behind your goals at $eachGoalYear years and need to invest more';
+    if(widget.dataSet.isNotEmpty){
+      widget.dataSet.forEach((element) {
+        if( double.parse(element[4])>0){
+          recomMessage = 'You are ahead of your goals';
+        }else{
+          recomMessage = 'You are behind your goals at';
         }
       });
     }
-  }
+
+
+  //
+  //   if (widget.goals.isNotEmpty) {
+  //     widget.goals.forEach((element) {
+  //       eachGoalYear = element.duration;
+  //       eachGoalName = element.name;
+  //       String eachInvTotal = widget.dataSet[0][eachGoalYear];
+  //       String eachGoalTotal = widget.dataSet[1][eachGoalYear];
+  //
+  //
+  //       if (double.parse(eachInvTotal) > double.parse(eachGoalTotal)) {
+  //         recomMessage = 'You are ahead of your goals at $eachGoalYear years';
+  //
+  //       } else {
+  //
+  //          recomMessage =   'You are behind your goals at $eachGoalYear years and need to invest more';
+  //       }
+  //     });
+  //   }
+   }
 
   @override
   Widget build(BuildContext context) {
 
+    print(widget.dataSet);
+    print('Hello');
     _fetchRecommendations();
 
 
@@ -66,7 +80,9 @@ class _RecomCardState extends State<RecomCard> {
 
           Tooltip(
             message: 'Hi',
-              child: Text(recomMessage, style: DefaultValues.kNormal3(context),)),
+              child: ListTile(
+                leading: Icon(Icons.info),
+                  title: Text(recomMessage, style: DefaultValues.kNormal3(context),))),
 
         ],
 

@@ -69,6 +69,18 @@ class DefaultValues {
   static final threshold = 9999999999;  // 1 less than 1000 Cr.
 
 
+  static String financialFormat( final format, double value){
+
+      String formattedString = format.format(value);
+      if(formattedString.contains('-')){
+         return '(${formattedString.substring(1)})';
+      }
+      else{
+        return formattedString;
+      }
+  }
+
+
  // static final textFormat1 =
   static double adaptForSmallDevice(BuildContext context) {
     final size = MediaQuery.of(context).size;
