@@ -72,10 +72,10 @@ class DefaultValues {
     'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
         ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
 
-    'success_update_profile':'Your profile has been succesfully updated.' ,
-    'empty':'Let us start your financial plannning by adding your first Goal and Investment',
-    'empty_goal':'You do not add  any GOAL.\n\nLet\'s add your first Goal',
-    'empty_inv':'You do not add any INVESTMENT.\n\nLet\'s add your first Investment ',
+    'success_update_profile':'Your profile has been successfully updated.' ,
+    'empty':'Let us start your financial planning by adding your first Goal and Investment',
+    'empty_goal':'You do not have any GOAL.\n\nLet\'s add your first Goal',
+    'empty_inv':'You do not have any INVESTMENT.\n\nLet\'s add your first Investment ',
     '':'',
     'date_picker':'Select a date to continue',
     'profile_pic_change':'Click the image to Edit',

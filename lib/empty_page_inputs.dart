@@ -56,8 +56,6 @@ class EmptyPage extends StatelessWidget {
 
     }
 
-    print('Goals :${Global.goalCount}');
-     print('Invs :${Global.investmentCount}');
 
 
     return ShowCaseWidget(
@@ -99,7 +97,7 @@ class EmptyPage extends StatelessWidget {
                   //CommandButton(),
                   Padding(
                     padding: const EdgeInsets.only(left: 18.0, right: 18.0),
-                    child: Global.investmentCount == 0 ? Showcase(
+                    child: Global.goalCount == 0 ? Showcase(
                       key: _key1,
                       description: 'Click here to add GOALS',
                       shapeBorder: CircleBorder(),
@@ -123,7 +121,7 @@ class EmptyPage extends StatelessWidget {
 
                   Padding(
                     padding: const EdgeInsets.only(left:18.0, right: 18.0),
-                    child:Global.goalCount == 0 ? Showcase(
+                    child:Global.investmentCount == 0 ? Showcase(
                       key: _key2,
                       description: 'Click here to add INVESTMENTS',
                       shapeBorder: CircleBorder(),
