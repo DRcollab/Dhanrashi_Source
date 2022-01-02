@@ -83,7 +83,7 @@ class DefaultValues {
     'last_name_empty':'Last Name should not be empty',
     'login_link_text':"Trouble logging in ? Click here",
     'tnc_link_text':'terms and conditions',
-    'tnc':'I agreed to',
+    'tnc':'I agree to ',
     'ask_for_login':'Already have a login id ?',
 
 
