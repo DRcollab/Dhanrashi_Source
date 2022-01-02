@@ -251,14 +251,14 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.monetization_on),
-                          Text('Financial Wisdom', style:DefaultValues.kH1(context),),
+                          Text(DefaultValues.titles['app_name']!, style:DefaultValues.kH1(context),),
                         ],
                       ),
                       Padding(
                         padding:  EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
                         child: InputCard(
 
-                          titleText: 'Login Page',
+                          titleText: DefaultValues.titles['login_page_title']!,
                           children: [
                             //Logger(),
                         Column(
@@ -271,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                               autovalidateMode: this._autovalidateMode,
                               controller: _userText,
 
-                              hintText: "enter email",
+                              hintText: DefaultValues.hints['email']!,
                               passWord: false,
                               icon: Icons.email,
                               //  textInputAction: TextInputAction.next,
@@ -333,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                             },
 
                             controller: _passWord,
-                            hintText: 'Enter Password',
+                            hintText: DefaultValues.hints['pwd']!,
                             passWord: true,
                             hidePassword: _hidePassword,
                             icon: Icons.password_sharp,
@@ -349,7 +349,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                       ),
                       ErrorText( errorText: _errorText,),
                       !clickedLogin ? CommandButton(
-                        buttonText: 'Login',
+                        buttonText: DefaultValues.titles['login_button_text']!,
                         textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
                         buttonColor: kPresentTheme.accentColor,
                         textColor: kPresentTheme.lightWeightColor,
@@ -383,7 +383,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                               child: LinkText(
                                   type: LinkTextType.DARK,
 
-                                  linkText: "Trouble logging in ? Click here",
+                                  linkText: DefaultValues.messages['login_link_text']!,
                                   displaySize: 12.sp, //*  DefaultValues.adaptForSmallDevice(context),
 
                                   onPressed: () {
@@ -413,7 +413,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                             padding:  EdgeInsets.all(1.h),
                             child: CommandButton(
                               textSize: 12.sp,// * DefaultValues.adaptForSmallDevice(context),
-                              buttonText: "New User? Sign Up",
+                              buttonText: DefaultValues.titles['signup_option']!,
                               borderRadius: BorderRadius.circular(20),
                               buttonColor: kPresentTheme.alternateColor,
                               textColor: kPresentTheme.accentColor,

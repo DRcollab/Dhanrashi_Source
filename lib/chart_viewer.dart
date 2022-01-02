@@ -18,15 +18,16 @@ class ChartViewer extends StatefulWidget {
   var currentUser;
   ChartType type;
   bool useFirstColumnFromList = false;
-  ChartViewer(
-  {
+  bool isVertical = false;
+
+  ChartViewer({
     required this.dataSet,
     this.dataSetForTable,
     this.currentUser,
     this.type = ChartType.bar,
     this.useFirstColumnFromList = false,
-  }
-      );
+    this.isVertical = false,
+  });
 
   @override
   _ChartViewerState createState() => _ChartViewerState();
@@ -93,9 +94,11 @@ class _ChartViewerState extends State<ChartViewer> {
             ChartTabView(
               currentUser: widget.currentUser,
               chartChild: DynamicGraph(
-                isVertical: false,
+
+                isVertical: widget.isVertical,
                 chartType: widget.type,
                 resultSet: widget.dataSet,
+
                 gallopYears: 1,
               ),
             ),

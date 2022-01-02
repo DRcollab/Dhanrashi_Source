@@ -28,6 +28,7 @@ class _TableViewState extends State<TableView> {
   int columnCount = 0;
   int startingPoint = 0;
   String firstColumn = '';
+
   @override
   void initState() {
     late List<DataCell> dataCells;
@@ -44,7 +45,6 @@ class _TableViewState extends State<TableView> {
         startingPoint = 1;
       }
     }
-
 
 
 

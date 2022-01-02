@@ -214,7 +214,8 @@ class _DynamicGraphState extends State<DynamicGraph> {
           //     // To change the radius of the bars, use [ConstCornerStrategy]
           //     cornerStrategy: const charts.ConstCornerStrategy(30)),
           barGroupingType: charts.BarGroupingType.stacked,
-          vertical: widget.isVertical);
+          vertical: widget.isVertical,
+      );
     } else if(widget.chartType == ChartType.line){
       return new charts.LineChart(
         _lineChartData,
@@ -244,6 +245,8 @@ class _DynamicGraphState extends State<DynamicGraph> {
                     roundEndCaps: true,
                   ),
                   animate: true,
+
+
 
 
         );
@@ -408,7 +411,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                        child: Text('Investment',style: DefaultValues.kH4(context),),
+                        child: Text('Investments',style: DefaultValues.kH4(context),),
                       ),
                         Padding(
                           padding: EdgeInsets.only(left:25.w,right:6.w),
@@ -431,9 +434,11 @@ class _DynamicGraphState extends State<DynamicGraph> {
                       Padding(
                         padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
                         child: Text('Goals',style: DefaultValues.kH4(context)),
+
                       ),
+                      Text('(inflation adjusted)'),
                       Padding(
-                        padding: EdgeInsets.only(left:37.w, right:6.w),
+                        padding: EdgeInsets.only(left:5.w, right:6.w),
                         child: Text( DefaultValues.textFormat.format(totalGoal),
                           style: DefaultValues.kH4(context),
                         ),

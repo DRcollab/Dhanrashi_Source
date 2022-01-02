@@ -182,6 +182,7 @@ class AnalyticsTabView extends StatelessWidget {
                             MaterialPageRoute(builder: (context) =>
                                 ChartViewer(
                                   currentUser: this.currentUser,
+                                  isVertical: true,
                                   dataSet: dataSet,
                                   dataSetForTable: recommList,
                                   type: ChartType.line,

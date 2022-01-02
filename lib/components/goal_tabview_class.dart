@@ -52,6 +52,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   bool moveKB = false;
   String prefix = '';
   double totalGoal = 0;
+  double totalCorpus = 0;
   // int longestInvestmentDuration = 0;
   // int longestGoalDuration = 0;
 
@@ -136,6 +137,13 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                   if(goals.isNotEmpty) {
                     goals.forEach((element) {
                       totalGoal = element.goalAmount + totalGoal;
+
+                      double futureValue = Calculator.fv(element.inflation, element.duration,element.goalAmount,
+                          0, 0);
+
+                      totalCorpus = futureValue + totalCorpus;
+                      print(totalCorpus);
+
                     });
 
                     Global.longestGoalDuration = Calculator().getLongestGoalDuration(goals);
@@ -250,7 +258,8 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                     description: 'Click this area to view and update the goal',
                     child: Shingle(
                       onPressed:(){
-                        if('#@:%&^*!'.contains(goals[index].name.substring(0,1))){
+
+                        if(prefixSymbols.contains(goals[index].name.substring(0,1))){
                           prefix=goals[index].name.substring(0,1);
 
                         }else{
@@ -264,10 +273,10 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                       leadingImage: goalIcons.containsKey(this.goals[index].name)
                           ?goalIcons[this.goals[index].name]
                           :goalIcons[this.goals[index].name.substring(0,1)],
-                      title:  '#@:%&^*!'.contains(goals[index].name.substring(0,1))
+                      title:  prefixSymbols.contains(goals[index].name.substring(0,1))
                           ?goals[index].name.substring(1)
                           :goals[index].name,
-                      prefix: '#@:%&^*!'.contains(goals[index].name.substring(0,1))
+                      prefix: prefixSymbols.contains(goals[index].name.substring(0,1))
                           ?goals[index].name.substring(0,1)
                           :'',
                 //Utility.changeToPeriodicDecimal(goals[index].goalAmount).toString()} ${Utility.getPeriod(goals[index].goalAmount)

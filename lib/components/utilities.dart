@@ -40,28 +40,18 @@ class Utility{
 
   ];
 
-  static var messages = {
-    'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
-    ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
-
-    'success_update_profile':'Your profile has been succesfully updated.' ,
-    'empty':'Let us start your financial plannning by adding your first Goal and Investment',
-    'empty_goal':'You do not add  any GOAL.\n\nLet\'s add your first Goal',
-    'empty_inv':'You do not add any INVESTMENT.\n\nLet\'s add your first Investment ',
-    '':'',
-    'date_picker':'Select a date to continue',
-    'profile_pic_change':'Click the image to Edit',
-    'first_name_empty':'First Name should not be empty',
-    'last_name_empty':'Last Name should not be empty',
 
 
-  };
+ static String formatMessage(String msg){
 
-static var recom_message = ['You are ahead of your goals at',
-                            'You are behind your goals at',
-                            ];
-
-
+   msg = msg.trim();
+   if(msg.endsWith(',')) {
+     msg = msg.substring(0, msg.length - 1);
+     msg = msg.substring(0, msg.lastIndexOf(',')) + ' and' +
+         msg.substring(msg.lastIndexOf(',') + 1);
+   }
+  return msg;
+ }
 
   static String customise(String str){
 

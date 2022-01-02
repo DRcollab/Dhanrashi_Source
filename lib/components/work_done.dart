@@ -86,7 +86,7 @@ class _WorkDoneState extends State<WorkDone> {
                         color:Colors.red,
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
-                            child: Text(Utility.messages['timed_out']!, style: DefaultValues.kH2(context),),
+                            child: Text(DefaultValues.messages['timed_out']!, style: DefaultValues.kH2(context),),
                           ),
                       )
                     ],

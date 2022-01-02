@@ -1,4 +1,5 @@
 
+import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 
 class Profile {
@@ -21,7 +22,7 @@ class Profile {
     this.firstName ='';
     this.lastName = '';
     this.incomeRange = '';
-    this.DOB = DateTime.parse('1900-01-01');
+    this.DOB = DateTime.parse(DefaultValues.minimumDate);
     this.docId = '';
     this.uid ='';
     this.email = '';

@@ -2,8 +2,7 @@
 
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
-import 'package:dhanrashi_mvp/data/global.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
+
 import 'package:dhanrashi_mvp/profile_view.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'components/date_picker.dart';
@@ -12,13 +11,13 @@ import 'package:sizer/sizer.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
-import 'dashboard.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'components/constants.dart';
 import 'components/custom_text_field.dart';
-import 'package:dhanrashi_mvp/components/utilities.dart';
+
 import 'confirmation_page.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -93,18 +92,11 @@ class _ProfilerPageState extends State<ProfilerPage> {
   final List<String> headers = [
     "Great, Let's start with your name",
     'Choose your date of birth',
-    //'Your age factors how  you choose your investments.',
     '',
     ''
   ];
 
-  /// Holds the necessary desscription .. THIS NEED TO BE REVIEWED
-  final List<String> description = [
 
-    'Your name would be used to customize this app for you',
-    '',
-    '',
-  ];
 
   List <String> incomeRangeList  = [
 
@@ -112,7 +104,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
     "1 Lakh to 5 lakh",
     "5 Lakh to 10 Lakh",
     "Above 10 Lakh",
-    "N/A",
+    "Not Disclosed",
 
   ];
   /// LIST ENDS HERE
@@ -259,7 +251,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
               errorText = '';
             }
             else{
-              this.errorText = Utility.messages['date_picker']!;
+              this.errorText = DefaultValues.messages['date_picker']!;
             }
 
             break;
@@ -510,7 +502,7 @@ class _NamePickerState extends State<NamePicker> {
                           ),
                         ),
 
-                        Text(Utility.messages['profile_pic_change']!),
+                        Text(DefaultValues.messages['profile_pic_change']!),
                         SizedBox(height: 2.h,),
                         Padding(
                             padding:DefaultValues.kTextFieldPadding(context),
@@ -528,7 +520,7 @@ class _NamePickerState extends State<NamePicker> {
                                       },
                                           validator: (value){
                                             if(value.toString().isEmpty){
-                                               return Utility.messages['first_name_empty']!;
+                                               return DefaultValues.messages['first_name_empty']!;
 
                                             }
                                             else{
@@ -559,7 +551,7 @@ class _NamePickerState extends State<NamePicker> {
                                         textInputAction: TextInputAction.done,
                                         validator: (value){
                                           if(value.toString().isEmpty){
-                                            return Utility.messages['last_name_empty']!;
+                                            return DefaultValues.messages['last_name_empty']!;
 
                                           }
                                           else {
@@ -637,7 +629,7 @@ class _DOBPickerState extends State<DOBPicker> {
                (
                showCaseKeys: widget.showCaseKey!.sublist(1),
               //DateTimeFormField(
-                initialDate: widget.datePicker.toString()=='1900-01-01 00:00:00.000'? DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day)
+                initialDate: widget.datePicker.toString()==DefaultValues.minimumDateTime ? DateTime( DateTime.now().year-18,DateTime.now().month, DateTime.now().day)
                  :DateTime.parse(widget.datePicker),
                 textColor: Colors.black,
                 selectTextColor: Colors.white,
@@ -697,7 +689,7 @@ class _IncomePickerState extends State<IncomePicker> {
     '1 Lakh to 5 lakh',
     '5 Lakh to 10 Lakh',
     'Above 10 Lakh',
-    'N/A',
+    'Not Disclosed',
 
   ];
 

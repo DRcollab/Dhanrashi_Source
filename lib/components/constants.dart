@@ -68,6 +68,62 @@ class DefaultValues {
   static final String directoryOfPhoto = 'images/profiles';
   static final threshold = 9999999999;  // 1 less than 1000 Cr.
 
+  static var messages = {
+    'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
+        ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
+
+    'success_update_profile':'Your profile has been succesfully updated.' ,
+    'empty':'Let us start your financial plannning by adding your first Goal and Investment',
+    'empty_goal':'You do not add  any GOAL.\n\nLet\'s add your first Goal',
+    'empty_inv':'You do not add any INVESTMENT.\n\nLet\'s add your first Investment ',
+    '':'',
+    'date_picker':'Select a date to continue',
+    'profile_pic_change':'Click the image to Edit',
+    'first_name_empty':'First Name should not be empty',
+    'last_name_empty':'Last Name should not be empty',
+    'login_link_text':"Trouble logging in ? Click here",
+    'tnc_link_text':'terms and conditions',
+    'tnc':'I agreed to',
+    'ask_for_login':'Already have a login id ?',
+
+
+
+  };
+
+  static var showcaseMessages = {
+
+  };
+
+  static var titles = {
+        'app_name':'Dhanrashi',
+        'login_button_text': 'Login',
+        'signup_option':"New User? Sign Up",
+        'login_page_title': 'Login Page',
+        'signup_title':'Signup Page',
+        'signup_button_text':'Sign Up',
+        'ask_login_button_text':'Click Here to Login',
+
+  };
+
+ static var hints = {
+      'email':'enter email',
+      'pwd': 'enter password',
+      'email_signup': 'enter your email to signup',
+      're_pwd': 're-enter the password',
+
+ };
+
+ static var errors = {
+   'not_match':'password and confirm password must be same',
+   'anonymous':'something went wrong please restart the app',
+ };
+
+  static var recom_message = ['You are ahead of your goals at',
+    'You are behind your goals at',
+  ];
+
+  static String minimumDate = '1900-01-01';
+  static String minimumDateTime = '1900-01-01 00:00:00.000';
 
   static String financialFormat( final format, double value){
 

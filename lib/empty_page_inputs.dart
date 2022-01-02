@@ -91,7 +91,7 @@ class EmptyPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(28),
-                    child: Text( Utility.messages[messageIndex]!,
+                    child: Text( DefaultValues.messages[messageIndex]!,
                                 style:DefaultValues.kH2(context),
 
                     ),

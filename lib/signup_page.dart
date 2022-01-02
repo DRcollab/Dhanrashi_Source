@@ -139,14 +139,14 @@ import 'package:sizer/sizer.dart';
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.monetization_on),
-                      Text('Dhanrashi', style:DefaultValues.kH1(context),),
+                      Text(DefaultValues.titles['app_name']!, style:DefaultValues.kH1(context),),
                     ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
                     child: InputCard(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      titleText: "Sign Up Page",
+                      titleText: DefaultValues.titles['signup_title']!,
                       children: [
                         Padding(
                           padding:EdgeInsets.symmetric(vertical: 0.h, horizontal: 6.w),// DefaultValues.kTextFieldPadding(context),
@@ -183,7 +183,7 @@ import 'package:sizer/sizer.dart';
                               },
 
                               icon: Icons.email,
-                              hintText: 'Enter email to register',
+                              hintText: DefaultValues.hints['email_signup']!,
                             ),
                           ),
                         ),
@@ -227,7 +227,7 @@ import 'package:sizer/sizer.dart';
                               },
                               icon: Icons.password_rounded,
                               hidePassword: _hidePassword,
-                              hintText: 'Enter Password ',
+                              hintText: DefaultValues.hints['pwd']!,
                               passWord: true,
                             ),
                           ),
@@ -269,10 +269,10 @@ import 'package:sizer/sizer.dart';
 
                                 }
                                 else
-                                  return 'password and confirm password must be same';
+                                  return DefaultValues.errors['not_match']!;
                               },
                               icon: Icons.password_sharp,
-                              hintText: 'Re-Enter Password',
+                              hintText: DefaultValues.hints['re_pwd']!,
                               passWord: true,
                             ),
                           ),
@@ -283,7 +283,7 @@ import 'package:sizer/sizer.dart';
                           enabled: this._agreedToTnc,
                           textColor: kPresentTheme.lightWeightColor,
                           buttonColor: kPresentTheme.accentColor,
-                          buttonText: 'Sign Up',
+                          buttonText: DefaultValues.titles['signup_button_text']!,
                           textSize: 12.sp,
                           borderRadius: BorderRadius.circular(DefaultValues.kCurveRadius),
                           onPressed: () {
@@ -307,7 +307,7 @@ import 'package:sizer/sizer.dart';
 
                               }
                               else
-                                Utility.showErrorMessage(context, 'Something went wrong please restart the app.');
+                                Utility.showErrorMessage(context, DefaultValues.errors['anonymous']!);
                             /// custom method defined in utilities.dart;
                             });
                           },
@@ -327,7 +327,7 @@ import 'package:sizer/sizer.dart';
 
                               ),
                             ),
-                            Text('I agreed to ', style: TextStyle(fontSize: 18.0),),
+                            Text(DefaultValues.messages['tnc']!, style: TextStyle(fontSize: 18.0),),
                             LinkText(
                               onPressed: (){
                                 Navigator.push(
@@ -337,7 +337,7 @@ import 'package:sizer/sizer.dart';
                                     )
                                 );
                               },
-                              linkText: 'terms and condition ',
+                              linkText: DefaultValues.messages['tnc_link_text']!,
                               displaySize: 12.sp,
 
                             )
@@ -354,14 +354,14 @@ import 'package:sizer/sizer.dart';
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "Already have a login id ?",
+                          DefaultValues.messages['ask_for_login']!,
                           style:DefaultValues.kNormal2(context),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CommandButton(
-                          buttonText: "Click Here to Login",
+                          buttonText: DefaultValues.titles['ask_login_button_text']!,
                           buttonColor: kPresentTheme.alternateColor,
                           textColor: kPresentTheme.accentColor,
                           textSize: 12.sp,

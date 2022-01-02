@@ -3,6 +3,7 @@
 
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/custom_card.dart';
+import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:flutter/material.dart';
 class RecomCard extends StatefulWidget {
 
@@ -24,6 +25,9 @@ class _RecomCardState extends State<RecomCard> {
  // var goals ;
 
    String recomMessage = '';
+   String negativeMessage = 'You are behind your goals at';
+   String positiveMessage = 'You are ahead of your goals at';
+
 
 
   _fetchRecommendations(){
@@ -31,16 +35,34 @@ class _RecomCardState extends State<RecomCard> {
     // int eachGoalYear;
     // String eachGoalName;
 
+    print(widget.dataSet[0]);
+    print(widget.dataSet[1]);
+    print(widget.dataSet[2]);
+    print(widget.dataSet[3]);
+
+
     if(widget.dataSet.isNotEmpty){
-      widget.dataSet.forEach((element) {
-        if( double.parse(element[4])>0){
-          recomMessage = 'You are ahead of your goals';
+
+      for (int i =1 ; i<widget.dataSet.length ; i++){
+        if(double.parse(widget.dataSet[3][i])>0){
+          positiveMessage   = positiveMessage + ' '+ widget.dataSet[0][i] + ',';
         }else{
-          recomMessage = 'You are behind your goals at';
+          negativeMessage   = negativeMessage + ' ' + widget.dataSet[0][i] + ',';
         }
-      });
+      }
+
+
+      // widget.dataSet[3].forEach((element) {
+      //  // print(element[4]);
+      //    if( double.parse(element) > 0){
+      //
+      //   }else{
+      //     negativeMessage =  negativeMessage + element[1];
+      //   }
+      // });
     }
 
+    recomMessage = Utility.formatMessage(negativeMessage) + ' years';
 
   //
   //   if (widget.goals.isNotEmpty) {
@@ -65,8 +87,7 @@ class _RecomCardState extends State<RecomCard> {
   @override
   Widget build(BuildContext context) {
 
-    print(widget.dataSet);
-    print('Hello');
+
     _fetchRecommendations();
 
 
@@ -81,7 +102,8 @@ class _RecomCardState extends State<RecomCard> {
           Tooltip(
             message: 'Hi',
               child: ListTile(
-                leading: Icon(Icons.info),
+                tileColor: kPresentTheme.alternateColor,
+                leading: Icon(Icons.info, size: 28,),
                   title: Text(recomMessage, style: DefaultValues.kNormal3(context),))),
 
         ],

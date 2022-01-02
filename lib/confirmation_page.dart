@@ -355,7 +355,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                 fetchVariables(fireStore),
                                 Utility.timeoutAfter(sec: 10, onTimeout:(){
                                   if(!isComplete){
-                                    Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                    Utility.showErrorMessage(context, DefaultValues.messages['timed_out']!);
                                   }
                                 }),
                               ]
@@ -366,7 +366,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                 _update(this.profile),
                                 Utility.timeoutAfter(sec: 10, onTimeout:(){
                                   if(!isComplete){
-                                    Utility.showErrorMessage(context, Utility.messages['timed_out']!);
+                                    Utility.showErrorMessage(context, DefaultValues.messages['timed_out']!);
                                   }
                                 }),
                               ]
