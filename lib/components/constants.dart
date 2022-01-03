@@ -4,25 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
+var keyValue =
+    "1//0g3rWVkbDBZi0CgYIARAAGBASNwF-L9IryMTSaus23u7smtHXfWADwbeTz4MN46YMJUnkshgW4nhz5FDVmNusXwmmZi3NTV3lOwM";
 
-
-
-
-var keyValue = "1//0g3rWVkbDBZi0CgYIARAAGBASNwF-L9IryMTSaus23u7smtHXfWADwbeTz4MN46YMJUnkshgW4nhz5FDVmNusXwmmZi3NTV3lOwM";
-
-
-DhanrashiTheme kLimeTheme =  DhanrashiTheme(
-
-  progressIndicator:  'images/gifs/rolling.gif',
-  themeColor:Color(0xFFfafafa),
-  influenceColors: [Color(0xfff0f0f0),Color(0xFFf7f7f7)],
-
+DhanrashiTheme kLimeTheme = DhanrashiTheme(
+  progressIndicator: 'images/gifs/rolling.gif',
+  themeColor: Color(0xFFfafafa),
+  influenceColors: [Color(0xfff0f0f0), Color(0xFFf7f7f7)],
   alternateColor: Color(0xffb5c210),
   accentColor: Color(0xFF004752),
   shadowColor: Colors.black12,
   linkTextColor: Color(0xFF193F6C),
   borderColor: Colors.white24,
-
   highLightColor: Color(0xFF004752),
   lightWeightColor: Color(0xffb5c210),
 
@@ -42,30 +35,26 @@ DhanrashiTheme kPresentTheme = kLimeTheme;
 int kInitialYear = 1950;
 
 final kFormTextBorder = OutlineInputBorder(
-
-gapPadding: 2.0,
-borderRadius: BorderRadius.circular(25.0),
-borderSide: BorderSide(
-color: Color(0xFF004752),
-)
-);
+    gapPadding: 2.0,
+    borderRadius: BorderRadius.circular(25.0),
+    borderSide: BorderSide(
+      color: Color(0xFF004752),
+    ));
 
 final kFormErrorTextBorder = OutlineInputBorder(
-
     gapPadding: 2.0,
     borderRadius: BorderRadius.circular(25.0),
     borderSide: BorderSide(
       color: Colors.red,
-    )
-);
-
-
+    ));
 
 class DefaultValues {
-
-  static final textFormat = NumberFormat.simpleCurrency(locale:'en-in', decimalDigits: 0);
-  static final textFormatWithDecimal = NumberFormat.simpleCurrency(locale:'en-in', decimalDigits: 1);
-  static final textShortFormat = NumberFormat.compactSimpleCurrency(locale:'en-in');
+  static final textFormat =
+      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 0);
+  static final textFormatWithDecimal =
+      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 1);
+  static final textShortFormat =
+      NumberFormat.compactSimpleCurrency(locale: 'en-in');
   static final String directoryOfPhoto = 'images/profiles';
   static final threshold = 9999999999;  // 1 less than 1000 Cr.
   static final maxSlideYear = 60.0; // defines the max Sliding year in goal / investment and SIP Calc
@@ -74,30 +63,27 @@ class DefaultValues {
   static final minReturn = 0.0;
 
   static var messages = {
-    'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
-        ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
-
-    'success_update_profile':'Your profile has been successfully updated.' ,
-    'empty':'Let us start your financial planning by adding your first Goal and Investment',
-    'empty_goal':'You do not have any GOAL.\n\nLet\'s add your first Goal',
-    'empty_inv':'You do not have any INVESTMENT.\n\nLet\'s add your first Investment ',
-    '':'',
-    'date_picker':'Select a date to continue',
-    'profile_pic_change':'Click the image to Edit',
-    'first_name_empty':'First Name should not be empty',
-    'last_name_empty':'Last Name should not be empty',
-    'login_link_text':"Trouble logging in ? Click here",
-    'tnc_link_text':'terms and conditions',
-    'tnc':'I agree to ',
-    'ask_for_login':'Already have a login id ?',
-
-
-
+    'timed_out':
+        'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
+            ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
+    'success_update_profile': 'Your profile has been successfully updated.',
+    'empty':
+        'Let us start your financial planning by adding your first Goal and Investment',
+    'empty_goal': 'You do not have any GOAL.\n\nLet\'s add your first Goal',
+    'empty_inv':
+        'You do not have any INVESTMENT.\n\nLet\'s add your first Investment ',
+    '': '',
+    'date_picker': 'Select a date to continue',
+    'profile_pic_change': 'Click the image to Edit',
+    'first_name_empty': 'First Name should not be empty',
+    'last_name_empty': 'Last Name should not be empty',
+    'login_link_text': "Trouble logging in? Click here",
+    'tnc_link_text': 'terms and conditions',
+    'tnc': 'I agree to ',
+    'ask_for_login': 'Already have a login id?',
   };
 
-  static var showcaseMessages = {
-
-  };
+  static var showcaseMessages = {};
 
   static var titles = {
         'app_name':'Dhanrashi',
@@ -126,31 +112,29 @@ class DefaultValues {
 
  };
 
- static var errors = {
-   'not_match':'password and confirm password must be same',
-   'anonymous':'something went wrong please restart the app',
- };
+  static var errors = {
+    'not_match': 'password and confirm password must be same',
+    'anonymous': 'something went wrong please restart the app',
+  };
 
-  static var recom_message = ['You are ahead of your goals at',
+  static var recom_message = [
+    'You are ahead of your goals at',
     'You are behind your goals at',
   ];
 
   static String minimumDate = '1900-01-01';
   static String minimumDateTime = '1900-01-01 00:00:00.000';
 
-  static String financialFormat( final format, double value){
-
-      String formattedString = format.format(value);
-      if(formattedString.contains('-')){
-         return '(${formattedString.substring(1)})';
-      }
-      else{
-        return formattedString;
-      }
+  static String financialFormat(final format, double value) {
+    String formattedString = format.format(value);
+    if (formattedString.contains('-')) {
+      return '(${formattedString.substring(1)})';
+    } else {
+      return formattedString;
+    }
   }
 
-
- // static final textFormat1 =
+  // static final textFormat1 =
   static double adaptForSmallDevice(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.
@@ -173,7 +157,6 @@ class DefaultValues {
     return 1.0;
   }
 
-
   static double adaptFontsForSmallDevice(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.
@@ -184,15 +167,15 @@ class DefaultValues {
     return 1.0;
   }
 
-  static screenHeight(BuildContext context){
+  static screenHeight(BuildContext context) {
     print(MediaQuery.of(context).size.height);
     return MediaQuery.of(context).size.height;
-
   }
 
-  static screenWidth(BuildContext context){
+  static screenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
+
   static double adaptByValue(BuildContext context, double value) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.
@@ -202,8 +185,6 @@ class DefaultValues {
     // For normal devices.
     return 1.0;
   }
-
-
 
   static TextStyle kTitleTextStyle(context) {
     var kTitleTextStyle = TextStyle(
@@ -215,154 +196,126 @@ class DefaultValues {
     return kTitleTextStyle;
   }
 
-
-
   static TextStyle kH1(context) => TextStyle(
-    fontSize: 18.sp, //* adaptFontsForSmallDevice(context),
-    fontWeight: FontWeight.bold,
-    fontStyle: FontStyle.normal,
-  );
-
+        fontSize: 18.sp, //* adaptFontsForSmallDevice(context),
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal,
+      );
 
   static TextStyle kH2(context) => TextStyle(
-    fontSize: 16.sp,// * adaptFontsForSmallDevice(context),
-    fontWeight: FontWeight.bold,
-    fontStyle: FontStyle.normal,
-  );
+        fontSize: 16.sp, // * adaptFontsForSmallDevice(context),
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal,
+      );
 
   static TextStyle kH3(context) => TextStyle(
-    fontSize: 14.sp, //* adaptFontsForSmallDevice(context),
-    height: 1,
-    fontWeight: FontWeight.bold,
-    fontStyle: FontStyle.normal,
-  );
+        fontSize: 14.sp, //* adaptFontsForSmallDevice(context),
+        height: 1,
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal,
+      );
+
   ///
   ///
   static TextStyle kH4(context) => TextStyle(
-    fontSize: 12.sp, //* adaptFontsForSmallDevice(context),
-    height: 1,
-    fontWeight: FontWeight.bold,
-    fontStyle: FontStyle.normal,
-  );
-
+        fontSize: 12.sp, //* adaptFontsForSmallDevice(context),
+        height: 1,
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.normal,
+      );
 
   static const kCurveRadius = 15.0;
 
-  static  kNormal1(context) => TextStyle(
-    fontSize: 20 * adaptFontsForSmallDevice(context),
-    fontWeight: FontWeight.normal,
-    fontStyle: FontStyle.normal,
-
-  );
+  static kNormal1(context) => TextStyle(
+        fontSize: 20 * adaptFontsForSmallDevice(context),
+        fontWeight: FontWeight.normal,
+        fontStyle: FontStyle.normal,
+      );
 
   static kNormal2(context) => TextStyle(
-    fontSize: 15.sp,//* adaptFontsForSmallDevice(context) ,
-    fontWeight: FontWeight.normal,
-    fontStyle: FontStyle.normal,
-  );
+        fontSize: 15.sp, //* adaptFontsForSmallDevice(context) ,
+        fontWeight: FontWeight.normal,
+        fontStyle: FontStyle.normal,
+      );
 
   static kNormal3(context) => TextStyle(
-    fontSize: 12.sp,//* adaptFontsForSmallDevice(context),
-    fontWeight: FontWeight.normal,
-    fontStyle: FontStyle.normal,
-  );
+        fontSize: 12.sp, //* adaptFontsForSmallDevice(context),
+        fontWeight: FontWeight.normal,
+        fontStyle: FontStyle.normal,
+      );
 
   static kNormalTextStyle(context) => TextStyle(
-    color: Colors.white,
-    fontSize: 20.0* adaptFontsForSmallDevice(context) ,
-  );
+        color: Colors.white,
+        fontSize: 20.0 * adaptFontsForSmallDevice(context),
+      );
 
-  static  kDarkTextStyle(context) => TextStyle(
-    color: kPresentTheme.highLightColor,
-    fontWeight: FontWeight.bold,
-    fontSize: 20.0* adaptFontsForSmallDevice(context) ,
-  );
+  static kDarkTextStyle(context) => TextStyle(
+        color: kPresentTheme.highLightColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 20.0 * adaptFontsForSmallDevice(context),
+      );
 
   static kAdviceTextStyleDark(context) => TextStyle(
-    color: kPresentTheme.accentColor,
-    fontSize: 18.0 *adaptFontsForSmallDevice(context),
-    fontStyle: FontStyle.italic,
-  );
+        color: kPresentTheme.accentColor,
+        fontSize: 18.0 * adaptFontsForSmallDevice(context),
+        fontStyle: FontStyle.italic,
+      );
 
-  static kHintTextStyle(context) =>  TextStyle(
-    fontStyle: FontStyle.italic,
-    color: Color(0x88004752),
-  );
+  static kHintTextStyle(context) => TextStyle(
+        fontStyle: FontStyle.italic,
+        color: Color(0x88004752),
+      );
 
-  static kTextFieldPadding(context) =>  EdgeInsets.fromLTRB(
-  6.w, //* adaptForSmallDevice(context),
-  1.h, //* adaptForSmallDevice(context),
-  8.w, //* adaptForSmallDevice(context),
-  1.h, //* adaptForSmallDevice(context),
+  static kTextFieldPadding(context) => EdgeInsets.fromLTRB(
+        6.w, //* adaptForSmallDevice(context),
+        1.h, //* adaptForSmallDevice(context),
+        8.w, //* adaptForSmallDevice(context),
+        1.h, //* adaptForSmallDevice(context),
+      );
 
-  );
+  static kDefaultPaddingAllSame(context) => EdgeInsets.all(
+        1.h, //* adaptForSmallDevice(context)
+      );
 
-  static kDefaultPaddingAllSame(context) => EdgeInsets.all
-    (1.h, //* adaptForSmallDevice(context)
-       );
+  static kDefaultHorizontalSymmetricPadding(context) =>
+      EdgeInsets.symmetric(horizontal: 2.w);
 
-  static kDefaultHorizontalSymmetricPadding(context) => EdgeInsets.symmetric(
-    horizontal: 2.w
-  );
-
-  static  kInputTextStyle(context) => TextStyle(
+  static kInputTextStyle(context) => TextStyle(
       fontSize: 15.sp,
       fontWeight: FontWeight.bold,
       color: kPresentTheme.accentColor);
 
-  static kAdaptedTopPadding(context, double value)
-  => EdgeInsets.only(top:value );
+  static kAdaptedTopPadding(context, double value) =>
+      EdgeInsets.only(top: value);
 
-  static kAdaptedBottoemPadding(context, double value)
-  => EdgeInsets.only(bottom:value * adaptForSmallDevice(context)
-
-  );
-  static kAdaptedLeftPadding(context, double value)
-  => EdgeInsets.only(left:value * adaptForSmallDevice(context)
-
-  );
-  static kAdaptedRightPadding(context, double value)
-  => EdgeInsets.only(right:value * adaptForSmallDevice(context)
-
-  );
+  static kAdaptedBottoemPadding(context, double value) =>
+      EdgeInsets.only(bottom: value * adaptForSmallDevice(context));
+  static kAdaptedLeftPadding(context, double value) =>
+      EdgeInsets.only(left: value * adaptForSmallDevice(context));
+  static kAdaptedRightPadding(context, double value) =>
+      EdgeInsets.only(right: value * adaptForSmallDevice(context));
 
   static List<Color> graphColors = [
-
-      Color(0xFF004752),
-      Color(0xffb5c210),
-      Colors.purple,
-      Colors.amber,
-      Color(0xff005213),
-      Colors.orange,
-      Colors.red,
-      Colors.indigo,
-      Colors.lightBlue,
-      Colors.yellow,
-      Color(0xff324d3b),
-      Color(0xff4d2b69),
-      Colors.deepOrange,
-      Color(0xffd181de),
-      Color(0xff5696c7),
-
-
-
-
-
-
-
-
-
+    Color(0xFF004752),
+    Color(0xffb5c210),
+    Colors.purple,
+    Colors.amber,
+    Color(0xff005213),
+    Colors.orange,
+    Colors.red,
+    Colors.indigo,
+    Colors.lightBlue,
+    Colors.yellow,
+    Color(0xff324d3b),
+    Color(0xff4d2b69),
+    Colors.deepOrange,
+    Color(0xffd181de),
+    Color(0xff5696c7),
   ];
-
 }
 
-
-class Messages{
-
+class Messages {
   static String welcomeMessage = 'Welcome';
   static String investmentChoiceHeader = 'Click on any one of the investments';
   static String goalChoiceHeader = 'Click on any one of the goals';
-
-
 }
-
