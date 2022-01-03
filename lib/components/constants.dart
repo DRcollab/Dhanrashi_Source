@@ -72,7 +72,7 @@ class DefaultValues {
     'empty_goal': 'You do not have any GOAL.\n\nLet\'s add your first Goal',
     'empty_inv':
         'You do not have any INVESTMENT.\n\nLet\'s add your first Investment ',
-    '': '',
+    '': '', // important donot remove//
     'date_picker': 'Select a date to continue',
     'profile_pic_change': 'Click the image to Edit',
     'first_name_empty': 'First Name should not be empty',
@@ -215,6 +215,7 @@ class DefaultValues {
         fontStyle: FontStyle.normal,
       );
 
+  ///
   ///
   ///
   static TextStyle kH4(context) => TextStyle(
