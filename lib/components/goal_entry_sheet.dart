@@ -531,8 +531,8 @@ class _GoalSheetState extends State<GoalSheet> {
                   });
                 },
                 min: 1,
-                max: 30,
-                labelText: 'Goal Period',
+                max: DefaultValues.maxSlideYear,
+                labelText: DefaultValues.titles['goal_period_title']!,
                 sliderValue: goalDuration.toDouble(),
                 textPrecision: 0,
                 textEditable: false,

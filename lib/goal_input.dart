@@ -189,7 +189,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 0,
-                                              goalDuration: 10,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.carInflation * 100,
                                               imageSource: 'images/car.png',
                                               onAdd: (value){
@@ -242,7 +242,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 0,
-                                              goalDuration: 20,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.houseInflation * 100,
                                               imageSource: 'images/house.png',
                                               onAdd: (value){
@@ -296,7 +296,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 10,
-                                              goalDuration: 10,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.educationInflation * 100,
                                               imageSource: 'images/education.png',
                                               onAdd: (value){
@@ -345,7 +345,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 10,
-                                              goalDuration: 5,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.retailInflation * 100,
                                               imageSource: 'images/pension.png',
                                               onAdd: (value){
@@ -399,7 +399,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 10,
-                                              goalDuration: 20,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.tourInflation*100,
                                               imageSource: 'images/tour.png',
                                               onAdd: (value){
@@ -448,7 +448,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 10,
-                                              goalDuration: 5,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.retailInflation * 100,
                                               imageSource: 'images/destination.png',
                                               onAdd: (value){
@@ -504,7 +504,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 10,
-                                              goalDuration: 10,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.healthInflation * 100,
                                               imageSource: 'images/healthcare.png',
                                               onAdd: (value){
@@ -553,7 +553,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               goalAmount: 10,
-                                              goalDuration: 10,
+                                              goalDuration: DefaultValues.goalDuration,
                                               inflation: Global.retailInflation * 100,
                                               imageSource: 'images/products.png',
                                               onAdd: (value){

@@ -25,8 +25,8 @@ class _RecomCardState extends State<RecomCard> {
  // var goals ;
 
    String recomMessage = '';
-   String negativeMessage = 'You are behind your goals at';
-   String positiveMessage = 'You are ahead of your goals at';
+   String negativeMessage = 'You are behind your goals for';
+   String positiveMessage = 'You are ahead of your goals for';
 
 
 
@@ -99,13 +99,15 @@ class _RecomCardState extends State<RecomCard> {
         requiredTitleBar: false,
         children: [
 
-          Tooltip(
-            message: 'Hi',
-              child: ListTile(
-                tileColor: kPresentTheme.alternateColor,
-                leading: Icon(Icons.info, size: 28,),
-                  title: Text(recomMessage, style: DefaultValues.kNormal3(context),))),
-
+          ListTile(
+            tileColor: kPresentTheme.alternateColor,
+            leading: Icon(Icons.info, size: 28,),
+              title: Text(   Utility.formatMessage(positiveMessage), style: DefaultValues.kNormal3(context),)),
+          SizedBox(height: 10,),
+          ListTile(
+              tileColor: Colors.redAccent,
+              leading: Icon(Icons.info, size: 28,),
+              title: Text(   Utility.formatMessage(negativeMessage), style: DefaultValues.kNormal3(context),)),
         ],
 
     );

@@ -189,6 +189,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                             padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
                                                 :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                             child: InvestmentSheet(
+                                                roiHintMessage: DefaultValues.hints['roi_hint_mf']!,
                                                 prefix: '#',
                                                 currentUser: widget.currentUser,
                                               onEditCommit: (){
@@ -203,7 +204,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               },
                                                 titleMessage: name,
                                                 investedAmount: 0,
-                                                investmentDuration: 10,
+                                                investmentDuration: DefaultValues.investmentDuration,
                                                 expectedRoi: Global.mfReturn *100,
                                                 annualInvestment: 0,
                                                 imageSource: 'images/mutual.png',
@@ -240,6 +241,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                             padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
                                                 :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                                             child: InvestmentSheet(
+                                              roiHintMessage: DefaultValues.hints['roi_hint']!,
                                               prefix: '%',
                                               onEditCommit: (){
                                                 setState(() {
@@ -254,7 +256,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               investedAmount: 0,
-                                              investmentDuration: 5,
+                                              investmentDuration: DefaultValues.investmentDuration,
                                               annualInvestment: 0,
                                               expectedRoi: Global.stockReturn * 100,
                                               imageSource: 'images/stock.png',
@@ -309,7 +311,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               investedAmount: 0,
-                                              investmentDuration: 5,
+                                              investmentDuration: DefaultValues.investmentDuration,
                                               annualInvestment: 0,
                                               expectedRoi: Global.fdReturn * 100,
                                               imageSource: 'images/bank.png',
@@ -361,7 +363,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               investedAmount: 0,
-                                              investmentDuration: 20,
+                                              investmentDuration: DefaultValues.investmentDuration,
                                               annualInvestment: 0,
                                               expectedRoi: Global.realEstateReturn * 100,
                                               imageSource: 'images/real-estate.png',
@@ -416,7 +418,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               investedAmount: 0,
-                                              investmentDuration: 10,
+                                              investmentDuration: DefaultValues.investmentDuration,
                                               annualInvestment: 0,
                                               expectedRoi: Global.goldReturn * 100,
                                               imageSource: 'images/coin.png',
@@ -465,7 +467,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               investedAmount: 0,
-                                              investmentDuration: 20,
+                                              investmentDuration: DefaultValues.investmentDuration,
                                               annualInvestment: 0,
                                               expectedRoi: Global.avgReturn * 100,
                                               imageSource: 'images/insurance.png',
@@ -523,7 +525,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               investedAmount: 0,
-                                              investmentDuration: 10,
+                                              investmentDuration: DefaultValues.investmentDuration,
                                               annualInvestment: 0,
                                               expectedRoi: Global.bondYield * 100,
                                               imageSource: 'images/bonds.png',
@@ -572,7 +574,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                               currentUser: widget.currentUser,
                                               titleMessage: name,
                                               investedAmount: 0,
-                                              investmentDuration: 10,
+                                              investmentDuration: DefaultValues.investmentDuration,
                                               annualInvestment: 0,
                                               expectedRoi: Global.avgReturn * 100,
                                               imageSource: 'images/products.png',

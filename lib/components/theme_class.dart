@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
         final Color highLightColor; /// This color defines the heading of text and mostly has contrasted value with the background
         final Color lightWeightColor; /// This color defines the normal text color
         final Color linkTextColor; /// Takes the color of a link text after being clicked;
-
+        final Color errorAccentColor;
       //  final Color accentButtonColor;
         final Color borderColor; /// Equirpped for darker themes holds the boreder color;
 
@@ -46,7 +46,7 @@ import 'package:flutter/material.dart';
     required this.influenceColors,
     required this.accentColor,
     required this.alternateColor,
-
+    required this.errorAccentColor,
     required this.highLightColor,
     required this.lightWeightColor,
     required this.borderColor,

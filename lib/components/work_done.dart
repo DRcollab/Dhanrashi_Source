@@ -50,49 +50,54 @@ class _WorkDoneState extends State<WorkDone> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: widget.isComplete ? AnimatedContainer(
-          duration: Duration(seconds: 10),
-          width: _width,
-          height: _height,
-          color:  color,
-          child: Column(
-            children: [
-              Padding(
-                padding:  EdgeInsets.symmetric(vertical: 6.h, horizontal: 2.w),
-                child: CircleAvatar(
-                  radius: 80,
-                  backgroundColor: Colors.amber,
-                  child: Image.asset('images/check.png',
+    return GestureDetector(
+      onTap: (){
+        Navigator.pop(context);
+      },
+      child: Container(
+        child: widget.isComplete ? AnimatedContainer(
+            duration: Duration(seconds: 10),
+            width: _width,
+            height: _height,
+            color:  color,
+            child: Column(
+              children: [
+                Padding(
+                  padding:  EdgeInsets.symmetric(vertical: 6.h, horizontal: 2.w),
+                  child: CircleAvatar(
+                    radius: 80,
+                    backgroundColor: Colors.amber,
+                    child: Image.asset('images/check.png',
 
-                    height: 80,width: 80,),
-                ),
-              ),
-               Text('Your ${this.widget.whatToAdd} is \n${this.widget.whatToDo}d successfully ', style: DefaultValues.kH2(context),)
-
-            ],
-          )) :!widget.timedOut ? Image.asset(kPresentTheme.progressIndicator, scale: 3) :
-            Container(
-
-                child: Padding(
-                  padding:  EdgeInsets.only(top:8.h, bottom: 8.h),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 4.h),
-                        child: Image.asset('images/connection_lost.png', scale: 5, height: 18.h,width: 50.w,),
-                      ),
-                      Container(
-                        color:Colors.red,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
-                            child: Text(DefaultValues.messages['timed_out']!, style: DefaultValues.kH2(context),),
-                          ),
-                      )
-                    ],
+                      height: 80,width: 80,),
                   ),
                 ),
-            )
+                 Text('Your ${this.widget.whatToAdd} is \n${this.widget.whatToDo}d successfully ', style: DefaultValues.kH2(context),)
+
+              ],
+            )) :!widget.timedOut ? Image.asset(kPresentTheme.progressIndicator, scale: 3) :
+              Container(
+
+                  child: Padding(
+                    padding:  EdgeInsets.only(top:8.h, bottom: 8.h),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 4.h),
+                          child: Image.asset('images/connection_lost.png', scale: 5, height: 18.h,width: 50.w,),
+                        ),
+                        Container(
+                          color:Colors.red,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
+                              child: Text(DefaultValues.messages['timed_out']!, style: DefaultValues.kH2(context),),
+                            ),
+                        )
+                      ],
+                    ),
+                  ),
+              )
+      ),
     );
   }
 }

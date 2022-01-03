@@ -51,6 +51,7 @@ class InvestmentSheet extends StatefulWidget {
   Function(dynamic)? onAdd;
   late Function()? onTap;
   late Function() onEditCommit;
+  String roiHintMessage = '';
   // final String? Function(String?) validator => return 0;
 
   InvestmentSheet({
@@ -69,6 +70,7 @@ class InvestmentSheet extends StatefulWidget {
     this.onTap,
     required this.onEditCommit,
     required this.prefix,
+    this.roiHintMessage = '',
   });
 
   @override
@@ -456,8 +458,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      Align(
                         alignment: Alignment.centerRight,
                          child: Text(
+                           corpusValue>0 ?(
                           corpusValue<DefaultValues.threshold ?'${DefaultValues.textFormatWithDecimal.format(interestValue)}'
-                           :'${DefaultValues.textShortFormat.format(interestValue)}',
+                           :'${DefaultValues.textShortFormat.format(interestValue)}'):0.toString(),
 
                            style: DefaultValues.kH3(context),)),
                      SizedBox(height: 0.6.h,width: double.infinity,),
@@ -466,8 +469,9 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                      Align(
                        alignment: Alignment.centerRight,
                        child: Text(
+                          corpusValue> 0 ? (
                            corpusValue<DefaultValues.threshold ?'${DefaultValues.textFormatWithDecimal.format(corpusValue)}'
-                          :'${DefaultValues.textShortFormat.format(corpusValue)}',
+                          :'${DefaultValues.textShortFormat.format(corpusValue)}'):0.toString(),
                               style: DefaultValues.kH2(context),
                        ),
                      ),
@@ -484,7 +488,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                // stay muted;
                controller: currentInvestmentController,
                 initialValue: investedAmount,
-               label: 'Initial Investment',
+               label: DefaultValues.titles['inv_start_title']!,
                icon: Icon(Icons.bar_chart),
 
 
@@ -535,7 +539,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                 controller: annualInvestmentController,
                 initialValue: annualInvestment,
                // controller: editingController,
-               label: 'Annual Investment',
+               label: DefaultValues.titles['inv_rec_title']!,
                icon:Icon(Icons.show_chart, color: Colors.amber,),
 
                 // getValue: (value){
@@ -601,12 +605,12 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                     isEditing = false;
                   });
                 },
-                min: 1,
+                min: DefaultValues.minReturn,
                 max:30,
                 divisions: 30,
                 labelText: 'Expected return per year',
                 suggestiveIcon: Tooltip(
-                  message: 'Last year Nifty grew at ${Global.stockReturn}%',
+                  message: widget.roiHintMessage,
                   child:Icon(Icons.info),
                 ),
                 textPrecision: 2,
@@ -641,7 +645,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                   });
                 },
                 min: 1,
-                max: 30,
+                max: DefaultValues.maxSlideYear,
                 divisions: 30,
                 labelText: 'Time Period',
                 sliderValue: investmentDuration.toDouble(),
@@ -651,7 +655,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
               ):LabeledInput(
                 controller: TextEditingController(),
                 mute: true,
-                label: 'Time Period',
+                label: DefaultValues.titles['inv_time_title']!,
                 initialValue:investmentDuration.toDouble(),
               ),
             ),

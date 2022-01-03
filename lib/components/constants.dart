@@ -1,4 +1,5 @@
 import 'package:dhanrashi_mvp/components/theme_class.dart';
+import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
@@ -25,12 +26,12 @@ DhanrashiTheme kLimeTheme =  DhanrashiTheme(
   highLightColor: Color(0xFF004752),
   lightWeightColor: Color(0xffb5c210),
 
+  errorAccentColor: Colors.redAccent,
 
 
 
 
  );
-
 
 
 
@@ -67,6 +68,10 @@ class DefaultValues {
   static final textShortFormat = NumberFormat.compactSimpleCurrency(locale:'en-in');
   static final String directoryOfPhoto = 'images/profiles';
   static final threshold = 9999999999;  // 1 less than 1000 Cr.
+  static final maxSlideYear = 60.0; // defines the max Sliding year in goal / investment and SIP Calc
+  static final goalDuration = 10;
+  static final investmentDuration = 10;
+  static final minReturn = 0.0;
 
   static var messages = {
     'timed_out': 'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
@@ -102,6 +107,12 @@ class DefaultValues {
         'signup_title':'Signup Page',
         'signup_button_text':'Sign Up',
         'ask_login_button_text':'Click Here to Login',
+        'inv_time_title':'Investment Duration',
+        'inv_start_title':'Initial Investment',
+        'inv_rec_title':'Annual Investment',
+        'goal_period_title':'Goal duration'
+
+
 
   };
 
@@ -110,6 +121,8 @@ class DefaultValues {
       'pwd': 'enter password',
       'email_signup': 'enter your email to signup',
       're_pwd': 're-enter the password',
+      'roi_hint':'Last 5 years Nifty grew at ${Global.stockReturn*100}%',
+      'roi_hint_mf':'Last 5 years Debt funds grew at ${Global.stockReturn*100}%\n,Equity fund grew at ${Global.stockReturn*100}%\n& Balanced Fund grew at ${Global.stockReturn*100}%',
 
  };
 

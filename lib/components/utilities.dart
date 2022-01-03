@@ -47,10 +47,13 @@ class Utility{
    msg = msg.trim();
    if(msg.endsWith(',')) {
      msg = msg.substring(0, msg.length - 1);
-     msg = msg.substring(0, msg.lastIndexOf(',')) + ' and' +
-         msg.substring(msg.lastIndexOf(',') + 1);
+     if(msg.lastIndexOf(',')>0){
+       msg = msg.substring(0, msg.lastIndexOf(',')) + ' and' +
+           msg.substring(msg.lastIndexOf(',') + 1);
+     }
+
    }
-  return msg;
+  return msg + ' years';
  }
 
   static String customise(String str){
