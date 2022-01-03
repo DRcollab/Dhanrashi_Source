@@ -134,7 +134,7 @@ class AnalyticsTabView extends StatelessWidget {
 
   goalPoints.sort();
 
-  print(goalPoints);
+
 
 
   if(investments.isNotEmpty && goals.isNotEmpty) {
@@ -145,7 +145,7 @@ class AnalyticsTabView extends StatelessWidget {
     dataSet = Calculator().getInvVsGoalDetail(
         investments, goals, Global.longestInvestmentDuration,Global.longestGoalDuration);
 
-        print(dataSet);
+
 
       _fetchRecommendations();
   }else{

@@ -1,11 +1,14 @@
 import 'package:dhanrashi_mvp/components/theme_class.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 var keyValue =
     "1//0g3rWVkbDBZi0CgYIARAAGBASNwF-L9IryMTSaus23u7smtHXfWADwbeTz4MN46YMJUnkshgW4nhz5FDVmNusXwmmZi3NTV3lOwM";
+
+/// The above key is important for deployment -- need for dhanrashi team member
 
 DhanrashiTheme kLimeTheme = DhanrashiTheme(
   progressIndicator: 'images/gifs/rolling.gif',
@@ -48,6 +51,8 @@ final kFormErrorTextBorder = OutlineInputBorder(
       color: Colors.red,
     ));
 
+
+
 class DefaultValues {
   static final textFormat =
       NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 0);
@@ -62,7 +67,13 @@ class DefaultValues {
   static final investmentDuration = 10;
   static final minReturn = 0.0;
 
+
+
   static var messages = {
+    'welcome':'Welcome',
+    'inv_choice':'Click on any one of the investments',
+    'goal_choice':'Click on any one of the goals',
+    'ask_for_profile':'Update your profile now',
     'timed_out':
         'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
             ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
@@ -96,11 +107,70 @@ class DefaultValues {
         'inv_time_title':'Investment Duration',
         'inv_start_title':'Initial Investment',
         'inv_rec_title':'Annual Investment',
-        'goal_period_title':'Goal duration'
+        'goal_period_title':'Goal duration',
+        'update_profile_button_text':'Update profile',
+        'link_text_skip': 'Skip to continue',
+        'privacy_policy':'Privacy police',
+
+        //Goal tiles titles . // in goal input menu
+        'car':'My Dream\nCar',
+        'house':'My Dream\nHouse',
+        'education':'Child\nEducation',
+        'retirement':'Retirement',
+        'travel':'Travel',
+        'family':'Family \nEvents',
+        'health':'Health',
+        'others':'Others',
+
+          'car_st':'Buy my very own car\n',
+          'house_st':'My sweet home\n',
+          'education_st':'Education empowers life\n',
+          'retirement_st':'A blissful life\n',
+          'travel_st': 'Tours and travels\n',
+          'family_st':'Moments of Togetherness',
+          'health_st':'Health related expenses\n',
+           'others_gol_st':'Anything not listed here\n',
 
 
+
+
+        //Investment tiles titles . // in investment input menu
+        'mf':'Mutual\nFund',
+        'equity':'Equity',
+        'fd':'Fixed\nDeposits',
+        'real':'Real\nEstate',
+        'gold':'Gold',
+        'insurance':'Insurance',
+        'bonds':'Bonds',
+        'others_inv':'Other',
+
+    //subtext
+
+    'mf_st':'Equity and debt funds\n',
+    'equity_st':'Stock market investments\n',
+    'fd_st':'Fixed deposits\n',
+    'real_st':'Lands,houses,complexes\n',
+    'gold_st':'Physical and digital gold\n',
+    'insurance_st':'Life insurance \n',
+    'bonds_st':'Govt, corporate bonds\n',
+    'others_st':'Any other asset class\n',
+
+    'tab_1':'Analytics',
+    'tab_2':'Goals',
+    'tab_3':'Investments',
+    'tab_header':'Dashboard',
+
+    'bottom_tab_1':'Goals',
+    'bottom_tab_2':'Investments',
+    'bottom_tab3':'Dashboard',
+    'bottom_tab4':'SIP Calculator',
+
+    'chart_view_tab1':'Chart',
+    'chart_view_tab2':'Table',
 
   };
+
+
 
  static var hints = {
       'email':'enter email',
@@ -313,10 +383,29 @@ class DefaultValues {
     Color(0xffd181de),
     Color(0xff5696c7),
   ];
+
+
+  /// botttom Navigation tab used accross all the screen ..
+  ///
+  ///
+  static List<BottomNavigationBarItem>  bottomTabs = [BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
+                  label: 'Goals',
+
+
+                ),
+                  BottomNavigationBarItem(
+                    icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
+                    label: 'Investments',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: FaIcon(FontAwesomeIcons.chartPie, color: kPresentTheme.accentColor,size: 15.sp,),
+                    label: 'Dashboard',
+
+                  ),
+                  BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
+                      label: 'SIP Calculator'
+                  ),];
 }
 
-class Messages {
-  static String welcomeMessage = 'Welcome';
-  static String investmentChoiceHeader = 'Click on any one of the investments';
-  static String goalChoiceHeader = 'Click on any one of the goals';
-}
+

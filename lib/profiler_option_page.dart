@@ -1,24 +1,24 @@
 
 
 import 'package:dhanrashi_mvp/components/buttons.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
+
 import 'package:dhanrashi_mvp/tnc.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_gifs/loading_gifs.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
-import 'components/custom_card.dart';
+
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
-import 'dashboard.dart';
+
 import 'empty_page_inputs.dart';
 import 'models/profile.dart';
 import 'profiler.dart';
-import 'models/user_data_class.dart';
+
 import 'data/profile_access.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'components/utilities.dart';
 
@@ -158,11 +158,9 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
 
 
     return CustomScaffold(
-          //  helpSCKey: _helpSCKey,
+
             menuSCKey: _menuSCKey,
-            // helper: (){
-            //   ShowCaseWidget.of(context)!.startShowCase([_showCaseKey1,_showCaseKey2,_menuSCKey,_helpSCKey]);
-            // },
+
             rightButton: Showcase(
 
               key: _helpSCKey,
@@ -194,7 +192,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                             child:Column  (
                              // crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  Center(child: Text('Welcome', style: TextStyle(fontSize: 35.sp,fontWeight: FontWeight.bold, color: Colors.white),)),
+                                  Center(child: Text(DefaultValues.messages['welcome']!, style: TextStyle(fontSize: 35.sp,fontWeight: FontWeight.bold, color: Colors.white),)),
                                   Text('Take a tour of this app', style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.bold, color: Colors.white),),
                                   Text('Tap any where on the screen to begin', style: TextStyle(fontSize: 15.sp,fontWeight: FontWeight.bold, color: Colors.white),),
                                 ]
@@ -230,7 +228,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
 
                       Padding(
                         padding: EdgeInsets.only(top: 1.h),
-                        child: Text("Update your profile now.",
+                        child: Text( DefaultValues.messages['ask_for_profile']!,
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
@@ -270,7 +268,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                               textColor: Colors.black,
                               borderRadius: BorderRadius.circular(20),
                               buttonColor: kPresentTheme.alternateColor,
-                              buttonText: "Update profile",
+                              buttonText: DefaultValues.messages['update_profile_button_text']!,
                               onPressed: (){
                                 Navigator.push(
                                     context,
@@ -294,7 +292,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                               //buttonColor: kPresentTheme.influenceColors[0],
                               // textColor: Colors.white,
                                 type: LinkTextType.DARK,
-                                linkText: "Skip to continue",
+                                linkText: DefaultValues.messages['link_text_skip']!,
                                 onPressed: (){
 
                                     Profile profile = Profile(
@@ -332,7 +330,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom:48.0),
                     child: LinkText(
-                        linkText: "Privacy Policy",
+                        linkText: DefaultValues.messages['privace_policy']!,
                         displaySize: 14.sp,
                         type: LinkTextType.DARK,
                         onPressed: (){

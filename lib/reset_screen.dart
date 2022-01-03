@@ -14,7 +14,7 @@ import 'components/constants.dart';
 import 'package:sizer/sizer.dart';
 
 import 'components/on_error_screen.dart';
-import 'landing.dart';
+
 import 'login_screen.dart';
 import 'models/profile.dart';
 import 'profiler.dart';

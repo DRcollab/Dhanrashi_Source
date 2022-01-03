@@ -35,10 +35,7 @@ class _RecomCardState extends State<RecomCard> {
     // int eachGoalYear;
     // String eachGoalName;
 
-    print(widget.dataSet[0]);
-    print(widget.dataSet[1]);
-    print(widget.dataSet[2]);
-    print(widget.dataSet[3]);
+
 
 
     if(widget.dataSet.isNotEmpty){

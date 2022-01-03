@@ -142,7 +142,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                           0, 0);
 
                       totalCorpus = futureValue + totalCorpus;
-                      print(totalCorpus);
+
 
                     });
 

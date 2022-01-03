@@ -141,7 +141,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                               ),
                             ),
                           ):SizedBox(),
-                          subtitle: Text(Messages.investmentChoiceHeader,
+                          subtitle: Text(DefaultValues.messages['inv_choice']!,
                             style:DefaultValues.kNormal3(context),
                         ),
                       ),
@@ -173,9 +173,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 child: Tile(
                                   imageSource: 'images/mutual.png',
 
-                                  title: 'Mutual\nFund',
+                                  title: DefaultValues.titles['mf']!,
                                   title2: 'Fund',
-                                  subText: 'Equity and debt funds\n',
+                                  subText: DefaultValues.titles['mf_st']!,
                                   color: kPresentTheme.accentColor,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -226,8 +226,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   imageSource: 'images/stock.png',
                                   //  height: 120,
                                   //  width: 150,
-                                  title: 'Equity',
-                                  subText: 'Stock market investments\n',
+                                  title: DefaultValues.titles['equity']!,
+                                  subText: DefaultValues.titles['equity_st']!,
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -282,8 +282,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   imageSource: 'images/bank.png',
                                   //  height: 120,
                                   //  width: 150,
-                                  title: 'Fixed\nDeposits',
-                                  subText: 'Fixed deposits\n',
+                                  title: DefaultValues.titles['fd']!,
+                                  subText: DefaultValues.titles['fd_st']!,
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -334,8 +334,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   imageSource: 'images/real-estate.png',
                                   // height: 120,
                                   // width: 150,
-                                  title: 'Real\nEstate',
-                                  subText: 'Lands,houses,complexes\n',
+                                  title: DefaultValues.titles['real']!,
+                                  subText: DefaultValues.titles['real_st']!,
                                   color:color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -389,8 +389,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   imageSource: 'images/coin.png',
                                   //    height: 120,
                                   //   width: 150,
-                                  title: 'Gold',
-                                  subText: 'Physical and digital gold\n',
+                                  title: DefaultValues.titles['gold']!,
+                                  subText: DefaultValues.titles['gold_st']!,
                                   color:color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -438,8 +438,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                 child: Tile(
                                   imageSource: 'images/insurance.png',
 
-                                  title: 'Insurance',
-                                  subText: 'Life insurance \n',
+                                  title: DefaultValues.titles['insurance']!,
+                                  subText: DefaultValues.titles['insurance_st']!,
                                   color: kPresentTheme.alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -495,8 +495,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   imageSource: 'images/bonds.png',
                                   // height: 120,
                                   // width: 150,
-                                  title: 'Bonds',
-                                  subText: 'Govt, corporate bonds\n',
+                                  title: DefaultValues.titles['bonds']!,
+                                  subText: DefaultValues.titles['bonds_st']!,
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -545,8 +545,8 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                                   imageSource: 'images/products.png',
                               //    height: 120,
                               //    width: 150,
-                                  title: 'Others',
-                                  subText: 'Any other asset class\n',
+                                  title: DefaultValues.titles['others_inv']!,
+                                  subText: DefaultValues.titles['others_st']!,
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -654,29 +654,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
                    }
 
               },
-              items: [
+              items: DefaultValues.bottomTabs,
 
 
-                BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
-                  label: 'Goals',
-
-
-                ),
-                BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
-                  label: 'Investments',
-                ),
-                BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.chartPie, color: kPresentTheme.accentColor,size: 15.sp,),
-                  label: 'Dashboard',
-
-                ),
-                BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
-                    label: 'SIP Calculator'
-                ),
-
-              ],
             ),
           );
         }

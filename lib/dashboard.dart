@@ -17,6 +17,7 @@ import 'components/investment_tabview_class.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'goal_input.dart';
 import 'investmentinput.dart';
 import 'models/goal_db.dart';
 import 'models/investment.dart';
@@ -250,7 +251,7 @@ class _DashboardState extends State<Dashboard> {
 
                               },
                               currentUser: this.widget.currentUser,
-                                title: 'Dashboard',
+                                title: DefaultValues.titles['tab_header']!,
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 5.h),
                                   child: Material(
@@ -338,6 +339,16 @@ class _DashboardState extends State<Dashboard> {
 
                             switch(index){
 
+                              case 0:
+                                Navigator.pop(context);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,),
+                                  ),
+                                );
+                              break;
                               case 1:
                                 Navigator.pop(context);
 
@@ -372,28 +383,7 @@ class _DashboardState extends State<Dashboard> {
                             }
                           },
 
-                          items: [
-                            BottomNavigationBarItem(
-                              icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
-                              label: 'Goal',
-                            ),
-                            BottomNavigationBarItem(
-                              icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
-                              label: 'Investment',
-                            ),
-
-
-                            BottomNavigationBarItem(
-                              icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,size: 15.sp,),
-                              label: 'Dashboard',
-                            ),
-                            BottomNavigationBarItem(
-                              icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
-                              label: 'SIP Calculator',
-                            ),
-
-
-                          ],
+                          items: DefaultValues.bottomTabs,
                         ),
                             );
                     }

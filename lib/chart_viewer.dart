@@ -83,8 +83,8 @@ class _ChartViewerState extends State<ChartViewer> {
               labelStyle: DefaultValues.kH4(context),
               labelPadding: EdgeInsets.only(top: 0),
               tabs: [
-                Tab(text:'Chart',),
-                Tab(text:'Table',),
+                Tab(text:DefaultValues.titles['chart_view_tab1'],),
+                Tab(text:DefaultValues.titles['chart_view_tab2'],),
               ],
             ),
           ),

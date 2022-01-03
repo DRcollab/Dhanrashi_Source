@@ -130,7 +130,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                               ),
                             ),
                           ):SizedBox(),
-                          subtitle: Text(Messages.goalChoiceHeader,
+                          subtitle: Text(DefaultValues.messages['goal_choice']!,
                             style:DefaultValues.kNormal3(context),
                           ),
                         ),
@@ -160,8 +160,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/car.png',
                                   //height: 120,
                                   //width: 150,
-                                    title: 'My Dream\nCar',
-                                  subText: 'Buy my very own car\n',
+                                    title: DefaultValues.titles['car']!,
+                                  subText: DefaultValues.titles['car_st']!,
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -195,8 +195,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                               onAdd: (value){
                                                 setState(() {
                                                   goalCount = value;
-                                                  print('Goal count');
-                                                  print(value);
+
 
                                                 });
                                               },
@@ -213,8 +212,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/house.png',
                                   //height: 20,
                                   //width: 150,
-                                  title: 'My Dream\nHouse',
-                                  subText: 'My sweet home\n',
+                                  title: DefaultValues.titles['house']!,
+                                  subText: DefaultValues.titles['house_st']!,
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -267,8 +266,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/education.png',
                                   // height: 120,
                                   // width: 150,
-                                  title: 'Child\nEducation',
-                                  subText: 'Education empowers life\n',
+                                  title: DefaultValues.titles['education']!,
+                                  subText: DefaultValues.titles['education_st']!,
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -316,8 +315,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/pension.png',
                                   //  height: 120,
                                   //  width: 150,
-                                  title: 'Retirement',
-                                  subText: 'A blissful life\n',
+                                  title: DefaultValues.titles['retirement']!,
+                                  subText: DefaultValues.titles['retirement_st']!,
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -370,8 +369,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/tour.png',
                                   // height: 250,
                                   // width: 150,
-                                  title: 'Travel',
-                                  subText: "Tours and travels\n",
+                                  title: DefaultValues.titles['travel']!,
+                                  subText: DefaultValues.titles['travel_st']!,
                                   color:color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -419,8 +418,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/destination.png',
                                    // height: 120,
                                   //  width: 150,
-                                  title: 'Family \nEvents',
-                                  subText: 'Moments of Togetherness',
+                                  title: DefaultValues.titles['family']!,
+                                  subText: DefaultValues.titles['family_st']!,
                                   color: alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -475,8 +474,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/healthcare.png',
                                   //    height: 120,
                                   //   width: 150,
-                                  title: 'Health',
-                                  subText: 'Health related expenses\n',
+                                  title: DefaultValues.titles['health']!,
+                                  subText: DefaultValues.titles['health_st']!,
                                   color:alternateColor,
                                   titleColor: titleColor,
                                   onPressed: (){
@@ -524,8 +523,8 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                   imageSource: 'images/products.png',
                                   //    height: 120,
                                   //    width: 150,
-                                  title: 'Others',
-                                  subText: 'Anything not listed here\n',
+                                  title: DefaultValues.titles['others']!,
+                                  subText: DefaultValues.titles['others_gol_st']!,
                                   color: color,
                                   titleColor: Colors.white60,
                                   onPressed: (){
@@ -626,28 +625,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                 }
               },
 
-              items: [
-                BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
-                  label: 'Goal',
-                ),
-                BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
-                  label: 'Investment',
-                ),
-
-
-                BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.chartPie,color: kPresentTheme.accentColor,size: 15.sp,),
-                  label: 'Dashboard',
-                ),
-                BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
-                  label: 'SIP Calculator',
-                ),
-
-
-              ],
+              items: DefaultValues.bottomTabs,
             ),
           );
         }
