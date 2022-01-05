@@ -115,14 +115,14 @@ class _RecomCardState extends State<RecomCard> {
 
       if(_scrollController.position.userScrollDirection == ScrollDirection.reverse){
 
-        print('up');
+
         setState(() {
           _scrollingUp = false;
           _showSummary = false;
         });
       } else if(_scrollController.position == _scrollController.position.minScrollExtent){
 
-        print('down');
+
         setState(() {
           _scrollingUp = true;
           _showSummary = true;
