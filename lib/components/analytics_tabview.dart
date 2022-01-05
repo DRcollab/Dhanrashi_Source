@@ -249,7 +249,31 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
 
        fetched ? Tooltip(
           message: 'Hi',
-            child: RecomCard(dataSet: recommList, goals: goals,showHeader: this._showSummary,scrolledUp: this._scrollingUp,),
+            child: RecomCard(
+              dataSet: recommList, 
+              goals: goals,
+              showHeader: this._showSummary,
+              scrolledUp: this._scrollingUp,
+              scrollControl: (){
+                if(this._scrollingUp){
+                  this._scrollController.animateTo(0.0, duration: Duration(milliseconds: 50), curve: Curves.bounceOut);
+                  setState(() {
+                    this._scrollingUp = false;
+                    this._showSummary = true;
+                  });
+
+                }
+                else{
+                  this._scrollController.animateTo(_scrollController.position.maxScrollExtent,
+                      duration: Duration(milliseconds: 50), curve: Curves.bounceOut);
+                  setState(() {
+                    this._scrollingUp = true;
+                    this._showSummary = false;
+                  });
+                }
+              },
+            
+            ),
         ): SizedBox(),
       ],
     );

@@ -15,13 +15,14 @@ class RecomCard extends StatefulWidget {
   late List goals;
   late bool showHeader;
   late bool scrolledUp;
+  late Function()? scrollControl;
 
 
 
   @override
   State<RecomCard> createState() => _RecomCardState();
 
-  RecomCard({required this.dataSet, required this.goals, this.showHeader=true, this.scrolledUp=false});
+  RecomCard({required this.dataSet, required this.goals, this.showHeader=true, this.scrolledUp=false, this.scrollControl});
 }
 
 class _RecomCardState extends State<RecomCard> {
@@ -194,12 +195,7 @@ class _RecomCardState extends State<RecomCard> {
                 child: ExpandButton(
                       display: !widget.scrolledUp ? Icon(Icons.keyboard_arrow_up):Icon(Icons.keyboard_arrow_down),
                       color: kPresentTheme.themeColor,
-                     onTap: (){
-
-                        // showBottomSheet(context: context,
-                        //     elevation: 2.0,
-                        //     builder: (context) => SingleChildScrollView(child: Container(child: RecommSheet())));
-                     }
+                     onTap: widget.scrollControl,
                     )),
           ),
 
