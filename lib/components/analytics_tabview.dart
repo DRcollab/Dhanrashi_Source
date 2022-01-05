@@ -8,6 +8,7 @@ import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:dhanrashi_mvp/models/investment.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../chart_viewer.dart';
 import 'dounut_charts.dart';
@@ -16,18 +17,11 @@ import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 import 'package:loading_gifs/loading_gifs.dart';
 import 'package:sizer/sizer.dart';
 
-class AnalyticsTabView extends StatelessWidget {
+class AnalyticsTabView extends StatefulWidget {
  // AnalyticsTabView({Key? key}) : super(key: key);
   late List<InvestDB> investmentDBs;
-  List<Investment> investments = [];
-  List recommList = List.empty(growable: true);
-  List<Goal> goals = [];
-  List<int> goalPoints = [];
   late var currentUser;
   late List<GoalDB>  goalDBs;
-  List dataSet = List.empty(growable: true);
-  // int longestGoalDuration;
-  // int longestInvestmentDuration;
   List<GlobalKey?>? showCaseKey;
 
 //{required this.currentUser, required this.investmentDBs, required this.goalDBs}
@@ -39,6 +33,25 @@ class AnalyticsTabView extends StatelessWidget {
     // required this.longestGoalDuration,
     this.showCaseKey,
   });
+
+  @override
+  State<AnalyticsTabView> createState() => _AnalyticsTabViewState();
+}
+
+class _AnalyticsTabViewState extends State<AnalyticsTabView> {
+  List<Investment> investments = [];
+
+  List recommList = List.empty(growable: true);
+
+  List<Goal> goals = [];
+
+  List<int> goalPoints = [];
+
+  List dataSet = List.empty(growable: true);
+  late final ScrollController _scrollController;
+
+  bool _scrollingUp = false;
+  bool _showSummary = true;
 
 
   _fetchRecommendations(){
@@ -94,8 +107,39 @@ class AnalyticsTabView extends StatelessWidget {
     }
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _scrollController = new ScrollController();
+    _scrollController.addListener(() {
+
+      if(_scrollController.position.userScrollDirection == ScrollDirection.reverse){
 
 
+
+        setState(() {
+          if(_scrollController.position.pixels < 200){
+            _scrollingUp = false;
+          }
+          else{
+            _scrollingUp = true;
+          }
+
+          _showSummary = false;
+        });
+      } else if(_scrollController.position.pixels == 0){
+
+
+        setState(() {
+          _scrollingUp = false;
+          _showSummary = true;
+        });
+      }
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +148,8 @@ class AnalyticsTabView extends StatelessWidget {
   goals = List.empty(growable: true);
   bool fetched = false;
 
-  if(investmentDBs.isNotEmpty) {
-    investmentDBs.forEach((element) {
+  if(widget.investmentDBs.isNotEmpty) {
+    widget.investmentDBs.forEach((element) {
       investments.add(element.investment);
     });
     fetched = true;
@@ -115,8 +159,8 @@ class AnalyticsTabView extends StatelessWidget {
   }
 
 
-  if(goalDBs.isNotEmpty) {
-    goalDBs.forEach((element) {
+  if(widget.goalDBs.isNotEmpty) {
+    widget.goalDBs.forEach((element) {
       goals.add(element.goal);
     });
     fetched = true;
@@ -153,10 +197,11 @@ class AnalyticsTabView extends StatelessWidget {
   }
 
     return ListView(
+      controller: _scrollController,
       children: [
         fetched?
         Showcase(
-            key:showCaseKey![1],
+            key:widget.showCaseKey![1],
             description: 'See your goal and investment relation',
             child: DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,))
 
@@ -171,7 +216,7 @@ class AnalyticsTabView extends StatelessWidget {
             width: 100.w,
             height: 35.h,
             child: fetched ? Showcase(
-                key: showCaseKey![2],
+                key: widget.showCaseKey![2],
                 description: 'See how your investment and goals are doing as time goes',
                 child: Stack(
                   children: [
@@ -181,7 +226,7 @@ class AnalyticsTabView extends StatelessWidget {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
                                 ChartViewer(
-                                  currentUser: this.currentUser,
+                                  currentUser: this.widget.currentUser,
                                   isVertical: true,
                                   dataSet: dataSet,
                                   dataSetForTable: recommList,
@@ -204,7 +249,7 @@ class AnalyticsTabView extends StatelessWidget {
 
        fetched ? Tooltip(
           message: 'Hi',
-            child: RecomCard(dataSet: recommList, goals: goals),
+            child: RecomCard(dataSet: recommList, goals: goals,showHeader: this._showSummary,scrolledUp: this._scrollingUp,),
         ): SizedBox(),
       ],
     );

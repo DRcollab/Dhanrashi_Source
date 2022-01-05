@@ -158,29 +158,31 @@ class _ReportCardState extends State<ReportCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: widget.baseColor,
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        color: widget.baseColor,
         borderRadius: widget.borderRadius,
+        boxShadow: [BoxShadow(
+          color: Colors.black26,
+          spreadRadius: 0.5,
+          blurRadius: 1.0,
+          offset: Offset(0,-3),
+        ),],
       ),
+
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            // color: Colors.amber,
-
-            decoration: BoxDecoration(
-                borderRadius: widget.borderRadius, color: titleColor),
-            child: Padding(
-              padding: requiredTitleBar
-                  ? EdgeInsets.symmetric(vertical: 10.0)
-                  : EdgeInsets.zero,
-              child: Center(
-                child: Text(
-                  titleText,
-                  style:DefaultValues.kH2(context),
-                ),
+          Padding(
+            padding: requiredTitleBar
+                ? EdgeInsets.symmetric(vertical: 10.0)
+                : EdgeInsets.zero,
+            child: Center(
+              child: Text(
+                titleText,
+                style:DefaultValues.kH2(context),
               ),
             ),
           ), // Title Bar of the custom card

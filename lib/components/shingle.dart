@@ -84,7 +84,7 @@ class Shingle extends StatelessWidget {
                 child: ListTile(
                       leading:Stack(
                         children: [
-                          Image.asset(this.leadingImage,height: 10.h,width: 10.w,),
+                         this.leadingImage != ''? Image.asset(this.leadingImage,height: 10.h,width: 10.w,):SizedBox(),
 
                         ],
                       ),
