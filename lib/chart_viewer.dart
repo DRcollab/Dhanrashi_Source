@@ -1,6 +1,5 @@
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -9,10 +8,8 @@ import 'components/constants.dart';
 import 'components/table_view.dart';
 import 'data/show_graph_dynamic.dart';
 
-
 class ChartViewer extends StatefulWidget {
-
- // late Widget chartChild;
+  // late Widget chartChild;
   List dataSet;
   List? dataSetForTable;
   var currentUser;
@@ -34,18 +31,15 @@ class ChartViewer extends StatefulWidget {
 }
 
 class _ChartViewerState extends State<ChartViewer> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    if(widget.dataSetForTable == null){
+    if (widget.dataSetForTable == null) {
       widget.dataSetForTable = widget.dataSet;
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +47,17 @@ class _ChartViewerState extends State<ChartViewer> {
       length: 2,
       child: CustomScaffold(
         currentUser: widget.currentUser,
-        rightButton: IconButton(icon: Icon(Icons.close),
-          onPressed: (){
-              Navigator.pop(context);
+        rightButton: IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () {
+            Navigator.pop(context);
           },
         ),
-        child:Padding(
-          padding: EdgeInsets.only(top:4.h),
+        child: Padding(
+          padding: EdgeInsets.only(top: 4.h),
           child: Material(
             child: TabBar(
-
-             // isScrollable: true,
+              // isScrollable: true,
               indicator: RectangularIndicator(
                 //height: 5,
                 topLeftRadius: 15,
@@ -83,8 +77,12 @@ class _ChartViewerState extends State<ChartViewer> {
               labelStyle: DefaultValues.kH4(context),
               labelPadding: EdgeInsets.only(top: 0),
               tabs: [
-                Tab(text:DefaultValues.titles['chart_view_tab1'],),
-                Tab(text:DefaultValues.titles['chart_view_tab2'],),
+                Tab(
+                  text: DefaultValues.titles['chart_view_tab1'],
+                ),
+                Tab(
+                  text: DefaultValues.titles['chart_view_tab2'],
+                ),
               ],
             ),
           ),
@@ -94,11 +92,9 @@ class _ChartViewerState extends State<ChartViewer> {
             ChartTabView(
               currentUser: widget.currentUser,
               chartChild: DynamicGraph(
-
                 isVertical: widget.isVertical,
                 chartType: widget.type,
                 resultSet: widget.dataSet,
-
                 gallopYears: 1,
               ),
             ),
@@ -106,9 +102,7 @@ class _ChartViewerState extends State<ChartViewer> {
               arrayList: widget.dataSetForTable!,
               useFirstColumnFromList: widget.useFirstColumnFromList,
             ),
-
           ],
-
         ),
       ),
     );
