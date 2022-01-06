@@ -1,4 +1,3 @@
-
 import 'package:dhanrashi_mvp/components/recom_class.dart';
 import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
@@ -11,17 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../chart_viewer.dart';
-import 'dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
-import 'package:dhanrashi_mvp/data/financial_calculator.dart';
-import 'package:loading_gifs/loading_gifs.dart';
 import 'package:sizer/sizer.dart';
 
 class AnalyticsTabView extends StatefulWidget {
- // AnalyticsTabView({Key? key}) : super(key: key);
+  // AnalyticsTabView({Key? key}) : super(key: key);
   late List<InvestDB> investmentDBs;
   late var currentUser;
-  late List<GoalDB>  goalDBs;
+  late List<GoalDB> goalDBs;
   List<GlobalKey?>? showCaseKey;
 
 //{required this.currentUser, required this.investmentDBs, required this.goalDBs}
@@ -53,11 +49,8 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
   bool _scrollingUp = false;
   bool _showSummary = true;
 
-
-  _fetchRecommendations(){
-
-   // int eachGoalYear;
-
+  _fetchRecommendations() {
+    // int eachGoalYear;
 
     List temp1 = List.empty(growable: true);
     List temp2 = List.empty(growable: true);
@@ -72,23 +65,22 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
     if (this.goalPoints.isNotEmpty) {
       this.goalPoints.forEach((element) {
         String eachInvTotal = this.dataSet[0][element];
-        String eachGoalTotal =  this.dataSet[1][element];
+        String eachGoalTotal = this.dataSet[1][element];
         String year = this.dataSet[2][element].toString();
-        double diff = double.parse(eachInvTotal)- double.parse(eachGoalTotal);
+        double diff = double.parse(eachInvTotal) - double.parse(eachGoalTotal);
         temp1.add(year);
         temp2.add(eachInvTotal);
         temp3.add(eachGoalTotal);
         temp4.add(diff.toString());
         //eachGoalYear = element;
-       // eachGoalName = element;
-       //  if(goalPoints.contains(eachGoalYear)){
-       //    String eachInvTotal = this.dataSet[0][eachGoalYear];
-       //    String eachGoalTotal =  this.dataSet[1][eachGoalYear];
-       //    double diff = double.parse(eachInvTotal)- double.parse(eachGoalTotal);
-       //  }
+        // eachGoalName = element;
+        //  if(goalPoints.contains(eachGoalYear)){
+        //    String eachInvTotal = this.dataSet[0][eachGoalYear];
+        //    String eachGoalTotal =  this.dataSet[1][eachGoalYear];
+        //    double diff = double.parse(eachInvTotal)- double.parse(eachGoalTotal);
+        //  }
 
-
-      //  recommList.add([eachInvTotal, eachGoalTotal,diff.toString()]);
+        //  recommList.add([eachInvTotal, eachGoalTotal,diff.toString()]);
 
         // if (double.parse(eachInvTotal) > double.parse(eachGoalTotal)) {
         //  // recomMessage = 'You are ahead of your goals at $eachGoalYear years';
@@ -103,7 +95,6 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
       recommList.add(temp2);
       recommList.add(temp3);
       recommList.add(temp4);
-
     }
   }
 
@@ -114,170 +105,161 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
 
     _scrollController = new ScrollController();
     _scrollController.addListener(() {
-
-      if(_scrollController.position.userScrollDirection == ScrollDirection.reverse){
-
-
-
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
         setState(() {
-          if(_scrollController.position.pixels < 200){
+          if (_scrollController.position.pixels < 200) {
             _scrollingUp = false;
-          }
-          else{
+          } else {
             _scrollingUp = true;
           }
 
           _showSummary = false;
         });
-      } else if(_scrollController.position.pixels == 0){
-
-
+      } else if (_scrollController.position.pixels == 0) {
         setState(() {
           _scrollingUp = false;
           _showSummary = true;
         });
       }
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    investments = List.empty(growable: true);
+    goals = List.empty(growable: true);
+    bool fetched = false;
 
-  investments = List.empty(growable: true);
-  goals = List.empty(growable: true);
-  bool fetched = false;
+    if (widget.investmentDBs.isNotEmpty) {
+      widget.investmentDBs.forEach((element) {
+        investments.add(element.investment);
+      });
+      fetched = true;
+    } else {
+      fetched = false;
+    }
 
-  if(widget.investmentDBs.isNotEmpty) {
-    widget.investmentDBs.forEach((element) {
-      investments.add(element.investment);
-    });
-    fetched = true;
-  }
-  else{
-    fetched = false;
-  }
+    if (widget.goalDBs.isNotEmpty) {
+      widget.goalDBs.forEach((element) {
+        goals.add(element.goal);
+      });
+      fetched = true;
+    } else {
+      fetched = false;
+    }
 
+    if (goals.isNotEmpty) {
+      goals.forEach((element) {
+        if (!goalPoints.contains(element.duration))
+          goalPoints.add(element.duration);
+      });
+    }
 
-  if(widget.goalDBs.isNotEmpty) {
-    widget.goalDBs.forEach((element) {
-      goals.add(element.goal);
-    });
-    fetched = true;
-  }else{
+    goalPoints.sort();
 
-    fetched = false;
-  }
-
-  if(goals.isNotEmpty){
-    goals.forEach((element) {
-      if(!goalPoints.contains(element.duration))
-              goalPoints.add(element.duration);
-    });
-  }
-
-  goalPoints.sort();
-
-
-
-
-  if(investments.isNotEmpty && goals.isNotEmpty) {
-
-
-
-    fetched = true;
-    dataSet = Calculator().getInvVsGoalDetail(
-        investments, goals, Global.longestInvestmentDuration,Global.longestGoalDuration);
-
-
+    if (investments.isNotEmpty && goals.isNotEmpty) {
+      fetched = true;
+      dataSet = Calculator().getInvVsGoalDetail(investments, goals,
+          Global.longestInvestmentDuration, Global.longestGoalDuration);
 
       _fetchRecommendations();
-  }else{
-    fetched = false;
-  }
+    } else {
+      fetched = false;
+    }
 
     return ListView(
       controller: _scrollController,
       children: [
-        fetched?
-        Showcase(
-            key:widget.showCaseKey![1]!,
-            description: 'See your goal and investment relation',
-            child: Container(
-              height: 35.h,
-                child: DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,)))
-
-            :Center(child: Text('Loading.......', style: DefaultValues.kH1(context),)),
-
-
+        fetched
+            ? Showcase(
+                key: widget.showCaseKey![1]!,
+                description: 'See your goal and investment relation',
+                child: Container(
+                    height: 35.h,
+                    child: DynamicGraph(
+                      resultSet: dataSet,
+                      chartType: ChartType.gauge,
+                    )))
+            : Center(
+                child: Text(
+                'Loading.......',
+                style: DefaultValues.kH1(context),
+              )),
         Padding(
-          padding:  EdgeInsets.only(
-              top:1.0 * DefaultValues.adaptByValue(context, 0.6),
+          padding: EdgeInsets.only(
+            top: 1.0 * DefaultValues.adaptByValue(context, 0.6),
           ),
           child: Container(
             width: 100.w,
             height: 35.h,
-            child: fetched ? Showcase(
-                key: widget.showCaseKey![2]!,
-                description: 'See how your investment and goals are doing as time goes',
-                child: Stack(
-                  children: [
-                    DynamicGraph(resultSet: dataSet,chartType: ChartType.line,),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) =>
-                                ChartViewer(
-                                  currentUser: this.widget.currentUser,
-                                  isVertical: true,
-                                  dataSet: dataSet,
-                                  dataSetForTable: recommList,
-                                  type: ChartType.line,
-                                  useFirstColumnFromList: true,
-                                )));
-                      },
-                      child: Container(
-                        color: Color(0x00000000),
-                        width:100.w,
-                        height:35.h,
-                      ),
-                    )
-                  ],
-                ))
-
-                :Image.asset(kPresentTheme.progressIndicator, scale: 3),
+            child: fetched
+                ? Showcase(
+                    key: widget.showCaseKey![2]!,
+                    description:
+                        'See how your investment and goals are doing as time goes',
+                    child: Stack(
+                      children: [
+                        DynamicGraph(
+                          resultSet: dataSet,
+                          chartType: ChartType.line,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ChartViewer(
+                                          currentUser: this.widget.currentUser,
+                                          isVertical: true,
+                                          dataSet: dataSet,
+                                          dataSetForTable: recommList,
+                                          type: ChartType.line,
+                                          useFirstColumnFromList: true,
+                                        )));
+                          },
+                          child: Container(
+                            color: Color(0x00000000),
+                            width: 100.w,
+                            height: 35.h,
+                          ),
+                        )
+                      ],
+                    ))
+                : Image.asset(kPresentTheme.progressIndicator, scale: 3),
           ),
         ),
-
-       fetched ? Tooltip(
-          message: 'Hi',
-            child: RecomCard(
-
-              dataSet: recommList, 
-              goals: goals,
-              showHeader: this._showSummary,
-              scrolledUp: this._scrollingUp,
-              scrollControl: (){
-                if(this._scrollingUp){
-                  this._scrollController.animateTo(0.0, duration: Duration(milliseconds: 50), curve: Curves.bounceOut);
-                  setState(() {
-                    this._scrollingUp = false;
-                    this._showSummary = true;
-                  });
-
-                }
-                else{
-                  this._scrollController.animateTo(_scrollController.position.maxScrollExtent,
-                      duration: Duration(milliseconds: 50), curve: Curves.bounceOut);
-                  setState(() {
-                    this._scrollingUp = true;
-                    this._showSummary = false;
-                  });
-                }
-              },
-            
-            ),
-        ): SizedBox(),
+        fetched
+            ? Tooltip(
+                message: 'Hi',
+                child: RecomCard(
+                  dataSet: recommList,
+                  goals: goals,
+                  showHeader: this._showSummary,
+                  scrolledUp: this._scrollingUp,
+                  scrollControl: () {
+                    if (this._scrollingUp) {
+                      this._scrollController.animateTo(0.0,
+                          duration: Duration(milliseconds: 50),
+                          curve: Curves.bounceOut);
+                      setState(() {
+                        this._scrollingUp = false;
+                        this._showSummary = true;
+                      });
+                    } else {
+                      this._scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent,
+                          duration: Duration(milliseconds: 50),
+                          curve: Curves.bounceOut);
+                      setState(() {
+                        this._scrollingUp = true;
+                        this._showSummary = false;
+                      });
+                    }
+                  },
+                ),
+              )
+            : SizedBox(),
       ],
     );
   }

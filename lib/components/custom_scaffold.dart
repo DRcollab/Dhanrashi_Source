@@ -1,17 +1,10 @@
-
-import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
-import 'package:dhanrashi_mvp/components/on_error_screen.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'constants.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dhanrashi_mvp/components/menu_drawer_class.dart';
-import 'package:dhanrashi_mvp/network/connectivity_checker.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:showcaseview/showcaseview.dart';
 
 class CustomScaffold extends StatelessWidget {
   Widget child;
@@ -32,8 +25,14 @@ class CustomScaffold extends StatelessWidget {
     required this.child,
     this.title = '',
     this.trailing,
-    this.foot = const SizedBox(height: 0,width: 0,),
-    this.bottomNavigationBar = const  SizedBox(height: 0, width: 0,),
+    this.foot = const SizedBox(
+      height: 0,
+      width: 0,
+    ),
+    this.bottomNavigationBar = const SizedBox(
+      height: 0,
+      width: 0,
+    ),
     this.currentUser,
     this.allowToSeeBottom = false,
     this.helper,
@@ -43,51 +42,46 @@ class CustomScaffold extends StatelessWidget {
     this.menuSCKey,
   });
 
-  final  _scaffoldKey = GlobalKey<ScaffoldState>();
- // final _keyShowCase = GlobalKey();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final _keyShowCase = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: AnnotatedRegion(
         value: SystemUiOverlayStyle(
-         statusBarColor: kPresentTheme.themeColor,//Color(0xffb5c210),
+          statusBarColor: kPresentTheme.themeColor, //Color(0xffb5c210),
           systemNavigationBarIconBrightness: Brightness.dark,
-         // systemNavigationBarColor: Colors.black,
-        ) ,
-
+          // systemNavigationBarColor: Colors.black,
+        ),
         child: Scaffold(
+          backgroundColor: kPresentTheme.themeColor,
+          key: _scaffoldKey,
+          resizeToAvoidBottomInset: this.allowToSeeBottom,
 
-                  backgroundColor: kPresentTheme.themeColor,
-                  key: _scaffoldKey,
-                  resizeToAvoidBottomInset: this.allowToSeeBottom,
+          // backgroundColor: kPresentTheme.scaffoldColors[0],
 
-                 // backgroundColor: kPresentTheme.scaffoldColors[0],
+          body: safeAreaWidgets(),
 
-                  body:  safeAreaWidgets(),
-
-
-                  drawer: MenuDrawer(currentUser: this.currentUser, ),
-                  bottomNavigationBar:SizedBox(
-                      height: DefaultValues.screenHeight(context)<600 ? 48:58,
-                      child: bottomNavigationBar),
-                ),
-
+          drawer: MenuDrawer(
+            currentUser: this.currentUser,
+          ),
+          bottomNavigationBar: SizedBox(
+              height: DefaultValues.screenHeight(context) < 600 ? 48 : 58,
+              child: bottomNavigationBar),
+        ),
       ),
     );
   }
 
-  Widget safeAreaWidgets(){
+  Widget safeAreaWidgets() {
     return SafeArea(
       child: StreamBuilder<Object>(
           stream: Connectivity().onConnectivityChanged,
-          builder: (context,
-              AsyncSnapshot snapshot) {
-
-            if( snapshot.hasData &&
-                snapshot.data != ConnectivityResult.none){
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData && snapshot.data != ConnectivityResult.none) {
               Global.internetAvailable = true;
-            }else{
+            } else {
               Global.internetAvailable = false;
             }
             return Stack(
@@ -97,23 +91,34 @@ class CustomScaffold extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left:2.w),
-                      child: this.leftButton==null ? IconButton(icon: Icon(Icons.menu,),
-
-                        onPressed: (){
-                          _scaffoldKey.currentState!.openDrawer();
-                        },):this.leftButton,
+                      padding: EdgeInsets.only(left: 2.w),
+                      child: this.leftButton == null
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.menu,
+                              ),
+                              onPressed: () {
+                                _scaffoldKey.currentState!.openDrawer();
+                              },
+                            )
+                          : this.leftButton,
                     ),
-                    Text(this.title, style: DefaultValues.kH3(context),),
+                    Text(
+                      this.title,
+                      style: DefaultValues.kH3(context),
+                    ),
                     Padding(
-                      padding: EdgeInsets.only( right:2.w),
-                      child: this.rightButton==null ? IconButton(icon: Icon(Icons.help),
-                        iconSize: 20.sp,
-                        onPressed: (){
-                          helper!();
-                      },):this.rightButton,
+                      padding: EdgeInsets.only(right: 2.w),
+                      child: this.rightButton == null
+                          ? IconButton(
+                              icon: Icon(Icons.help),
+                              iconSize: 20.sp,
+                              onPressed: () {
+                                helper!();
+                              },
+                            )
+                          : this.rightButton,
                     ),
-
                   ],
                 ),
                 //),
@@ -123,16 +128,7 @@ class CustomScaffold extends StatelessWidget {
                 ),
               ],
             );
-
-
-          }
-      ),
+          }),
     );
   }
-
-
 }
-
-
-
-
