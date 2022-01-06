@@ -216,6 +216,13 @@ class DefaultValues {
     return 1.0;
   }
 
+
+  // static String reduceAsPerDeviceSize(BuildContext context){
+  //   final size = MediaQuery.of(context);
+  //
+  //   if(size.height < )
+  // }
+
   static double reduceWidthAsPerScreen(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // For tiny devices.

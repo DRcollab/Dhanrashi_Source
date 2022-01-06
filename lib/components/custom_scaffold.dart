@@ -68,7 +68,9 @@ class CustomScaffold extends StatelessWidget {
 
 
                   drawer: MenuDrawer(currentUser: this.currentUser, ),
-                  bottomNavigationBar:bottomNavigationBar,
+                  bottomNavigationBar:SizedBox(
+                      height: DefaultValues.screenHeight(context)<600 ? 48:58,
+                      child: bottomNavigationBar),
                 ),
 
       ),

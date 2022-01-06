@@ -332,6 +332,7 @@ class _DashboardState extends State<Dashboard> {
                         bottomNavigationBar: BottomNavigationBar(
                           type: BottomNavigationBarType.fixed,
                           currentIndex: _currentTabIndex,
+
                           onTap: (index){
                             setState(() {
                               _currentTabIndex = index;

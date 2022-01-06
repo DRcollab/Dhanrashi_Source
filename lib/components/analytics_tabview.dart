@@ -203,7 +203,9 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
         Showcase(
             key:widget.showCaseKey![1],
             description: 'See your goal and investment relation',
-            child: DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,))
+            child: Container(
+              height: 35.h,
+                child: DynamicGraph(resultSet: dataSet,chartType: ChartType.gauge,)))
 
             :Center(child: Text('Loading.......', style: DefaultValues.kH1(context),)),
 
@@ -250,6 +252,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
        fetched ? Tooltip(
           message: 'Hi',
             child: RecomCard(
+
               dataSet: recommList, 
               goals: goals,
               showHeader: this._showSummary,

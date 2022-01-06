@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:ffi';
 import 'dart:math';
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:dhanrashi_mvp/components/legend_class.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 //import 'Archive/stacked.dart';
@@ -312,7 +313,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
         children: [
 
           Container(
-            width:28.h,
+            width: 28.h,
             height:28.h,
             child: charts.PieChart<String>(
               List.from(_pieChartData),
@@ -396,54 +397,54 @@ class _DynamicGraphState extends State<DynamicGraph> {
           Padding(
             padding: EdgeInsets.only(left:1.w,top:25.h),
             child: Card(
+              
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding:  EdgeInsets.only(left:8.w, top:8.0, bottom: 8.0),
-                        child: Container(
-                          height: 10,width: 20,
-                          color: DefaultValues.graphColors[0],
+                  Flexible(
+                    flex:1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
 
+                        Legend(
+                            legendColor: DefaultValues.graphColors[0],
+                            legendString: 'Investments',
+                            legendStyle: DefaultValues.kH4(context),),
+
+                          Padding(
+                            padding: EdgeInsets.only(left:25.w,right:6.w),
+                            child: Text(DefaultValues.textFormat.format(totalInvestmentCorpus),
+                              style: DefaultValues.kH4(context),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+
+                        Legend(
+                            legendColor:DefaultValues.graphColors[1],
+                            legendString: 'Goals (inflation adjusted)',
+                            legendStyle:DefaultValues.kH4(context),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                        child: Text('Investments',style: DefaultValues.kH4(context),),
-                      ),
+                        // DefaultValues.screenWidth(context)>600 ? Text('(inflation adjusted)')
+                        //     :Tooltip(
+                        //      message: 'inflation adjusted value',
+                        //     child: Icon(Icons.info_outline),
+                        // ),
                         Padding(
-                          padding: EdgeInsets.only(left:25.w,right:6.w),
-                          child: Text(DefaultValues.textFormat.format(totalInvestmentCorpus),
+                          padding: EdgeInsets.only(left:5.w, right:6.w),
+                          child: Text( DefaultValues.textFormat.format(totalGoal),
                             style: DefaultValues.kH4(context),
                           ),
                         ),
-                    ],
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left:8.w, top:8.0, bottom: 8.0),
-                        child: Container(
-                          height: 10,width: 20,
-                          color: DefaultValues.graphColors[1],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left:8.0, top:8.0, bottom: 8.0),
-                        child: Text('Goals',style: DefaultValues.kH4(context)),
-
-                      ),
-                      Text('(inflation adjusted)'),
-                      Padding(
-                        padding: EdgeInsets.only(left:5.w, right:6.w),
-                        child: Text( DefaultValues.textFormat.format(totalGoal),
-                          style: DefaultValues.kH4(context),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
                 ],
               ),

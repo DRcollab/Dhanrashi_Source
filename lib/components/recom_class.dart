@@ -134,7 +134,7 @@ class _RecomCardState extends State<RecomCard> {
   @override
   Widget build(BuildContext context) {
 
-    print(widget.dataSet.length);
+
     _fetchRecommendations();
 
 

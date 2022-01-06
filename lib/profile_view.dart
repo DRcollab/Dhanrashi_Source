@@ -84,8 +84,8 @@ class ProfileView extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left:36.w,
-                    right: 36.w, ),
+                    left:30.w,
+                    right: 30.w, ),
                   child: CommandButton(
                     onPressed: (){
                       Navigator.pop(context);
