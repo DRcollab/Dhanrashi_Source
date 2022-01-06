@@ -201,7 +201,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
       children: [
         fetched?
         Showcase(
-            key:widget.showCaseKey![1],
+            key:widget.showCaseKey![1]!,
             description: 'See your goal and investment relation',
             child: Container(
               height: 35.h,
@@ -218,7 +218,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
             width: 100.w,
             height: 35.h,
             child: fetched ? Showcase(
-                key: widget.showCaseKey![2],
+                key: widget.showCaseKey![2]!,
                 description: 'See how your investment and goals are doing as time goes',
                 child: Stack(
                   children: [

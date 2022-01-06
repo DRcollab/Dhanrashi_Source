@@ -489,7 +489,7 @@ class _NamePickerState extends State<NamePicker> {
                           ,
 
                           child: Showcase(
-                            key: widget.showCaseKeys![0],
+                            key: widget.showCaseKeys![0]!,
                             description: 'Change your profile image here',
                             shapeBorder: CircleBorder(),
                             overlayPadding: EdgeInsets.all(4),
@@ -509,7 +509,7 @@ class _NamePickerState extends State<NamePicker> {
                                 child: Form(
                                   key:widget.nameKey,
                                   child: Showcase(
-                                    key:widget.showCaseKeys![1],
+                                    key:widget.showCaseKeys![1]!,
                                     description:'Enter your first name',
                                     shapeBorder: CircleBorder(),
                                     overlayPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal:10),
@@ -537,7 +537,7 @@ class _NamePickerState extends State<NamePicker> {
                         Padding(
                               padding: DefaultValues.kTextFieldPadding(context),
                                   child: Showcase(
-                                    key:widget.showCaseKeys![2],
+                                    key:widget.showCaseKeys![2]!,
                                     description:'Enter your lastname here',
                                     shapeBorder: CircleBorder(),
                                     overlayPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal:10),
@@ -623,7 +623,7 @@ class _DOBPickerState extends State<DOBPicker> {
             // ),
 
            Showcase(
-             key:widget.showCaseKey![0],
+             key:widget.showCaseKey![0]!,
              description: 'Pick your date of birth',
              child: Calendar
                (
@@ -715,7 +715,7 @@ class _IncomePickerState extends State<IncomePicker> {
     return Padding(
       padding: EdgeInsets.only(top: 2.h, left:4.w, right: 4.w),
       child: Showcase(
-        key:widget.showCaseKey![0],
+        key:widget.showCaseKey![0]!,
         description: 'Pick your Income range',
         child: InputCard(
           titleText: "Your Annual Income",

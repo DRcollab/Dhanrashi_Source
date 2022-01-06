@@ -210,7 +210,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
         Flexible(
           flex:2,
           child: Showcase(
-            key: widget.showCaseKey![0],
+            key: widget.showCaseKey![0]!,
             title: 'Chart view of your Investments',
             description: 'Click here view tabular form',
 
@@ -255,7 +255,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                :DefaultValues.textShortFormat.format(totalCorpus)}',
                style: DefaultValues.kH3(context)),
            trailing: Showcase(
-             key: widget.showCaseKey![1],
+             key: widget.showCaseKey![1]!,
              description:'Click here to add a new investment',
              child: RoundButton(
                  icon:Icons.add,
@@ -288,7 +288,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),
                 child: Showcase(
-                  key: index==0 ? widget.showCaseKey![2]:new GlobalKey(),
+                  key: index==0 ? widget.showCaseKey![2]!:new GlobalKey(),
                   description:'Click here to view and update the investment',
 
                   child: Shingle(
@@ -337,7 +337,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                           :DefaultValues.textShortFormat.format(futureValue)
                       }' ,
                       trailing: Showcase(
-                        key: index==0 ? widget.showCaseKey![3]:new GlobalKey(),
+                        key: index==0 ? widget.showCaseKey![3]!:new GlobalKey(),
                         description: 'Click here to delete the investment',
                         child: IconButton(
                           icon: Icon(Icons.delete, size: 16.sp,) ,

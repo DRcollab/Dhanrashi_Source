@@ -184,7 +184,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
         Flexible(
           flex:2,
           child:Showcase(
-                  key:widget.showCaseKey![0],
+                  key:widget.showCaseKey![0]!,
                   description: 'Click here to view the data in tabular form',
                   title: 'Your goals in a chart',
                   child: Container(
@@ -230,7 +230,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
 
               , style: DefaultValues.kH3(context),),
             trailing: Showcase(
-              key: widget.showCaseKey![1],
+              key: widget.showCaseKey![1]!,
               description: 'Click here to add a new goal',
               child: RoundButton(
                 icon: Icons.add,
@@ -253,7 +253,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                 return Padding(
                   padding:  EdgeInsets.only(left:2.w,right: 2.w),
                   child: Showcase(
-                    key:index==0 ? widget.showCaseKey![2]: new GlobalKey(),
+                    key:index==0 ? widget.showCaseKey![2]!: new GlobalKey(),
                     title: 'Summary of the Goal',
                     description: 'Click this area to view and update the goal',
                     child: Shingle(
@@ -284,7 +284,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                       value:'${goals[index].duration.toString()} Years',
                       icon1:Icons.watch_later_outlined,
                       trailing: Showcase(
-                        key: index==0 ? widget.showCaseKey![3] : new GlobalKey(),
+                        key: index==0 ? widget.showCaseKey![3]! : new GlobalKey(),
                         //shapeBorder: Shape,
                         contentPadding: EdgeInsets.all(10),
                         description: 'Click here to delete',
