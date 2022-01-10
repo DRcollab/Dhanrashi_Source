@@ -196,7 +196,9 @@ class _RecomCardState extends State<RecomCard> {
                       display: !widget.scrolledUp ? Icon(Icons.keyboard_arrow_up):Icon(Icons.keyboard_arrow_down),
                       color: kPresentTheme.themeColor,
                      onTap: widget.scrollControl,
-                    )),
+                    ),
+
+            ),
           ),
 
         ],

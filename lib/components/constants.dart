@@ -92,6 +92,12 @@ class DefaultValues {
     'tnc_link_text': 'terms and conditions',
     'tnc': 'I agree to ',
     'ask_for_login': 'Already have a login id?',
+
+    'recomm_negative_1':'Your Goals are lagging',
+    'recomm_positive_1':'Your Goals are leading',
+
+    'recomm_positive_2':''
+
   };
 
   static var showcaseMessages = {};
