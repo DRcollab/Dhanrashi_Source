@@ -251,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen>  with InputValidationMixin{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.monetization_on),
-                          Text(DefaultValues.titles['app_name']!, style:DefaultValues.kH1(context),),
+                          Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
                         ],
                       ),
                       Padding(

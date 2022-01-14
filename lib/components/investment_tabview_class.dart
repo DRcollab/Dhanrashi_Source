@@ -1,3 +1,5 @@
+/// Copyright goes to Dhanrashi Team
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/investment_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';

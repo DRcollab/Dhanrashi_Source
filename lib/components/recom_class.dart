@@ -37,7 +37,8 @@ class _RecomCardState extends State<RecomCard> {
    String recomMessage = '';
    String negativeMessage = 'You are behind your goals for';
    String positiveMessage = 'You are ahead of your goals for';
-
+   String positiveIcon = DefaultValues.imageDirectory + '/accept.png';
+   String negativeIcon = DefaultValues.imageDirectory + '/remove.png';
    int laggingGoals = 0;
    int leadingGoals = 0;
 
@@ -62,46 +63,20 @@ class _RecomCardState extends State<RecomCard> {
         }
       }
 
-      print(widget.dataSet);
+
 
       if(laggingGoals > 0 && laggingGoals> leadingGoals){
-        recomMessage = '$laggingGoals of your goals are lagging...';
-        displayWidget = Text(recomMessage, style: DefaultValues.kH2(context).copyWith(color: Colors.red),);
+        recomMessage = '$laggingGoals ${DefaultValues.recom_summary['negative']}';
+        displayWidget = Text(recomMessage, style: DefaultValues.kH2(context).copyWith(color: kPresentTheme.errorAccentColor),);
       }else{
-        recomMessage = '$leadingGoals of your goals are doing well';
-        displayWidget = Text(recomMessage, style: DefaultValues.kH2(context).copyWith(color: Colors.green),);
+        recomMessage = '$leadingGoals ${DefaultValues.recom_summary['positive']}';
+        displayWidget = Text(recomMessage, style: DefaultValues.kH2(context).copyWith(color: kPresentTheme.defaultAccentColor),);
       }
 
-      // widget.dataSet[3].forEach((element) {
-      //  // print(element[4]);
-      //    if( double.parse(element) > 0){
-      //
-      //   }else{
-      //     negativeMessage =  negativeMessage + element[1];
-      //   }
-      // });
+
     }
 
-   // recomMessage = Utility.formatMessage(negativeMessage) + ' years';
 
-  //
-  //   if (widget.goals.isNotEmpty) {
-  //     widget.goals.forEach((element) {
-  //       eachGoalYear = element.duration;
-  //       eachGoalName = element.name;
-  //       String eachInvTotal = widget.dataSet[0][eachGoalYear];
-  //       String eachGoalTotal = widget.dataSet[1][eachGoalYear];
-  //
-  //
-  //       if (double.parse(eachInvTotal) > double.parse(eachGoalTotal)) {
-  //         recomMessage = 'You are ahead of your goals at $eachGoalYear years';
-  //
-  //       } else {
-  //
-  //          recomMessage =   'You are behind your goals at $eachGoalYear years and need to invest more';
-  //       }
-  //     });
-  //   }
    }
 
 
@@ -161,13 +136,14 @@ class _RecomCardState extends State<RecomCard> {
                     child: ListView.builder(
 
                         itemCount: widget.dataSet[0].length-1,
-                       // controller: _scrollController,
+
                         itemBuilder: (context, index){
 
                       return Shingle(
-                          leadingImage: (double.parse( widget.dataSet[3][index+1])>0)?'images/accept.png':'images/remove.png',
+                          icon1: null,
+                          leadingImage: (double.parse( widget.dataSet[3][index+1])>0)?this.positiveIcon:negativeIcon,
                           type: 'goal',
-                          title: 'Goals for ${widget.dataSet[0][index+1]} is ${double.parse( widget.dataSet[3][index+1])>0 ? 'leading':'lagging'}',
+                          title: 'Goals for ${widget.dataSet[0][index+1]}th year is ${double.parse( widget.dataSet[3][index+1])>0 ? 'leading':'lagging'}',
                           subtitle: 'by ${DefaultValues.financialFormat(DefaultValues.textFormatWithDecimal,double.parse( widget.dataSet[3][index+1]))}',
                           onPressed: (){}
                           );
@@ -175,14 +151,7 @@ class _RecomCardState extends State<RecomCard> {
                       //DefaultValues.financialFormat(DefaultValues.textFormatWithDecimal, widget.dataSet[3][index+1])
                     ),
                   ),
-                  // Placard(
-                  //     color:kPresentTheme.alternateColor,
-                  //     child: Text(Utility.formatMessage(positiveMessage),
-                  //       style: DefaultValues.kNormal3(context),),),
-                  // Placard(
-                  //     color: kPresentTheme.errorAccentColor,
-                  //     child: Text(   Utility.formatMessage(negativeMessage),
-                  //       style: DefaultValues.kNormal3(context),),),
+                  //
 
                 ],
 

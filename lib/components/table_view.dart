@@ -66,7 +66,7 @@ class _TableViewState extends State<TableView> {
 
 
     for(int i = 0; i<columnCount;i++){
-    //  print(widget.arrayList[i][0]);
+
 
      dataColumns.add( DataColumn(
           label: prefixSymbols.contains(widget.arrayList[i][0].substring(0,1))

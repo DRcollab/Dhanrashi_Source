@@ -379,7 +379,7 @@ class _GoalSheetState extends State<GoalSheet> {
               ),
             ),
 
-           widget.type =='Delete'? Utility.showBanner(context, 'You are about to delete this goal. This action is irreversible.', Colors.red.shade50, Colors.red)
+           widget.type =='Delete'? Utility.showBanner(context, DefaultValues.messages['warning_deletion']!, Colors.red.shade50, Colors.red)
             :SizedBox(width:0, height: 0,),
             Row(
               children: [

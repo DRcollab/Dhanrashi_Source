@@ -1,34 +1,19 @@
+/// copyright goes to Dhanrashi team
+/// Reset Login Page - appears when users  click on 'Trouble logging in ? '
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
-import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
-import 'package:dhanrashi_mvp/investmentinput.dart';
-import 'package:dhanrashi_mvp/profiler_option_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dashboard.dart';
 import 'components/buttons.dart';
 import 'components/custom_card.dart';
 import 'components/custom_scaffold.dart';
 import 'components/constants.dart';
 import 'package:sizer/sizer.dart';
-
-import 'components/on_error_screen.dart';
-
 import 'login_screen.dart';
-import 'models/profile.dart';
-import 'profiler.dart';
 import 'signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'components/custom_text_field.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'data/user_handler.dart';
-import 'data/database.dart';
-import 'components/custom_text.dart';
-import 'models/user_data_class.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class ResetScreen extends StatefulWidget with InputValidationMixin {
@@ -105,13 +90,13 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.monetization_on),
-              Text('Dhanrashi', style:DefaultValues.kH1(context),),
+              Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
             ],
           ),
           Padding(
             padding: EdgeInsets.only(left: 4.w,right:4.w,top:4.h,bottom:2.h),
             child: InputCard(
-              titleText: "Reset Login Page",
+              titleText: DefaultValues.titles['reset_title']!,
               children: [
                 //Logger(),
                 Column(
@@ -170,7 +155,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
                   padding:DefaultValues.kTextFieldPadding(context),
                   child: LinkText(
                       type: LinkTextType.DARK,
-                      linkText: "Recalled the password ? Go back",
+                      linkText: DefaultValues.messages['pwd_recall']!,
                       displaySize: 12.sp,
 
                       onPressed: () {
@@ -222,21 +207,7 @@ class _ResetScreenState extends State<ResetScreen>  with InputValidationMixin{
         ],
       ),
       bottomNavigationBar: SizedBox(),
-      // BottomNavigationBar(
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: FaIcon(FontAwesomeIcons.calculator),
-      //       label: 'SIP Calculator',
-      //
-      //     ),
-      //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar),
-      //         label: 'Inflation Data'
-      //     ),
-      //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench),
-      //         label: 'Settings'
-      //     ),
-      //   ],
-      // ),
+
 
     );
   }

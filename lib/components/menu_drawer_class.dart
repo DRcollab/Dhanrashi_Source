@@ -1,14 +1,12 @@
 /// This code is written by Shubhadee
 
-import 'package:dhanrashi_mvp/components/settings_sheet.dart';
+
 import 'package:dhanrashi_mvp/dashboard.dart';
-import 'package:dhanrashi_mvp/data/global.dart';
-import 'package:dhanrashi_mvp/data/user_access.dart';
+
 import 'package:dhanrashi_mvp/goal_input.dart';
 import 'package:dhanrashi_mvp/info_page.dart';
 import 'package:dhanrashi_mvp/investmentinput.dart';
-import 'package:dhanrashi_mvp/main.dart';
-import 'package:dhanrashi_mvp/models/profile.dart';
+
 import 'package:dhanrashi_mvp/profile_view.dart';
 import 'package:dhanrashi_mvp/profiler.dart';
 import 'package:dhanrashi_mvp/sip_calculator.dart';
@@ -46,7 +44,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
   @override
   void initState()  {
     // TODO: implement initState
-   // print(widget.currentUser.profileImage);
+
     super.initState();
     future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance );
 
@@ -93,17 +91,17 @@ class _MenuDrawerState extends State<MenuDrawer> {
             child: DrawerHeader(
 
               child: Stack(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                 children: [
-                  //Image.asset('images/goldsrain.png'),
+
                   CircleAvatar(
                     radius: 4.h,backgroundColor: kPresentTheme.accentColor,
                     backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
                   ),
                   Align(
                       alignment: Alignment.topRight,
-
-                      child: Text('Dhanrashi', style:DefaultValues.kH1(context),)),
+                      //DefaultValues.kH1(context).copyWith(fontFamily: DefaultValues.appFont)
+                      child: Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context))),
                   Align(
                       alignment: Alignment.bottomLeft,
 
@@ -144,7 +142,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.chartPie,size: 24.sp,color:kPresentTheme.accentColor),
-                    title: Text('Dashboard', style: DefaultValues.kNormal2(context)),
+                    title: Text(DefaultValues.menuItems['menu_dashboard']!, style: DefaultValues.kNormal2(context)),
                     subtitle:DefaultValues.screenHeight(context)>600 ? Text('Analyse your portfolio'):null,
                     enabled: widget.currentUser!=null,
                     onTap: (){
@@ -158,7 +156,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ListTile(
                     enabled: widget.currentUser!=null,
                     leading: FaIcon(FontAwesomeIcons.plus,size: 24.sp,color:kPresentTheme.accentColor),
-                    title: Text('Add Investments', style: DefaultValues.kNormal2(context)),
+                    title: Text(DefaultValues.menuItems['menu_inv']!, style: DefaultValues.kNormal2(context)),
                     //subtitle: DefaultValues.screenHeight(context)>600 ?Text('Add your investments by choosing from a list'):null,
                     onTap: (){
                       Navigator.pop(context);
@@ -169,7 +167,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.plusCircle, size: 24.sp,color:kPresentTheme.accentColor),
-                    title: Text('Add Goals', style: DefaultValues.kNormal2(context)),
+                    title: Text(DefaultValues.menuItems['menu_goal']!, style: DefaultValues.kNormal2(context)),
                    // subtitle:DefaultValues.screenHeight(context)>600 ? Text('Add your goals by choosing from a list'):null,
                     enabled: widget.currentUser!=null,
                     onTap: (){
@@ -185,8 +183,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   SizedBox(height: 10,width: double.infinity,),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.calculator, size: 24.sp,color:kPresentTheme.accentColor),
-                    title: Text('SIP Calculator', style: DefaultValues.kNormal2(context)),
-                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('Dhanrashi SIP calculator. find how to plan on your investments'):null,
+                    title: Text(DefaultValues.menuItems['menu_sip_calc']!, style: DefaultValues.kNormal2(context)),
+                    subtitle:DefaultValues.screenHeight(context)>600 ? Text(DefaultValues.messages['sip_calc_menusubtext']!):null,
                     onTap: (){
                       Navigator.pop(context);
                       Navigator.push(context,
@@ -199,8 +197,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     //contentPadding: EdgeInsets.all(10),
                     enabled: (widget.currentUser!=null && widget.currentUser.firstName!=''),
                     leading: FaIcon(FontAwesomeIcons.userFriends,size: 24.sp,color:kPresentTheme.accentColor, ),
-                    title:  userHasProfile ? Text('Update profile' ,style:DefaultValues.kNormal2(context), )
-                        : Text('Add profile' ,style:DefaultValues.kNormal2(context), ) ,
+                    title:  userHasProfile ? Text(DefaultValues.menuItems['menu_update_profile']! ,style:DefaultValues.kNormal2(context), )
+                        : Text(DefaultValues.menuItems['menu_add_profile']! ,style:DefaultValues.kNormal2(context), ) ,
                     //  subtitle: DefaultValues.screenHeight(context)>600 ? Text('Change your name , date of birth and income'):null,
                     onTap: (){
                       if(widget.currentUser.firstName !='N/A') {
@@ -220,8 +218,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.idBadge, size: 24.sp,color:kPresentTheme.accentColor),
-                    title: Text('About', style: DefaultValues.kNormal2(context)),
-                    subtitle:DefaultValues.screenHeight(context)>600 ? Text('Credits , where it is due'):null,
+                    title: Text(DefaultValues.menuItems['menu_about']!, style: DefaultValues.kNormal2(context)),
+                   // subtitle:DefaultValues.screenHeight(context)>600 ? Text(''):null,
                     onTap: (){
                       Navigator.pop(context);
                       Navigator.push(context,
@@ -237,7 +235,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           Container(
               child: ListTile(
                 leading:Icon(Icons.logout,size: 26.sp,color:kPresentTheme.accentColor),
-                title: Text('Logout',style: DefaultValues.kNormal2(context)),
+                title: Text(DefaultValues.menuItems['menu_logout']!,style: DefaultValues.kNormal2(context)),
                enabled: widget.currentUser!=null,
                 onTap: () async {
                   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -256,7 +254,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginScreen()));
-                    print(widget.currentUser.email);
+
                   });
 
 

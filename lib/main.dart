@@ -1,5 +1,5 @@
+/// Copyright goes to Dhanrashi team
 
-import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/login_screen.dart';
 import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,7 +39,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
     late Profile? profile;
     bool? sessionActive;
     var userLoggedIn;
-  // late FirebaseFirestore firestore;
+
 
   @override
   void initState()  {

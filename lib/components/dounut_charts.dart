@@ -1,7 +1,5 @@
 
 
-import 'dart:math';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +53,7 @@ class DonutChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    generateData();
-    print('From inside Pie Chart : ${seriesPieData[0].data[0].task}');
-    print('From inside Pie Chart : ${seriesPieData[0].data[1].task}');
+
 
     if(seriesPieData.length>1){
       print('length > 1');

@@ -29,23 +29,13 @@ import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:sizer/sizer.dart';
 
 
-// var  TEXTFIELD_PADDING = EdgeInsets.fromLTRB(
-//     18.0 *  DefaultValues.adaptForSmallDevice(context),
-//     18.0 * DefaultValues.adaptForSmallDevice(context),
-//     18.0 *DefaultValues.adaptForSmallDevice(context),
-//
-//     8.0 *DefaultValues.adaptForSmallDevice(context),
-// );
+
 
 
 
   class SignUpPage extends StatefulWidget with InputValidationMixin {
 
-  //const Logging({Key? key}) : super(key: key);
 
- // var currentUser;
-
-   // SignUpPage({});
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -139,7 +129,7 @@ import 'package:sizer/sizer.dart';
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.monetization_on),
-                      Text(DefaultValues.titles['app_name']!, style:DefaultValues.kH1(context),),
+                      Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
                     ],
                   ),
                   Padding(
@@ -382,21 +372,7 @@ import 'package:sizer/sizer.dart';
           ],
         ),
         bottomNavigationBar: SizedBox(),
-        // BottomNavigationBar(
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,),
-        //       label: 'SIP Calculator',
-        //
-        //     ),
-        //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.chartBar,size: 15.sp,),
-        //         label: 'Inflation Data'
-        //     ),
-        //     BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.wrench,size: 15.sp,),
-        //         label: 'Settings'
-        //     ),
-        //   ],
-        // ),
+
       ),
     );
   }

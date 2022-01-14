@@ -1,4 +1,4 @@
-
+/// Copyright goes to Dhanrashi Team
 
 import 'package:dhanrashi_mvp/components/analytics_tabview.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
@@ -6,7 +6,6 @@ import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/sip_calculator.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -25,8 +24,6 @@ import 'models/investment_db.dart';
 import 'data/data_access.dart';
 
 class Dashboard extends StatefulWidget {
-
-
 
   var currentUser;
   String bannerMessage = '';
@@ -108,17 +105,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
 
-  // Future fetchVariables() async{
-  //   fireStore.collection('pjdhan_variables').get().then((QuerySnapshot snapshot){
-  //     snapshot.docs.forEach((element) {
-  //       Global.stockReturn = element.get('stock_return');
-  //
-  //     });
-  //   }).catchError((onError){
-  //
-  //       throw onError;
-  //   });
-  // }
+
 
   Future fetchGoals() async{
 

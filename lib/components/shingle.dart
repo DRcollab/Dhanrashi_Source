@@ -23,7 +23,7 @@ class Shingle extends StatelessWidget {
   String type = 'goal';
   String text = '';
   String text2 = '';
-  late IconData icon1;
+  late IconData? icon1;
   late IconData? icon2;
   String highlight = '';
   bool hasExtraText = false;
@@ -108,7 +108,7 @@ class Shingle extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Icon(icon1, color:kPresentTheme.accentColor,size:16.sp*DefaultValues.adaptForSmallDevice(context)),
+                                  icon1!=null ? Icon(icon1, color:kPresentTheme.accentColor,size:16.sp*DefaultValues.adaptForSmallDevice(context)):SizedBox(),
                                   Padding(
                                     padding:EdgeInsets.only(left : 1.5.w),
                                     child: Text( this.value, style: DefaultValues.kH4(context),),

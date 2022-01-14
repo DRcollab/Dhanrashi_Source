@@ -1,3 +1,5 @@
+/// copyright goes to Dhanrashi team
+
 import 'package:dhanrashi_mvp/components/theme_class.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ DhanrashiTheme kLimeTheme = DhanrashiTheme(
   lightWeightColor: Color(0xffb5c210),
 
   errorAccentColor: Colors.redAccent,
+  defaultAccentColor : Colors.green,
 
 
 
@@ -32,10 +35,10 @@ DhanrashiTheme kLimeTheme = DhanrashiTheme(
 
 
 
-
+/// default theme of the entire project across all screens
 DhanrashiTheme kPresentTheme = kLimeTheme;
 
-int kInitialYear = 1950;
+int kInitialYear = 1950; /// change this if you want to change the date starting point in any datepicker
 
 final kFormTextBorder = OutlineInputBorder(
     gapPadding: 2.0,
@@ -43,6 +46,7 @@ final kFormTextBorder = OutlineInputBorder(
     borderSide: BorderSide(
       color: Color(0xFF004752),
     ));
+
 
 final kFormErrorTextBorder = OutlineInputBorder(
     gapPadding: 2.0,
@@ -52,20 +56,22 @@ final kFormErrorTextBorder = OutlineInputBorder(
     ));
 
 
-
+/// default settings of the app
 class DefaultValues {
+  static final appFont = 'Cabin';  // appname display font
   static final textFormat =
-      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 0);
+      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 0); // format the number as $9,999
   static final textFormatWithDecimal =
-      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 1);
+      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 1);  // format the number as $9,999.00
   static final textShortFormat =
-      NumberFormat.compactSimpleCurrency(locale: 'en-in');
-  static final String directoryOfPhoto = 'images/profiles';
+      NumberFormat.compactSimpleCurrency(locale: 'en-in');  // format the number as $9T
+  static final String directoryOfPhoto = 'images/profiles';  // change this if you have changed the physical directory
+  static final String imageDirectory = 'images';
   static final threshold = 9999999999;  // 1 less than 1000 Cr.
   static final maxSlideYear = 60.0; // defines the max Sliding year in goal / investment and SIP Calc
-  static final goalDuration = 10;
-  static final investmentDuration = 10;
-  static final minReturn = 0.0;
+  static final goalDuration = 10; // goal duration across all the goal class
+  static final investmentDuration = 10; //  duration across all the asset class
+  static final minReturn = 0.0; // min ROI making it negative may crash the app
 
 
 
@@ -89,25 +95,44 @@ class DefaultValues {
     'first_name_empty': 'First Name should not be empty',
     'last_name_empty': 'Last Name should not be empty',
     'login_link_text': "Trouble logging in? Click here",
+    'pwd_recall':'Recalled the password ? Go back',
     'tnc_link_text': 'terms and conditions',
     'tnc': 'I agree to ',
     'ask_for_login': 'Already have a login id?',
 
+    'sip_calc_menusubtext': 'Plan you investments',
+
     'recomm_negative_1':'Your Goals are lagging',
     'recomm_positive_1':'Your Goals are leading',
 
-    'recomm_positive_2':''
+    'recomm_positive_2':'',
+
+    'warning_deletion':'You are about to delete this goal. This action is irreversible',
+  };
+
+  static var menuItems  = {
+    'menu_inv':'Add Investments',
+    'menu_goal':'Add Goals',
+    'menu_dashboard': 'Dashboard',
+    'menu_sip_calc':'SIP Calculator',
+    'menu_update_profile':'Update Profile',
+    'menu_add_profile':'Add Profile',
+    'menu_about':'About',
+    'menu_logout':'Logout',
 
   };
 
   static var showcaseMessages = {};
 
   static var titles = {
-        'app_name':'Dhanrashi',
+        'app_name':'FiWi',
         'login_button_text': 'Login',
         'signup_option':"New User? Sign Up",
         'login_page_title': 'Login Page',
         'signup_title':'Signup Page',
+        'reset_title':'Reset Login Page',
+
+
         'signup_button_text':'Sign Up',
         'ask_login_button_text':'Click Here to Login',
         'inv_time_title':'Investment Duration',
@@ -193,10 +218,12 @@ class DefaultValues {
     'anonymous': 'something went wrong please restart the app',
   };
 
-  static var recom_message = [
-    'You are ahead of your goals at',
-    'You are behind your goals at',
-  ];
+  static var recom_summary = {
+    'negative': 'of your goals are lagging',
+    'positive': 'of your goals are doing well',
+  };
+
+
 
   static String minimumDate = '1900-01-01';
   static String minimumDateTime = '1900-01-01 00:00:00.000';
@@ -223,11 +250,6 @@ class DefaultValues {
   }
 
 
-  // static String reduceAsPerDeviceSize(BuildContext context){
-  //   final size = MediaQuery.of(context);
-  //
-  //   if(size.height < )
-  // }
 
   static double reduceWidthAsPerScreen(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -273,7 +295,7 @@ class DefaultValues {
     var kTitleTextStyle = TextStyle(
       fontSize: 20.0 * adaptFontsForSmallDevice(context),
       fontFamily: 'Fredoka',
-      color: Colors.white38,
+
     );
 
     return kTitleTextStyle;
@@ -419,6 +441,9 @@ class DefaultValues {
                   BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
                       label: 'SIP Calculator'
                   ),];
-}
+
+
+
+}// DefaultValues -- End of class definition
 
 

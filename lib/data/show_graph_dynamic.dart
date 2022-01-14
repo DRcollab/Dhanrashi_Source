@@ -362,28 +362,13 @@ class _DynamicGraphState extends State<DynamicGraph> {
                    List.from(_pieChartDataGoal),
                    animate: false,
 
-                 //  animationDuration: Duration(milliseconds: 200),
-                   // behaviors: [
-                   //
-                   //   charts.DatumLegend(
-                   //     outsideJustification: charts.OutsideJustification.middleDrawArea,
-                   //     horizontalFirst: false,
-                   //     desiredMaxColumns: 2,
-                   //    // cellPadding: EdgeInsets.only(right: 4.0,bottom: 4.0),
-                   //    // entryTextStyle:
-                   //
-                   //   ),
-                   //
-                   // ],
+
                    defaultRenderer: new charts.ArcRendererConfig(
                      arcWidth: (15 * DefaultValues.adaptByValue(context, 0.8)).ceil(),
                      startAngle: 1 * pi,
                      arcLength: 2 * ratio * pi,
                      arcRendererDecorators: viewLabel ? [
-//goal_ratio
-                     new charts.ArcLabelDecorator(
-                         labelPosition: charts.ArcLabelPosition.auto
-                     )
+
                      ] : [],
 
 
@@ -432,11 +417,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
                             legendString: 'Goals (inflation adjusted)',
                             legendStyle:DefaultValues.kH4(context),
                         ),
-                        // DefaultValues.screenWidth(context)>600 ? Text('(inflation adjusted)')
-                        //     :Tooltip(
-                        //      message: 'inflation adjusted value',
-                        //     child: Icon(Icons.info_outline),
-                        // ),
+
                         Padding(
                           padding: EdgeInsets.only(left:5.w, right:6.w),
                           child: Text( DefaultValues.textFormat.format(totalGoal),
@@ -461,7 +442,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
 
   @override
   void initstate() {
-    //_makeDataforBar();
+
   }
 
   @override
