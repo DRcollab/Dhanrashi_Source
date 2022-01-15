@@ -143,7 +143,9 @@ class _RecomCardState extends State<RecomCard> {
                           icon1: null,
                           leadingImage: (double.parse( widget.dataSet[3][index+1])>0)?this.positiveIcon:negativeIcon,
                           type: 'goal',
-                          title: 'Goals for ${widget.dataSet[0][index+1]}th year is ${double.parse( widget.dataSet[3][index+1])>0 ? 'leading':'lagging'}',
+                          title: double.parse( widget.dataSet[3][index+1])>0 ? '${DefaultValues.messages['recomm_positive_1']} ${DefaultValues.messages['recomm_2']}'
+                          :'${DefaultValues.messages['recomm_negative_1']} ${DefaultValues.messages['recomm_2']}',
+                         // title: 'Goals for ${widget.dataSet[0][index+1]}th year is ${double.parse( widget.dataSet[3][index+1])>0 ? 'leading':'lagging'}',
                           subtitle: 'by ${DefaultValues.financialFormat(DefaultValues.textFormatWithDecimal,double.parse( widget.dataSet[3][index+1]))}',
                           onPressed: (){}
                           );
