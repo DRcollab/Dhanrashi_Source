@@ -23,22 +23,16 @@ DhanrashiTheme kLimeTheme = DhanrashiTheme(
   borderColor: Colors.white24,
   highLightColor: Color(0xFF004752),
   lightWeightColor: Color(0xffb5c210),
-
   errorAccentColor: Colors.redAccent,
-  defaultAccentColor : Colors.green,
-
-
-
-
- );
-
-
-
+  defaultAccentColor: Colors.green,
+);
 
 /// default theme of the entire project across all screens
 DhanrashiTheme kPresentTheme = kLimeTheme;
 
-int kInitialYear = 1950; /// change this if you want to change the date starting point in any datepicker
+int kInitialYear = 1950;
+
+/// change this if you want to change the date starting point in any datepicker
 
 final kFormTextBorder = OutlineInputBorder(
     gapPadding: 2.0,
@@ -47,7 +41,6 @@ final kFormTextBorder = OutlineInputBorder(
       color: Color(0xFF004752),
     ));
 
-
 final kFormErrorTextBorder = OutlineInputBorder(
     gapPadding: 2.0,
     borderRadius: BorderRadius.circular(25.0),
@@ -55,31 +48,30 @@ final kFormErrorTextBorder = OutlineInputBorder(
       color: Colors.red,
     ));
 
-
 /// default settings of the app
 class DefaultValues {
-  static final appFont = 'Cabin';  // appname display font
-  static final textFormat =
-      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 0); // format the number as $9,999
-  static final textFormatWithDecimal =
-      NumberFormat.simpleCurrency(locale: 'en-in', decimalDigits: 1);  // format the number as $9,999.00
-  static final textShortFormat =
-      NumberFormat.compactSimpleCurrency(locale: 'en-in');  // format the number as $9T
-  static final String directoryOfPhoto = 'images/profiles';  // change this if you have changed the physical directory
+  static final appFont = 'Cabin'; // appname display font
+  static final textFormat = NumberFormat.simpleCurrency(
+      locale: 'en-in', decimalDigits: 0); // format the number as $9,999
+  static final textFormatWithDecimal = NumberFormat.simpleCurrency(
+      locale: 'en-in', decimalDigits: 1); // format the number as $9,999.00
+  static final textShortFormat = NumberFormat.compactSimpleCurrency(
+      locale: 'en-in'); // format the number as $9T
+  static final String directoryOfPhoto =
+      'images/profiles'; // change this if you have changed the physical directory
   static final String imageDirectory = 'images';
-  static final threshold = 9999999999;  // 1 less than 1000 Cr.
-  static final maxSlideYear = 60.0; // defines the max Sliding year in goal / investment and SIP Calc
+  static final threshold = 9999999999; // 1 less than 1000 Cr.
+  static final maxSlideYear =
+      60.0; // defines the max Sliding year in goal / investment and SIP Calc
   static final goalDuration = 10; // goal duration across all the goal class
   static final investmentDuration = 10; //  duration across all the asset class
   static final minReturn = 0.0; // min ROI making it negative may crash the app
 
-
-
   static var messages = {
-    'welcome':'Welcome',
-    'inv_choice':'Click on any one of the investments',
-    'goal_choice':'Click on any one of the goals',
-    'ask_for_profile':'Update your profile now',
+    'welcome': 'Welcome',
+    'inv_choice': 'Click on any one of the investments',
+    'goal_choice': 'Click on any one of the goals',
+    'ask_for_profile': 'Update your profile now',
     'timed_out':
         'It seems there is an issue with your internet connection. Check your settings or watch for an wifi hotspot.\n\n'
             ' Your data will be stored as soon as internet restores. Meanwhile you are free to do other things.',
@@ -95,123 +87,116 @@ class DefaultValues {
     'first_name_empty': 'First Name should not be empty',
     'last_name_empty': 'Last Name should not be empty',
     'login_link_text': "Trouble logging in? Click here",
-    'pwd_recall':'Recalled the password ? Go back',
+    'pwd_recall': 'Recalled the password ? Go back',
     'tnc_link_text': 'terms and conditions',
     'tnc': 'I agree to ',
     'ask_for_login': 'Already have a login id?',
 
     'sip_calc_menusubtext': 'Plan you investments',
 
-    'recomm_negative_1':'Your Goals are lagging',
-    'recomm_positive_1':'Your Goals are leading',
+    'recomm_negative_1': 'Your total Investments are behind Goals',
+    'recomm_positive_1': 'Your total Investments are ahead of Goals',
 
-    'recomm_positive_2':'',
+    'recomm_2': 'at the end of year 5',
 
-    'warning_deletion':'You are about to delete this goal. This action is irreversible',
+    'warning_deletion':
+        'You are about to delete this goal. This action is irreversible',
   };
 
-  static var menuItems  = {
-    'menu_inv':'Add Investments',
-    'menu_goal':'Add Goals',
+  static var menuItems = {
+    'menu_inv': 'Add Investments',
+    'menu_goal': 'Add Goals',
     'menu_dashboard': 'Dashboard',
-    'menu_sip_calc':'SIP Calculator',
-    'menu_update_profile':'Update Profile',
-    'menu_add_profile':'Add Profile',
-    'menu_about':'About',
-    'menu_logout':'Logout',
-
+    'menu_sip_calc': 'SIP Calculator',
+    'menu_update_profile': 'Update Profile',
+    'menu_add_profile': 'Add Profile',
+    'menu_about': 'About',
+    'menu_logout': 'Logout',
   };
 
   static var showcaseMessages = {};
 
   static var titles = {
-        'app_name':'FiWi',
-        'login_button_text': 'Login',
-        'signup_option':"New User? Sign Up",
-        'login_page_title': 'Login Page',
-        'signup_title':'Signup Page',
-        'reset_title':'Reset Login Page',
+    'app_name': 'FiWi',
+    'login_button_text': 'Login',
+    'signup_option': "New User? Sign Up",
+    'login_page_title': 'Login Page',
+    'signup_title': 'Signup Page',
+    'reset_title': 'Reset Login Page',
 
+    'signup_button_text': 'Sign Up',
+    'ask_login_button_text': 'Click Here to Login',
+    'inv_time_title': 'Investment Duration',
+    'inv_start_title': 'Initial Investment',
+    'inv_rec_title': 'Annual Investment',
+    'goal_period_title': 'Goal duration',
+    'update_profile_button_text': 'Update profile',
+    'link_text_skip': 'Skip to continue',
+    'privacy_policy': 'Privacy police',
 
-        'signup_button_text':'Sign Up',
-        'ask_login_button_text':'Click Here to Login',
-        'inv_time_title':'Investment Duration',
-        'inv_start_title':'Initial Investment',
-        'inv_rec_title':'Annual Investment',
-        'goal_period_title':'Goal duration',
-        'update_profile_button_text':'Update profile',
-        'link_text_skip': 'Skip to continue',
-        'privacy_policy':'Privacy police',
+    //Goal tiles titles . // in goal input menu
+    'car': 'My Dream\nCar',
+    'house': 'My Dream\nHouse',
+    'education': 'Child\nEducation',
+    'retirement': 'Retirement',
+    'travel': 'Travel',
+    'family': 'Family \nEvents',
+    'health': 'Health',
+    'others': 'Others',
 
-        //Goal tiles titles . // in goal input menu
-        'car':'My Dream\nCar',
-        'house':'My Dream\nHouse',
-        'education':'Child\nEducation',
-        'retirement':'Retirement',
-        'travel':'Travel',
-        'family':'Family \nEvents',
-        'health':'Health',
-        'others':'Others',
+    'car_st': 'Buy my very own car\n',
+    'house_st': 'My sweet home\n',
+    'education_st': 'Education empowers life\n',
+    'retirement_st': 'A blissful life\n',
+    'travel_st': 'Tours and travels\n',
+    'family_st': 'Moments of Togetherness',
+    'health_st': 'Health related expenses\n',
+    'others_gol_st': 'Anything not listed here\n',
 
-          'car_st':'Buy my very own car\n',
-          'house_st':'My sweet home\n',
-          'education_st':'Education empowers life\n',
-          'retirement_st':'A blissful life\n',
-          'travel_st': 'Tours and travels\n',
-          'family_st':'Moments of Togetherness',
-          'health_st':'Health related expenses\n',
-           'others_gol_st':'Anything not listed here\n',
-
-
-
-
-        //Investment tiles titles . // in investment input menu
-        'mf':'Mutual\nFund',
-        'equity':'Equity',
-        'fd':'Fixed\nDeposits',
-        'real':'Real\nEstate',
-        'gold':'Gold',
-        'insurance':'Insurance',
-        'bonds':'Bonds',
-        'others_inv':'Other',
+    //Investment tiles titles . // in investment input menu
+    'mf': 'Mutual\nFund',
+    'equity': 'Equity',
+    'fd': 'Fixed\nDeposits',
+    'real': 'Real\nEstate',
+    'gold': 'Gold',
+    'insurance': 'Insurance',
+    'bonds': 'Bonds',
+    'others_inv': 'Other',
 
     //subtext
 
-    'mf_st':'Equity and debt funds\n',
-    'equity_st':'Stock market investments\n',
-    'fd_st':'Fixed deposits\n',
-    'real_st':'Lands,houses,complexes\n',
-    'gold_st':'Physical and digital gold\n',
-    'insurance_st':'Life insurance \n',
-    'bonds_st':'Govt, corporate bonds\n',
-    'others_st':'Any other asset class\n',
+    'mf_st': 'Equity and debt funds\n',
+    'equity_st': 'Stock market investments\n',
+    'fd_st': 'Fixed deposits\n',
+    'real_st': 'Lands,houses,complexes\n',
+    'gold_st': 'Physical and digital gold\n',
+    'insurance_st': 'Life insurance \n',
+    'bonds_st': 'Govt, corporate bonds\n',
+    'others_st': 'Any other asset class\n',
 
-    'tab_1':'Analytics',
-    'tab_2':'Goals',
-    'tab_3':'Investments',
-    'tab_header':'Dashboard',
+    'tab_1': 'Analytics',
+    'tab_2': 'Goals',
+    'tab_3': 'Investments',
+    'tab_header': 'Dashboard',
 
-    'bottom_tab_1':'Goals',
-    'bottom_tab_2':'Investments',
-    'bottom_tab3':'Dashboard',
-    'bottom_tab4':'SIP Calculator',
+    'bottom_tab_1': 'Goals',
+    'bottom_tab_2': 'Investments',
+    'bottom_tab3': 'Dashboard',
+    'bottom_tab4': 'SIP Calculator',
 
-    'chart_view_tab1':'Chart',
-    'chart_view_tab2':'Table',
-
+    'chart_view_tab1': 'Chart',
+    'chart_view_tab2': 'Table',
   };
 
-
-
- static var hints = {
-      'email':'enter email',
-      'pwd': 'enter password',
-      'email_signup': 'enter your email to signup',
-      're_pwd': 're-enter the password',
-      'roi_hint':'Last 5 years Nifty grew at ${Global.stockReturn*100}%',
-      'roi_hint_mf':'Last 5 years Debt funds grew at ${Global.stockReturn*100}%\n,Equity fund grew at ${Global.stockReturn*100}%\n& Balanced Fund grew at ${Global.stockReturn*100}%',
-
- };
+  static var hints = {
+    'email': 'enter email',
+    'pwd': 'enter password',
+    'email_signup': 'enter your email to signup',
+    're_pwd': 're-enter the password',
+    'roi_hint': 'Last 5 years Nifty grew at ${Global.stockReturn * 100}%',
+    'roi_hint_mf':
+        'Last 5 years Debt funds grew at ${Global.stockReturn * 100}%\n,Equity fund grew at ${Global.stockReturn * 100}%\n& Balanced Fund grew at ${Global.stockReturn * 100}%',
+  };
 
   static var errors = {
     'not_match': 'password and confirm password must be same',
@@ -219,11 +204,9 @@ class DefaultValues {
   };
 
   static var recom_summary = {
-    'negative': 'of your goals are lagging',
-    'positive': 'of your goals are doing well',
+    'negative': 'Goals and Investments summary',
+    'positive': 'Goals and Investments summary',
   };
-
-
 
   static String minimumDate = '1900-01-01';
   static String minimumDateTime = '1900-01-01 00:00:00.000';
@@ -248,8 +231,6 @@ class DefaultValues {
     // For normal devices.
     return 1.0;
   }
-
-
 
   static double reduceWidthAsPerScreen(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -295,7 +276,6 @@ class DefaultValues {
     var kTitleTextStyle = TextStyle(
       fontSize: 20.0 * adaptFontsForSmallDevice(context),
       fontFamily: 'Fredoka',
-
     );
 
     return kTitleTextStyle;
@@ -419,31 +399,38 @@ class DefaultValues {
     Color(0xff5696c7),
   ];
 
-
   /// botttom Navigation tab used accross all the screen ..
   ///
   ///
-  static List<BottomNavigationBarItem>  bottomTabs = [BottomNavigationBarItem(
-                  icon: FaIcon(FontAwesomeIcons.bullseye,size: 15.sp,),
-                  label: 'Goals',
-
-
-                ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.chartLine,size: 15.sp,),
-                    label: 'Investments',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(FontAwesomeIcons.chartPie, color: kPresentTheme.accentColor,size: 15.sp,),
-                    label: 'Dashboard',
-
-                  ),
-                  BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.calculator,size: 15.sp,color: Colors.orange,),
-                      label: 'SIP Calculator'
-                  ),];
-
-
-
-}// DefaultValues -- End of class definition
-
-
+  static List<BottomNavigationBarItem> bottomTabs = [
+    BottomNavigationBarItem(
+      icon: FaIcon(
+        FontAwesomeIcons.bullseye,
+        size: 15.sp,
+      ),
+      label: 'Goals',
+    ),
+    BottomNavigationBarItem(
+      icon: FaIcon(
+        FontAwesomeIcons.chartLine,
+        size: 15.sp,
+      ),
+      label: 'Investments',
+    ),
+    BottomNavigationBarItem(
+      icon: FaIcon(
+        FontAwesomeIcons.chartPie,
+        color: kPresentTheme.accentColor,
+        size: 15.sp,
+      ),
+      label: 'Dashboard',
+    ),
+    BottomNavigationBarItem(
+        icon: FaIcon(
+          FontAwesomeIcons.calculator,
+          size: 15.sp,
+          color: Colors.orange,
+        ),
+        label: 'SIP Calculator'),
+  ];
+} // DefaultValues -- End of class definition
