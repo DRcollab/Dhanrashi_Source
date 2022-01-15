@@ -94,10 +94,10 @@ class DefaultValues {
 
     'sip_calc_menusubtext': 'Plan you investments',
 
-    'recomm_negative_1': 'Your total Investments are behind Goals',
-    'recomm_positive_1': 'Your total Investments are ahead of Goals',
+    'recomm_negative_1': 'Investments are behind Goals',
+    'recomm_positive_1': 'Investments are ahead of Goals',
 
-    'recomm_2': 'at the end of year 5',
+    'recomm_2': 'after year 5',
 
     'warning_deletion':
         'You are about to delete this goal. This action is irreversible',
