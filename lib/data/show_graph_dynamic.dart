@@ -380,7 +380,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
               )
           ),
           Padding(
-            padding: EdgeInsets.only(left:1.w,top:25.h),
+            padding: EdgeInsets.only(left:1.w,top:28.h),
             child: Card(
               
               child: Column(

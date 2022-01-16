@@ -10,6 +10,9 @@ import 'package:sizer/sizer.dart';
 var keyValue =
     "1//0g3rWVkbDBZi0CgYIARAAGBASNwF-L9IryMTSaus23u7smtHXfWADwbeTz4MN46YMJUnkshgW4nhz5FDVmNusXwmmZi3NTV3lOwM";
 
+ var attribution = '<a href="https://www.flaticon.com/free-icons/chart-down" title="chart down icons">Chart down icons created by Arkinasi - Flaticon</a>';
+
+
 /// The above key is important for deployment -- need for dhanrashi team member
 
 DhanrashiTheme kLimeTheme = DhanrashiTheme(

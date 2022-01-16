@@ -28,6 +28,9 @@ class Shingle extends StatelessWidget {
   String highlight = '';
   bool hasExtraText = false;
 
+  double textDisplayScale = 1;
+
+
 
 
   Shingle( {
@@ -49,6 +52,7 @@ class Shingle extends StatelessWidget {
     this.hasExtraText = false,
     this.trailing2,
     this.prefix='',
+    this.textDisplayScale = 1,
   } );
 
 
@@ -94,15 +98,19 @@ class Shingle extends StatelessWidget {
                       ),
                       title: Padding(
                         padding:  EdgeInsets.only(top:1.h),
-                        child: Text(this.title,style: DefaultValues.kH3(context),),
+                        child: Text(this.title,style: DefaultValues.kH3(context).
+                                copyWith(fontSize: DefaultValues.kH3(context).fontSize! * this.textDisplayScale ),),
                       ),
                       subtitle: Padding(
                         padding:  EdgeInsets.only(top:1.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text( this.subtitle, style:DefaultValues.kNormal3(context)),
-                            this.text!=''? Text(this.text, style:DefaultValues.kNormal3(context)):SizedBox(),
+                            Text( this.subtitle, style:DefaultValues.kNormal3(context).
+                            copyWith(fontSize: DefaultValues.kNormal3(context).fontSize! * this.textDisplayScale ),),
+                            this.text!=''? Text(this.text, style:DefaultValues.kNormal3(context).
+                            copyWith(fontSize: DefaultValues.kNormal3(context).fontSize! * this.textDisplayScale ),
+                            ):SizedBox(),
                             Padding(
                               padding: EdgeInsets.only(top: 1.h, left:0.5.w),
                               child: Row(
@@ -111,7 +119,9 @@ class Shingle extends StatelessWidget {
                                   icon1!=null ? Icon(icon1, color:kPresentTheme.accentColor,size:16.sp*DefaultValues.adaptForSmallDevice(context)):SizedBox(),
                                   Padding(
                                     padding:EdgeInsets.only(left : 1.5.w),
-                                    child: Text( this.value, style: DefaultValues.kH4(context),),
+                                    child: Text( this.value, style: DefaultValues.kH4(context).
+                                    copyWith(fontSize: DefaultValues.kH4(context).fontSize! * this.textDisplayScale ),
+                                      ),
                                   ),
                                  // Image.asset('images/roi.png', height: 0.5.h,width: 0.5.w,),
                                   icon2 != null ?Padding(
@@ -120,7 +130,8 @@ class Shingle extends StatelessWidget {
                                   ):SizedBox(),
                                   this.text2!='' ?Padding(
                                     padding: EdgeInsets.only(left : 2.w),
-                                    child: Text( this.text2, style: DefaultValues.kH4(context),),
+                                    child: Text( this.text2, style: DefaultValues.kH4(context).
+                                    copyWith(fontSize: DefaultValues.kH4(context).fontSize! * this.textDisplayScale ),),
                                   ):SizedBox(),
 
                                 ],
@@ -128,7 +139,9 @@ class Shingle extends StatelessWidget {
                             ),
                             this.highlight!='' ? Padding(
                               padding: EdgeInsets.only(top:1.h, bottom: 1.h),
-                              child: Text(this.highlight, style: DefaultValues.kH3(context),),
+                              child: Text(this.highlight, style: DefaultValues.kH3(context).
+                                  copyWith(fontSize: DefaultValues.kH3(context).fontSize! * this.textDisplayScale )
+                                ,),
                             ):SizedBox(),
                           ],
                         ),

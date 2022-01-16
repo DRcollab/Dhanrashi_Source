@@ -192,7 +192,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
           ),
           child: Container(
             width: 100.w,
-            height: 35.h,
+            height: 40.h,
             child: fetched
                 ? Showcase(
                     key: widget.showCaseKey![2]!,
@@ -221,7 +221,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
                           child: Container(
                             color: Color(0x00000000),
                             width: 100.w,
-                            height: 35.h,
+                            height: 40.h,
                           ),
                         )
                       ],

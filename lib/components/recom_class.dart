@@ -8,6 +8,7 @@ import 'package:dhanrashi_mvp/components/shingle.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sizer/sizer.dart';
 class RecomCard extends StatefulWidget {
 
 
@@ -37,8 +38,8 @@ class _RecomCardState extends State<RecomCard> {
    String recomMessage = '';
    String negativeMessage = 'You are behind your goals for';
    String positiveMessage = 'You are ahead of your goals for';
-   String positiveIcon = DefaultValues.imageDirectory + '/accept.png';
-   String negativeIcon = DefaultValues.imageDirectory + '/remove.png';
+   String positiveIcon = DefaultValues.imageDirectory + '/up.png';
+   String negativeIcon = DefaultValues.imageDirectory + '/down.png';
    int laggingGoals = 0;
    int leadingGoals = 0;
 
@@ -63,14 +64,14 @@ class _RecomCardState extends State<RecomCard> {
         }
       }
 
-
-
+    //style: DefaultValues.kNormal3(context).copyWith(color: kPresentTheme.errorAccentColor)
+    //.copyWith(color: kPresentTheme.defaultAccentColor)
       if(laggingGoals > 0 && laggingGoals> leadingGoals){
-        recomMessage = '$laggingGoals ${DefaultValues.recom_summary['negative']}';
-        displayWidget = Text(recomMessage, style: DefaultValues.kH2(context).copyWith(color: kPresentTheme.errorAccentColor),);
+        recomMessage = '${DefaultValues.recom_summary['negative']}';
+        displayWidget = Text(recomMessage,);
       }else{
-        recomMessage = '$leadingGoals ${DefaultValues.recom_summary['positive']}';
-        displayWidget = Text(recomMessage, style: DefaultValues.kH2(context).copyWith(color: kPresentTheme.defaultAccentColor),);
+        recomMessage = '${DefaultValues.recom_summary['positive']}';
+        displayWidget = Text(recomMessage, );
       }
 
 
@@ -126,7 +127,7 @@ class _RecomCardState extends State<RecomCard> {
                 titleText: '',
                 requiredTitleBar: false,
                 children: [
-                widget.showHeader ? displayWidget : SizedBox(),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(height: 1,color: kPresentTheme.alternateColor),
@@ -140,6 +141,7 @@ class _RecomCardState extends State<RecomCard> {
                         itemBuilder: (context, index){
 
                       return Shingle(
+                          textDisplayScale: 0.9,
                           icon1: null,
                           leadingImage: (double.parse( widget.dataSet[3][index+1])>0)?this.positiveIcon:negativeIcon,
                           type: 'goal',
@@ -171,7 +173,10 @@ class _RecomCardState extends State<RecomCard> {
 
             ),
           ),
-
+          Padding(
+            padding:  EdgeInsets.only(top:3.h),
+            child: Center(child: widget.showHeader ? displayWidget : SizedBox()),
+          ),
         ],
       ),
     );

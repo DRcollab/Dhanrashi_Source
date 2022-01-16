@@ -137,6 +137,8 @@ flutter:
     - images/gifs/chunk.gif
     - images/gifs/empty.gif
     - images/empty-bro.png
+    - images/up.png
+    - images/down.png
 
 
 
