@@ -25,14 +25,14 @@ class Legend extends StatelessWidget {
       child: Row(
         children: [
           Padding(
-            padding: EdgeInsets.only(left:4.w, top:8.0, bottom: 4.0),
+            padding: EdgeInsets.only(left:4.w, top:1.h, bottom: 0.5.h),
             child: Container(
               height: 10,width: 20,
               color: this.legendColor,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left:4.0, top:8.0, bottom: 4.0),
+            padding: EdgeInsets.only(left:4.0, top:1.h, bottom: 0.5.h),
             child: Text(this.legendString,style: this.legendStyle),
 
           ),

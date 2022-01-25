@@ -357,7 +357,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
               ),
               child: Container(
                 width:22.8.h,
-                height: 22.8.h,
+                height: 23.h,
                  child:charts.PieChart<String>(
                    List.from(_pieChartDataGoal),
                    animate: false,
@@ -380,7 +380,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
               )
           ),
           Padding(
-            padding: EdgeInsets.only(left:1.w,top:28.h),
+            padding: EdgeInsets.only(left:1.w,top:26.h),
             child: Card(
               
               child: Column(
@@ -440,10 +440,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
     }
   }
 
-  @override
-  void initstate() {
 
-  }
 
   @override
   Widget build(BuildContext context) {
