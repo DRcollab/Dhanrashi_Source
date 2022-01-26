@@ -100,7 +100,7 @@ class DefaultValues {
     'recomm_negative_1': 'Investments are behind Goals',
     'recomm_positive_1': 'Investments are ahead of Goals',
 
-    'recomm_2': 'after year 5',
+    'recomm_2': 'after year ',
 
     'warning_deletion':
         'You are about to delete this goal. This action is irreversible',
