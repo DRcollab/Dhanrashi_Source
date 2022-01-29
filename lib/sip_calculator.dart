@@ -253,6 +253,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                       child: Text(
                                         selectedValue == 0 ?'${DefaultValues.textFormat.format(totalInvestment+interestValue)}'
                                         :'${DefaultValues.textFormat.format( sipAmount)}',
+                                        textScaleFactor: DefaultValues.screenHeight(context)<600?0.9:1,
 
                                         style: DefaultValues.kH2(context),),
                                     )

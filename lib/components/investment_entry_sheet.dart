@@ -434,7 +434,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                              color: kPresentTheme.accentColor),
                          Padding(
                            padding: EdgeInsets.only(left : 2.w),
-                           child: Text('Total Investment'),
+                           child: Text('Total Investment',textScaleFactor: DefaultValues.screenHeight(context)<600?0.7:1.2),
                          ),
 
                        ],
@@ -450,7 +450,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                          Container(height: 1.5.h, width: 3.w ,color: kPresentTheme.alternateColor),
                          Padding(
                            padding:  EdgeInsets.only(left : 2.w),
-                           child: Text('Total Interest'),
+                           child: Text('Total Interest',textScaleFactor: DefaultValues.screenHeight(context)<600?0.7:1.2),
                          ),
 
                        ],

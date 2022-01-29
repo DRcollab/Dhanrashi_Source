@@ -403,7 +403,7 @@ class _GoalSheetState extends State<GoalSheet> {
                               color: kPresentTheme.accentColor),
                           Padding(
                             padding: EdgeInsets.only(left : 2.w),
-                            child: Text('Goal Amount'),
+                            child: Text('Goal Amount',textScaleFactor: DefaultValues.screenHeight(context)<600?0.7:1.2,),
                           ),
 
                         ],
@@ -419,7 +419,7 @@ class _GoalSheetState extends State<GoalSheet> {
                           Container(height: 10, width: 12 ,color: kPresentTheme.alternateColor),
                           Padding(
                             padding:  EdgeInsets.only(left : 2.w),
-                            child: Text('Inflationary Effect'),
+                            child: Text('Inflationary Effect', textScaleFactor: DefaultValues.screenHeight(context)<600?0.7:1.2,),
                           ),
 
                         ],

@@ -37,6 +37,9 @@ int kInitialYear = 1950;
 
 /// change this if you want to change the date starting point in any datepicker
 
+
+double kScreenHeight = 0;
+
 final kFormTextBorder = OutlineInputBorder(
     gapPadding: 2.0,
     borderRadius: BorderRadius.circular(25.0),
@@ -104,6 +107,8 @@ class DefaultValues {
 
     'warning_deletion':
         'You are about to delete this goal. This action is irreversible',
+
+    'recomm_summary':'Goals and Investments summary',
   };
 
   static var menuItems = {
@@ -206,10 +211,7 @@ class DefaultValues {
     'anonymous': 'something went wrong please restart the app',
   };
 
-  static var recom_summary = {
-    'negative': 'Goals and Investments summary',
-    'positive': 'Goals and Investments summary',
-  };
+
 
   static String minimumDate = '1900-01-01';
   static String minimumDateTime = '1900-01-01 00:00:00.000';
@@ -257,7 +259,7 @@ class DefaultValues {
   }
 
   static screenHeight(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
+    kScreenHeight = MediaQuery.of(context).size.height;
     return MediaQuery.of(context).size.height;
   }
 
@@ -409,31 +411,44 @@ class DefaultValues {
     BottomNavigationBarItem(
       icon: FaIcon(
         FontAwesomeIcons.bullseye,
-        size: 15.sp,
+        size: kScreenHeight >600 ? 15.sp : 10.sp,
       ),
       label: 'Goals',
+      tooltip: 'Goto add goal page',
     ),
     BottomNavigationBarItem(
       icon: FaIcon(
         FontAwesomeIcons.chartLine,
-        size: 15.sp,
+        size: kScreenHeight >600 ? 15.sp : 10.sp,
       ),
       label: 'Investments',
+      tooltip: 'Goto add investment page'
+
     ),
     BottomNavigationBarItem(
       icon: FaIcon(
         FontAwesomeIcons.chartPie,
         color: kPresentTheme.accentColor,
-        size: 15.sp,
+        size: kScreenHeight >600 ? 15.sp : 10.sp,
       ),
       label: 'Dashboard',
+        tooltip: 'Goto dashboard',
     ),
     BottomNavigationBarItem(
         icon: FaIcon(
           FontAwesomeIcons.calculator,
-          size: 15.sp,
+          size: kScreenHeight >600 ? 15.sp : 10.sp,
           color: Colors.orange,
         ),
-        label: 'SIP Calculator'),
+        label: 'SIP Calculator',
+        tooltip: 'Open SIP calculator',
+    ),
   ];
+
+
+
+
+
+
+
 } // DefaultValues -- End of class definition

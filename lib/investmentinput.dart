@@ -612,7 +612,7 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
             // ) ,
             bottomNavigationBar: BottomNavigationBar(
                type: BottomNavigationBarType.fixed,
-
+              unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
               currentIndex: _currentTabIndex,
               onTap: (index){
                   setState(() {

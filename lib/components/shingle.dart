@@ -27,8 +27,9 @@ class Shingle extends StatelessWidget {
   late IconData? icon2;
   String highlight = '';
   bool hasExtraText = false;
-
+  bool subtitleAlsoInBold = false;
   double textDisplayScale = 1;
+  double iconDisplayScale = 1;
 
 
 
@@ -53,6 +54,8 @@ class Shingle extends StatelessWidget {
     this.trailing2,
     this.prefix='',
     this.textDisplayScale = 1,
+    this.subtitleAlsoInBold = false,
+    this.iconDisplayScale = 1,
   } );
 
 
@@ -88,7 +91,7 @@ class Shingle extends StatelessWidget {
                 child: ListTile(
                       leading:Stack(
                         children: [
-                         this.leadingImage != ''? Image.asset(this.leadingImage,height: 10.h,width: 10.w,):SizedBox(),
+                         this.leadingImage != ''? Image.asset(this.leadingImage,height: 10.h * iconDisplayScale,width: 10.w * iconDisplayScale,):SizedBox(),
 
                         ],
                       ),
@@ -97,19 +100,20 @@ class Shingle extends StatelessWidget {
                         child: this.trailing,
                       ),
                       title: Padding(
-                        padding:  EdgeInsets.only(top:1.h),
-                        child: Text(this.title,style: DefaultValues.kH3(context).
-                                copyWith(fontSize: DefaultValues.kH3(context).fontSize! * this.textDisplayScale ),),
+                        padding:  EdgeInsets.only(top:1.h,),
+                        child: Text(this.title,style: DefaultValues.kH3(context),textScaleFactor: this.textDisplayScale,
+
+                          ),
                       ),
                       subtitle: Padding(
                         padding:  EdgeInsets.only(top:1.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text( this.subtitle, style:DefaultValues.kNormal3(context).
-                            copyWith(fontSize: DefaultValues.kNormal3(context).fontSize! * this.textDisplayScale ),),
-                            this.text!=''? Text(this.text, style:DefaultValues.kNormal3(context).
-                            copyWith(fontSize: DefaultValues.kNormal3(context).fontSize! * this.textDisplayScale ),
+                            Text( this.subtitle, style: subtitleAlsoInBold ? DefaultValues.kH4(context)
+                                :DefaultValues.kNormal3(context), textScaleFactor: this.textDisplayScale,),
+                            this.text!=''? Text(this.text, style:DefaultValues.kNormal3(context),textScaleFactor: this.textDisplayScale,
+
                             ):SizedBox(),
                             Padding(
                               padding: EdgeInsets.only(top: 1.h, left:0.5.w),

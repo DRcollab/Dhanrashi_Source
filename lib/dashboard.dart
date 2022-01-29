@@ -45,6 +45,7 @@ class _DashboardState extends State<Dashboard> {
   GlobalKey _tabBarHelpKey = GlobalKey(); // Used to showcase tab help;
   GlobalKey _analysisHelpKey1 = GlobalKey();
   GlobalKey _analysisHelpKey2 = GlobalKey();
+  GlobalKey _recommHelpKey = GlobalKey();
 
   GlobalKey _chartViewGoalHelpKey = GlobalKey();
   GlobalKey _shingleGoalHelpKey = GlobalKey();
@@ -77,7 +78,7 @@ class _DashboardState extends State<Dashboard> {
 
     super.initState();
     _showCaseKeys = [
-      [_tabBarHelpKey,_analysisHelpKey1,_analysisHelpKey2],
+      [_tabBarHelpKey,_analysisHelpKey1,_analysisHelpKey2,_recommHelpKey],
       [_chartViewGoalHelpKey,_addGoalHelpKey,_shingleGoalHelpKey,_deleteGoalHelpKey],
       [_chartViewInvHelpKey,_addInvHelpKey,_shingleInvHelpKey,_deleteInvHelpKey],
     ];
@@ -319,7 +320,7 @@ class _DashboardState extends State<Dashboard> {
                         bottomNavigationBar: BottomNavigationBar(
                           type: BottomNavigationBarType.fixed,
                           currentIndex: _currentTabIndex,
-
+                          unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
                           onTap: (index){
                             setState(() {
                               _currentTabIndex = index;

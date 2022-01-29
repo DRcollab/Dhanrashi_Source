@@ -67,10 +67,10 @@ class _RecomCardState extends State<RecomCard> {
     //style: DefaultValues.kNormal3(context).copyWith(color: kPresentTheme.errorAccentColor)
     //.copyWith(color: kPresentTheme.defaultAccentColor)
       if(laggingGoals > 0 && laggingGoals> leadingGoals){
-        recomMessage = '${DefaultValues.recom_summary['negative']}';
-        displayWidget = Text(recomMessage,);
+       // recomMessage = '${DefaultValues.recom_summary['negative']}';
+        displayWidget = Text(recomMessage);
       }else{
-        recomMessage = '${DefaultValues.recom_summary['positive']}';
+       // recomMessage = '${DefaultValues.recom_summary['positive']}';
         displayWidget = Text(recomMessage, );
       }
 
@@ -111,8 +111,9 @@ class _RecomCardState extends State<RecomCard> {
   Widget build(BuildContext context) {
 
 
-    _fetchRecommendations();
-
+   // _fetchRecommendations();
+      print('screen height');
+      print(DefaultValues.screenHeight(context));
 
     return Container(
       color: Color(0x00000000),
@@ -141,7 +142,9 @@ class _RecomCardState extends State<RecomCard> {
                         itemBuilder: (context, index){
 
                       return Shingle(
-                          textDisplayScale: 0.9,
+                          textDisplayScale: 0.8,
+                          iconDisplayScale: 0.5,
+                          subtitleAlsoInBold: true,
                           icon1: null,
                           leadingImage: (double.parse( widget.dataSet[3][index+1])>0)?this.positiveIcon:negativeIcon,
                           type: 'goal',
@@ -175,8 +178,12 @@ class _RecomCardState extends State<RecomCard> {
             ),
           ),
           Padding(
-            padding:  EdgeInsets.only(top:3.h),
-            child: Center(child: widget.showHeader ? displayWidget : SizedBox()),
+            padding:  EdgeInsets.only(top:DefaultValues.screenHeight(context)> 600 ? 3.h: 4.h ),
+            child: Center(child: widget.showHeader
+                ? Text(DefaultValues.messages['recomm_summary']!, style: TextStyle(
+                fontSize: DefaultValues.screenHeight(context)> 600 ? 14: 8 ) ,
+
+            ) : SizedBox()),
           ),
         ],
       ),
