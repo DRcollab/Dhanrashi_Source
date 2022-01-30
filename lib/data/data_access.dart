@@ -20,6 +20,15 @@ Future fetchVariables( FirebaseFirestore fireStore) async{
       Global.tourInflation = element.get('travel_inflation');
       Global.healthInflation = element.get('health_inflation');
 
+      print(Global.stockReturn);
+      print(Global.avgReturn);
+      print(Global.bondYield);
+      print(Global.fdReturn);
+      print(Global.goldReturn);
+      print(Global.mfReturn);
+      print(Global.realEstateReturn);
+
+
 
 
     });

@@ -421,7 +421,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                                           DefaultValues.screenHeight(context) <
                                                   600
                                               ? 0.7
-                                              : 1.2),
+                                              : 1),
                                 ),
                               ],
                             ),
@@ -446,7 +446,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                                           DefaultValues.screenHeight(context) <
                                                   600
                                               ? 0.7
-                                              : 1.2),
+                                              : 1),
                                 ),
                               ],
                             ),

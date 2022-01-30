@@ -17,13 +17,12 @@ import 'components/constants.dart';
 import 'package:sizer/sizer.dart';
 import 'models/profile.dart';
 import 'signup_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'components/custom_text_field.dart';
 import 'data/user_handler.dart';
 import 'data/database.dart';
 import 'components/custom_text.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 class LoginScreen extends StatefulWidget with InputValidationMixin {
@@ -35,7 +34,7 @@ class LoginScreen extends StatefulWidget with InputValidationMixin {
 
 class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
   bool profileReady =
-      false; // will be used to determine if profiler page to be navigated or to dhanrashi
+  false; // will be used to determine if profiler page to be navigated or to dhanrashi
   //DRUserAccess? currentUser; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
   // The currentUser will be displayed on dhanrashi or other places....
 
@@ -104,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
   void _login(String id, String pwd) async {
     try {
       var _loggedInUser =
-          await fireAuth.signInWithEmailAndPassword(email: id, password: pwd);
+      await fireAuth.signInWithEmailAndPassword(email: id, password: pwd);
       if (_loggedInUser.user != null) {
         profile.uid = _loggedInUser.user!.uid;
         profile.email = _loggedInUser.user!.email!;
@@ -124,12 +123,11 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ProfilerOptionPage(
-                          currentUser: profile,
-                        )));
+                      currentUser: profile,
+                    )));
           }
 
           /// on successful retrieving of user details
-
           snapshot.docs.forEach((f) {
             String email = f.get('email');
             String userID = f.get('Uid');
@@ -142,7 +140,6 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
 
             /// Updating profile of user in a profile class object
             /// This profile object will be sent to all widget and screens
-
             profile = Profile(
               firstName: firstName,
               lastName: lastName,
@@ -155,7 +152,6 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
             );
 
             /// Populating shared preference prefs which will be used to determine whether user is logged
-
             prefs.remove('f_name');
             prefs.setString('f_name', firstName);
             prefs.remove('l_name');
@@ -171,15 +167,14 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                 'image', '${DefaultValues.directoryOfPhoto}/$image');
 
             /// If user details is FOUND for the user then redirected to the Dashboard...
-
             if (profile.docId != '') {
               Navigator.pop(context);
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => Dashboard(
-                            currentUser: profile, //_loggedInUser.user,
-                          )));
+                        currentUser: profile, //_loggedInUser.user,
+                      )));
             }
           });
         }).catchError((e) {
@@ -229,10 +224,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        //Icon(Icons.monetization_on),
-                        //Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
-                        Image.asset('images/fiwilogo.png',
-                            width: 100.w, height: 12.h),
+
+                       DefaultValues.logo,
                       ],
                     ),
                     Padding(
@@ -246,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                             children: [
                               Padding(
                                   padding:
-                                      DefaultValues.kTextFieldPadding(context),
+                                  DefaultValues.kTextFieldPadding(context),
                                   child: Form(
                                     key: _loginKey,
                                     child: CustomTextField(
@@ -283,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                                   )),
                               Padding(
                                 padding:
-                                    DefaultValues.kTextFieldPadding(context),
+                                DefaultValues.kTextFieldPadding(context),
                                 child: Form(
                                   key: _passwordKey,
                                   child: CustomTextField(
@@ -327,41 +320,41 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                               ),
                               !clickedLogin
                                   ? CommandButton(
-                                      buttonText: DefaultValues
-                                          .titles['login_button_text']!,
-                                      textSize: 12
-                                          .sp, // * DefaultValues.adaptForSmallDevice(context),
-                                      buttonColor: kPresentTheme.accentColor,
-                                      textColor: kPresentTheme.lightWeightColor,
-                                      borderRadius: BorderRadius.circular(
-                                          DefaultValues.kCurveRadius),
-                                      onPressed: () {
+                                buttonText: DefaultValues
+                                    .titles['login_button_text']!,
+                                textSize: 12
+                                    .sp, // * DefaultValues.adaptForSmallDevice(context),
+                                buttonColor: kPresentTheme.accentColor,
+                                textColor: kPresentTheme.lightWeightColor,
+                                borderRadius: BorderRadius.circular(
+                                    DefaultValues.kCurveRadius),
+                                onPressed: () {
 //
-                                        setState(() {
-                                          if (_loginKey.currentState!
-                                              .validate()) {
-                                            if (_passwordKey.currentState!
-                                                .validate()) {
-                                              clickedLogin = true;
-                                              // Async function to enable login
+                                  setState(() {
+                                    if (_loginKey.currentState!
+                                        .validate()) {
+                                      if (_passwordKey.currentState!
+                                          .validate()) {
+                                        clickedLogin = true;
+                                        // Async function to enable login
 
-                                              try {
-                                                _login(_userText.text,
-                                                    _passWord.text);
-                                              } catch (e) {
-                                                Utility.showErrorMessage(
-                                                    context, e.toString());
-                                              }
-                                            } // end of outside
-                                          }
-                                        });
-                                        //circularProgressIndicator
-                                      },
-                                    )
+                                        try {
+                                          _login(_userText.text,
+                                              _passWord.text);
+                                        } catch (e) {
+                                          Utility.showErrorMessage(
+                                              context, e.toString());
+                                        }
+                                      } // end of outside
+                                    }
+                                  });
+                                  //circularProgressIndicator
+                                },
+                              )
                                   : Image.asset(
-                                      kPresentTheme.progressIndicator,
-                                      scale: 3,
-                                    ),
+                                kPresentTheme.progressIndicator,
+                                scale: 3,
+                              ),
                             ],
                           ),
                           Padding(
@@ -369,7 +362,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                             child: LinkText(
                                 type: LinkTextType.DARK,
                                 linkText:
-                                    DefaultValues.messages['login_link_text']!,
+                                DefaultValues.messages['login_link_text']!,
                                 displaySize: 12
                                     .sp, //*  DefaultValues.adaptForSmallDevice(context),
 

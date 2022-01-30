@@ -90,39 +90,51 @@ class _MenuDrawerState extends State<MenuDrawer> {
             height: 30.h,
             child: DrawerHeader(
 
-              child: Stack(
+              child: Column(
 
                 children: [
 
-                  CircleAvatar(
-                    radius: 4.h,backgroundColor: kPresentTheme.accentColor,
-                    backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
-                  ),
-                  Align(
-                      alignment: Alignment.topRight,
-                      //DefaultValues.kH1(context).copyWith(fontFamily: DefaultValues.appFont)
-                      child: Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context))),
-                  Align(
-                      alignment: Alignment.bottomLeft,
-
-                      child: widget.currentUser!=null ? Padding(
-                        padding:  EdgeInsets.all(2.w),
-                        child: Row(
-                          children: [
-                            Text(
-                              widget.currentUser.email,
-                              style:DefaultValues.kNormal2(context),
-                            ),
-
-                          ],
-                        ),
-                      ) : SizedBox(),
-                  ),
+                  DefaultValues.logo,
                   Padding(
-                    padding: EdgeInsets.only(left:2.w, top:10.h),
-                    child: Text(userHasProfile ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
-                        :'', style: DefaultValues.kH2(context),),
+                    padding: const EdgeInsets.only(top: 28.0),
+                    child: CircleAvatar(
+                      radius: 4.h,backgroundColor: kPresentTheme.accentColor,
+                      backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
+                    ),
                   ),
+
+
+                  // Align(
+                  //     alignment: Alignment.topRight,
+                  //     //DefaultValues.kH1(context).copyWith(fontFamily: DefaultValues.appFont)
+                  //     child:
+                  //     //Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context))),
+
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    //padding: const EdgeInsets.only(top:98.0),
+                    child: Column(
+                      children: [
+
+                        Text(userHasProfile ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
+                            :'', style: DefaultValues.kH2(context),),
+
+                        widget.currentUser!=null ? Padding(
+                          padding:  EdgeInsets.all(2.w),
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.currentUser.email,
+                                style:DefaultValues.kNormal2(context),
+                              ),
+
+                            ],
+                          ),
+                        ) : SizedBox(),
+                      ],
+                    ),
+                  ),
+
                 ],
               ),
               decoration: BoxDecoration(

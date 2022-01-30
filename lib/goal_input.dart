@@ -148,427 +148,391 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                     description: 'Click these tiles to enter your goals',
                     child: Container(
 
-                      child:ListView(
+                      child:GridView.count(
+                        crossAxisCount: 2,
                         shrinkWrap: false,
+                        childAspectRatio: 1.2,
                         children: [
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/car.png',
-                                  //height: 120,
-                                  //width: 150,
-                                    title: DefaultValues.titles['car']!,
-                                  subText: DefaultValues.titles['car_st']!,
-                                  color: color,
-                                  titleColor: Colors.white60,
-                                  onPressed: (){
-                                    name = 'My Dream Car';
+                          Tile(
+                            imageSource: 'images/car.png',
+                            //height: 120,
+                            //width: 150,
+                              title: DefaultValues.titles['car']!,
+                            subText: DefaultValues.titles['car_st']!,
+                            color: color,
+                            titleColor: Colors.white60,
+                            onPressed: (){
+                              name = 'My Dream Car';
 
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                            :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: '#',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 0,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.carInflation * 100,
-                                              imageSource: 'images/car.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                      :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: '#',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+                                       // roiHintMessage: 'Presently banks are giving FD interest @ ${Global.fdReturn*100} %',
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 0,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.carInflation * 100,
+                                        imageSource: 'images/car.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
 
 
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ));
+                            },
 
-                                ),
-                              ),
+                          ),
 
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/house.png',
-                                  //height: 20,
-                                  //width: 150,
-                                  title: DefaultValues.titles['house']!,
-                                  subText: DefaultValues.titles['house_st']!,
-                                  color: alternateColor,
-                                  titleColor: titleColor,
-                                  onPressed: (){
-                                    name = 'My Dream House';
+                          Tile(
+                            imageSource: 'images/house.png',
+                            //height: 20,
+                            //width: 150,
+                            title: DefaultValues.titles['house']!,
+                            subText: DefaultValues.titles['house_st']!,
+                            color: alternateColor,
+                            titleColor: titleColor,
+                            onPressed: (){
+                              name = 'My Dream House';
 
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: '@',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 0,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.houseInflation * 100,
-                                              imageSource: 'images/house.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                            ],
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                          :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: '@',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 0,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.houseInflation * 100,
+                                        imageSource: 'images/house.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ));
+                            },
                           ),// Row 1
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/education.png',
-                                  // height: 120,
-                                  // width: 150,
-                                  title: DefaultValues.titles['education']!,
-                                  subText: DefaultValues.titles['education_st']!,
-                                  color: alternateColor,
-                                  titleColor: titleColor,
-                                  onPressed: (){
-                                    name = 'Child Education';
+                          Tile(
+                            imageSource: 'images/education.png',
+                            // height: 120,
+                            // width: 150,
+                            title: DefaultValues.titles['education']!,
+                            subText: DefaultValues.titles['education_st']!,
+                            color: alternateColor,
+                            titleColor: titleColor,
+                            onPressed: (){
+                              name = 'Child Education';
 
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: ':',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 10,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.educationInflation * 100,
-                                              imageSource: 'images/education.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/pension.png',
-                                  //  height: 120,
-                                  //  width: 150,
-                                  title: DefaultValues.titles['retirement']!,
-                                  subText: DefaultValues.titles['retirement_st']!,
-                                  color: color,
-                                  titleColor: Colors.white60,
-                                  onPressed: (){
-                                    name = 'Retirement';
-
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: '%',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 10,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.retailInflation * 100,
-                                              imageSource: 'images/pension.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/tour.png',
-                                  // height: 250,
-                                  // width: 150,
-                                  title: DefaultValues.titles['travel']!,
-                                  subText: DefaultValues.titles['travel_st']!,
-                                  color:color,
-                                  titleColor: Colors.white60,
-                                  onPressed: (){
-                                    name = 'Travel';
-
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: '&',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 10,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.tourInflation*100,
-                                              imageSource: 'images/tour.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/destination.png',
-                                   // height: 120,
-                                  //  width: 150,
-                                  title: DefaultValues.titles['family']!,
-                                  subText: DefaultValues.titles['family_st']!,
-                                  color: alternateColor,
-                                  titleColor: titleColor,
-                                  onPressed: (){
-                                    name = 'Family Events';
-
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: '^',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 10,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.retailInflation * 100,
-                                              imageSource: 'images/destination.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
-                                                });
-                                              },
-
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
-
-                            ],
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                          :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: ':',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 10,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.educationInflation * 100,
+                                        imageSource: 'images/education.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ));
+                            },
                           ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/healthcare.png',
-                                  //    height: 120,
-                                  //   width: 150,
-                                  title: DefaultValues.titles['health']!,
-                                  subText: DefaultValues.titles['health_st']!,
-                                  color:alternateColor,
-                                  titleColor: titleColor,
-                                  onPressed: (){
-                                    name = 'Health';
+                          Tile(
+                            imageSource: 'images/pension.png',
+                            //  height: 120,
+                            //  width: 150,
+                            title: DefaultValues.titles['retirement']!,
+                            subText: DefaultValues.titles['retirement_st']!,
+                            color: color,
+                            titleColor: Colors.white60,
+                            onPressed: (){
+                              name = 'Retirement';
 
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: '*',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 10,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.healthInflation * 100,
-                                              imageSource: 'images/healthcare.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                          :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: '%',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 10,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.retailInflation * 100,
+                                        imageSource: 'images/pension.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ));
+                            },
+                          ),
+                          Tile(
+                            imageSource: 'images/tour.png',
+                            // height: 250,
+                            // width: 150,
+                            title: DefaultValues.titles['travel']!,
+                            subText: DefaultValues.titles['travel_st']!,
+                            color:color,
+                            titleColor: Colors.white60,
+                            onPressed: (){
+                              name = 'Travel';
 
-                              Expanded(
-                                child: Tile(
-                                  imageSource: 'images/products.png',
-                                  //    height: 120,
-                                  //    width: 150,
-                                  title: DefaultValues.titles['others']!,
-                                  subText: DefaultValues.titles['others_gol_st']!,
-                                  color: color,
-                                  titleColor: Colors.white60,
-                                  onPressed: (){
-                                    name = 'Other';
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                          :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: '&',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 10,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.tourInflation*100,
+                                        imageSource: 'images/tour.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ));
+                            },
+                          ),
 
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => SingleChildScrollView(
-                                          child: Container(
-                                            padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
-                                                :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-                                            child: GoalSheet(
-                                              prefix: '!',
-                                              onEditCommit: (){
-                                                setState(() {
-                                                  moveKB = false;
-                                                });
-                                              },
-                                              onTap: (){
-                                                setState(() {
-                                                  moveKB = true;
-                                                });
-                                              },
-                                              currentUser: widget.currentUser,
-                                              titleMessage: name,
-                                              goalAmount: 10,
-                                              goalDuration: DefaultValues.goalDuration,
-                                              inflation: Global.retailInflation * 100,
-                                              imageSource: 'images/products.png',
-                                              onAdd: (value){
-                                                setState(() {
-                                                  goalCount = value;
-                                                });
-                                              },
+                          Tile(
+                            imageSource: 'images/destination.png',
+                             // height: 120,
+                            //  width: 150,
+                            title: DefaultValues.titles['family']!,
+                            subText: DefaultValues.titles['family_st']!,
+                            color: alternateColor,
+                            titleColor: titleColor,
+                            onPressed: (){
+                              name = 'Family Events';
 
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
-                              ),
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                          :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: '^',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 10,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.retailInflation * 100,
+                                        imageSource: 'images/destination.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
+                                          });
+                                        },
 
-                            ],
+                                      ),
+                                    ),
+                                  ));
+                            },
+                          ),
+
+                          Tile(
+                            imageSource: 'images/healthcare.png',
+                            //    height: 120,
+                            //   width: 150,
+                            title: DefaultValues.titles['health']!,
+                            subText: DefaultValues.titles['health_st']!,
+                            color:alternateColor,
+                            titleColor: titleColor,
+                            onPressed: (){
+                              name = 'Health';
+
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                          :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: '*',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 10,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.healthInflation * 100,
+                                        imageSource: 'images/healthcare.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ));
+                            },
+                          ),
+
+                          Tile(
+                            imageSource: 'images/products.png',
+                            //    height: 120,
+                            //    width: 150,
+                            title: DefaultValues.titles['others']!,
+                            subText: DefaultValues.titles['others_gol_st']!,
+                            color: color,
+                            titleColor: Colors.white60,
+                            onPressed: (){
+                              name = 'Other';
+
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => SingleChildScrollView(
+                                    child: Container(
+                                      padding:!moveKB ?EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)
+                                          :EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
+                                      child: GoalSheet(
+                                        prefix: '!',
+                                        onEditCommit: (){
+                                          setState(() {
+                                            moveKB = false;
+                                          });
+                                        },
+                                        onTap: (){
+                                          setState(() {
+                                            moveKB = true;
+                                          });
+                                        },
+                                        currentUser: widget.currentUser,
+                                        titleMessage: name,
+                                        goalAmount: 10,
+                                        goalDuration: DefaultValues.goalDuration,
+                                        inflation: Global.retailInflation * 100,
+                                        imageSource: 'images/products.png',
+                                        onAdd: (value){
+                                          setState(() {
+                                            goalCount = value;
+                                          });
+                                        },
+
+                                      ),
+                                    ),
+                                  ));
+                            },
                           )
 
 

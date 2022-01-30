@@ -128,8 +128,9 @@ import 'package:sizer/sizer.dart';
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.monetization_on),
-                      Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
+                      // Icon(Icons.monetization_on),
+                      // Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
+                      DefaultValues.logo,
                     ],
                   ),
                   Padding(

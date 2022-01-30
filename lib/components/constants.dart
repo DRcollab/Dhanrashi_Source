@@ -73,6 +73,13 @@ class DefaultValues {
   static final investmentDuration = 10; //  duration across all the asset class
   static final minReturn = 0.0; // min ROI making it negative may crash the app
 
+  static Widget logo =  Image.asset('images/logo.png', width: 60.w, height: 5.h);
+
+ // static Widget logo = Row(children: [ Icon(Icons.monetization_on), Text(DefaultValues.titles['app_name']!, style:TextStyle(fontSize: 28,fontFamily: 'Fredoka',),),  ],);
+
+  //Icon(Icons.monetization_on),
+  //Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
+
   static var messages = {
     'welcome': 'Welcome',
     'inv_choice': 'Click on any one of the investments',
@@ -201,7 +208,7 @@ class DefaultValues {
     'pwd': 'enter password',
     'email_signup': 'enter your email to signup',
     're_pwd': 're-enter the password',
-    'roi_hint': 'Last 5 years Nifty grew at ${Global.stockReturn * 100}%',
+    'roi_hint': 'Last 5 years Nifty grew @ ${Global.stockReturn * 100}%',
     'roi_hint_mf':
         'Last 5 years Debt funds grew at ${Global.stockReturn * 100}%\n,Equity fund grew at ${Global.stockReturn * 100}%\n& Balanced Fund grew at ${Global.stockReturn * 100}%',
   };
