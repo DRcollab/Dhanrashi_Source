@@ -2,6 +2,7 @@
     package="com.example.dhanrashi">
     <uses-permission android:name="android.permission.INTERNET"/>
 
+
     <application
         android:label="dhanrashi"
         android:icon="@mipmap/ic_launcher">
