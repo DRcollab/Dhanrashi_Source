@@ -326,7 +326,7 @@ class _DashboardState extends State<Dashboard> {
                                 ]
                               ),
                         bottomNavigationBar: BottomNavigationBar(
-                         // type: BottomNavigationBarType.,
+                         type: BottomNavigationBarType.fixed,
 
                           currentIndex: _currentTabIndex,
                           unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,

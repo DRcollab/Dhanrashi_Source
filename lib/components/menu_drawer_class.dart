@@ -87,7 +87,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            height: 30.h,
+            height: 35.h,
             child: DrawerHeader(
 
               child: Column(
@@ -96,7 +96,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                   DefaultValues.logo,
                   Padding(
-                    padding: const EdgeInsets.only(top: 28.0),
+                    padding: const EdgeInsets.only(top: 20.0),
                     child: CircleAvatar(
                       radius: 4.h,backgroundColor: kPresentTheme.accentColor,
                       backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),
@@ -104,32 +104,29 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
 
 
-                  // Align(
-                  //     alignment: Alignment.topRight,
-                  //     //DefaultValues.kH1(context).copyWith(fontFamily: DefaultValues.appFont)
-                  //     child:
-                  //     //Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context))),
 
                   Align(
                     alignment: Alignment.bottomCenter,
                     //padding: const EdgeInsets.only(top:98.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
 
-                        Text(userHasProfile ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
-                            :'', style: DefaultValues.kH2(context),),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 2.h),
+                          child: Text(userHasProfile ? '${widget.currentUser.firstName} ${widget.currentUser.lastName}'
+                              :'', style: DefaultValues.kH2(context),),
+                        ),
 
-                        widget.currentUser!=null ? Padding(
-                          padding:  EdgeInsets.all(2.w),
-                          child: Row(
-                            children: [
-                              Text(
-                                widget.currentUser.email,
-                                style:DefaultValues.kNormal2(context),
-                              ),
+                        widget.currentUser!=null ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.currentUser.email,
+                              style:DefaultValues.kNormal2(context),
+                            ),
 
-                            ],
-                          ),
+                          ],
                         ) : SizedBox(),
                       ],
                     ),
