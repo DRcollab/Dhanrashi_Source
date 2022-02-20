@@ -6,6 +6,7 @@ import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/sip_calculator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -325,7 +326,8 @@ class _DashboardState extends State<Dashboard> {
                                 ]
                               ),
                         bottomNavigationBar: BottomNavigationBar(
-                          type: BottomNavigationBarType.fixed,
+                         // type: BottomNavigationBarType.,
+
                           currentIndex: _currentTabIndex,
                           unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
                           onTap: (index){
@@ -379,7 +381,43 @@ class _DashboardState extends State<Dashboard> {
                             }
                           },
 
-                          items: DefaultValues.bottomTabs,
+                          items: [
+                            BottomNavigationBarItem(
+                              icon: FaIcon(
+                                FontAwesomeIcons.bullseye,
+                                size: kScreenHeight >600 ? 15.sp : 10.sp,
+                              ),
+                              label: 'Goals',
+                              tooltip: 'Goto add goal page',
+                            ),
+                            BottomNavigationBarItem(
+                                icon: FaIcon(
+                                  FontAwesomeIcons.chartLine,
+                                  size: kScreenHeight >600 ? 15.sp : 10.sp,
+                                ),
+                                label: 'Investments',
+                                tooltip: 'Goto add investment page'
+
+                            ),
+                            BottomNavigationBarItem(
+                              icon: FaIcon(
+                                FontAwesomeIcons.chartPie,
+                                color: kPresentTheme.accentColor,
+                                size: kScreenHeight >600 ? 15.sp : 10.sp,
+                              ),
+                              label: 'Dashboard',
+                              tooltip: 'Goto dashboard',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: FaIcon(
+                                FontAwesomeIcons.calculator,
+                                size: kScreenHeight >600 ? 15.sp : 10.sp,
+                                color: Colors.orange,
+                              ),
+                              label: 'SIP Calculator',
+                              tooltip: 'Open SIP calculator',
+                            ),
+                          ],
                         ),
                             );
                     }
