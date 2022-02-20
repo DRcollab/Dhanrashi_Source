@@ -72,6 +72,13 @@ class _DashboardState extends State<Dashboard> {
 
   List<List<GlobalKey>> _showCaseKeys = [[]];
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    print('dashboard dipsoed');
+  }
 
   @override
   void initState() {
@@ -310,8 +317,8 @@ class _DashboardState extends State<Dashboard> {
                                     investmentDBs: investments,
                                     currentUser: widget.currentUser,
                                     totalInvest: totalInvestValue,
-                                    //longestInvestmentDuration: longestInvestmentDuration,
-                                   // longestGoalDuration: longestGoalDuration,
+                                  //  longestInvestmentDuration: Global.longestInvestmentDuration,
+                                  //  longestGoalDuration: Global.longestGoalDuration,
 
                                   ),
 
@@ -329,8 +336,8 @@ class _DashboardState extends State<Dashboard> {
                             switch(index){
 
                               case 0:
-                                Navigator.pop(context);
-
+                               // Navigator.pop(context);
+                                print('index is $index');
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -339,8 +346,8 @@ class _DashboardState extends State<Dashboard> {
                                 );
                               break;
                               case 1:
-                                Navigator.pop(context);
-
+                              //  Navigator.pop(context);
+                                print('index is $index');
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -349,8 +356,8 @@ class _DashboardState extends State<Dashboard> {
                                 );
                                 break;
                               case 2:
-                                Navigator.pop(context);
-
+                              //  Navigator.pop(context);
+                                print('index is $index');
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -361,7 +368,7 @@ class _DashboardState extends State<Dashboard> {
                                 break;
                               case 3:
 
-
+                                print('index is $index');
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

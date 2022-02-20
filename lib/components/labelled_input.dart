@@ -85,6 +85,7 @@ class _LabeledInputState extends State<LabeledInput> {
     // TODO: implement dispose
     super.dispose();
     //controller.dispose();
+    print('labelled input disposed');
   }
 
 
@@ -171,16 +172,12 @@ class _LabeledInputState extends State<LabeledInput> {
                         //labelStyle:
                       ),
 
-                      onEditingComplete: (){
+                      onEditingComplete: widget.onCompleteEditing,
 
-                        setState(() {
-                          //autofocus = false;
-                          widget.onCompleteEditing!();
-                                              });
 
-                      },
 
                       onTap: (){
+                       //
                        widget.controller.text = widget.initialValue.toStringAsFixed(0);
                         widget.validator!();
                       }

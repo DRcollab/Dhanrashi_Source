@@ -6,7 +6,7 @@ import 'constants.dart';
 import 'package:dhanrashi_mvp/components/menu_drawer_class.dart';
 import 'package:connectivity/connectivity.dart';
 
-class CustomScaffold extends StatelessWidget {
+class CustomScaffold extends StatefulWidget {
   Widget child;
   String title = '';
   Widget? trailing;
@@ -21,19 +21,21 @@ class CustomScaffold extends StatelessWidget {
   GlobalKey? helpSCKey = GlobalKey(); // used for showcase for help
   GlobalKey? menuSCKey = GlobalKey(); // used for showcase for menu
 
+
   CustomScaffold({
     required this.child,
     this.title = '',
     this.trailing,
+    this.currentUser,
     this.foot = const SizedBox(
       height: 0,
       width: 0,
     ),
-    this.bottomNavigationBar = const SizedBox(
+    this.bottomNavigationBar =  const SizedBox(
       height: 0,
       width: 0,
     ),
-    this.currentUser,
+   //this.currentUser,
     this.allowToSeeBottom = false,
     this.helper,
     this.rightButton,
@@ -42,8 +44,23 @@ class CustomScaffold extends StatelessWidget {
     this.menuSCKey,
   });
 
+  @override
+  State<CustomScaffold> createState() => _CustomScaffoldState();
+}
+
+class _CustomScaffoldState extends State<CustomScaffold> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  // final _keyShowCase = GlobalKey();
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -57,18 +74,18 @@ class CustomScaffold extends StatelessWidget {
         child: Scaffold(
           backgroundColor: kPresentTheme.themeColor,
           key: _scaffoldKey,
-          resizeToAvoidBottomInset: this.allowToSeeBottom,
+          resizeToAvoidBottomInset: this.widget.allowToSeeBottom,
 
           // backgroundColor: kPresentTheme.scaffoldColors[0],
 
           body: safeAreaWidgets(),
 
           drawer: MenuDrawer(
-            currentUser: this.currentUser,
+            currentUser: this.widget.currentUser,
           ),
           bottomNavigationBar: SizedBox(
               height: DefaultValues.screenHeight(context) < 600 ? 48 : 58,
-              child: bottomNavigationBar),
+              child: widget.bottomNavigationBar),
         ),
       ),
     );
@@ -86,13 +103,13 @@ class CustomScaffold extends StatelessWidget {
             }
             return Stack(
               children: [
-                this.child,
+                this.widget.child,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 2.w),
-                      child: this.leftButton == null
+                      child: this.widget.leftButton == null
                           ? IconButton(
                               icon: Icon(
                                 Icons.menu,
@@ -101,30 +118,30 @@ class CustomScaffold extends StatelessWidget {
                                 _scaffoldKey.currentState!.openDrawer();
                               },
                             )
-                          : this.leftButton,
+                          : this.widget.leftButton,
                     ),
                     Text(
-                      this.title,
+                      this.widget.title,
                       style: DefaultValues.kH3(context),
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 2.w),
-                      child: this.rightButton == null
+                      child: this.widget.rightButton == null
                           ? IconButton(
                               icon: Icon(Icons.help),
                               iconSize: 20.sp,
                               onPressed: () {
-                                helper!();
+                                widget.helper!();
                               },
                             )
-                          : this.rightButton,
+                          : this.widget.rightButton,
                     ),
                   ],
                 ),
                 //),
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
-                  child: this.foot,
+                  child: this.widget.foot,
                 ),
               ],
             );

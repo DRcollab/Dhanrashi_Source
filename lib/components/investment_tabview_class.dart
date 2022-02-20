@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../chart_viewer.dart';
+import '../dashboard.dart';
 import '../empty_page_inputs.dart';
 import '../investmentinput.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart' as donut;
@@ -56,11 +57,20 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   double totalCorpus = 0;
   late List<Investment> investments = [];
 
-  // int longestInvestmentDuration = 0;
-  // int longestGoalDuration = 0;
+  int longestInvestmentDuration = 0;
+  int longestGoalDuration = 0;
 
   List dataSet = List.empty(growable: true);
   //double futureValue
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print(' Investmebt tabview dsiposed');
+  }
+
 
   @override
   void initState() {
@@ -75,13 +85,12 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
       widget.investmentDBs.forEach((element) {
         investments.add(element.investment);
       });
-      // longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
-      //     investments);
-      //longestGoalDuration = Calculator().getLongestGoalDuration(goals);
+      longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
+          investments);
+     // longestGoalDuration = Calculator().getLongestGoalDuration(goals);
       dataSet = Calculator().getInvestmentDetail(investments, Global.longestInvestmentDuration, Global.longestGoalDuration);
       fetched = true;
     }
-
 
 
     investments.forEach((element) {
@@ -95,6 +104,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
     });
 
   }
+
+
+
 
 
   _edit(int index , String type){
@@ -135,42 +147,56 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
               type: type,
               onUpdate: (newInv){
 
-                setState(() {
-                  if(type!='Delete'){
-                    investments[index] = newInv!;
-                    widget.investmentDBs[index].investment = investments[index];
-                  }else{
-                    investments.removeAt(index);
-                    widget.investmentDBs.removeAt(index);
-                  }
+               // if(mounted) {
+                 setState(() {
+                    if (type != 'Delete') {
+                      investments[index] = newInv!;
+                      print(newInv);
+                      widget.investmentDBs[index].investment =
+                      investments[index];
+                      print(index);
+                    } else {
+                      investments.removeAt(index);
+                      widget.investmentDBs.removeAt(index);
 
-                  totalInvest = 0;
-                  totalCorpus = 0;
+                    }
 
-                  if(investments.isNotEmpty) {
-                    investments.forEach((element) {
-                      totalInvest = element.currentInvestmentAmount + element.annualInvestmentAmount * element.duration +totalInvest;
-                      double futureValue = Calculator.fv(element.investmentRoi, element.duration,element.annualInvestmentAmount,
-                          element.currentInvestmentAmount, 0);
+                    totalInvest = 0;
+                    totalCorpus = 0;
 
-                      totalCorpus = futureValue + totalCorpus;
-                    });
+                    if (investments.isNotEmpty) {
+
+                      investments.forEach((element) {
+                        totalInvest = element.currentInvestmentAmount +
+                            element.annualInvestmentAmount * element.duration +
+                            totalInvest;
+                        double futureValue = Calculator.fv(
+                            element.investmentRoi, element.duration,
+                            element.annualInvestmentAmount,
+                            element.currentInvestmentAmount, 0);
+
+                        totalCorpus = futureValue + totalCorpus;
+                      });
 
 
+                      Global.longestInvestmentDuration =
+                          Calculator().getLongestInvestmentDuration(
+                              investments);
 
-                   Global.longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
-                        investments);
+
+                      dataSet.clear();
+                      dataSet = Calculator().getInvestmentDetail(
+                          investments, Global.longestInvestmentDuration,
+                          Global.longestGoalDuration);
 
 
-                    dataSet.clear();
-                    dataSet = Calculator().getInvestmentDetail(
-                        investments, Global.longestInvestmentDuration, Global.longestGoalDuration);
-                  } else{
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
-                  }
-                });
-
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              EmptyPage(currentUser: widget.currentUser,)));
+                    }
+                 });
+               // }
               },
             ),
           ),
@@ -204,6 +230,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
     );
 
   }
+
+
+
     @override
   Widget build(BuildContext context) {
 
@@ -277,15 +306,9 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
 
               double futureValue = Calculator.fv(investments[index].investmentRoi,
-                  investments[index].duration, 
-                  investments[index].annualInvestmentAmount, 
+                  investments[index].duration,
+                  investments[index].annualInvestmentAmount,
                   investments[index].currentInvestmentAmount, 0);
-
-
-
-
-
-
 
               return Padding(
                 padding: EdgeInsets.only(left:2.w,right: 2.w),

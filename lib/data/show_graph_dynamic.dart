@@ -49,6 +49,7 @@ class _DynamicGraphState extends State<DynamicGraph> {
   void _makeDataforBar() {
     List allInvestmentAnnualAmt = widget.resultSet;
 
+    //print(allInvestmentAnnualAmt);
 
     int noStack = allInvestmentAnnualAmt.shape[0] -  2; //Number of goals - 1; hardcoded for now
     int noOfYear = allInvestmentAnnualAmt.shape[1] - 1; // hardcoded for now

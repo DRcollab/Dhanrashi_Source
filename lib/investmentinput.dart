@@ -63,6 +63,12 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
   GlobalKey _showCaseKey2 = GlobalKey();
 
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('investment input disposed');
+  }
 
   @override
   void initState() {

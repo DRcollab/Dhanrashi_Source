@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:dhanrashi_mvp/components/maps.dart';
 import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
+import 'package:dhanrashi_mvp/dashboard.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
 import 'package:dhanrashi_mvp/components/irregular_shapes.dart';
@@ -12,6 +13,7 @@ import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../empty_page_inputs.dart';
 import 'band_class.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
@@ -125,6 +127,27 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     return fv;
   }
 
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (context) =>
+    //         Dashboard(currentUser: widget.currentUser,)));
+
+    super.dispose();
+  }
+
+@override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    context.dependOnInheritedWidgetOfExactType();
+  }
+
+
   @override
   void initState() {
     //  titleEditingController = TextEditingController(text:widget.titleMessage);
@@ -146,6 +169,14 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     });
   }
 
+
+
+
+
+
+
+
+
   Future _update(InvestDB investDB) async {
     DateTime currentPhoneDate = DateTime.now();
 
@@ -166,17 +197,24 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
       'update_dts': Timestamp.fromDate(currentPhoneDate),
       'status': widget.type != 'Delete' ? 'Active' : 'InActive',
     }).whenComplete(() {
-      setState(() {
-        statusOfStoring = true;
-        if (widget.type == 'Delete') {
-          Global.investmentCount--;
-        }
-        widget.onUpdate!(investDB.investment);
-      });
-    }).catchError((onError) {
+
+        setState(() {
+          statusOfStoring = true;
+          if (widget.type == 'Delete') {
+            Global.investmentCount--;
+          }
+          widget.onUpdate!(investDB.investment);
+        });
+
+    }).
+
+    catchError((onError) {
       Utility.showErrorMessage(context, onError.toString() + 'Hello : ');
     });
   }
+
+
+
 
   Future _save(Investment investment) async {
     DateTime currentPhoneDate = DateTime.now();
@@ -623,7 +661,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                             },
                             min: DefaultValues.minReturn,
                             max: 30,
-                            divisions: 30,
+                           // divisions: 30,
                             labelText: 'Expected return per year',
                             suggestiveIcon: Tooltip(
                               message: widget.roiHintMessage,
@@ -662,7 +700,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                             },
                             min: 1,
                             max: DefaultValues.maxSlideYear,
-                            divisions: 30,
+                            //divisions: 30,
                             labelText: 'Time Period',
                             sliderValue: investmentDuration.toDouble(),
                             textPrecision: 0,

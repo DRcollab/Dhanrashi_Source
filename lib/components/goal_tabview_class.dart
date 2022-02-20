@@ -57,6 +57,15 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   // int longestGoalDuration = 0;
 
   late FirebaseFirestore fireStore;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('goals tab page disposed');
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
