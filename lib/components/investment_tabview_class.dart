@@ -62,6 +62,15 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   List dataSet = List.empty(growable: true);
   //double futureValue
 
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print(' disposed it ');
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
