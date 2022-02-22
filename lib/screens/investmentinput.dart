@@ -578,59 +578,9 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
 
               ],
             ),
-            // body: Container(color: Colors.red,
-            //           width: double.infinity,
-            //     height: 10,
-            // ) ,
+
             selectedBottomNavtab: 1,
-            // bottomNavigationBar: BottomNavigationBar(
-            //    type: BottomNavigationBarType.fixed,
-            //   unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
-            //   currentIndex: _currentTabIndex,
-            //   onTap: (index){
-            //       setState(() {
-            //         _currentTabIndex = index;
-            //       });
-            //
-            //        switch(index){
-            //
-            //          case 0:
-            //            Navigator.pop(context);
-            //
-            //            Navigator.push(
-            //              context,
-            //              MaterialPageRoute(
-            //                builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,),
-            //              ),
-            //            );
-            //            break;
-            //          case 2:
-            //            Navigator.pop(context);
-            //
-            //            Navigator.push(
-            //              context,
-            //              MaterialPageRoute(
-            //                builder: (context) => Dashboard(currentUser: widget.currentUser,),
-            //              ),
-            //            );
-            //            break;
-            //          case 3:
-            //
-            //
-            //            Navigator.push(
-            //              context,
-            //              MaterialPageRoute(
-            //                builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
-            //              ),
-            //            );
-            //            break;
-            //        }
-            //
-            //   },
-            //   items: DefaultValues.bottomTabs,
-            //
-            //
-            // ),
+
           );
         }
       ),
