@@ -3,12 +3,12 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
 import 'package:dhanrashi_mvp/models/user_data_class.dart';
-import 'package:dhanrashi_mvp/investmentinput.dart';
+import 'package:dhanrashi_mvp/screens/investmentinput.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'components/constants.dart';
+import '../components/constants.dart';
 import 'dashboard.dart';
-import 'data/global.dart';
+import '../data/global.dart';
 import 'goal_input.dart';
 
 //<a href="https://storyset.com/work">Work illustrations by Storyset</a>

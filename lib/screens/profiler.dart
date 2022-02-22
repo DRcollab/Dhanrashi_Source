@@ -3,20 +3,20 @@
 import 'package:dhanrashi_mvp/components/file_handeler_class.dart';
 import 'package:dhanrashi_mvp/components/photo_sheet_class.dart';
 
-import 'package:dhanrashi_mvp/profile_view.dart';
+import 'package:dhanrashi_mvp/screens/profile_view.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'components/date_picker.dart';
-import 'models/profile_collector.dart';
+import '../components/date_picker.dart';
+import '../models/profile_collector.dart';
 import 'package:sizer/sizer.dart';
-import 'components/buttons.dart';
-import 'components/custom_card.dart';
-import 'components/custom_scaffold.dart';
+import '../components/buttons.dart';
+import '../components/custom_card.dart';
+import '../components/custom_scaffold.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'components/constants.dart';
-import 'components/custom_text_field.dart';
+import '../components/constants.dart';
+import '../components/custom_text_field.dart';
 
 import 'confirmation_page.dart';
 

@@ -4,15 +4,15 @@ import 'package:dhanrashi_mvp/components/goal_entry_sheet.dart';
 import 'package:dhanrashi_mvp/components/round_button.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
-import 'package:dhanrashi_mvp/goal_input.dart';
+import 'package:dhanrashi_mvp/screens/goal_input.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
-import '../chart_viewer.dart';
+import '../screens/chart_viewer.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
-import '../empty_page_inputs.dart';
+import '../screens/empty_page_inputs.dart';
 import 'shingle.dart';
 import 'maps.dart';
 import 'package:dhanrashi_mvp/data/show_graph_dynamic.dart';
@@ -27,14 +27,14 @@ class GoalsTabView extends StatefulWidget {
  // int longestGoalDuration;
   //int longestInvestmentDuration;
   var currentUser;
-  double totalAmount;
+  // double totalAmount;
   List<GlobalKey?>? showCaseKey;
 
   GoalsTabView({
 
     required this.goalDBs,
     required this.currentUser,
-    this.totalAmount=0,
+    // this.totalAmount=0,
     //this.longestInvestmentDuration = 0,
    // this.longestGoalDuration=0,
     this.showCaseKey,
@@ -72,13 +72,17 @@ class _GoalsTabViewState extends State<GoalsTabView> {
     super.initState();
 
 
-    totalGoal = widget.totalAmount;
+    totalGoal = 0;
+
+
+
+
     goals = List.empty(growable: true);
     if(widget.goalDBs.isNotEmpty){
       widget.goalDBs.forEach((element) {
 
         goals.add(element.goal);
-
+        totalGoal = element.goal.goalAmount + totalGoal;
       });
       //longestGoalDuration = Calculator().getLongestGoalDuration(goals);
 

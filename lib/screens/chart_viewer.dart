@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
-import 'components/chart_tab_view.dart';
-import 'components/constants.dart';
-import 'components/table_view.dart';
-import 'data/show_graph_dynamic.dart';
+import '../components/chart_tab_view.dart';
+import '../components/constants.dart';
+import '../components/table_view.dart';
+import '../data/show_graph_dynamic.dart';
 
 class ChartViewer extends StatefulWidget {
   // late Widget chartChild;

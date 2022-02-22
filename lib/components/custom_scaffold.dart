@@ -1,7 +1,13 @@
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
+import '../screens/dashboard.dart';
+import '../screens/goal_input.dart';
+
+import '../screens/investmentinput.dart';
+import '../screens/sip_calculator.dart';
 import 'constants.dart';
 import 'package:dhanrashi_mvp/components/menu_drawer_class.dart';
 import 'package:connectivity/connectivity.dart';
@@ -11,7 +17,9 @@ class CustomScaffold extends StatefulWidget {
   String title = '';
   Widget? trailing;
   late Widget foot;
-  Widget? bottomNavigationBar;
+  //Widget? bottomNavigationBar;
+  int selectedBottomNavtab;
+  bool showBottomNavBar = true;
   var currentUser;
   //final Widget svg = Svg
   bool allowToSeeBottom = false;
@@ -31,11 +39,13 @@ class CustomScaffold extends StatefulWidget {
       height: 0,
       width: 0,
     ),
-    this.bottomNavigationBar =  const SizedBox(
-      height: 0,
-      width: 0,
-    ),
+    // this.bottomNavigationBar =  const SizedBox(
+    //   height: 0,
+    //   width: 0,
+    // ),
    //this.currentUser,
+    this.selectedBottomNavtab = 0,
+    this.showBottomNavBar = true,
     this.allowToSeeBottom = false,
     this.helper,
     this.rightButton,
@@ -51,12 +61,17 @@ class CustomScaffold extends StatefulWidget {
 class _CustomScaffoldState extends State<CustomScaffold> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
+  late int _currentTabIndex;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _currentTabIndex = widget.selectedBottomNavtab;
+
+
+
+
 
   }
 
@@ -85,7 +100,103 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           ),
           bottomNavigationBar: SizedBox(
               height: DefaultValues.screenHeight(context) < 600 ? 48 : 58,
-              child: widget.bottomNavigationBar),
+              child: widget.showBottomNavBar ? BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+
+                currentIndex: _currentTabIndex,
+                unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
+                onTap: (index){
+                  setState(() {
+                    _currentTabIndex = index;
+                  });
+
+                  switch(index){
+
+                    case 0:
+                    // Navigator.pop(context);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,),
+                        ),
+                      );
+                      break;
+                    case 1:
+                    //  Navigator.pop(context);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,),
+                        ),
+                      );
+                      break;
+                    case 2:
+                    //  Navigator.pop(context);
+                      print('index is $index');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Dashboard(currentUser: widget.currentUser,),
+                        ),
+                      );
+
+                      break;
+                    case 3:
+
+                      print('index is $index');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
+                        ),
+                      );
+                      break;
+                  }
+                },
+
+                items: [
+                  BottomNavigationBarItem(
+                    icon: FaIcon(
+                      FontAwesomeIcons.bullseye,
+                      size: kScreenHeight >600 ? 15.sp : 10.sp,
+                    ),
+                    label: 'Goals',
+                    tooltip: 'Goto add goal page',
+                  ),
+                  BottomNavigationBarItem(
+                      icon: FaIcon(
+                        FontAwesomeIcons.chartLine,
+                        size: kScreenHeight >600 ? 15.sp : 10.sp,
+                      ),
+                      label: 'Investments',
+                      tooltip: 'Goto add investment page'
+
+                  ),
+                  BottomNavigationBarItem(
+                    icon: FaIcon(
+                      FontAwesomeIcons.chartPie,
+                      color: kPresentTheme.accentColor,
+                      size: kScreenHeight >600 ? 15.sp : 10.sp,
+                    ),
+                    label: 'Dashboard',
+                    tooltip: 'Goto dashboard',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: FaIcon(
+                      FontAwesomeIcons.calculator,
+                      size: kScreenHeight >600 ? 15.sp : 10.sp,
+                      color: Colors.orange,
+                    ),
+                    label: 'SIP Calculator',
+                    tooltip: 'Open SIP calculator',
+                  ),
+                ],
+              ): SizedBox() ,
+
+
+          ),
         ),
       ),
     );

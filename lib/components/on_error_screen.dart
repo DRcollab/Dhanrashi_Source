@@ -2,7 +2,7 @@
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:flutter/material.dart';
 
-import '../login_screen.dart';
+import '../screens/login_screen.dart';
 import 'constants.dart';
 
 

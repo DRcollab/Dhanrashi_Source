@@ -5,24 +5,24 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/goal_tabview_class.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/models/goal.dart';
-import 'package:dhanrashi_mvp/sip_calculator.dart';
+import 'package:dhanrashi_mvp/screens/sip_calculator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'empty_page_inputs.dart';
 import 'package:flutter/material.dart';
-import 'components/constants.dart';
-import 'components/investment_tabview_class.dart';
+import '../components/constants.dart';
+import '../components/investment_tabview_class.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'goal_input.dart';
 import 'investmentinput.dart';
-import 'models/goal_db.dart';
-import 'models/investment.dart';
-import 'models/investment_db.dart';
-import 'data/data_access.dart';
+import '../models/goal_db.dart';
+import '../models/investment.dart';
+import '../models/investment_db.dart';
+import '../data/data_access.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -136,13 +136,13 @@ class _DashboardState extends State<Dashboard> {
         String goalDescription=f.get('goal_description');
         double amount=f.get('goal_amount');
         double inflation = f.get('inflation');
-        totalGoalValue = totalGoalValue+amount;
+
         int duration=f.get('goal_duration');
         if(duration >Global.longestGoalDuration){
           Global.longestGoalDuration = duration;
         }
 
-        //double inflation = f.get('inflation');
+
       setState(() {
 
           goals.add(
@@ -309,7 +309,7 @@ class _DashboardState extends State<Dashboard> {
                                     showCaseKey: _showCaseKeys[1],
                                     goalDBs:goals,
                                     currentUser: widget.currentUser,
-                                    totalAmount: totalGoalValue,
+                                    // totalAmount: totalGoalValue,
                                    // longestInvestmentDuration: longestInvestmentDuration,
                                     //longestGoalDuration: longestGoalDuration,
                                   ),// 2nd view
@@ -325,100 +325,8 @@ class _DashboardState extends State<Dashboard> {
 
                                 ]
                               ),
-                        bottomNavigationBar: BottomNavigationBar(
-                         type: BottomNavigationBarType.fixed,
+                        selectedBottomNavtab: 2,
 
-                          currentIndex: _currentTabIndex,
-                          unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
-                          onTap: (index){
-                            setState(() {
-                              _currentTabIndex = index;
-                            });
-
-                            switch(index){
-
-                              case 0:
-                               // Navigator.pop(context);
-                                print('index is $index');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,),
-                                  ),
-                                );
-                              break;
-                              case 1:
-                              //  Navigator.pop(context);
-                                print('index is $index');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,),
-                                  ),
-                                );
-                                break;
-                              case 2:
-                              //  Navigator.pop(context);
-                                print('index is $index');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Dashboard(currentUser: widget.currentUser,),
-                                  ),
-                                );
-
-                                break;
-                              case 3:
-
-                                print('index is $index');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
-                                  ),
-                                );
-                                break;
-                            }
-                          },
-
-                          items: [
-                            BottomNavigationBarItem(
-                              icon: FaIcon(
-                                FontAwesomeIcons.bullseye,
-                                size: kScreenHeight >600 ? 15.sp : 10.sp,
-                              ),
-                              label: 'Goals',
-                              tooltip: 'Goto add goal page',
-                            ),
-                            BottomNavigationBarItem(
-                                icon: FaIcon(
-                                  FontAwesomeIcons.chartLine,
-                                  size: kScreenHeight >600 ? 15.sp : 10.sp,
-                                ),
-                                label: 'Investments',
-                                tooltip: 'Goto add investment page'
-
-                            ),
-                            BottomNavigationBarItem(
-                              icon: FaIcon(
-                                FontAwesomeIcons.chartPie,
-                                color: kPresentTheme.accentColor,
-                                size: kScreenHeight >600 ? 15.sp : 10.sp,
-                              ),
-                              label: 'Dashboard',
-                              tooltip: 'Goto dashboard',
-                            ),
-                            BottomNavigationBarItem(
-                              icon: FaIcon(
-                                FontAwesomeIcons.calculator,
-                                size: kScreenHeight >600 ? 15.sp : 10.sp,
-                                color: Colors.orange,
-                              ),
-                              label: 'SIP Calculator',
-                              tooltip: 'Open SIP calculator',
-                            ),
-                          ],
-                        ),
                             );
                     }
                   ),

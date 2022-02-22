@@ -3,20 +3,20 @@ import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
-import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/screens/dashboard.dart';
 import 'package:dhanrashi_mvp/data/investment_access.dart';
 import 'package:dhanrashi_mvp/data/user_access.dart';
-import 'package:dhanrashi_mvp/goal_input.dart';
+import 'package:dhanrashi_mvp/screens/goal_input.dart';
 import 'package:dhanrashi_mvp/models/investment_db.dart';
-import 'package:dhanrashi_mvp/sip_calculator.dart';
+import 'package:dhanrashi_mvp/screens/sip_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'components/constants.dart';
+import '../components/constants.dart';
 //import 'components/tile_class.dart';
 import 'package:sizer/sizer.dart';
-import 'components/investment_entry_sheet.dart';
-import 'models/user_data_class.dart';
+import '../components/investment_entry_sheet.dart';
+import '../models/user_data_class.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -582,54 +582,55 @@ class _InvestmentInputScreenState extends State<InvestmentInputScreen> {
             //           width: double.infinity,
             //     height: 10,
             // ) ,
-            bottomNavigationBar: BottomNavigationBar(
-               type: BottomNavigationBarType.fixed,
-              unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
-              currentIndex: _currentTabIndex,
-              onTap: (index){
-                  setState(() {
-                    _currentTabIndex = index;
-                  });
-
-                   switch(index){
-
-                     case 0:
-                       Navigator.pop(context);
-
-                       Navigator.push(
-                         context,
-                         MaterialPageRoute(
-                           builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,),
-                         ),
-                       );
-                       break;
-                     case 2:
-                       Navigator.pop(context);
-
-                       Navigator.push(
-                         context,
-                         MaterialPageRoute(
-                           builder: (context) => Dashboard(currentUser: widget.currentUser,),
-                         ),
-                       );
-                       break;
-                     case 3:
-
-
-                       Navigator.push(
-                         context,
-                         MaterialPageRoute(
-                           builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
-                         ),
-                       );
-                       break;
-                   }
-
-              },
-              items: DefaultValues.bottomTabs,
-
-
-            ),
+            selectedBottomNavtab: 1,
+            // bottomNavigationBar: BottomNavigationBar(
+            //    type: BottomNavigationBarType.fixed,
+            //   unselectedFontSize:  DefaultValues.screenHeight(context)<600? 8:12,
+            //   currentIndex: _currentTabIndex,
+            //   onTap: (index){
+            //       setState(() {
+            //         _currentTabIndex = index;
+            //       });
+            //
+            //        switch(index){
+            //
+            //          case 0:
+            //            Navigator.pop(context);
+            //
+            //            Navigator.push(
+            //              context,
+            //              MaterialPageRoute(
+            //                builder: (context) => GoalsInputScreen(currentUser: widget.currentUser,),
+            //              ),
+            //            );
+            //            break;
+            //          case 2:
+            //            Navigator.pop(context);
+            //
+            //            Navigator.push(
+            //              context,
+            //              MaterialPageRoute(
+            //                builder: (context) => Dashboard(currentUser: widget.currentUser,),
+            //              ),
+            //            );
+            //            break;
+            //          case 3:
+            //
+            //
+            //            Navigator.push(
+            //              context,
+            //              MaterialPageRoute(
+            //                builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
+            //              ),
+            //            );
+            //            break;
+            //        }
+            //
+            //   },
+            //   items: DefaultValues.bottomTabs,
+            //
+            //
+            // ),
           );
         }
       ),

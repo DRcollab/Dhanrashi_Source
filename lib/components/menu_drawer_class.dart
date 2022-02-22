@@ -1,15 +1,15 @@
 /// This code is written by Shubhadee
 
 
-import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/screens/dashboard.dart';
 
-import 'package:dhanrashi_mvp/goal_input.dart';
-import 'package:dhanrashi_mvp/info_page.dart';
-import 'package:dhanrashi_mvp/investmentinput.dart';
+import 'package:dhanrashi_mvp/screens/goal_input.dart';
+import 'package:dhanrashi_mvp/screens/info_page.dart';
+import 'package:dhanrashi_mvp/screens/investmentinput.dart';
 
-import 'package:dhanrashi_mvp/profile_view.dart';
-import 'package:dhanrashi_mvp/profiler.dart';
-import 'package:dhanrashi_mvp/sip_calculator.dart';
+import 'package:dhanrashi_mvp/screens/profile_view.dart';
+import 'package:dhanrashi_mvp/screens/profiler.dart';
+import 'package:dhanrashi_mvp/screens/sip_calculator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
@@ -20,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 
-import '../login_screen.dart';
+import '../screens/login_screen.dart';
 
 class MenuDrawer extends StatefulWidget {
  // const MenuDrawer({Key? key}) : super(key: key);

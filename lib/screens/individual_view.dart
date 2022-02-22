@@ -9,8 +9,8 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import 'components/dounut_charts.dart';
-import 'components/table_view.dart';
+import '../components/dounut_charts.dart';
+import '../components/table_view.dart';
 
 
 class IndividualInvestment extends StatefulWidget {

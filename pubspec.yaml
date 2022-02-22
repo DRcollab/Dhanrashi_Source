@@ -73,6 +73,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - images/
     - images/logo.png
     - images/d-chart.png
     - images/legend.png
@@ -134,6 +135,7 @@ flutter:
     - images/profiles/profile_image0.png
     - images/profiles/question.png
     - audio/done.wav
+    - images/gifs/logo_animation.gif
     - images/gifs/dual_ring.gif
     - images/gifs/elipses.gif
     - images/gifs/rolling.gif

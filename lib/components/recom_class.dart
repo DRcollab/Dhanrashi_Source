@@ -111,11 +111,10 @@ class _RecomCardState extends State<RecomCard> {
   Widget build(BuildContext context) {
 
 
-   // _fetchRecommendations();
-      print('screen height');
-      print(DefaultValues.screenHeight(context));
+
 
     return Container(
+
       color: Color(0x00000000),
       child: Stack(
         children: [
@@ -131,10 +130,11 @@ class _RecomCardState extends State<RecomCard> {
 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(height: 1,color: kPresentTheme.alternateColor),
+                    child: Container(height: 2,color: kPresentTheme.alternateColor),
                   ),
                   Container(
                     height: DefaultValues.screenHeight(context)/2,
+
                     child: ListView.builder(
 
                         itemCount: widget.dataSet[0].length-1,
@@ -167,7 +167,7 @@ class _RecomCardState extends State<RecomCard> {
             ),
           ),
           Padding(
-            padding:  EdgeInsets.only(left : 0.0, bottom: 0.0,top:10.0 ),
+            padding:  EdgeInsets.only(left : 0.0, bottom: 0.0,top:10 ),
             child: Center(
                 child: ExpandButton(
                       display: !widget.scrolledUp ? Icon(Icons.keyboard_arrow_up):Icon(Icons.keyboard_arrow_down),

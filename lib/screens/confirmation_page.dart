@@ -3,31 +3,31 @@
 
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 
-import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/screens/dashboard.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
 
-import 'package:dhanrashi_mvp/empty_page_inputs.dart';
+import 'package:dhanrashi_mvp/screens/empty_page_inputs.dart';
 
-import 'package:dhanrashi_mvp/profiler.dart';
+import 'package:dhanrashi_mvp/screens/profiler.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
-import 'models/profile_collector.dart';
+import '../models/profile_collector.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:flutter/material.dart';
-import 'components/constants.dart';
+import '../components/constants.dart';
 
-import 'models/profile.dart';
+import '../models/profile.dart';
 
-import 'components/buttons.dart';
-import 'data/data_access.dart';
+import '../components/buttons.dart';
+import '../data/data_access.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'components/utilities.dart';
-import 'components/constants.dart';
+import '../components/utilities.dart';
+import '../components/constants.dart';
 
 class ConfirmationPage extends StatefulWidget {
 

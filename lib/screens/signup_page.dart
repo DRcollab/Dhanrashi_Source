@@ -6,25 +6,25 @@ import 'package:dhanrashi_mvp/data/database.dart';
 import 'package:dhanrashi_mvp/data/user_handler.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
 
-import 'package:dhanrashi_mvp/profiler_option_page.dart';
-import 'package:dhanrashi_mvp/tnc.dart';
+import 'package:dhanrashi_mvp/screens/profiler_option_page.dart';
+import 'package:dhanrashi_mvp/screens/tnc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-import 'components/buttons.dart';
-import 'components/custom_card.dart';
-import 'components/custom_scaffold.dart';
-import 'components/constants.dart';
+import '../components/buttons.dart';
+import '../components/custom_card.dart';
+import '../components/custom_scaffold.dart';
+import '../components/constants.dart';
 
 import 'package:flutter/material.dart';
-import 'components/custom_text_field.dart';
+import '../components/custom_text_field.dart';
 
-import 'components/custom_text.dart';
+import '../components/custom_text.dart';
 import 'login_screen.dart';
-import 'models/profile.dart';
-import 'data/global.dart';
+import '../models/profile.dart';
+import '../data/global.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'components/utilities.dart';
+import '../components/utilities.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:sizer/sizer.dart';
 
@@ -372,7 +372,8 @@ import 'package:sizer/sizer.dart';
             ),
           ],
         ),
-        bottomNavigationBar: SizedBox(),
+       showBottomNavBar: false,
+       // bottomNavigationBar: SizedBox(),
 
       ),
     );

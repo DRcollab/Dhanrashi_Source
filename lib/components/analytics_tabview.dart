@@ -9,7 +9,7 @@ import 'package:dhanrashi_mvp/models/investment_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:showcaseview/showcaseview.dart';
-import '../chart_viewer.dart';
+import '../screens/chart_viewer.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:sizer/sizer.dart';
 
@@ -48,6 +48,8 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
 
   bool _scrollingUp = false;
   bool _showSummary = true;
+
+  String logoAnime = '${DefaultValues.imageDirectory}/gifs/logo_animation.gif';
 
   _fetchRecommendations() {
     // int eachGoalYear;
@@ -102,7 +104,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    print('analyti page disposed');
+
   }
 
   @override
@@ -199,7 +201,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
           ),
           child: Container(
             width: 100.w,
-            height:  DefaultValues.screenHeight(context) > 600 ? 40.h : 35.h,
+            height:  DefaultValues.screenHeight(context) > 600 ?DefaultValues.screenHeight(context) * 0.38: 35.h,
             child: fetched
                 ? Showcase(
                     key: widget.showCaseKey![2]!,
@@ -228,12 +230,15 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
                           child: Container(
                             color: Color(0x00000000),
                             width: 100.w,
-                            height: DefaultValues.screenHeight(context) > 600 ? 40.h : 35.h,
+                            height: DefaultValues.screenHeight(context) > 600 ? 38.h : 35.h,
                           ),
                         )
                       ],
                     ))
-                : Image.asset(kPresentTheme.progressIndicator, scale: 3),
+                : Image.asset(
+                //logoAnime,
+               kPresentTheme.progressIndicator,
+                scale: 3),
           ),
         ),
         fetched

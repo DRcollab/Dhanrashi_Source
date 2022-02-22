@@ -6,22 +6,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:dhanrashi_mvp/data/profile_access.dart';
 import 'package:dhanrashi_mvp/data/validators.dart';
-import 'package:dhanrashi_mvp/profiler_option_page.dart';
-import 'package:dhanrashi_mvp/reset_screen.dart';
+import 'package:dhanrashi_mvp/screens/profiler_option_page.dart';
+import 'package:dhanrashi_mvp/screens/reset_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dashboard.dart';
-import 'components/buttons.dart';
-import 'components/custom_card.dart';
-import 'components/custom_scaffold.dart';
-import 'components/constants.dart';
+import '../components/buttons.dart';
+import '../components/custom_card.dart';
+import '../components/custom_scaffold.dart';
+import '../components/constants.dart';
 import 'package:sizer/sizer.dart';
-import 'models/profile.dart';
+import '../models/profile.dart';
 import 'signup_page.dart';
 import 'package:flutter/material.dart';
-import 'components/custom_text_field.dart';
-import 'data/user_handler.dart';
-import 'data/database.dart';
-import 'components/custom_text.dart';
+import '../components/custom_text_field.dart';
+import '../data/user_handler.dart';
+import '../data/database.dart';
+import '../components/custom_text.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -414,7 +414,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
               ),
             ],
           ),
-          bottomNavigationBar: SizedBox(),
+          showBottomNavBar: false,
+          //bottomNavigationBar: SizedBox(),
           // BottomNavigationBar(
           //   items: [
           //     BottomNavigationBarItem(

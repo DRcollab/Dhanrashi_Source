@@ -2,17 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:dhanrashi_mvp/components/tile_class.dart';
-import 'package:dhanrashi_mvp/sip_calculator.dart';
+import 'package:dhanrashi_mvp/screens/sip_calculator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'components/constants.dart';
+import '../components/constants.dart';
 
-import 'components/goal_entry_sheet.dart';
+import '../components/goal_entry_sheet.dart';
 import 'dashboard.dart';
-
-import 'inv_grid.dart';
 import 'investmentinput.dart';
 
 import 'package:sizer/sizer.dart';
@@ -544,53 +542,53 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                 ),
               ],
             ),
-
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _currentTabIndex,
-              onTap: (index){
-                setState(() {
-                   _currentTabIndex = index;
-                });
-
-                switch(index){
-
-                  case 1:
-                    Navigator.pop(context);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,),
-                      ),
-                    );
-                    break;
-                  case 2:
-                    Navigator.pop(context);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Dashboard(currentUser: widget.currentUser,),
-                      ),
-                    );
-
-                    break;
-                  case 3:
-
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
-                      ),
-                    );
-                    break;
-                }
-              },
-
-              items: DefaultValues.bottomTabs,
-            ),
+            selectedBottomNavtab: 0,
+            // bottomNavigationBar: BottomNavigationBar(
+            //   type: BottomNavigationBarType.fixed,
+            //   currentIndex: _currentTabIndex,
+            //   onTap: (index){
+            //     setState(() {
+            //        _currentTabIndex = index;
+            //     });
+            //
+            //     switch(index){
+            //
+            //       case 1:
+            //         Navigator.pop(context);
+            //
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => InvestmentInputScreen(currentUser: widget.currentUser,),
+            //           ),
+            //         );
+            //         break;
+            //       case 2:
+            //         Navigator.pop(context);
+            //
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => Dashboard(currentUser: widget.currentUser,),
+            //           ),
+            //         );
+            //
+            //         break;
+            //       case 3:
+            //
+            //
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => SIPCalculator(currentUser: widget.currentUser,),
+            //           ),
+            //         );
+            //         break;
+            //     }
+            //   },
+            //
+            //   items: DefaultValues.bottomTabs,
+            // ),
           );
         }
       ),

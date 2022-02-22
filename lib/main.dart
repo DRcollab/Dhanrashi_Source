@@ -1,7 +1,8 @@
 /// Copyright goes to Dhanrashi team
 
-import 'package:dhanrashi_mvp/login_screen.dart';
-import 'package:dhanrashi_mvp/dashboard.dart';
+import 'package:dhanrashi_mvp/screens/intro.dart';
+import 'package:dhanrashi_mvp/screens/login_screen.dart';
+import 'package:dhanrashi_mvp/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +90,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
 
             },
             child: MaterialApp(
-              home:  sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile),
+              home:Intro(nav:sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile) , ),// sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile), //
               //routes: ,
             ),
           );

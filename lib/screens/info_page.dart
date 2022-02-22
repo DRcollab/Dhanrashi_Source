@@ -1,7 +1,7 @@
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'components/custom_scaffold.dart';
+import '../components/custom_scaffold.dart';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({Key? key}) : super(key: key);

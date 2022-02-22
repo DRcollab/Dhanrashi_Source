@@ -2,16 +2,16 @@ import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'components/buttons.dart';
-import 'components/constants.dart';
-import 'components/dounut_charts.dart';
-import 'components/labeled_slider.dart';
+import '../components/buttons.dart';
+import '../components/constants.dart';
+import '../components/dounut_charts.dart';
+import '../components/labeled_slider.dart';
 import 'package:sizer/sizer.dart';
 
-import 'components/labelled_input.dart';
-import 'components/menu_drawer_class.dart';
-import 'components/vanish_keyboard.dart';
-import 'data/financial_calculator.dart';
+import '../components/labelled_input.dart';
+import '../components/menu_drawer_class.dart';
+import '../components/vanish_keyboard.dart';
+import '../data/financial_calculator.dart';
 
 class SIPCalculator extends StatefulWidget {
 

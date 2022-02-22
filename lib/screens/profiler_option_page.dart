@@ -2,25 +2,25 @@
 
 import 'package:dhanrashi_mvp/components/buttons.dart';
 
-import 'package:dhanrashi_mvp/tnc.dart';
+import 'package:dhanrashi_mvp/screens/tnc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sizer/sizer.dart';
 
-import 'components/custom_scaffold.dart';
-import 'components/constants.dart';
+import '../components/custom_scaffold.dart';
+import '../components/constants.dart';
 
 import 'empty_page_inputs.dart';
-import 'models/profile.dart';
+import '../models/profile.dart';
 import 'profiler.dart';
 
-import 'data/profile_access.dart';
+import '../data/profile_access.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'components/utilities.dart';
+import '../components/utilities.dart';
 
 
 

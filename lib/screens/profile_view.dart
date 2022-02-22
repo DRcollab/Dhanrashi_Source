@@ -1,13 +1,13 @@
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/custom_card.dart';
 import 'package:dhanrashi_mvp/components/custom_scaffold.dart';
-import 'package:dhanrashi_mvp/profiler.dart';
+import 'package:dhanrashi_mvp/screens/profiler.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-import 'components/buttons.dart';
-import 'models/profile.dart';
+import '../components/buttons.dart';
+import '../models/profile.dart';
 
 class ProfileView extends StatelessWidget {
   //const ProfileView({Key? key}) : super(key: key);
