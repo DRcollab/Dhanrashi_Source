@@ -225,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
 
-                       DefaultValues.logo,
+                       DefaultValues.setLogo(context),
                       ],
                     ),
                     Padding(

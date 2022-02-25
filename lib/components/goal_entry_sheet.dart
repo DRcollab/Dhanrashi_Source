@@ -204,10 +204,15 @@ class _GoalSheetState extends State<GoalSheet> {
             onTap: () {
               setState(() {
                 isEditing = false;
-
-                goalAmount = double.parse(dummy.text);
-                dummy.text =
-                    DefaultValues.textFormat.format(double.parse(dummy.text));
+                if(dummy.text!='') {
+                  goalAmount = double.parse(dummy.text);
+                  dummy.text =
+                      DefaultValues.textFormat.format(double.parse(dummy.text));
+                }else{
+                  goalAmount = double.parse('0');
+                  dummy.text =
+                      DefaultValues.textFormat.format(double.parse('0'));
+                }
               });
             },
             child: Container(

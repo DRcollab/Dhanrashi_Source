@@ -101,7 +101,7 @@ class _GoalsInputScreenState extends State<GoalsInputScreen> {
                                       top: 18.h,
                               ),
                         child: ListTile(
-                          title: Text("Goals",
+                          title: Text("Goals:",
                             style:DefaultValues.kH1(context),
 
                           ),

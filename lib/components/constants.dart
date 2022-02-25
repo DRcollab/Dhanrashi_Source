@@ -73,7 +73,15 @@ class DefaultValues {
   static final investmentDuration = 10; //  duration across all the asset class
   static final minReturn = 0.0; // min ROI making it negative may crash the app
 
-  static Widget logo =  Image.asset('images/logo.png', width: 60.w, height: 5.h);
+ // static Image logo =  Image.asset('images/logo.png', width:screenHeight(context)>600 ? 60.w:30.w, height: 5.h);
+
+
+  static setLogo(context){
+
+    return Image.asset('images/logo.png', width:screenHeight(context)>600 ? 60.w:30.w, height: screenHeight(context)>600 ? 5.h: 4.h);
+
+  }
+
 
  // static Widget logo = Row(children: [ Icon(Icons.monetization_on), Text(DefaultValues.titles['app_name']!, style:TextStyle(fontSize: 28,fontFamily: 'Fredoka',),),  ],);
 
@@ -294,19 +302,19 @@ class DefaultValues {
   }
 
   static TextStyle kH1(context) => TextStyle(
-        fontSize: 18.sp, //* adaptFontsForSmallDevice(context),
+        fontSize: DefaultValues.screenHeight(context) > 600 ? 18.sp:15.sp, //* adaptFontsForSmallDevice(context),
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
       );
 
   static TextStyle kH2(context) => TextStyle(
-        fontSize: 16.sp, // * adaptFontsForSmallDevice(context),
+        fontSize: DefaultValues.screenHeight(context) > 600 ? 16.sp : 13.sp, // * adaptFontsForSmallDevice(context),
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
       );
 
   static TextStyle kH3(context) => TextStyle(
-        fontSize: 14.sp, //* adaptFontsForSmallDevice(context),
+        fontSize: DefaultValues.screenHeight(context) > 600 ? 14.sp:11.sp, //* adaptFontsForSmallDevice(context),
         height: 1,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
@@ -316,7 +324,7 @@ class DefaultValues {
   ///
   ///
   static TextStyle kH4(context) => TextStyle(
-        fontSize: 12.sp, //* adaptFontsForSmallDevice(context),
+        fontSize: DefaultValues.screenHeight(context) > 600 ? 12.sp:10.sp, //* adaptFontsForSmallDevice(context),
         height: 1,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
@@ -325,19 +333,19 @@ class DefaultValues {
   static const kCurveRadius = 15.0;
 
   static kNormal1(context) => TextStyle(
-        fontSize: 20 * adaptFontsForSmallDevice(context),
+        fontSize: DefaultValues.screenHeight(context) > 600 ? 20.sp: 18.sp,
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.normal,
       );
 
   static kNormal2(context) => TextStyle(
-        fontSize: 15.sp, //* adaptFontsForSmallDevice(context) ,
+        fontSize: DefaultValues.screenHeight(context) > 600 ? 15.sp:13.sp,
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.normal,
       );
 
   static kNormal3(context) => TextStyle(
-        fontSize: 12.sp, //* adaptFontsForSmallDevice(context),
+        fontSize: DefaultValues.screenHeight(context) > 600 ? 12.sp : 10.sp, //* adaptFontsForSmallDevice(context),
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.normal,
       );

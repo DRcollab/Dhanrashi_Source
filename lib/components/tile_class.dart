@@ -73,7 +73,7 @@ class Tile extends StatelessWidget {
                                   alignment: Alignment.topLeft,
                                   child: Text(
                                     this.title,
-                                    style: TextStyle(fontSize: 15.sp,
+                                    style: TextStyle(fontSize: DefaultValues.screenHeight(context) >600 ?15.sp : 10.sp,
                                         color: titleColor, fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -87,7 +87,7 @@ class Tile extends StatelessWidget {
                               padding: DefaultValues.kAdaptedLeftPadding(context, 18),
                               child: Align(
                                 alignment: Alignment.topLeft,
-                                child: Text(this.subText, style: TextStyle(color: titleColor),)),
+                                child: Text(this.subText, style: TextStyle(color: titleColor, fontSize:DefaultValues.screenHeight(context) >600 ?10.sp : 8.sp ),)),
                     ),
 
                   ],

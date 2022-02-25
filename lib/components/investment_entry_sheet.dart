@@ -276,7 +276,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                       text = dummy.text.substring(1).replaceAll(',', '').trim();
                       investedAmount = double.parse(dummy.text);
                     } else {
-                      investedAmount = double.parse(dummy.text);
+                      if(dummy.text!='') investedAmount = double.parse(dummy.text);
                     }
 
                     text1Active =
@@ -289,13 +289,22 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                       text = dummy.text.substring(1).replaceAll(',', '').trim();
                       annualInvestment = double.parse(dummy.text);
                     } else {
-                      annualInvestment = double.parse(dummy.text);
+                      if(dummy.text!='') {
+                        print('Blank found');
+                        annualInvestment = double.parse(dummy.text);
+
+                      }
                     }
 
                     text2Active =
                         false; // determines whether textBox2 in the context recieved a tap and now it is released.
-                    dummy.text = DefaultValues.textFormat
-                        .format(double.parse(dummy.text));
+                    if(dummy.text!='') {
+                      dummy.text = DefaultValues.textFormat
+                          .format(double.parse(dummy.text));
+                    }else{
+                      dummy.text = DefaultValues.textFormat
+                          .format(double.parse('0'));
+                    }
                     break;
                   default:
                     break;

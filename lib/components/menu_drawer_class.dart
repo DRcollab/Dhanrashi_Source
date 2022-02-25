@@ -94,9 +94,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
                 children: [
 
-                  DefaultValues.logo,
+                  DefaultValues.setLogo(context),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
+                    padding:  EdgeInsets.only(top: DefaultValues.screenHeight(context)>600 ?20.0:5),
                     child: CircleAvatar(
                       radius: 4.h,backgroundColor: kPresentTheme.accentColor,
                       backgroundImage: AssetImage(userHasProfile  ? widget.currentUser.profileImage: 'images/profiles/question.png'),

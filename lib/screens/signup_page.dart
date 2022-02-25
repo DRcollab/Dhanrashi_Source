@@ -130,7 +130,7 @@ import 'package:sizer/sizer.dart';
                     children: [
                       // Icon(Icons.monetization_on),
                       // Text(DefaultValues.titles['app_name']!, style:DefaultValues.kTitleTextStyle(context),),
-                      DefaultValues.logo,
+                      DefaultValues.setLogo(context),
                     ],
                   ),
                   Padding(
