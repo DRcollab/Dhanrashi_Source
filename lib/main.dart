@@ -1,5 +1,7 @@
 /// Copyright goes to Dhanrashi team
 
+import 'dart:ui';
+
 import 'package:dhanrashi_mvp/screens/intro.dart';
 import 'package:dhanrashi_mvp/screens/login_screen.dart';
 import 'package:dhanrashi_mvp/screens/dashboard.dart';
@@ -45,6 +47,8 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
   @override
   void initState()  {
     // TODO: implement initState
+    DefaultValues.mediaScreenHeight = window.physicalSize.height/window.devicePixelRatio;
+    print('height :${DefaultValues.mediaScreenHeight}');
     super.initState();
     future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
 
@@ -80,6 +84,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
   Widget build(BuildContext context) {
 
 
+ //print('Height ')
 
 
 

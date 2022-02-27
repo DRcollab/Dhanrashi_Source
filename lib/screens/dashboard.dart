@@ -85,6 +85,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
 
     super.initState();
+
     _showCaseKeys = [
       [_tabBarHelpKey,_analysisHelpKey1,_analysisHelpKey2,_recommHelpKey],
       [_chartViewGoalHelpKey,_addGoalHelpKey,_shingleGoalHelpKey,_deleteGoalHelpKey],

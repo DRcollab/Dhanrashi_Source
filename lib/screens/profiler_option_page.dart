@@ -268,7 +268,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                               textColor: Colors.black,
                               borderRadius: BorderRadius.circular(20),
                               buttonColor: kPresentTheme.alternateColor,
-                              buttonText: DefaultValues.messages['update_profile_button_text']!,
+                              buttonText:'Update profile',// DefaultValues.messages['update_profile_button_text']!,
                               onPressed: (){
                                 Navigator.push(
                                     context,
