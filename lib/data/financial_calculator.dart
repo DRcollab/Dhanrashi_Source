@@ -10,13 +10,21 @@ class Calculator {
       longestDuration = 0;
 
   static double fv(double r, int nper, double pmt, double pv, int type) {
+    if (r == 0.0) {
+      double fv = (pv * pow(1 + r, nper) + pmt * (1 + r * type) * nper);
+      return fv;
+    }
     double fv = (pv * pow(1 + r, nper) +
         pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
-
     return fv;
   }
 
   static double sipAmount(double r, int nper, double pv, double fv, int type) {
+    if (r == 0.0) {
+      double pmt = (fv - pv * pow(1 + r, nper)) / nper;
+      return pmt;
+    }
+
     double pmt = (fv - pv * pow(1 + r, nper)) /
         ((1 + r * type) * (pow(1 + r, nper) - 1) / r);
     return pmt;
@@ -245,11 +253,6 @@ class Calculator {
       investmenetVsGgoal.add(allGoalAnnualAmt[allGoalAnnualAmt.shape[0] - 1]);
     }
     //
-
-
-
-
-
 
     return investmenetVsGgoal;
   }
