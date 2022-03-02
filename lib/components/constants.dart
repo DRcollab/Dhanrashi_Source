@@ -76,6 +76,7 @@ class DefaultValues {
  // static Image logo =  Image.asset('images/logo.png', width:screenHeight(context)>600 ? 60.w:30.w, height: 5.h);
 
  static late double mediaScreenHeight;
+ static late double mediaScreenWidth;
 
 
 
@@ -158,7 +159,7 @@ class DefaultValues {
     'goal_period_title': 'Goal duration',
     'update_profile_button_text': 'Update profile',
     'link_text_skip': 'Skip to continue',
-    'privacy_policy': 'Privacy police',
+    'privacy_policy': 'Privacy policy',
 
     //Goal tiles titles . // in goal input menu
     'car': 'My Dream\nCar',
@@ -277,12 +278,12 @@ class DefaultValues {
   }
 
   static screenHeight(BuildContext context) {
-    kScreenHeight = MediaQuery.of(context).size.height;
-    return MediaQuery.of(context).size.height;
+
+    return mediaScreenHeight;
   }
 
   static screenWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
+    return mediaScreenWidth;
   }
 
   static double adaptByValue(BuildContext context, double value) {

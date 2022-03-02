@@ -268,7 +268,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                               textColor: Colors.black,
                               borderRadius: BorderRadius.circular(20),
                               buttonColor: kPresentTheme.alternateColor,
-                              buttonText:'Update profile',// DefaultValues.messages['update_profile_button_text']!,
+                              buttonText: DefaultValues.titles['update_profile_button_text']!,
                               onPressed: (){
                                 Navigator.push(
                                     context,
@@ -292,7 +292,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                               //buttonColor: kPresentTheme.influenceColors[0],
                               // textColor: Colors.white,
                                 type: LinkTextType.DARK,
-                                linkText: DefaultValues.messages['link_text_skip']!,
+                                linkText: DefaultValues.titles['link_text_skip']!,
                                 onPressed: (){
 
                                     Profile profile = Profile(
@@ -330,7 +330,7 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom:48.0),
                     child: LinkText(
-                        linkText: DefaultValues.messages['privace_policy']!,
+                        linkText: DefaultValues.titles['privacy_policy']!,
                         displaySize: 14.sp,
                         type: LinkTextType.DARK,
                         onPressed: (){

@@ -218,6 +218,7 @@ class NumberInputField extends StatefulWidget {
 
   final Function()? getValue;
   Function()? onCompleteEditing;
+  Function(double) onChanged;
   String errorText;
   double radius;
   String label;
@@ -234,6 +235,7 @@ class NumberInputField extends StatefulWidget {
     required this.controller,
     //required this.validator,
     this.getValue,
+   required this.onChanged,
     this.radius = 25,
     this.label='',
     this.errorText='',
@@ -345,7 +347,15 @@ class _NumberInputFieldState extends State<NumberInputField> {
                       });
 
                       },
-
+                  onChanged: (value){
+                       print(value);
+                       if(value!='') {
+                         widget.onChanged(double.parse(value));
+                       }
+                       else{
+                         widget.onChanged(0);
+                       }
+                  },
                   onTap: widget.validator,
 
             ),

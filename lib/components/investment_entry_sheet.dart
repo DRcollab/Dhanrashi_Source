@@ -307,6 +307,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                     }
                     break;
                   default:
+                    print('Expected ROI $expectedRoi');
                     break;
                 }
               });
@@ -655,15 +656,18 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                             onChanged: (value) {
                               setState(() {
                                 expectedRoi = value;
+                                print('@$expectedRoi');
                               });
                             },
 
                             validator: () {
                               setState(() {
                                 isEditing = true;
+                                whichTextController = 3;
                               });
                             },
                             onEditingComplete: () {
+
                               setState(() {
                                 isEditing = false;
                               });

@@ -103,6 +103,11 @@ class _LabeledSliderState extends State<LabeledSlider> {
               suggestiveIcon: widget.suggestiveIcon != null ? widget.suggestiveIcon! : SizedBox(),
               hintText: '',
               suffix: widget.suffix,
+              onChanged: (value){
+                print(':$value');
+                widget.onChanged!(value);
+               // value = double.parse(double.parse(this.controller.text).toStringAsFixed(2));
+              },
               getValue: (){
                 setState(() {
 
@@ -128,12 +133,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
 
                  widget.onChanged!(widget.sliderValue);
-                  // if(widget.perpetualActive){
-                  //   if(val>widget.max){
-                  //     variableMax = widget.max + widget.max;
-                  //     variableMin = widget.max;
-                  //   }
-                  // }
+
 
                 });
 
@@ -186,8 +186,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
                       }
                     }
 
-                    print(this.controller.text);
-                    print( double.parse(this.controller.text).roundToDouble() );
+
                     this.controller.clear();
                     widget.sliderValue = double.parse( changeValue.toStringAsFixed(1));
                     widget.onChanged!(widget.sliderValue);
