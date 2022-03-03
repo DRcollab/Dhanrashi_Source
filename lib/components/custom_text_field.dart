@@ -218,7 +218,7 @@ class NumberInputField extends StatefulWidget {
 
   final Function()? getValue;
   Function()? onCompleteEditing;
-  Function(double) onChanged;
+  Function(double, bool) onChanged;
   String errorText;
   double radius;
   String label;
@@ -350,13 +350,14 @@ class _NumberInputFieldState extends State<NumberInputField> {
                   onChanged: (value){
                        print(value);
                        if(value!='') {
-                         widget.onChanged(double.parse(value));
+                         widget.onChanged(double.parse(value), true);
                          // setState(() {
                          //   widget.controller.text = value;
                          // });
                        }
                        else{
-                         widget.onChanged(0);
+                         widget.onChanged(0, false);
+
                          // setState(() {
                          //   widget.controller.text = value;
                          // });

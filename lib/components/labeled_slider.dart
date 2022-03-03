@@ -8,6 +8,7 @@ class LabeledSlider extends StatefulWidget {
 // const LabeledSlider({Key? key}) : super(key: key);
 
 bool textEditable = true;
+String internalErrorMsg='';
 double sliderValue = 5.0; // Movement of slider
 String labelText; //
 double min = 1; // minimum value of the slider movement
@@ -22,9 +23,10 @@ bool perpetualActive = false;
 final  Function() validator;
 Function()? onEditingComplete;
 bool implementWarning = false;
- Function(double)? onChanged;  // get the  changed value;
+ Function(double, bool)? onChanged;  // get the  changed value;
  late Color activeColor;
  Widget? suggestiveIcon;
+
 LabeledSlider({
   this.onEditingComplete,
   this.sliderValue=5.0,
@@ -35,6 +37,7 @@ LabeledSlider({
   this.suggestiveIcon,
   required this.validator,
   this.collector = 0,
+  this.internalErrorMsg = '',
   this.suffix ='',
   this.textPrecision = 2,
   this.textEditable = true,
@@ -103,9 +106,14 @@ class _LabeledSliderState extends State<LabeledSlider> {
               suggestiveIcon: widget.suggestiveIcon != null ? widget.suggestiveIcon! : SizedBox(),
               hintText: '',
               suffix: widget.suffix,
-              onChanged: (value){
-                print(':$value');
-                widget.onChanged!(value);
+              onChanged: (value, internal){
+
+                if(value>widget.max){
+                  value = widget.max;
+                }else if(value< widget.min){
+                  value = widget.min;
+                }
+                widget.onChanged!(value, internal);
                // value = double.parse(double.parse(this.controller.text).toStringAsFixed(2));
               },
               getValue: (){
@@ -115,8 +123,10 @@ class _LabeledSliderState extends State<LabeledSlider> {
                   if(this.controller.text !='') {
                      val = double.parse(double.parse(this.controller.text)
                         .toStringAsFixed(2));
+
                   }else{
                     val = 0;
+
                   }
                   if( val > widget.min) {
 
@@ -138,7 +148,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
                   }
 
 
-                 widget.onChanged!(widget.sliderValue);
+                 widget.onChanged!(widget.sliderValue, true);
 
 
                 });
@@ -147,6 +157,7 @@ class _LabeledSliderState extends State<LabeledSlider> {
             ),
 
           ),
+          Center(child: Text(widget.internalErrorMsg, style: TextStyle(color: Colors.red),)),// Used to display error when validation fails
           Padding(
             padding: DefaultValues.kAdaptedTopPadding(context, 6.h),
             child: Slider(
@@ -166,6 +177,9 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
                     if(changeValue < widget.min){
                       changeValue = widget.min;
+                    }else if(changeValue > widget.max){
+                      changeValue = widget.max;
+
                     }
 
                      // if(widget.perpetualActive) {
@@ -195,7 +209,8 @@ class _LabeledSliderState extends State<LabeledSlider> {
 
                     this.controller.clear();
                     widget.sliderValue = double.parse( changeValue.toStringAsFixed(1));
-                    widget.onChanged!(widget.sliderValue);
+                   // print('change value : ${widget.sliderValue}');
+                    widget.onChanged!(widget.sliderValue,true);
                     controller = TextEditingController(
                       text: widget.sliderValue.toStringAsFixed(widget.textPrecision),
 

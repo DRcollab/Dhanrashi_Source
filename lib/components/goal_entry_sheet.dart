@@ -11,6 +11,7 @@ import 'package:dhanrashi_mvp/main.dart';
 import 'package:dhanrashi_mvp/models/goal_db.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../data/financial_calculator.dart';
 import 'band_class.dart';
 import 'custom_text_field.dart';
 import 'package:dhanrashi_mvp/components/buttons.dart';
@@ -68,6 +69,8 @@ class GoalSheet extends StatefulWidget {
 
 class _GoalSheetState extends State<GoalSheet> {
   //var seriesPieData =  <charts.Series<Task, String>>[];
+  bool changedByUser = false;
+  String internalErrorMsg = '';
   bool isSavePressed = false;
   bool isTimedOut = false;
   List<Task> pieData = [];
@@ -80,6 +83,7 @@ class _GoalSheetState extends State<GoalSheet> {
   double inflation = 1;
   int goalDuration = 1;
   double inflationEffect = 1.0;
+  int whichController = 0;
 
   TextEditingController titleEditingController = TextEditingController();
   TextEditingController goalController = TextEditingController();
@@ -87,12 +91,12 @@ class _GoalSheetState extends State<GoalSheet> {
   late FirebaseFirestore fireStore;
   // late var goalAccess;
 
-  double fv(double r, int nper, double pmt, double pv, int type) {
-    double fv = (pv * pow(1 + r, nper) +
-        pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
-    print('fv is $fv');
-    return fv;
-  }
+  // double fv(double r, int nper, double pmt, double pv, int type) {
+  //   double fv = (pv * pow(1 + r, nper) +
+  //       pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
+  //   print('fv is $fv');
+  //   return fv;
+  // }
 
   @override
   void initState() {
@@ -120,7 +124,7 @@ class _GoalSheetState extends State<GoalSheet> {
   double calculateInterset() {
     double interest;
     // double roi = expectedRoi /100;
-    futureValue = fv(inflation / 100, goalDuration, 0, goalAmount, 0);
+    futureValue = Calculator.fv(inflation / 100, goalDuration, 0, goalAmount, 0);
     double goalPortion = goalAmount;
 
     double _inflation = futureValue - goalPortion;
@@ -205,15 +209,36 @@ class _GoalSheetState extends State<GoalSheet> {
             onTap: () {
               setState(() {
                 isEditing = false;
-                if(dummy.text!='') {
-                  goalAmount = double.parse(dummy.text);
-                  dummy.text =
-                      DefaultValues.textFormat.format(double.parse(dummy.text));
-                }else{
-                  goalAmount = double.parse('0');
-                  dummy.text =
-                      DefaultValues.textFormat.format(double.parse('0'));
+
+                switch(whichController){
+                  case 1:
+                    if(dummy.text!='') {
+                      goalAmount = double.parse(dummy.text);
+                      dummy.text =
+                          DefaultValues.textFormat.format(double.parse(dummy.text));
+                    }else{
+                      goalAmount = double.parse('0');
+                      dummy.text =
+                          DefaultValues.textFormat.format(double.parse('0'));
+                    }
+                    break;
+
+                  case 2:
+                    if(!changedByUser){
+                      setState(() {
+                        internalErrorMsg = 'value must be numeric';
+                      });
+
+                    }else{
+                      setState(() {
+                        internalErrorMsg = '';
+                      });
+                    }
+                    // if(expectedRoi == '')
+                    break;
+
                 }
+
               });
             },
             child: Container(
@@ -462,6 +487,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
                       validator: () {
                         setState(() {
+                          whichController = 1;
                           isEditing = true;
                           dummy = goalController;
                         });
@@ -479,24 +505,29 @@ class _GoalSheetState extends State<GoalSheet> {
                   Padding(
                     padding: EdgeInsets.only(left: 2.w, right: 2.w),
                     child: (widget.type != 'Delete')
-                        ? LabeledSlider(
+                        ? LabeledSlider(   // Inflation slider
+                            internalErrorMsg: internalErrorMsg,
                             activeColor: kPresentTheme.accentColor,
-                            onChanged: (value) {
+                            onChanged: (value, internal) {
                               setState(() {
-                                if(value!=0){
-
-
                                 inflation = value;
-                                }else{
+                                changedByUser = internal;
 
-                                  inflation = 1;
-                                }
+                                // if(value!=0){
+                                //
+                                // inflation = value;
+                                // }else{
+                                //
+                                //   inflation = 0;
+                                //   changedByUser = internal;
+                                // }
 
-                               // print('inflarion : $inflation');
+                                //print('inflarion : $internal');
                               });
                             },
                             validator: () {
                               setState(() {
+                                whichController = 2;
                                 isEditing = true;
                               });
                             },
@@ -523,7 +554,7 @@ class _GoalSheetState extends State<GoalSheet> {
                     child: (widget.type != 'Delete')
                         ? LabeledSlider(
                             activeColor: kPresentTheme.accentColor,
-                            onChanged: (value) {
+                            onChanged: (value, internal) {
                               setState(() {
                                 goalDuration = value.round();
                               });

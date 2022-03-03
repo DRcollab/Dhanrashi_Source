@@ -406,7 +406,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                     padding: EdgeInsets.only(left:2.w, right: 2.w),
                     child: LabeledSlider(
                       activeColor: kPresentTheme.accentColor,
-                      onChanged: (value){
+                      onChanged: (value, internal){
                         setState(() {
                           expectedRoi = value;
                         });
@@ -434,7 +434,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                     padding: EdgeInsets.only(left:2.w, right: 2.w),
                     child: LabeledSlider(
                       activeColor: kPresentTheme.accentColor,
-                      onChanged: (value){
+                      onChanged: (value, internal){
                         setState(() {
                           investmentDuration = value.round();
                         });

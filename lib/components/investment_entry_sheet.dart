@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:dhanrashi_mvp/components/maps.dart';
 import 'package:dhanrashi_mvp/components/vanish_keyboard.dart';
+import 'package:dhanrashi_mvp/data/financial_calculator.dart';
 import 'package:dhanrashi_mvp/screens/dashboard.dart';
 import 'package:dhanrashi_mvp/data/global.dart';
 import 'package:dhanrashi_mvp/components/dounut_charts.dart';
@@ -81,7 +82,9 @@ class InvestmentSheet extends StatefulWidget {
 class _InvestmentSheetState extends State<InvestmentSheet> {
   //var seriesPieData =  <charts.Series<Task, String>>[];
 
+  bool changedByUser = false; // Checks whether the change in text box is done by the user of internally;
   bool textBoxLostFocus = false;
+  String internalErrorMsg = '';
   bool isSavePressed = false;
   bool isTimedOut = false;
   bool statusOfStoring = false;
@@ -107,10 +110,12 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   TextEditingController currentInvestmentController = TextEditingController();
   TextEditingController annualInvestmentController = TextEditingController();
   TextEditingController dummy = TextEditingController();
+
+
   double calculateInterset() {
     double interest;
     // double roi = expectedRoi /100;
-    futureValue = fv(expectedRoi / 100, investmentDuration, annualInvestment,
+    futureValue = Calculator.fv(expectedRoi / 100, investmentDuration, annualInvestment,
         investedAmount, 0);
     double investedPortion =
         investedAmount + annualInvestment * investmentDuration;
@@ -121,11 +126,11 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   }
 
 //TODO
-  double fv(double r, int nper, double pmt, double pv, int type) {
-    double fv = (pv * pow(1 + r, nper) +
-        pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
-    return fv;
-  }
+//   double fv(double r, int nper, double pmt, double pv, int type) {
+//     double fv = (pv * pow(1 + r, nper) +
+//         pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
+//     return fv;
+//   }
 
 
   @override
@@ -306,8 +311,19 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                           .format(double.parse('0'));
                     }
                     break;
-                  default:
-                    print('Expected ROI $expectedRoi');
+                  case 3:
+
+                    if(!changedByUser){
+                        setState(() {
+                          internalErrorMsg = 'value must be numeric';
+                        });
+
+                    }else{
+                      setState(() {
+                        internalErrorMsg = '';
+                      });
+                    }
+                   // if(expectedRoi == '')
                     break;
                 }
               });
@@ -650,13 +666,14 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                     padding: EdgeInsets.only(left: 2.w, right: 2.w),
                     child: (widget.type != 'Delete')
                         ? LabeledSlider(
+                            internalErrorMsg: internalErrorMsg,
                             activeColor: kPresentTheme.accentColor,
                             // implementWarning: true,
                             // threshold: 20,
-                            onChanged: (value) {
+                            onChanged: (value, internal) {
                               setState(() {
                                 expectedRoi = value;
-
+                                changedByUser = internal;
                               });
                             },
 
@@ -696,7 +713,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                     child: (widget.type != 'Delete')
                         ? LabeledSlider(
                             activeColor: kPresentTheme.accentColor,
-                            onChanged: (value) {
+                            onChanged: (value, internal) {
                               setState(() {
                                 investmentDuration = value.round();
                               });
