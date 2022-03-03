@@ -351,10 +351,18 @@ class _NumberInputFieldState extends State<NumberInputField> {
                        print(value);
                        if(value!='') {
                          widget.onChanged(double.parse(value));
+                         // setState(() {
+                         //   widget.controller.text = value;
+                         // });
                        }
                        else{
                          widget.onChanged(0);
+                         // setState(() {
+                         //   widget.controller.text = value;
+                         // });
                        }
+
+
                   },
                   onTap: widget.validator,
 

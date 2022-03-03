@@ -90,6 +90,7 @@ class _GoalSheetState extends State<GoalSheet> {
   double fv(double r, int nper, double pmt, double pv, int type) {
     double fv = (pv * pow(1 + r, nper) +
         pmt * (1 + r * type) * (pow(1 + r, nper) - 1) / r);
+    print('fv is $fv');
     return fv;
   }
 
@@ -482,7 +483,16 @@ class _GoalSheetState extends State<GoalSheet> {
                             activeColor: kPresentTheme.accentColor,
                             onChanged: (value) {
                               setState(() {
+                                if(value!=0){
+
+
                                 inflation = value;
+                                }else{
+
+                                  inflation = 1;
+                                }
+
+                               // print('inflarion : $inflation');
                               });
                             },
                             validator: () {

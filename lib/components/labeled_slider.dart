@@ -109,9 +109,15 @@ class _LabeledSliderState extends State<LabeledSlider> {
                // value = double.parse(double.parse(this.controller.text).toStringAsFixed(2));
               },
               getValue: (){
+                double val = 0;
                 setState(() {
 
-                  double val = double.parse(double.parse(this.controller.text).toStringAsFixed(2));
+                  if(this.controller.text !='') {
+                     val = double.parse(double.parse(this.controller.text)
+                        .toStringAsFixed(2));
+                  }else{
+                    val = 0;
+                  }
                   if( val > widget.min) {
 
                     if(val<1.0){

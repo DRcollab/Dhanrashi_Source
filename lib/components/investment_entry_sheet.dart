@@ -656,7 +656,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                             onChanged: (value) {
                               setState(() {
                                 expectedRoi = value;
-                                print('@$expectedRoi');
+
                               });
                             },
 
