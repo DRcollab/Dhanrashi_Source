@@ -78,7 +78,6 @@ class _DashboardState extends State<Dashboard> {
     // TODO: implement dispose
     super.dispose();
 
-    print('dashboard dipsoed');
   }
 
   @override
@@ -129,6 +128,7 @@ class _DashboardState extends State<Dashboard> {
             MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
       }
 
+      Global.goalCount = snapshot.docs.length;
       snapshot.docs.forEach((f) {
         String email=f.get('email');
         String userID=f.get('Uuid');
@@ -145,7 +145,7 @@ class _DashboardState extends State<Dashboard> {
 
 
       setState(() {
-
+          print(Global.goalCount);
           goals.add(
               GoalDB(
                 email:email,
@@ -160,7 +160,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               )
           );
-          Global.goalCount++;
+         // Global.goalCount++;
 
       });
 
@@ -189,7 +189,7 @@ class _DashboardState extends State<Dashboard> {
             MaterialPageRoute(builder: (context) => EmptyPage(currentUser: widget.currentUser,)));
 
       }
-
+      Global.investmentCount = snapshot.docs.length;
       snapshot.docs.forEach((f) {
         String email=f.get('email');
         String userID=f.get('Uuid');
@@ -220,7 +220,7 @@ class _DashboardState extends State<Dashboard> {
                 ) ,
               )
           );
-          Global.investmentCount++;
+          //Global.investmentCount++;
        });
 
 

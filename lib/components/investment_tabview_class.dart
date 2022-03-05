@@ -76,32 +76,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    totalInvest = widget.totalInvest;
-    totalCorpus = 0;
 
-    //
-    investments = List.empty(growable: true);
-    if(widget.investmentDBs.length>0){
-      widget.investmentDBs.forEach((element) {
-        investments.add(element.investment);
-      });
-      longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
-          investments);
-     // longestGoalDuration = Calculator().getLongestGoalDuration(goals);
-      dataSet = Calculator().getInvestmentDetail(investments, Global.longestInvestmentDuration, Global.longestGoalDuration);
-      fetched = true;
-    }
-
-
-    investments.forEach((element) {
-      double futureValue = Calculator.fv(element.investmentRoi,
-          element.duration,
-          element.annualInvestmentAmount,
-          element.currentInvestmentAmount, 0);
-
-     totalCorpus = futureValue + totalCorpus;
-
-    });
 
   }
 
@@ -235,6 +210,34 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
 
     @override
   Widget build(BuildContext context) {
+
+
+      totalInvest = widget.totalInvest;
+      totalCorpus = 0;
+
+      //
+      investments = List.empty(growable: true);
+      if(widget.investmentDBs.length>0){
+        widget.investmentDBs.forEach((element) {
+          investments.add(element.investment);
+        });
+        longestInvestmentDuration = Calculator().getLongestInvestmentDuration(
+            investments);
+        // longestGoalDuration = Calculator().getLongestGoalDuration(goals);
+        dataSet = Calculator().getInvestmentDetail(investments, Global.longestInvestmentDuration, Global.longestGoalDuration);
+        fetched = true;
+      }
+
+
+      investments.forEach((element) {
+        double futureValue = Calculator.fv(element.investmentRoi,
+            element.duration,
+            element.annualInvestmentAmount,
+            element.currentInvestmentAmount, 0);
+
+        totalCorpus = futureValue + totalCorpus;
+
+      });
 
     return Column(
       children: [

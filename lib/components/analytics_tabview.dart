@@ -74,23 +74,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
         temp2.add(eachInvTotal);
         temp3.add(eachGoalTotal);
         temp4.add(diff.toString());
-        //eachGoalYear = element;
-        // eachGoalName = element;
-        //  if(goalPoints.contains(eachGoalYear)){
-        //    String eachInvTotal = this.dataSet[0][eachGoalYear];
-        //    String eachGoalTotal =  this.dataSet[1][eachGoalYear];
-        //    double diff = double.parse(eachInvTotal)- double.parse(eachGoalTotal);
-        //  }
 
-        //  recommList.add([eachInvTotal, eachGoalTotal,diff.toString()]);
-
-        // if (double.parse(eachInvTotal) > double.parse(eachGoalTotal)) {
-        //  // recomMessage = 'You are ahead of your goals at $eachGoalYear years';
-        //
-        // } else {
-        //
-        //  // recomMessage =   'You are behind your goals at $eachGoalYear years and need to invest more';
-        // }
       });
 
       recommList.add(temp1);
@@ -139,6 +123,8 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
     investments = List.empty(growable: true);
     goals = List.empty(growable: true);
     bool fetched = false;
+
+
 
     if (widget.investmentDBs.isNotEmpty) {
       widget.investmentDBs.forEach((element) {

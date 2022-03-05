@@ -85,7 +85,7 @@ class _LabeledInputState extends State<LabeledInput> {
     // TODO: implement dispose
     super.dispose();
     //controller.dispose();
-    print('labelled input disposed');
+
   }
 
 

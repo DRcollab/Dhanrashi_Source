@@ -295,7 +295,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                       annualInvestment = double.parse(dummy.text);
                     } else {
                       if(dummy.text!='') {
-                        print('Blank found');
+
                         annualInvestment = double.parse(dummy.text);
 
                       }

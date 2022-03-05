@@ -48,7 +48,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
   void initState()  {
     // TODO: implement initState
     DefaultValues.mediaScreenHeight = window.physicalSize.height/window.devicePixelRatio;
-    print('height :${DefaultValues.mediaScreenHeight}');
+
     super.initState();
     future: Firebase.initializeApp().whenComplete(() => fireAuth = FirebaseAuth.instance);
 
@@ -84,7 +84,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
   Widget build(BuildContext context) {
 
 
- //print('Height ')
+   print('Height ${DefaultValues.mediaScreenHeight}');
 
 
 
@@ -95,7 +95,7 @@ class _DhanrashiMVPState extends State<DhanrashiMVP>  {
 
             },
             child: MaterialApp(
-              home:Intro(nav:sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile) , ),// sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile), //
+              home:Intro(nav:sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile,) , ),// sessionActive != true ?  LoginScreen() : Dashboard(currentUser: profile), //
               //routes: ,
             ),
           );

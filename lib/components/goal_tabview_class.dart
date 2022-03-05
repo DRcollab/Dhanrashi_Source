@@ -62,7 +62,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    print('goals tab page disposed');
+
   }
 
 
@@ -72,31 +72,14 @@ class _GoalsTabViewState extends State<GoalsTabView> {
     super.initState();
 
 
-    totalGoal = 0;
 
-
-
-
-    goals = List.empty(growable: true);
-    if(widget.goalDBs.isNotEmpty){
-      widget.goalDBs.forEach((element) {
-
-        goals.add(element.goal);
-        totalGoal = element.goal.goalAmount + totalGoal;
-      });
-      //longestGoalDuration = Calculator().getLongestGoalDuration(goals);
-
-      dataSet = Calculator().getGoalDetail(goals,Global.longestInvestmentDuration, Global.longestGoalDuration);
-      fetched = true;
-    }else{
-
-      fetched = false;
-    }
     //
-    future:Firebase.initializeApp().whenComplete(() {
-      fireStore =  FirebaseFirestore.instance;
-     // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
-    });
+
+
+    // future:Firebase.initializeApp().whenComplete(() {
+    //   fireStore =  FirebaseFirestore.instance;
+    //  // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
+    // });
   }
 
 
@@ -186,7 +169,23 @@ class _GoalsTabViewState extends State<GoalsTabView> {
   @override
   Widget build(BuildContext context) {
 
+    totalGoal = 0;
+    goals = List.empty(growable: true);
 
+    if(widget.goalDBs.isNotEmpty){
+      widget.goalDBs.forEach((element) {
+
+        goals.add(element.goal);
+        totalGoal = element.goal.goalAmount + totalGoal;
+      });
+      //longestGoalDuration = Calculator().getLongestGoalDuration(goals);
+
+      dataSet = Calculator().getGoalDetail(goals,Global.longestInvestmentDuration, Global.longestGoalDuration);
+      fetched = true;
+    }else{
+
+      fetched = false;
+    }
 
 
 
@@ -305,19 +304,7 @@ class _GoalsTabViewState extends State<GoalsTabView> {
                             icon: Icon(Icons.delete, size:16.sp) ,
                           onPressed: (){
                             _edit(index, 'Delete');
-                              // Utility.showMessageAndAsk(
-                              //     context: context,
-                              //     buttonText1: 'I know',
-                              //     buttonText2: 'Cancel',
-                              //     msg:'Beware! You are about to delete this goal. This action is irreversible',
-                              //     takeAction1: (){
-                              //       GoalDB goalDB = widget.goalDBs[index];
-                              //       _delete(goalDB);
-                              //
-                              //
-                              //     },
-                              //     takeAction2: (){},
-                              // );
+
                           },
 
 
