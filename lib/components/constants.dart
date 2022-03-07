@@ -82,7 +82,26 @@ class DefaultValues {
 
   static setLogo(context){
 
-    return Image.asset('images/logo.png', width:mediaScreenHeight>600 ? 60.w:30.w, height: mediaScreenHeight>600 ? 5.h: 4.h);
+    double width = 0.0;
+    double height = 0.0;
+    if(mediaScreenHeight>700)
+      {
+        width = 60.w;
+        height = 5.h;
+        print('@@@@700');
+
+      }else if(mediaScreenHeight>600){
+
+        width = 45.w;
+        height = 4.h;
+        print('######600');
+    } else{
+      width = 30.w;
+      height = 4.h;
+      print('%%%%%%%less');
+    }
+
+    return Image.asset('images/logo.png', width:width, height: height);
 
   }
 
@@ -306,19 +325,19 @@ class DefaultValues {
   }
 
   static TextStyle kH1(context) => TextStyle(
-        fontSize:mediaScreenHeight > 600 ? 18.sp:15.sp, //* adaptFontsForSmallDevice(context),
+        fontSize:mediaScreenHeight > 700 ? 18.sp:15.sp, //* adaptFontsForSmallDevice(context),
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
       );
 
   static TextStyle kH2(context) => TextStyle(
-        fontSize: mediaScreenHeight > 600 ? 16.sp : 13.sp, // * adaptFontsForSmallDevice(context),
+        fontSize: mediaScreenHeight > 700 ? 16.sp : 13.sp, // * adaptFontsForSmallDevice(context),
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
       );
 
   static TextStyle kH3(context) => TextStyle(
-        fontSize: mediaScreenHeight > 600 ? 14.sp:11.sp, //* adaptFontsForSmallDevice(context),
+        fontSize: mediaScreenHeight > 700 ? 14.sp:11.sp, //* adaptFontsForSmallDevice(context),
         height: 1,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
@@ -328,7 +347,7 @@ class DefaultValues {
   ///
   ///
   static TextStyle kH4(context) => TextStyle(
-        fontSize: mediaScreenHeight > 600 ? 12.sp:10.sp, //* adaptFontsForSmallDevice(context),
+        fontSize: mediaScreenHeight > 700 ? 12.sp:10.sp, //* adaptFontsForSmallDevice(context),
         height: 1,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.normal,
@@ -337,27 +356,27 @@ class DefaultValues {
   static const kCurveRadius = 15.0;
 
   static kNormal1(context) => TextStyle(
-        fontSize: mediaScreenHeight > 600 ? 20.sp: 18.sp,
+        fontSize: mediaScreenHeight > 700 ? 20.sp: 18.sp,
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.normal,
       );
 
   static kNormal2(context) => TextStyle(
-        fontSize: mediaScreenHeight > 600 ? 15.sp:13.sp,
+        fontSize: mediaScreenHeight > 700 ? 15.sp:13.sp,
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.normal,
       );
 
   static kNormal3(context) => TextStyle(
-        fontSize: mediaScreenHeight > 600 ? 12.sp : 10.sp, //* adaptFontsForSmallDevice(context),
+        fontSize: mediaScreenHeight > 700 ? 12.sp : 10.sp, //* adaptFontsForSmallDevice(context),
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.normal,
       );
 
-  static kNormalTextStyle(context) => TextStyle(
-        color: Colors.white,
-        fontSize: 20.0 * adaptFontsForSmallDevice(context),
-      );
+  // static kNormalTextStyle(context) => TextStyle(
+  //       color: Colors.white,
+  //       fontSize: 20.0 * adaptFontsForSmallDevice(context),
+  //     );
 
   static kDarkTextStyle(context) => TextStyle(
         color: kPresentTheme.highLightColor,
