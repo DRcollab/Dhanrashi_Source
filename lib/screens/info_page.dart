@@ -1,3 +1,4 @@
+import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -20,17 +21,31 @@ class InfoPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            backgroundColor: kPresentTheme.accentColor,
-            radius: 40,
+          DefaultValues.setLogo(context),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical:18.0),
+            child: Center(child: Text(' Fincial Wisdom : ver - 1.0.0', style: DefaultValues.kH2(context),)),
+          ),
 
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical:18.0),
+            child:
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircleAvatar(),
+                  CircleAvatar(),
+                  CircleAvatar(),
+                  //Text(' by Arvind, Debashis and Shubhadeep', style: DefaultValues.kH2(context),),
+                ],
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical:18.0),
-            child: Center(child: Text(' Dhanrashi : ver - 1.0.0', style: DefaultValues.kH2(context),)),
+            child: Center(child: LinkText(linkText: 'Click Here to see our T & C document' , onPressed: () {  },)),
           ),
-
-
 
         ],
       )
