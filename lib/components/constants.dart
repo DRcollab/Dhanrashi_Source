@@ -79,6 +79,19 @@ class DefaultValues {
  static late double mediaScreenWidth;
 
 
+ static List<String> attributes = [
+   ///'<a href="https://www.flaticon.com/free-icons/chart-down" title="chart down icons">Chart down icons created by Arkinasi - Flaticon</a>';
+   'Chart down icons created by Arkinasi - Flaticon',
+   // 'Business vector created by pikisuperstar - www.freepik.com',
+   ///<a href='https://www.freepik.com/vectors/people'>People vector created by pch.vector - www.freepik.com</a>
+   'People vector created by pch.vector - www.freepik.com',
+   ///<a href="https://www.freepik.com/vectors/shopping">Shopping vector created by storyset - www.freepik.com</a>
+   ///<a href="https://www.freepik.com/vectors/box">Box vector created by storyset - www.freepik.com</a>
+   ///<a href="https://www.freepik.com/vectors/smartphone">Smartphone vector created by storyset - www.freepik.com</a>
+   ///<a href="https://www.freepik.com/vectors/web">Web vector created by storyset - www.freepik.com</a>
+   ///<a href="https://www.freepik.com/vectors/technology">Technology vector created by storyset - www.freepik.com</a>
+
+  ];
 
   static setLogo(context){
 
@@ -88,17 +101,17 @@ class DefaultValues {
       {
         width = 60.w;
         height = 5.h;
-        print('@@@@700');
+
 
       }else if(mediaScreenHeight>600){
 
         width = 45.w;
         height = 4.h;
-        print('######600');
+
     } else{
       width = 30.w;
       height = 4.h;
-      print('%%%%%%%less');
+
     }
 
     return Image.asset('images/logo.png', width:width, height: height);

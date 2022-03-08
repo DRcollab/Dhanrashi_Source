@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import '../components/custom_scaffold.dart';
 
 class InfoPage extends StatelessWidget {
-  const InfoPage({Key? key}) : super(key: key);
+
+  InfoPage({required this.currentUser});
+
+  var currentUser;
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      currentUser: this.currentUser,
       leftButton: SizedBox(),
       rightButton: IconButton(
         onPressed: (){
@@ -46,7 +50,14 @@ class InfoPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical:18.0),
             child: Center(child: LinkText(linkText: 'Click Here to see our T & C document' , onPressed: () {  },)),
           ),
-
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical:18.0),
+            child: Center(child: Text(' We express our  thanks for using their creatives :', style: DefaultValues.kH2(context),)),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical:18.0),
+            child: Center(child: Text(' Fincial Wisdom : ver - 1.0.0', style: DefaultValues.kH2(context),)),
+          ),
         ],
       )
     );

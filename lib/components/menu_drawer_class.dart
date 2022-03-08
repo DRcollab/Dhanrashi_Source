@@ -233,7 +233,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       Navigator.pop(context);
                       Navigator.push(context,
                         MaterialPageRoute(builder: (context) =>
-                            InfoPage(),),);
+                            InfoPage(currentUser:widget.currentUser,),),);
                     }
                     ,
                   ),
