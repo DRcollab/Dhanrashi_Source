@@ -144,7 +144,13 @@ class _ProfilerPageState extends State<ProfilerPage> {
    profileCollector.profileImage = widget.currentUser.profileImage;
  }
 
- if(widget.currentUser.incomeRange!='') {
+ if(widget.currentUser.incomeRange!='N/A') {
+
+   print(';;;;;;;;;;');
+   print(this.incomeRangeList.indexOf(
+       widget.currentUser.incomeRange));
+   print(widget.currentUser.incomeRange);
+
    profileCollector.annualIncome =
    this.incomeRangeList[this.incomeRangeList.indexOf(
        widget.currentUser.incomeRange)];
@@ -220,7 +226,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
   @override
   Widget build(BuildContext context) {
 
-    print('call me index : $index');
+   // print('call me index : $index');
 
     /// toggles the view of save button and navigation button
     ///

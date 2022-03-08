@@ -61,7 +61,7 @@ class ProfileView extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),
-                    child: Text( 'Date of Birth :${DateFormat('dd-MM-yyyy').format(currentUser.DOB.toLocal())}', style: DefaultValues.kNormal2(context),),
+                    child: Text( 'Date of ----Birth :${DateFormat('dd-MM-yyyy').format(currentUser.DOB.toLocal())}', style: DefaultValues.kNormal2(context),),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 8.w),

@@ -180,6 +180,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               widget.isItForUpdate ? Dashboard(currentUser: profile)
               : EmptyPage(currentUser: profile,message:'Great! Your profile is saved successfully',)));
       }).catchError((onError){
+        print('error hold:  ${onError.toString()}');
+
         Utility.showErrorMessage(context, onError.toString());
       }).then((DocumentReference docRefs){
           this.profile.docId = docRefs.id;
