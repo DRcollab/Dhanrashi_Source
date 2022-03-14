@@ -4,7 +4,7 @@
 
 
     <application
-        android:label="dhanrashi"
+        android:label="FiWi"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
