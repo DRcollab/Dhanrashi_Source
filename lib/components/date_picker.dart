@@ -76,6 +76,8 @@ class _CalendarState extends State<Calendar> {
     selectedDay = widget.initialDate.day;
     arrayOfDates = determineDateList();
     selectedDate = DateTime(selectedYear,selectedMonth,selectedDay);
+    selectedCell = arrayOfDates.indexOf(selectedDay.toString());
+   // print(' array of dates$arrayOfDates , day $selectedDay, index :${arrayOfDates.indexOf('24')}');
     selectedGrid = showDays();
     selectedColor = widget.selectColor;
 
@@ -138,6 +140,8 @@ class _CalendarState extends State<Calendar> {
 
 
   Widget showDays(){
+
+    print('selected cell in calender is : $selectedCell');
     showingDays = true;
    // selectedCell = arrayOfDates.indexOf(selectedDay);
     return  GridView.builder(

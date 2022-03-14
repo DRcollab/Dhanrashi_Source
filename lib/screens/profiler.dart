@@ -146,10 +146,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
 
  if(widget.currentUser.incomeRange!='N/A') {
 
-   print(';;;;;;;;;;');
-   print(this.incomeRangeList.indexOf(
-       widget.currentUser.incomeRange));
-   print(widget.currentUser.incomeRange);
+
 
    profileCollector.annualIncome =
    this.incomeRangeList[this.incomeRangeList.indexOf(
@@ -226,7 +223,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
   @override
   Widget build(BuildContext context) {
 
-   // print('call me index : $index');
+
 
     /// toggles the view of save button and navigation button
     ///
@@ -442,20 +439,24 @@ class _NamePickerState extends State<NamePicker> {
 
 
   var jSon;
-  late String profileImage;
+  String profileImage = '';
 
   @override
   initState(){
     super.initState();
+
     if(widget.profilePhoto.contains('question')){
       profileImage = 'profile_image0.png';
       widget.changedPhoto(profileImage);
     }
-    else {
+    else if(widget.profilePhoto.contains('/')){
       profileImage = widget.profilePhoto.substring(
         DefaultValues.directoryOfPhoto.length + 1,);
+    }else{
+
+      profileImage = widget.profilePhoto;
     }
-    print(profileImage);
+
     jSon =  JsonHandler(fileName: 'settings.json');
     // profilePhotoSource = widget.profilePhoto;
 
@@ -703,9 +704,10 @@ class _IncomePickerState extends State<IncomePicker> {
   void initState() {
 
 
+      selectedValue = widget.incomePicker;
     if(widget.incomePicker!=0){
 
-   //   this.selectedValue = this.incomeOptions.indexOf(widget.incomePicker);
+     // this.selectedValue = this.incomeOptions.indexOf(widget.incomePicker.);
       widget.validate!(selectedValue);
 
     }

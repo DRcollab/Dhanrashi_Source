@@ -241,7 +241,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                             child: CommandButton(
                                 onPressed: (){
 
-
+                                  print('this is the image: ${widget.collector.profileImage}');
                                   var profile = Profile(
                                     firstName: widget.collector.fName.text,
                                     lastName: widget.collector.lName.text,
