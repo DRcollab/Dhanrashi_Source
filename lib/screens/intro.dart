@@ -29,7 +29,7 @@ class _IntroState extends State<Intro> {
                 PageRouteBuilder(pageBuilder: (context,a1,a2) =>
                     widget.nav,
                     transitionsBuilder: (context,anim,a1,child) => FadeTransition(opacity: anim,child: child,),
-                    transitionDuration: Duration(milliseconds: 2000),
+                    transitionDuration: Duration(milliseconds: 3000),
 
                 ));
 
@@ -41,8 +41,8 @@ class _IntroState extends State<Intro> {
     return Scaffold(
 
       body: Container(
-        color: kPresentTheme.alternateColor,
-        child:Center(child: Image.asset('${DefaultValues.imageDirectory}/gifs/logo_animation.gif')),
+        color: kPresentTheme.accentColor,
+        child:Center(child: Image.asset('${DefaultValues.imageDirectory}${DefaultValues.introImage}')),
 
       ),
 

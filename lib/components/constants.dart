@@ -93,6 +93,9 @@ class DefaultValues {
 
   ];
 
+  static String introImage = '/gifs/logo_animation_green.gif';
+      //'/gifs/logo_animation_lime.gif';
+
   static setLogo(context){
 
     double width = 0.0;

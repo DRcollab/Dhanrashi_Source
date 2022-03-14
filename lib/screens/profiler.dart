@@ -144,7 +144,7 @@ class _ProfilerPageState extends State<ProfilerPage> {
    profileCollector.profileImage = widget.currentUser.profileImage;
  }
 
- if(widget.currentUser.incomeRange!='N/A') {
+ if(widget.currentUser.incomeRange!='N/A' && widget.currentUser.incomeRange!='') {
 
 
 
@@ -203,10 +203,14 @@ class _ProfilerPageState extends State<ProfilerPage> {
         incomePicker: this.incomeRangeList.indexOf(widget.currentUser.incomeRange),
           validate:(value){
 
-            profileCollector.annualIncome = incomeRangeList[value!.round()];
-           // profileCollector.annualIncome = incomeOptions[value!.round()];
-            _incomeValidation = true;
-
+            print(value);
+            if(value! >= 0) {
+              profileCollector.annualIncome = incomeRangeList[value.round()];
+              // profileCollector.annualIncome = incomeOptions[value!.round()];
+              _incomeValidation = true;
+            }else{
+              profileCollector.annualIncome = incomeRangeList[0];
+            }
           },
         showCaseKey: this._showCaseKeys[2],
       ), /// THIS SHOWS THE RADIO OPTIONS TO COLLECT INCOME RANGE

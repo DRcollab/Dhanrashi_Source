@@ -49,7 +49,7 @@ class _AnalyticsTabViewState extends State<AnalyticsTabView> {
   bool _scrollingUp = false;
   bool _showSummary = true;
 
-  String logoAnime = '${DefaultValues.imageDirectory}/gifs/logo_animation.gif';
+  String logoAnime = '${DefaultValues.imageDirectory}/gifs/logo_animation1.gif';
 
   _fetchRecommendations() {
     // int eachGoalYear;

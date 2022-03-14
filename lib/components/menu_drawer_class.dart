@@ -219,7 +219,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         Navigator.pop(context);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                ProfilerPage(currentUser: widget.currentUser,isItForUpdate: true)));
+                                ProfilerPage(currentUser: widget.currentUser,isItForUpdate: false)));
                       }
                     }
                     ,
