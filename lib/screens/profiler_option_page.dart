@@ -138,12 +138,16 @@ class _ProfilerOptionPagerState extends State<ProfilerOptionPager> {
         prefs.setString('income', profile.incomeRange);
         prefs.setString('doc_id', profile.docId??'');
         prefs.setString('image', profile.profileImage);
+        
       });
       Navigator.push(context,
           MaterialPageRoute(builder: (context) =>
               EmptyPage(currentUser: profile,message:'Well you can always change the profile later' ,messageColor: Colors.amber,)));
     }).catchError((onError){
 
+    }).then((DocumentReference docRefs){
+      profile.docId = docRefs.id;
+      print('doc id : ${profile.docId}');
     });
 
 

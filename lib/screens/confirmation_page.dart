@@ -87,6 +87,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     print('profile _update:${widget.currentUser.profileImage}');
+    print(docID);
       fireStore.collection('pjdhan_users').doc(docID).update({
         'email': profile.email,
         'Uid': profile.uid,
