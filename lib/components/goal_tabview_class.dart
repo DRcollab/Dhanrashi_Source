@@ -123,8 +123,20 @@ class _GoalsTabViewState extends State<GoalsTabView> {
 
                 setState(() {
                   if(type!='Delete') {
-                    goals[index] = newGoal!;
-                    widget.goalDBs[index].goal = goals[index];
+                    goals.removeAt(index);
+                    goals.insert(0,newGoal!);
+
+
+
+                    GoalDB newGoalDB = widget.goalDBs[index];
+                    newGoalDB.goal = newGoal;
+
+                    widget.goalDBs.removeAt(index);
+
+                    widget.goalDBs.insert(0, newGoalDB);
+
+
+
                   }else{
                     goals.removeAt(index);
                     widget.goalDBs.removeAt(index);

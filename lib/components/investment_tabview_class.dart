@@ -125,11 +125,17 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
                // if(mounted) {
                  setState(() {
                     if (type != 'Delete') {
-                      investments[index] = newInv!;
-                      print(newInv);
-                      widget.investmentDBs[index].investment =
-                      investments[index];
-                      print(index);
+                      investments.removeAt(index);
+                      investments.insert(0,newInv!);
+
+                      InvestDB newInvestDB = widget.investmentDBs[index];
+                      newInvestDB.investment = newInv;
+                      widget.investmentDBs.removeAt(index);
+
+                      widget.investmentDBs.insert(0, newInvestDB);
+                      // widget.investmentDBs[index].investment =
+                      // investments[index];
+
                     } else {
                       investments.removeAt(index);
                       widget.investmentDBs.removeAt(index);
