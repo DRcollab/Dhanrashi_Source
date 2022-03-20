@@ -1,5 +1,6 @@
 import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
+import 'package:dhanrashi_mvp/screens/tnc.dart';
 import 'package:flutter/material.dart';
 
 import '../components/custom_scaffold.dart';
@@ -28,9 +29,12 @@ class InfoPage extends StatelessWidget {
           DefaultValues.setLogo(context),
           Padding(
             padding: const EdgeInsets.symmetric(vertical:18.0),
-            child: Center(child: Text(' Fincial Wisdom : ver - 1.0.0', style: DefaultValues.kH2(context),)),
+            child: Center(child: Text(' Financial Wisdom ver : 1.0.0', style: DefaultValues.kH2(context),)),
           ),
-
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical:18.0),
+            child: Center(child: Text(' Developed by', style: DefaultValues.kH4(context),)),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical:18.0),
             child:
@@ -38,9 +42,33 @@ class InfoPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CircleAvatar(),
-                  CircleAvatar(),
-                  CircleAvatar(),
+                  CircleAvatar(
+                    radius: 40,
+                   backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/AG_profile3.png'),
+
+                  ),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/deba_profile.png'),
+                  ),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/subha_profile.png'),
+                  ),
+                  //Text(' by Arvind, Debashis and Shubhadeep', style: DefaultValues.kH2(context),),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 18.0),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('Arvind',style: DefaultValues.kH2(context)),
+                  Text('Debashis',style: DefaultValues.kH2(context)),
+                  Text('Shubhadeep',style: DefaultValues.kH2(context)),
                   //Text(' by Arvind, Debashis and Shubhadeep', style: DefaultValues.kH2(context),),
                 ],
               ),
@@ -48,16 +76,24 @@ class InfoPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical:18.0),
-            child: Center(child: LinkText(linkText: 'Click Here to see our T & C document' , onPressed: () {  },)),
+            child: Center(child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Know our',style: DefaultValues.kNormal3(context),),
+                LinkText(linkText: ' Terms and Condition' , onPressed: () {
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TnC(),
+                      )
+                  );
+                },),
+              ],
+            )),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical:18.0),
-            child: Center(child: Text(' We express our  thanks for using their creatives :', style: DefaultValues.kH2(context),)),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical:18.0),
-            child: Center(child: Text(' Fincial Wisdom : ver - 1.0.0', style: DefaultValues.kH2(context),)),
-          ),
+
+
         ],
       )
     );

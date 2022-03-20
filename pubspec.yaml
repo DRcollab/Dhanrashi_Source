@@ -41,8 +41,8 @@ dependencies:
   provider: ^6.0.1
   matrix2d: ^1.0.0
   cloud_firestore: ^3.1.0 # new - DC
-  firebase_auth: ^3.2.0 # DC
-  firebase_core: ^1.10.0 # new DC
+  firebase_auth: ^3.3.10 # DC
+  firebase_core: ^1.13.1 # new DC
   google_fonts: ^2.0.0
   fluttertoast: ^8.0.8
   loading_gifs: ^0.3.0
@@ -50,7 +50,9 @@ dependencies:
   connectivity: ^3.0.6
   shared_preferences: ^2.0.8
   showcaseview: ^1.1.4
+  firebase_auth_platform_interface: ^6.2.1
   webview_flutter: ^3.0.0
+
 
 
 
@@ -83,6 +85,7 @@ flutter:
   assets:
     - images/
     - images/gifs/
+    - images/profiles/
     - images/goals.jpg
     - images/logo.png
     - images/d-chart.png

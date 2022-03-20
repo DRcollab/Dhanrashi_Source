@@ -13,7 +13,7 @@ class TnC extends StatefulWidget {
 class _TnCState extends State<TnC> {
 //
 
-late WebViewController _controller;
+//late WebViewController _controller = WebViewController;
 
 
 @override
@@ -44,16 +44,17 @@ late WebViewController _controller;
             padding: EdgeInsets.symmetric(vertical: 7.h),
             child: WebView(
               onWebViewCreated: (controller){
-                _controller = controller;
+               // _controller = controller;
               },
               onPageStarted: (url){
-                _controller.runJavascript(
-                      "document.getElementsById('docs-titlebar-container').style.display='none'"
-                );
+                //_controller.runJavascript(
+                   //   "document.getElementsById('docs-titlebar-container').style.display='none'"
+               // );
               },
               zoomEnabled: true,
               javascriptMode: JavascriptMode.unrestricted,
-              initialUrl: 'https://docs.google.com/document/d/1-JIDrxX4s--lFPNBqM-7W7H-af4_NR_o/edit?usp=sharing&ouid=103366263473702923059&rtpof=true&sd=true',
+              initialUrl: 'file:////images/profiles/AG_profile3.png'
+              //'https://drive.google.com/file/d/18HC33dZhcy8hh3Ji03BezdaH-phj3KiJ/view?usp=sharing',
             ),
           )
       ),
