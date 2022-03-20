@@ -88,6 +88,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
     print('profile _update:${widget.currentUser.profileImage}');
     print(docID);
+
       fireStore.collection('pjdhan_users').doc(docID).update({
         'email': profile.email,
         'Uid': profile.uid,
