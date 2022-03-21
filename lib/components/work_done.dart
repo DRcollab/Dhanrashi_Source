@@ -1,8 +1,11 @@
+import 'package:dhanrashi_mvp/components/buttons.dart';
 import 'package:dhanrashi_mvp/components/constants.dart';
 import 'package:dhanrashi_mvp/components/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:loading_gifs/loading_gifs.dart';
+
+import '../screens/dashboard.dart';
 
 
 class WorkDone extends StatefulWidget {
@@ -11,12 +14,14 @@ class WorkDone extends StatefulWidget {
   String whatToAdd = 'Investment';
   String whatToDo = 'Save';
   bool timedOut = false;
+  var currentUser;
 
   WorkDone({
     this.isComplete=false,
     this.whatToAdd = 'Investment',
     this.whatToDo = 'Save',
     this.timedOut = false,
+    required this.currentUser,
   });
 
   @override
@@ -65,14 +70,39 @@ class _WorkDoneState extends State<WorkDone> {
                 Padding(
                   padding:  EdgeInsets.symmetric(vertical: 6.h, horizontal: 2.w),
                   child: CircleAvatar(
-                    radius: 80,
+                    radius: 60,
                     backgroundColor: Colors.amber,
                     child: Image.asset('images/check.png',
 
                       height: 80,width: 80,),
                   ),
                 ),
-                 Text('Your ${this.widget.whatToAdd} is \n${this.widget.whatToDo}d successfully ', style: DefaultValues.kH2(context),)
+                 Text('Your ${this.widget.whatToAdd} is ${this.widget.whatToDo}d successfully ', style: DefaultValues.kH3(context),),
+                CommandButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Dashboard(currentUser: widget.currentUser,tabNumber: 1,),
+                        ),
+                      );
+                    },
+                    buttonColor: kPresentTheme.accentColor,
+                    borderRadius: BorderRadius.circular(20),
+                    textColor: kPresentTheme.alternateColor,
+                    buttonText: 'View your ${this.widget.whatToAdd}',
+
+                ),
+                CommandButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  buttonColor: kPresentTheme.accentColor,
+                  borderRadius: BorderRadius.circular(20),
+                  textColor: kPresentTheme.alternateColor,
+                  buttonText: 'Add more ${this.widget.whatToAdd}',
+
+                ),
 
               ],
             )) :!widget.timedOut ? Image.asset(kPresentTheme.progressIndicator, scale: 3) :

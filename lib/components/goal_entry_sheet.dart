@@ -200,6 +200,7 @@ class _GoalSheetState extends State<GoalSheet> {
 
     return isSavePressed
         ? WorkDone(
+            currentUser: widget.currentUser,
             isComplete: statusOfStoring,
             whatToAdd: 'Goal',
             whatToDo: widget.type,

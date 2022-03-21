@@ -264,6 +264,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
 
     return isSavePressed
         ? WorkDone(
+            currentUser: widget.currentUser,
             isComplete: statusOfStoring,
             whatToAdd: 'Investment "${widget.titleMessage}"',
             whatToDo: widget.type,
