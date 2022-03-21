@@ -73,13 +73,6 @@ class _GoalsTabViewState extends State<GoalsTabView> {
 
 
 
-    //
-
-
-    // future:Firebase.initializeApp().whenComplete(() {
-    //   fireStore =  FirebaseFirestore.instance;
-    //  // goalAccess = DRGoalAccess(fireStore, widget.currentUser);
-    // });
   }
 
 

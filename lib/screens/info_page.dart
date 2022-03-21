@@ -41,39 +41,55 @@ class InfoPage extends StatelessWidget {
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment:CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                   backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/AG_profile3.png'),
+                  Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                       backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/AG_profile3.png'),
 
+                      ),
+                      Text('Aravind',style: DefaultValues.kH3(context)),
+                    ],
                   ),
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/deba_profile.png'),
+                  Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/deba_profile.png'),
+                      ),
+                      Text('Debashis',style: DefaultValues.kH3(context)),
+                    ],
                   ),
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/subha_profile.png'),
+                  Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/subha_profile.png'),
+                      ),
+                      Text('Shubhadeep',style: DefaultValues.kH3(context)),
+                    ],
                   ),
                   //Text(' by Arvind, Debashis and Shubhadeep', style: DefaultValues.kH2(context),),
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 18.0),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('Arvind',style: DefaultValues.kH2(context)),
-                  Text('Debashis',style: DefaultValues.kH2(context)),
-                  Text('Shubhadeep',style: DefaultValues.kH2(context)),
-                  //Text(' by Arvind, Debashis and Shubhadeep', style: DefaultValues.kH2(context),),
-                ],
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 18.0),
+          //   child: Center(
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       children: [
+          //         Text('Arvind',style: DefaultValues.kH2(context)),
+          //         Text('Debashis',style: DefaultValues.kH2(context)),
+          //         Text('Shubhadeep',style: DefaultValues.kH2(context)),
+          //         //Text(' by Arvind, Debashis and Shubhadeep', style: DefaultValues.kH2(context),),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical:18.0),
             child: Center(child: Row(

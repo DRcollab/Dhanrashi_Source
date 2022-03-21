@@ -68,7 +68,7 @@ class _InvestmentTabViewState extends State<InvestmentTabView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    print(' Investmebt tabview dsiposed');
+
   }
 
 
