@@ -90,6 +90,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
   bool statusOfStoring = false;
   List<Task> pieData = [];
   bool isEditing = false;
+  bool usedForUpdate = false;
   //String display = '';
   double sliderValue = 5;
   double futureValue = 0;
@@ -204,6 +205,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     }).whenComplete(() {
 
         setState(() {
+          usedForUpdate = true;
           statusOfStoring = true;
           if (widget.type == 'Delete') {
             Global.investmentCount--;
@@ -239,6 +241,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
     }).whenComplete(() {
       setState(() {
         statusOfStoring = true;
+        usedForUpdate = false;
         Global.investmentCount++;
         widget.onAdd!(Global.investmentCount);
       });
@@ -266,9 +269,10 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
         ? WorkDone(
             currentUser: widget.currentUser,
             isComplete: statusOfStoring,
-            whatToAdd: 'Investment "${widget.titleMessage}"',
+            whatToAdd: 'Investment',
             whatToDo: widget.type,
             timedOut: isTimedOut,
+            usedForUpdate: usedForUpdate,
           )
         : VanishKeyBoard(
             onTap: () {
@@ -447,7 +451,7 @@ class _InvestmentSheetState extends State<InvestmentSheet> {
                   widget.type == 'Delete'
                       ? Utility.showBanner(
                           context,
-                          'You are about to delete this investment. This action is irreversible.',
+                          'You are about to delete this investment. Tap delete to confirm',
                           Colors.red.shade50,
                           Colors.red)
                       : SizedBox(

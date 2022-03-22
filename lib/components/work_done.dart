@@ -14,6 +14,7 @@ class WorkDone extends StatefulWidget {
   String whatToAdd = 'Investment';
   String whatToDo = 'Save';
   bool timedOut = false;
+  bool usedForUpdate = false;
   var currentUser;
 
   WorkDone({
@@ -22,6 +23,7 @@ class WorkDone extends StatefulWidget {
     this.whatToDo = 'Save',
     this.timedOut = false,
     required this.currentUser,
+    this.usedForUpdate = false,
   });
 
   @override
@@ -77,8 +79,9 @@ class _WorkDoneState extends State<WorkDone> {
                       height: 80,width: 80,),
                   ),
                 ),
-                 Text('Your ${this.widget.whatToAdd} is ${this.widget.whatToDo}d successfully ', style: DefaultValues.kH3(context),),
-                CommandButton(
+          widget.usedForUpdate ? Text('Your ${this.widget.whatToAdd} is \n${this.widget.whatToDo}d successfully ', style: DefaultValues.kH2(context),)
+                :Text('Your ${this.widget.whatToAdd} is ${this.widget.whatToDo}d successfully ', style: DefaultValues.kH3(context),),
+                !widget.usedForUpdate ? CommandButton(
                     onPressed: (){
                       Navigator.push(
                         context,
@@ -90,19 +93,19 @@ class _WorkDoneState extends State<WorkDone> {
                     buttonColor: kPresentTheme.accentColor,
                     borderRadius: BorderRadius.circular(20),
                     textColor: kPresentTheme.alternateColor,
-                    buttonText: 'View your ${this.widget.whatToAdd}',
+                    buttonText: 'View ${this.widget.whatToAdd}s',
 
-                ),
-                CommandButton(
+                ):SizedBox(),
+                !widget.usedForUpdate ?CommandButton(
                   onPressed: (){
                     Navigator.pop(context);
                   },
                   buttonColor: kPresentTheme.accentColor,
                   borderRadius: BorderRadius.circular(20),
                   textColor: kPresentTheme.alternateColor,
-                  buttonText: 'Add more ${this.widget.whatToAdd}',
+                  buttonText: 'Add ${this.widget.whatToAdd}',
 
-                ),
+                ):SizedBox(),
 
               ],
             )) :!widget.timedOut ? Image.asset(kPresentTheme.progressIndicator, scale: 3) :

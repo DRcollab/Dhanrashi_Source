@@ -160,7 +160,7 @@ class DefaultValues {
     'recomm_2': 'after year ',
 
     'warning_deletion':
-        'You are about to delete this goal. This action is irreversible',
+        'You are about to delete this goal. Tap delete to confirm',
 
     'recomm_summary':'Goals and Investments summary',
   };

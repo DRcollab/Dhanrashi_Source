@@ -47,7 +47,7 @@ class InfoPage extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                       backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/AG_profile3.png'),
+                       backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/aravind_avatar.jpeg'),
 
                       ),
                       Text('Aravind',style: DefaultValues.kH3(context)),
@@ -57,7 +57,7 @@ class InfoPage extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/deba_profile.png'),
+                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/deba_avatar.jpeg'),
                       ),
                       Text('Debashis',style: DefaultValues.kH3(context)),
                     ],
@@ -66,7 +66,7 @@ class InfoPage extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/subha_profile.png'),
+                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/shubha_avatar.jpeg'),
                       ),
                       Text('Shubhadeep',style: DefaultValues.kH3(context)),
                     ],

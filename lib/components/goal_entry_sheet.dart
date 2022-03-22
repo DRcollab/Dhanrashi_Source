@@ -84,6 +84,7 @@ class _GoalSheetState extends State<GoalSheet> {
   int goalDuration = 1;
   double inflationEffect = 1.0;
   int whichController = 0;
+  bool usedForUpdate = false;
 
   TextEditingController titleEditingController = TextEditingController();
   TextEditingController goalController = TextEditingController();
@@ -152,6 +153,7 @@ class _GoalSheetState extends State<GoalSheet> {
     }).whenComplete(() {
       setState(() {
         statusOfStoring = true;
+        usedForUpdate = true;
         if (widget.type == 'Delete') {
           Global.goalCount--;
         }
@@ -180,6 +182,7 @@ class _GoalSheetState extends State<GoalSheet> {
     }).whenComplete(() {
       setState(() {
         statusOfStoring = true;
+        usedForUpdate = false;
         Global.goalCount++;
         widget.onAdd!(Global.goalCount);
       });
@@ -205,6 +208,7 @@ class _GoalSheetState extends State<GoalSheet> {
             whatToAdd: 'Goal',
             whatToDo: widget.type,
             timedOut: isTimedOut,
+            usedForUpdate: usedForUpdate,
           )
         : VanishKeyBoard(
             onTap: () {
