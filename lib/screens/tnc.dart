@@ -300,7 +300,7 @@ class _TnCState extends State<TnC> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                  child: Text('If you have any questions or suggestions about my Terms and Conditions, contact us at projdhanrashi@gmail.com..'
+                  child: Text('If you have any questions or suggestions about our Terms and Conditions, contact us at projdhanrashi@gmail.com..'
 
 
 
