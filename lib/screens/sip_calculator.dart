@@ -96,11 +96,13 @@ class _SIPCalculatorState extends State<SIPCalculator> {
       investedAmount = 0;
       goalAmount = labelInput1;
       investedAmount = labelInput2;
+
       //investedAmount = valueSlider2;
      // goalAmount = valueSlider1;
     sipAmount = Calculator.sipAmount(expectedRoi/1200, investmentDuration*12, investedAmount, goalAmount, 1);
    interestValue =  goalAmount - (sipAmount*investmentDuration*12+investedAmount);
-      //sipAmount = annualInvestment * 100000/12;
+      totalInvestment = goalAmount - interestValue;
+    //sipAmount = annualInvestment * 100000/12;
     }
 
 
@@ -215,7 +217,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                             height: 1.h, width: 2.w ,color: kPresentTheme.accentColor),
                                         Padding(
                                           padding:  EdgeInsets.only(left : 2.w),
-                                          child:selectedValue == 0 ? Text('Total Investment'):Text('Goal Amount'),
+                                          child:selectedValue == 0 ? Text('Total Investment'):Text('Total Investment'),
                                         ),
 
                                       ],
@@ -224,7 +226,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                         alignment: Alignment.centerRight,
                                         child: Text(
                                            selectedValue == 0 ?'${DefaultValues.textFormat.format(totalInvestment)}'
-                                                              :'${DefaultValues.textFormat.format(goalAmount)}'
+                                                              :'${DefaultValues.textFormat.format(totalInvestment)}'
                                           ,style: DefaultValues.kH3(context),)),
                                     Row(
                                       children: [
@@ -280,7 +282,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                                       onChanged: (value){
                                         setState(() {
                                           selectedValue = int.parse( value.toString());
-                                          print(value);
+
                                           labelInput1 = 0;
                                           labelInput1Controller.text = labelInput1.toString();
                                         });
@@ -329,7 +331,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
             validator: (){
               setState(() {
-               // labelInput1Controller.text = '';
+
                 whichTextController = 1;
                 isEditing = true;
                 text1Active = true;
@@ -366,12 +368,10 @@ class _SIPCalculatorState extends State<SIPCalculator> {
                     label: selectedValue == 0 ? 'Monthly Investment':'Initial Investment',
                     icon:Icon(Icons.show_chart, color: Colors.amber,),
 
-                    // getValue: (value){
-                    //     annualInvestment = double.parse(value.toString());
-                    // },
+
                     validator: (){
                       setState(() {
-                        labelInput2Controller.text = '';
+
                         whichTextController = 2;
                         dummy = labelInput2Controller;
                         isEditing = true;

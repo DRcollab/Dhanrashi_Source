@@ -352,10 +352,7 @@ class _GoalSheetState extends State<GoalSheet> {
                                 });
 
                                 //
-                                // print('duration: ${investmentDuration}');
-                                // print('amount: ${investedAmount}');
-                                // print('ROI :${expectedRoi}');
-                                //
+
                               },
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -527,7 +524,7 @@ class _GoalSheetState extends State<GoalSheet> {
                                 //   changedByUser = internal;
                                 // }
 
-                                //print('inflarion : $internal');
+
                               });
                             },
                             validator: () {
