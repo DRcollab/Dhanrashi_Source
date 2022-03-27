@@ -329,7 +329,7 @@ class _SIPCalculatorState extends State<SIPCalculator> {
 
             validator: (){
               setState(() {
-                labelInput1Controller.text = '';
+               // labelInput1Controller.text = '';
                 whichTextController = 1;
                 isEditing = true;
                 text1Active = true;
