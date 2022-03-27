@@ -13,7 +13,7 @@ var keyValue =
  var attribution = '<a href="https://www.flaticon.com/free-icons/chart-down" title="chart down icons">Chart down icons created by Arkinasi - Flaticon</a>';
 
 
-/// The above key is important for deployment -- need for dhanrashi team member
+/// The above key is important for deployment -- need for fiwi team member
 
 DhanrashiTheme kLimeTheme = DhanrashiTheme(
   progressIndicator: 'images/gifs/rolling.gif',

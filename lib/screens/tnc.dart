@@ -42,20 +42,160 @@ class _TnCState extends State<TnC> {
             icon: Icon(Icons.close),),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 7.h),
-            child: WebView(
-              onWebViewCreated: (controller){
-               // _controller = controller;
-              },
-              onPageStarted: (url){
-                //_controller.runJavascript(
-                   //   "document.getElementsById('docs-titlebar-container').style.display='none'"
-               // );
-              },
-              zoomEnabled: true,
-              javascriptMode: JavascriptMode.unrestricted,
-              initialUrl: 'file:////images/profiles/AG_profile3.png'
-              //'https://drive.google.com/file/d/18HC33dZhcy8hh3Ji03BezdaH-phj3KiJ/view?usp=sharing',
-            ),
+            child: ListView(
+
+              children: [
+
+                Text('About FiWi', style: DefaultValues.kH2(context),),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('FiWi is your Financial Planning Assistant which helps you build a plan for your golden future. It lets you manage your financial goals and then helps you track investments which help you achieve '
+                      'those goals. For more information on how to use Fiwi – watch this video tutorial',style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Version  1.0.0', style: DefaultValues.kH2(context),),
+
+                Text('Revision History – ', style: DefaultValues.kH2(context),),
+                Text('27 March 2022 - MVP Launched ', style: DefaultValues.kH2(context),),
+
+                Text('Privacy Policy ', style: DefaultValues.kH2(context),),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('Shubhadeep, Aravind, '
+                      'Debashis built the FiWi app as an Ad Supported app. '
+                      'This Product  is provided by Shubhadeep, Aravind, Debashis at no cost and is intended for use as is.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('This page is used to inform visitors regarding the policies with the collection, use, '
+                      'and disclosure of Personal Information if anyone decides to use this Product.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('If you choose to use this Product, '
+                      'then you agree to the collection and use of information in relation '
+                      'to this policy. The Personal Information that we collect is used for '
+                      'providing and improving the Product. We will not use or share your information '
+                      'with anyone except as described in this Privacy Policy.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, '
+                      'which are accessible at FiWi unless otherwise defined in this Privacy Policy.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Information Collection and Use ', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('For a better experience, while using our Product, we may require you to provide certain personally identifiable information, '
+                      'including but not limited to Name, email, Date of Birth, Salary Range. '
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('The app does use third-party services that may collect information used to identify you.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+
+                Text('Log Data', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('We want to inform you that whenever you use this Product, '
+                      'in case of an error in the app, We collect data and information '
+                      '(through third-party products) on your phone called Log Data. '
+                      'This Log Data may include information such as your device Internet Protocol (“IP”) '
+                      'address, device name, operating system version, the configuration of the app when utilizing '
+                      'this Product, the time and date of your use of the Product, and other statistics.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Cookies', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text("Cookies are files with a small amount of data that are "
+                      'commonly used as anonymous unique identifiers. These are sent to your browser '
+                      "from the websites that you visit and are stored on your device's internal memory."
+                      'This Product does not use these “cookies” explicitly. However, the app may use third-party code and libraries that use “cookies” to collect '
+                      'information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. '
+                      'If you choose to refuse our cookies, you may not be able to use some portions of this Product. '
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Service Providers', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('We may employ third-party companies and individuals due to the following reasons:'
+                      '*   To facilitate our Service;'
+                  '*   To provide the Service on our behalf;'
+                  '*   To perform Service-related services; or'
+                  '*   To assist us in analyzing how our Product is used'
+                  'We want to inform users of this Product that these third parties have access to their Personal Information. The reason is to perform the tasks assigned to them on our behalf. '
+                      'However, they are obligated not to disclose or use the information for any other purpose.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Security', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Links to Other Sites', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('This Product may contain links to other sites. If you click on a third-party link, '
+                      'you will be directed to that site. Note that these external sites are not operated by us. '
+                      'Therefore, we strongly advise you to review the Privacy Policy of these websites. '
+                      'We have no control over and assume no responsibility'
+                      ' for the content, privacy policies, or practices of any third-party sites or services.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Children’s Privacy', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('This Product does not address anyone under the age of 13. '
+                      'We do not knowingly collect personally identifiable information from children under 13 years of age. '
+                      'In the case we discover that a child under 13 has provided us with personal information, '
+                      'we immediately delete this from our servers. If you are a parent or guardian and you are aware '
+                      'that your child has provided us with personal information, please contact us so that we will be able '
+                      'to do the necessary actions.'
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+
+                Text('Changes to This Privacy Policy', style: DefaultValues.kH2(context),),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  child: Text('We may update our Privacy Policy from time to time. '
+                      'Thus, you are advised to review this page periodically for any changes. '
+                      'We will notify you of any changes by posting the new Privacy Policy on this page.'
+                      'This policy is effective as of 2022-01-02'
+
+                      ,style: DefaultValues.kNormal3(context) ),
+                ),
+                
+
+              ],
+
+            )
           )
       ),
     );

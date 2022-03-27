@@ -79,7 +79,7 @@ class _WorkDoneState extends State<WorkDone> {
                       height: 80,width: 80,),
                   ),
                 ),
-          widget.usedForUpdate ? Text('Your ${this.widget.whatToAdd} is \n${this.widget.whatToDo}d successfully ', style: DefaultValues.kH2(context),)
+          widget.usedForUpdate ? Text('Your ${this.widget.whatToAdd.toLowerCase()} is \n${this.widget.whatToDo.toLowerCase()}d successfully ', style: DefaultValues.kH2(context),)
                 :Text('Your ${this.widget.whatToAdd} is ${this.widget.whatToDo}d successfully ', style: DefaultValues.kH3(context),),
                 !widget.usedForUpdate ? CommandButton(
                     onPressed: (){

@@ -34,9 +34,9 @@ class LoginScreen extends StatefulWidget with InputValidationMixin {
 
 class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
   bool profileReady =
-  false; // will be used to determine if profiler page to be navigated or to dhanrashi
+  false; // will be used to determine if profiler page to be navigated or to fiwi
   //DRUserAccess? currentUser; // Store the  Name of the user (not user id) if users decides not fill in name then user id will be used//
-  // The currentUser will be displayed on dhanrashi or other places....
+  // The currentUser will be displayed on fiwi or other places....
 
   // bool useForReset = false;
 
