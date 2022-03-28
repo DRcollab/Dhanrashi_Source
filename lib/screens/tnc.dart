@@ -50,7 +50,7 @@ class _TnCState extends State<TnC> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                   child: Text('FiWi is your Financial Planning Assistant which helps you build a plan for your golden future. It lets you manage your financial goals and then helps you track investments which help you achieve '
-                      'those goals. For more information on how to use Fiwi – watch this video tutorial',style: DefaultValues.kNormal3(context) ),
+                      'those goals. For more information on how to use FiWi – subscribe to our youtube channel - Financial Wisdom',style: DefaultValues.kNormal3(context) ),
                 ),
 
                 Center(child: Text('Version  1.0.0', style: DefaultValues.kH2(context),)),
