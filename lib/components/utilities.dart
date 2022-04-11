@@ -155,7 +155,7 @@ class Utility{
     required Function() takeAction1,
      Function()? takeAction2,
     type = 0,
-    String buttonText1 = '',
+    String buttonText1 = 'Ok',
     String buttonText2 = '',
 
 
