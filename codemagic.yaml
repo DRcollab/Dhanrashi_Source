@@ -1,0 +1,7 @@
+workflows:
+  master_mind:
+    name: master_mind
+    scripts:
+      - name: Build for ios
+        script: flutter ios build
+
