@@ -45,30 +45,9 @@ class InfoPage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      CircleAvatar(
-                        radius: 40,
-                       backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/aravind_avatar.jpeg'),
 
-                      ),
-                      Text('Aravind',style: DefaultValues.kH3(context)),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/deba_avatar.jpeg'),
-                      ),
-                      Text('Debashis',style: DefaultValues.kH3(context)),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/shubha_avatar.jpeg'),
-                      ),
-                      Text('Shubhadeep',style: DefaultValues.kH3(context)),
+                      Text('Dhanrashi Team', style: TextStyle(fontSize: 24),),
+
                     ],
                   ),
                   //Text(' by Arvind, Debashis and Shubhadeep', style: DefaultValues.kH2(context),),
@@ -115,3 +94,35 @@ class InfoPage extends StatelessWidget {
     );
   }
 }
+
+
+/// in case the information about the developers need to be shown the following code to be used
+///
+
+
+// CircleAvatar(
+//                         radius: 40,
+//                        backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/aravind_avatar.jpeg'),
+//
+//                       ),
+//                       Text('Aravind',style: DefaultValues.kH3(context)),
+//                     ],
+//                   ),
+//                   Column(
+//                     children: [
+//                       CircleAvatar(
+//                         radius: 40,
+//                         backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/deba_avatar.jpeg'),
+//                       ),
+//                       Text('Debashis',style: DefaultValues.kH3(context)),
+//                     ],
+//                   ),
+//                   Column(
+//                     children: [
+//                       CircleAvatar(
+//                         radius: 40,
+//                         backgroundImage:AssetImage('${DefaultValues.imageDirectory}/profiles/shubha_avatar.jpeg'),
+//                       ),
+//                       Text('Shubhadeep',style: DefaultValues.kH3(context)),
+
+
