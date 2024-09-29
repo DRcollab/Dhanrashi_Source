@@ -1,6 +1,9 @@
-# dashboard
+# Fi Wi mobile app
 
-A new Flutter project.
+A Flutter project for financial wisfomd app.
+
+https://www.youtube.com/watch?v=xWV3FilhXYA
+
 
 ## Getting Started
 
